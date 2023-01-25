@@ -9,15 +9,11 @@ const ForgotPassword = () => {
     <div className='container'>
       <Snowfall/>
       <div className='content-left'>
-        <h1>Reset password</h1>
+        <h1 style={{marginTop: '12rem'}}>Reset password</h1>
         <form>
           <label>Email</label>
           <br/>
           <input type='email'/>
-          <br/>
-          <label>Current password</label>
-          <br/>
-          <input type='password'/>
           <br/>
           <label>New password</label>
           <br/>
