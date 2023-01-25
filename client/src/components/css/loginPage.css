@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&family=Prompt&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.container{
+    display: flex;
+    min-height: 100vh;
+    min-width: 100vw;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-left , .content-right{
+    width: 50%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.content-left h1{
+    font-size: 2.2rem;
+    margin-top: 7.5rem;
+    margin-bottom: 1.2rem;
+    color: #545454;
+}
+
+.content-left label{
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color:  #3F3F3F;
+}
+
+.content-left form{
+    width: 400px;
+    height: 50%;
+    margin-top: 1.4rem;
+}
+
+form input[type='text'] , form input[type='password'] , form input[type='email']{
+    width: 100%;
+    height: 8%;
+    outline: none;
+    border: 1px solid #CECFD6;
+    margin-bottom: 1.4rem;
+    font-size: 17px;
+    padding: 10px;
+    color:  #3F3F3F;
+}
+
+.center-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+}
+
+.center-content span , .center-content .forgotPassword{
+    font-size: 1rem;
+    color:  #2E2E2E;
+    font-weight: 500;
+}
+
+.center-content .forgotPassword{
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.center-content .forgotPassword:hover{
+    color: #545454;
+}
+         
+.content-left button{
+    background-image: linear-gradient(to right, #00c6ff 0%, #0072ff  51%, #00c6ff  100%);
+    width: 100%;
+    height: 8%;
+    text-align: center;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;            
+    box-shadow: 0 0 20px #eee;
+    display: block;
+    border: none;
+  }
+
+.content-left button:hover{
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
+}
+ 
+.content-left .buttom-content{
+    margin-top: 1.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttom-content div , .buttom-content .signup{
+    font-size: 1rem;
+    color:  #848484;
+    font-weight: 400;
+}
+
+.buttom-content .signup{
+    text-decoration: none;
+    color: #2E2E2E;
+    transition: .3s;
+    font-weight: 500;
+}
+
+.buttom-content .signup:hover{
+    color: #545454;
+}
+
+.content-right{
+    background-color: #f7f7f7;
+}
+
+.content-right img{
+    height: 43%;
+    -webkit-user-drag: none;
+}
