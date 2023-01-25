@@ -15,11 +15,11 @@ const ForgotPassword = () => {
           <br/>
           <input type='email'/>
           <br/>
-          <label>Password</label>
+          <label>Current password</label>
           <br/>
           <input type='password'/>
           <br/>
-          <label>Confirm password</label>
+          <label>New password</label>
           <br/>
           <input type='password'/>
           <br/>
