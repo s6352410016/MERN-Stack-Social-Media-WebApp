@@ -2,10 +2,12 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import loginLogo from './images/loginLogo.svg';
 import './css/loginPage.css';
+import Snowfall from 'react-snowfall';
 
 const Signin = () => {
   return (
     <div className='container'>
+      <Snowfall/>
       <div className='content-left'>
         <h1>Welcome to BYN</h1>
         <form>
@@ -37,7 +39,7 @@ const Signin = () => {
         <img src={loginLogo} alt='loginLogo'/>
       </div>
     </div>
-  )
+  );
 }
 
 export default Signin;
