@@ -26,9 +26,9 @@
 
 .content-left h1{
     font-size: 2.2rem;
-    margin-top: 7.5rem;
-    margin-bottom: 1.2rem;
+    margin-bottom: 2rem;
     color: #545454;
+    text-align: center;
 }
 
 .content-left label{
@@ -40,16 +40,16 @@
 
 .content-left form{
     width: 400px;
-    height: 50%;
+    height: 55%;
     margin-top: 1.4rem;
 }
 
 form input[type='text'] , form input[type='password'] , form input[type='email']{
     width: 100%;
-    height: 8%;
+    height: 40px;
     outline: none;
     border: 1px solid #CECFD6;
-    margin-bottom: 1.4rem;
+    margin-bottom: 1rem;
     font-size: 17px;
     padding: 10px !important; 
     color:  #3F3F3F;
@@ -80,7 +80,7 @@ form input[type='text'] , form input[type='password'] , form input[type='email']
 .content-left button{
     background-image: linear-gradient(to right, #00c6ff 0%, #0072ff  51%, #00c6ff  100%);
     width: 100%;
-    height: 8%;
+    height: 40px;
     text-align: center;
     transition: 0.5s;
     background-size: 200% auto;
@@ -88,6 +88,7 @@ form input[type='text'] , form input[type='password'] , form input[type='email']
     box-shadow: 0 0 20px #eee;
     display: block;
     border: none;
+    margin-top: 1rem;
   }
 
 .content-left button:hover{
@@ -120,11 +121,13 @@ form input[type='text'] , form input[type='password'] , form input[type='email']
     color: #545454;
 }
 
-.content-right{
-    background-color: #f7f7f7;
+.input-head{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
 }
 
-.content-right img{
-    height: 43%;
-    -webkit-user-drag: none;
+.input-head div input{
+    height: 40px;
 }

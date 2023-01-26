@@ -1,0 +1,8 @@
+.content-right{
+    background-color: #f7f7f7;
+}
+
+.content-right img{
+    height: 43%;
+    -webkit-user-drag: none;
+}
