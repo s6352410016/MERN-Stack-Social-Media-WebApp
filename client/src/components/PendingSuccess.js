@@ -4,21 +4,22 @@ import './css/ContentLeft.css';
 import Snowfall from 'react-snowfall';
 import ContentRight from './ContentRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft , faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
-const ForgotPassword = () => {
+const PendingSuccess = () => {
   return (
     <div className='container'>
       <Snowfall/>
       <div className='content-left'>
         <div>
-          <h1>Reset password</h1>
-          <p>We'll send an otp for verification to your email.</p>
+          <div className='logo-container'>
+            <FontAwesomeIcon icon={faCircleCheck} className='check-logo'/>  
+          </div>
+          <h1>Successfully!</h1>
+          <p>Your password has been successfully reset.</p>
+          <p>Click below to sign in page.</p>
           <form>
-            <label>Email</label>
-            <br/>
-            <input type='text' className='err-style'/>
-            <button>Send OTP</button>
+            <Link to='/' className='button'>Continue</Link>
             <div className='buttom-content'>
               <Link to='/' className='signup'><FontAwesomeIcon icon={faArrowLeft}/>&nbsp;&nbsp;Back to sign in</Link>
             </div>
@@ -27,7 +28,7 @@ const ForgotPassword = () => {
       </div>
       <ContentRight/>
     </div>
-  );
+  )
 }
 
-export default ForgotPassword;
+export default PendingSuccess;

@@ -6,19 +6,21 @@ import ContentRight from './ContentRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-const ForgotPassword = () => {
+
+const VerifyOTP = () => {
   return (
     <div className='container'>
       <Snowfall/>
       <div className='content-left'>
         <div>
-          <h1>Reset password</h1>
-          <p>We'll send an otp for verification to your email.</p>
+          <h1>Verifying OTP</h1>
+          <p>Check your email <span style={{color: '#2E2E2E' , fontWeight: '500'}}>d*****4@hotmail.com</span></p>
           <form>
-            <label>Email</label>
-            <br/>
-            <input type='text' className='err-style'/>
-            <button>Send OTP</button>
+            <input type='text' className='err-style' placeholder='Enter OTP'/>
+            <button>Confirm</button>
+            <div className='resend-otp'>
+              <span className='first-span'>Don't receive an otp?</span>&nbsp;&nbsp;&nbsp;<span className='last-span'>Click to resend</span>
+            </div>
             <div className='buttom-content'>
               <Link to='/' className='signup'><FontAwesomeIcon icon={faArrowLeft}/>&nbsp;&nbsp;Back to sign in</Link>
             </div>
@@ -30,4 +32,4 @@ const ForgotPassword = () => {
   );
 }
 
-export default ForgotPassword;
+export default VerifyOTP;

@@ -6,19 +6,22 @@ import ContentRight from './ContentRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
   return (
     <div className='container'>
       <Snowfall/>
       <div className='content-left'>
         <div>
-          <h1>Reset password</h1>
-          <p>We'll send an otp for verification to your email.</p>
+          <h1>Change password</h1>
           <form>
-            <label>Email</label>
+            <label>New password:</label>
             <br/>
-            <input type='text' className='err-style'/>
-            <button>Send OTP</button>
+            <input type='password' className='err-style'/>
+            <br/>
+            <label>Confirm new password:</label>
+            <br/>
+            <input type='password' className='err-style'/>
+            <button>Reset password</button>
             <div className='buttom-content'>
               <Link to='/' className='signup'><FontAwesomeIcon icon={faArrowLeft}/>&nbsp;&nbsp;Back to sign in</Link>
             </div>
@@ -27,7 +30,7 @@ const ForgotPassword = () => {
       </div>
       <ContentRight/>
     </div>
-  );
+  )
 }
 
-export default ForgotPassword;
+export default ResetPassword;
