@@ -19,6 +19,9 @@ const Signin = () => {
   const signIn = (e) => {
     e.preventDefault();
 
+    const regExForUsername = /^[a-zA-Z0-9_]{6,20}$/; //math a-z A-Z 0-9 _ และต้องมีขั้นต่ำ 6 - 20 ตัวอักษร
+    const regExForPassword = /^[a-zA-Z0-9_]{8,20}$/; //math a-z A-Z 0-9 _ และต้องมีขั้นต่ำ 8 - 20 ตัวอักษร
+
     const inputTextUsernameOrEmail = document.getElementsByClassName('err-style')[0];
     const inputPassword = document.querySelector('.password-effect');
 
@@ -45,6 +48,20 @@ const Signin = () => {
       setErrMsg({});
       inputTextUsernameOrEmail.classList.remove('custom');
       inputPassword.classList.remove('custom');
+
+      if(regExForUsername.test(usernameOrEmail) === false){
+        setErrMsg({
+          regExErrUsername: 'Username or email is not formatted.'
+        });
+        inputTextUsernameOrEmail.classList.add('custom');
+        inputPassword.classList.remove('custom');
+      }else if(regExForPassword.test(password) === false){
+        setErrMsg({
+          regExErrPassword: 'Password must have 8-20 characters'
+        });
+        inputTextUsernameOrEmail.classList.remove('custom');
+        inputPassword.classList.add('custom');
+      }
     } 
   }
 
@@ -68,14 +85,14 @@ const Signin = () => {
             <label>Username / Email:</label>
             <br/>
             <input type='text' className='err-style' onChange={(e) => setUsernameOrEmail(e.target.value)}/>
-            {errMsg && <span className='errMsg'>{errMsg.usernameOrEmail}</span>}
+            {errMsg && <span className='errMsg'>{errMsg.usernameOrEmail}{errMsg.regExErrUsername}</span>}
             <br/>
             <label>Password:</label>
             <br/>
             <div className='password-effect'>
               <input type={type}  onChange={(e) => setPassword(e.target.value)}/> <FontAwesomeIcon className='icon' onClick={eyePopup} icon={icon}/>
             </div>
-            {errMsg && <span className='errMsg'>{errMsg.password}</span>}
+            {errMsg && <span className='errMsg'>{errMsg.password}{errMsg.regExErrPassword}</span>}
             <br/>
             <div className='center-content'>
               <div>

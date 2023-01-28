@@ -21,8 +21,10 @@ const Signup = () => {
   const signIn = (e) => {
     e.preventDefault();
     
-    const regExForFullname = /^[ก-ฮa-zA-Z\D]+$/; //match ก-ฮ a-z A-Z แต่จะไม่ match ตัวเลขทั้งหมด
-    
+    const regExForFullname = /^[ก-ฮa-zA-Z\D]+$/; //match ก-ฮ a-z A-Z แต่จะไม่ match ตัวเลข 0-9
+    const regExForUsername = /^[a-zA-Z0-9_]{6,20}$/; //math a-z A-Z 0-9 _ และต้องมีขั้นต่ำ 6 - 20 ตัวอักษร
+    const regExForPassword = /^[a-zA-Z0-9_]{8,20}$/; //math a-z A-Z 0-9 _ และต้องมีขั้นต่ำ 8 - 20 ตัวอักษร
+    const regExForEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; //รูปแบบ email ต้องเป็น test@hotmail.com ถึงจะ match
 
     const inputTextFirstname = document.getElementsByClassName('err-style')[0];
     const inputTextLastname = document.getElementsByClassName('err-style')[1];
@@ -353,6 +355,33 @@ const Signup = () => {
         inputTextUsername.classList.remove('custom');
         inputPassword.classList.remove('custom');
         inputTextEmail.classList.remove('custom');
+      }else if(regExForUsername.test(username) === false){
+        setErrMsg({
+          regExErrUsername: 'Username should be ( a-z , A-Z , _ ) or number and must have 6-20 characters.'
+        });
+        inputTextFirstname.classList.remove('custom-special');
+        inputTextLastname.classList.remove('custom-special');
+        inputTextUsername.classList.add('custom');
+        inputPassword.classList.remove('custom');
+        inputTextEmail.classList.remove('custom');
+      }else if(regExForPassword.test(password) === false){
+        setErrMsg({
+          regExErrPassword: 'A strong password must have 8-20 characters and contain upper & lowercase letters.'
+        });
+        inputTextFirstname.classList.remove('custom-special');
+        inputTextLastname.classList.remove('custom-special');
+        inputTextUsername.classList.remove('custom');
+        inputPassword.classList.add('custom');
+        inputTextEmail.classList.remove('custom');
+      }else if(regExForEmail.test(email) === false){
+        setErrMsg({
+          regExErrEmail: 'Please enter a valid email address for example example@domain.com'
+        });
+        inputTextFirstname.classList.remove('custom-special');
+        inputTextLastname.classList.remove('custom-special');
+        inputTextUsername.classList.remove('custom');
+        inputPassword.classList.remove('custom');
+        inputTextEmail.classList.add('custom');
       }
     }
   }
@@ -393,19 +422,19 @@ const Signup = () => {
             <label>Username:</label>
             <br/>
             <input type='text' className='err-style' onChange={(e) => setUsername(e.target.value)}/>
-            {errMsg && <span className='errMsg'>{errMsg.username}</span>}
+            {errMsg && <span className='errMsg'>{errMsg.username}{errMsg.regExErrUsername}</span>}
             <br/>
             <label>Password:</label>
             <br/>
             <div className='password-effect'>
               <input type={type}  onChange={(e) => setPassword(e.target.value)}/> <FontAwesomeIcon onClick={eyePopup} className='icon' icon={icon}/>
             </div>
-            {errMsg && <span className='errMsg'>{errMsg.password}</span>}
+            {errMsg && <span className='errMsg'>{errMsg.password}{errMsg.regExErrPassword}</span>}
             <br/>
             <label>Email:</label>
             <br/>
             <input type='text' className='err-style' onChange={(e) => setEmail(e.target.value)}/>
-            {errMsg && <span className='errMsg'>{errMsg.email}</span>}
+            {errMsg && <span className='errMsg'>{errMsg.email}{errMsg.regExErrEmail}</span>}
             <button type='submit'>Sign Up</button>
             <div className='buttom-content'>
               <div>
