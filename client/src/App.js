@@ -5,6 +5,7 @@ import ForgotPassword from './components/ForgotPassword';
 import VerifyOTP from './components/VerifyOTP';
 import ResetPassword from './components/ResetPassword';
 import PendingSuccess from './components/PendingSuccess';
+import SignupSuccess from './components/SignupSuccess';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path='/verifyOTP' element={<VerifyOTP/>}></Route>
           <Route path='/resetPassword' element={<ResetPassword/>}></Route>
           <Route path='/pendingSuccess' element={<PendingSuccess/>}></Route>
+          <Route path='/signupSuccess' element={<SignupSuccess/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Link} from 'react-router-dom';
 import './css/ContentLeft.css';
 import Snowfall from 'react-snowfall';
@@ -7,18 +7,43 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 const ForgotPassword = () => {
+
+  const [email , setEmail] = useState('');
+  const [errMsg , setErrMsg] = useState('');
+
+  const sendOTP = (e) => {
+    e.preventDefault();
+
+    const regExForEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; //รูปแบบ email ต้องเป็น test@hotmail.com ถึงจะ match
+
+    const inputTextEmail = document.getElementsByClassName('err-style')[0];
+   
+    if(!email){
+      setErrMsg('Email is required.');
+      inputTextEmail.classList.add('custom');
+    }else if(regExForEmail.test(email) === false){
+      setErrMsg('Invalid email format.');
+      inputTextEmail.classList.add('custom');
+    }else{
+      setErrMsg('');
+      inputTextEmail.classList.remove('custom');
+    }
+
+  }
+
   return (
     <div className='container'>
       <Snowfall/>
       <div className='content-left'>
-        <div>
+        <div className='container-content'>
           <h1>Reset password</h1>
           <p>We'll send an otp for verification to your email.</p>
-          <form>
+          <form onSubmit={(e) => sendOTP(e)}>
             <label>Email</label>
             <br/>
-            <input type='text' className='err-style'/>
-            <button>Send OTP</button>
+            <input type='text' className='err-style' onChange={(e) => setEmail(e.target.value)}/>
+            {errMsg && <span className='errMsg'>{errMsg}</span>}
+            <button type='submit'>Send OTP</button>
             <div className='buttom-content'>
               <Link to='/' className='signup'><FontAwesomeIcon icon={faArrowLeft}/>&nbsp;&nbsp;Back to sign in</Link>
             </div>

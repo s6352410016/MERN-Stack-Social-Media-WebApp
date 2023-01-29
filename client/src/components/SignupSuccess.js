@@ -6,7 +6,7 @@ import ContentRight from './ContentRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft , faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
-const PendingSuccess = () => {
+const SignupSuccess = () => {
   return (
     <div className='container'>
       <Snowfall/>
@@ -16,7 +16,7 @@ const PendingSuccess = () => {
             <FontAwesomeIcon icon={faCircleCheck} className='check-logo'/>  
           </div>
           <h1>Successfully!</h1>
-          <p>Your password has been successfully reset.</p>
+          <p>Your account has been successfully to signup.</p>
           <p>Click below to sign in page.</p>
           <form>
             <Link to='/' className='button'>Continue</Link>
@@ -31,4 +31,4 @@ const PendingSuccess = () => {
   )
 }
 
-export default PendingSuccess;
+export default SignupSuccess;

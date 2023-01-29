@@ -400,7 +400,7 @@ const Signup = () => {
     <div className='container'>
       <Snowfall/>
       <div className='content-left'>
-        <div>
+        <div className='container-content'>
           <h1>Create account</h1>
           <form onSubmit={(e) => signIn(e)}>
             <div className='input-head'>

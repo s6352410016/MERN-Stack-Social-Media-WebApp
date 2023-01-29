@@ -79,7 +79,7 @@ const Signin = () => {
     <div className='container'>
       <Snowfall/>
       <div className='content-left'>
-        <div>
+        <div className='container-content'>
           <h1>Welcome to BYN</h1>
           <form onSubmit={(e) => signIn(e)}>
             <label>Username / Email:</label>
@@ -98,7 +98,9 @@ const Signin = () => {
               <div>
                 <input type='checkbox'/> <span>Remember me</span>
               </div>
-              <Link to='/forgotPassword' className='forgotPassword'>Forgot password</Link>
+              <div>
+                <Link to='/forgotPassword' className='forgotPassword'>Forgot password</Link>
+              </div>
             </div>
             <button type='submit'>Sign In</button>
             <div className='buttom-content'>

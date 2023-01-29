@@ -64,6 +64,7 @@ form .err-style:focus{
     justify-content: space-between;
     align-items: center;
     height: 30px;
+    width: 100%;
 }
 
 .center-content span , .center-content .forgotPassword{
@@ -272,4 +273,105 @@ form .err-style:focus{
 
 .errMsg-container span{
     width: 50%;
+}
+
+@media (max-width: 1200px){
+    .content-left form {
+        width: 300px;
+    }
+
+    .content-left h1{
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .content-left .container-content{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .content-left .container-content p{
+        width: 80%;
+        margin-bottom: 0;
+    }
+
+    .container-content p span{
+        display: block;
+        margin-top: 1rem;
+    }
+
+    .content-left .check-logo{
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px){
+    .content-left form {
+        width: 250px;
+    }
+
+    .content-left h1{
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+    }
+
+    .center-content{
+        flex-direction: column;
+        margin-bottom: 2.5rem;
+        gap: .5rem;
+        margin-top: .5rem;
+    }
+
+    .center-content div{
+        width: 100%;
+        text-align: center;
+    }
+
+    .content-left .container-content{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .content-left .container-content p{
+        width: 75%;
+        margin-bottom: 0;
+    }
+
+    .container-content p span{
+        display: block;
+        margin-top: 1rem;
+    }
+
+    .resend-otp {
+        flex-direction: column;
+    }
+
+    .content-left .check-logo{
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 480px){
+    .content-left form {
+        width: 300px;
+    }
+
+    .content-left h1{
+        font-size: 1.4rem;
+    }
+
+    .center-content{
+        flex-direction: row;
+        margin-bottom: 0;
+        gap: .5rem;
+    }
+
+    .content-left .container-content p{
+        width: 100%;
+    }
+
 }
