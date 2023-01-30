@@ -275,6 +275,17 @@ form .err-style:focus{
     width: 50%;
 }
 
+.container-content .checkSigninErr{
+    color: #E92727;
+    width: 100%;
+    height: 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F6DBDB;
+    font-size: 1rem;
+}
+
 @media (max-width: 1200px){
     .content-left form {
         width: 300px;

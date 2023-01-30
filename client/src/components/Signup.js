@@ -21,7 +21,7 @@ const Signup = () => {
   const signIn = (e) => {
     e.preventDefault();
     
-    const regExForFullname = /^[ก-ฮa-zA-Z\D]+$/; //match ก-ฮ a-z A-Z แต่จะไม่ match ตัวเลข 0-9
+    const regExForFullname = /^([ก-ฮa-zA-Z\D])[^\s]+$/; //match ก-ฮ a-z A-Z และห้ามมี space แต่จะไม่ match ตัวเลข 0-9
     const regExForUsername = /^[a-zA-Z0-9_]{6,20}$/; //math a-z A-Z 0-9 _ และต้องมีขั้นต่ำ 6 - 20 ตัวอักษร
     const regExForPassword = /^[a-zA-Z0-9_]{8,20}$/; //math a-z A-Z 0-9 _ และต้องมีขั้นต่ำ 8 - 20 ตัวอักษร
     const regExForEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; //รูปแบบ email ต้องเป็น test@hotmail.com ถึงจะ match
@@ -382,6 +382,69 @@ const Signup = () => {
         inputTextUsername.classList.remove('custom');
         inputPassword.classList.remove('custom');
         inputTextEmail.classList.add('custom');
+      }else{
+        fetch('http://localhost:5000/checkUsername' , {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: username
+          })
+        }).then((res) => {
+          if(res.status === 400){
+            setErrMsg({
+              username: 'Username is already exist.'
+            });
+            inputTextFirstname.classList.remove('custom-special');
+            inputTextLastname.classList.remove('custom-special');
+            inputTextUsername.classList.add('custom');
+            inputPassword.classList.remove('custom');
+            inputTextEmail.classList.remove('custom');
+          }else if(res.status === 200){
+            fetch('http://localhost:5000/checkEmail' , {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                email: email
+              })
+            }).then((res) => {
+              if(res.status === 400){
+                setErrMsg({
+                  email: 'Email is already exist.'
+                });
+                inputTextFirstname.classList.remove('custom-special');
+                inputTextLastname.classList.remove('custom-special');
+                inputTextUsername.classList.remove('custom');
+                inputPassword.classList.remove('custom');
+                inputTextEmail.classList.add('custom');
+              }else if(res.status === 200){
+                fetch('http://localhost:5000/signup' , {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                    firstname: firstName,
+                    lastname: lastName,
+                    username: username,
+                    password: password,
+                    email: email
+                  })
+                }).then((res) => {
+                  if(res.status === 201){
+                    return res.json();
+                  }
+                }).then((res) => {
+                  localStorage.setItem('token' , res.token);
+                  window.location.href = '/signupSuccess';
+                });
+              } 
+            });
+          }
+        });
       }
     }
   }

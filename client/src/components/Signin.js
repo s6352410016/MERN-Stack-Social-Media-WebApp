@@ -61,6 +61,28 @@ const Signin = () => {
         });
         inputTextUsernameOrEmail.classList.remove('custom');
         inputPassword.classList.add('custom');
+      }else{
+        fetch('http://localhost:5000/signin' , {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            usernameOrEmail: usernameOrEmail,
+            password: password
+          })
+        }).then((res) => {
+          if(res.status === 400){
+            setErrMsg({
+              signinErr: 'Invalid username / email or password'
+            });
+          }else if(res.status === 200){
+            return res.json();
+          }
+        }).then((res) => {
+          localStorage.setItem('token' , res.token);
+          window.location.href = '/homepage';
+        });
       }
     } 
   }
@@ -81,6 +103,7 @@ const Signin = () => {
       <div className='content-left'>
         <div className='container-content'>
           <h1>Welcome to BYN</h1>
+          {errMsg.signinErr && <p className='checkSigninErr'>{errMsg.signinErr}</p>}
           <form onSubmit={(e) => signIn(e)}>
             <label>Username / Email:</label>
             <br/>
