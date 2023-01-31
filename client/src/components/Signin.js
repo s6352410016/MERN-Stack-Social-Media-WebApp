@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Link} from 'react-router-dom';
 import './css/ContentLeft.css';
 import Snowfall from 'react-snowfall';
@@ -6,6 +6,7 @@ import ContentRight from './ContentRight';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye , faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import Cookies from 'js-cookie';
 
 const Signin = () => {
 
@@ -19,11 +20,17 @@ const Signin = () => {
   const signIn = (e) => {
     e.preventDefault();
 
-    const regExForUsername = /^[a-zA-Z0-9_]{6,20}$/; //math a-z A-Z 0-9 _ และต้องมีขั้นต่ำ 6 - 20 ตัวอักษร
+    const regExForUsername = /^(?:[A-Z\d][A-Z\d_-]{5,19}|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})$/i; //math a-z A-Z 0-9 _ email และต้องมีขั้นต่ำ 6 - 20 ตัวอักษร
     const regExForPassword = /^[a-zA-Z0-9_]{8,20}$/; //math a-z A-Z 0-9 _ และต้องมีขั้นต่ำ 8 - 20 ตัวอักษร
 
     const inputTextUsernameOrEmail = document.getElementsByClassName('err-style')[0];
     const inputPassword = document.querySelector('.password-effect');
+    const saveSignin = document.getElementById('saveSignin');
+    const savePWDSignin = document.getElementById('savePWDSignin');
+
+    console.log(inputTextUsernameOrEmail.value , savePWDSignin.value);
+    setUsernameOrEmail(inputTextUsernameOrEmail.value);
+    setPassword(savePWDSignin.value);
 
     if(!usernameOrEmail && !!password){
       setErrMsg({
@@ -77,11 +84,20 @@ const Signin = () => {
               signinErr: 'Invalid username / email or password'
             });
           }else if(res.status === 200){
+            if(saveSignin.checked){
+              Cookies.set('usernameOrEmail' , usernameOrEmail , {expires: 7});
+              Cookies.set('password' , password , {expires: 7});
+            }else{
+              Cookies.remove('usernameOrEmail');
+              Cookies.remove('password');
+              inputTextUsernameOrEmail.value = '';
+              savePWDSignin.value = '';
+            }  
             return res.json();
           }
         }).then((res) => {
           localStorage.setItem('token' , res.token);
-          window.location.href = '/homepage';
+          window.location.href = '/media';
         });
       }
     } 
@@ -107,19 +123,19 @@ const Signin = () => {
           <form onSubmit={(e) => signIn(e)}>
             <label>Username / Email:</label>
             <br/>
-            <input type='text' className='err-style' onChange={(e) => setUsernameOrEmail(e.target.value)}/>
+            <input type='text' className='err-style' onChange={(e) => setUsernameOrEmail(e.target.value)} defaultValue={Cookies.get('usernameOrEmail')}/>
             {errMsg && <span className='errMsg'>{errMsg.usernameOrEmail}{errMsg.regExErrUsername}</span>}
             <br/>
             <label>Password:</label>
             <br/>
             <div className='password-effect'>
-              <input type={type}  onChange={(e) => setPassword(e.target.value)}/> <FontAwesomeIcon className='icon' onClick={eyePopup} icon={icon}/>
+              <input id='savePWDSignin' type={type}  onChange={(e) => setPassword(e.target.value)} defaultValue={Cookies.get('password')}/> <FontAwesomeIcon className='icon' onClick={eyePopup} icon={icon}/>
             </div>
             {errMsg && <span className='errMsg'>{errMsg.password}{errMsg.regExErrPassword}</span>}
             <br/>
             <div className='center-content'>
               <div>
-                <input type='checkbox'/> <span>Remember me</span>
+                <input type='checkbox' id='saveSignin'/> <span>Remember me</span>
               </div>
               <div>
                 <Link to='/forgotPassword' className='forgotPassword'>Forgot password</Link>

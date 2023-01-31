@@ -1,0 +1,23 @@
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
+const authUser = async (req , res) => {
+    try{
+        const token = req.headers['x-access-token'];
+        if(!token){
+            return res.status(401).json({msg: 'Unauthorized.'});
+        }
+        jwt.verify(token , process.env.SECRETKEY , (err , decoded) => {
+            if(err){
+                return res.status(403).json({msg: 'Forbidden'});
+            }
+            res.status(200).json({firstname: decoded.userData.firstname , lastname: decoded.userData.lastname});
+        });
+    }catch(err){
+        res.status(500).json(err);
+    }    
+}
+
+module.exports = {
+    authUser
+}
