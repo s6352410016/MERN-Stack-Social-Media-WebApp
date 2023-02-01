@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useContext , createContext } from 'react';
 import {Link} from 'react-router-dom';
 import './css/ContentLeft.css';
 import Snowfall from 'react-snowfall';
@@ -6,8 +6,13 @@ import ContentRight from './ContentRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-const ForgotPassword = () => {
+const EmailContext = createContext();
 
+export function useEmailContext(){
+  return useContext(EmailContext);
+}
+
+const ForgotPassword = () => {
   const [email , setEmail] = useState('');
   const [errMsg , setErrMsg] = useState('');
 
@@ -27,6 +32,31 @@ const ForgotPassword = () => {
     }else{
       setErrMsg('');
       inputTextEmail.classList.remove('custom');
+      fetch('http://localhost:5000/checkEmail' , {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({email: email})
+      }).then((res) => {
+        if(res.status !== 400){
+          setErrMsg('Invalid email address.');
+          inputTextEmail.classList.add('custom');
+        }else if(res.status === 400){
+          inputTextEmail.classList.remove('custom');
+          fetch('http://localhost:5000/sendOTP' , {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({email: email})
+          }).then((res) => {
+            if(res.status === 200){
+              window.location.href = '/verifyOTP';
+            }
+          });
+        }
+      });
     }
 
   }
@@ -55,4 +85,5 @@ const ForgotPassword = () => {
   );
 }
 
+export { EmailContext }
 export default ForgotPassword;

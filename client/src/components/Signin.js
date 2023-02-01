@@ -3,12 +3,19 @@ import {Link} from 'react-router-dom';
 import './css/ContentLeft.css';
 import Snowfall from 'react-snowfall';
 import ContentRight from './ContentRight';
-import { useState } from 'react';
+import { useState , useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye , faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Cookies from 'js-cookie';
 
 const Signin = () => {
+  const inputTextRef = useRef();
+  const inputPasswordRef = useRef();
+
+  useEffect(() => {
+    setUsernameOrEmail(inputTextRef.current.defaultValue);
+    setPassword(inputPasswordRef.current.defaultValue);
+  } , []);
 
   const [usernameOrEmail , setUsernameOrEmail] = useState('');
   const [password , setPassword] = useState('');
@@ -27,10 +34,6 @@ const Signin = () => {
     const inputPassword = document.querySelector('.password-effect');
     const saveSignin = document.getElementById('saveSignin');
     const savePWDSignin = document.getElementById('savePWDSignin');
-
-    console.log(inputTextUsernameOrEmail.value , savePWDSignin.value);
-    setUsernameOrEmail(inputTextUsernameOrEmail.value);
-    setPassword(savePWDSignin.value);
 
     if(!usernameOrEmail && !!password){
       setErrMsg({
@@ -123,13 +126,13 @@ const Signin = () => {
           <form onSubmit={(e) => signIn(e)}>
             <label>Username / Email:</label>
             <br/>
-            <input type='text' className='err-style' onChange={(e) => setUsernameOrEmail(e.target.value)} defaultValue={Cookies.get('usernameOrEmail')}/>
+            <input type='text' className='err-style' onChange={(e) => setUsernameOrEmail(e.target.value)} ref={inputTextRef} defaultValue={Cookies.get('usernameOrEmail')}/>
             {errMsg && <span className='errMsg'>{errMsg.usernameOrEmail}{errMsg.regExErrUsername}</span>}
             <br/>
             <label>Password:</label>
             <br/>
             <div className='password-effect'>
-              <input id='savePWDSignin' type={type}  onChange={(e) => setPassword(e.target.value)} defaultValue={Cookies.get('password')}/> <FontAwesomeIcon className='icon' onClick={eyePopup} icon={icon}/>
+              <input id='savePWDSignin' type={type}  onChange={(e) => setPassword(e.target.value)} ref={inputPasswordRef} defaultValue={Cookies.get('password')}/> <FontAwesomeIcon className='icon' onClick={eyePopup} icon={icon}/>
             </div>
             {errMsg && <span className='errMsg'>{errMsg.password}{errMsg.regExErrPassword}</span>}
             <br/>

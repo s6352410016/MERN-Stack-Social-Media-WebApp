@@ -6,10 +6,11 @@ import ContentRight from './ContentRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-
+import { useEmailContext } from './ForgotPassword';
 
 const VerifyOTP = () => {
-
+  const value = useEmailContext();
+  console.log(value);
   const [otp , setOTP] = useState('');
   const [errMsg , setErrMsg] = useState('');
 

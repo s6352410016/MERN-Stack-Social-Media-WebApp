@@ -2,11 +2,11 @@ import {BrowserRouter , Routes , Route} from 'react-router-dom';
 import Signin from './components/Signin';
 import Signup from './components/Signup';
 import ForgotPassword from './components/ForgotPassword';
-import VerifyOTP from './components/VerifyOTP';
 import ResetPassword from './components/ResetPassword';
 import PendingSuccess from './components/PendingSuccess';
 import SignupSuccess from './components/SignupSuccess';
 import Media from './components/Media';
+import VerifyOTP from './components/VerifyOTP';
 
 function App() {
   return (
