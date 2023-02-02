@@ -1,18 +1,13 @@
-import React, { useState , useContext , createContext } from 'react';
-import {Link} from 'react-router-dom';
+import React, { useState } from 'react';
+import {Link , useNavigate} from 'react-router-dom';
 import './css/ContentLeft.css';
 import Snowfall from 'react-snowfall';
 import ContentRight from './ContentRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-const EmailContext = createContext();
-
-export function useEmailContext(){
-  return useContext(EmailContext);
-}
-
 const ForgotPassword = () => {
+  const navigate = useNavigate();
   const [email , setEmail] = useState('');
   const [errMsg , setErrMsg] = useState('');
 
@@ -32,7 +27,7 @@ const ForgotPassword = () => {
     }else{
       setErrMsg('');
       inputTextEmail.classList.remove('custom');
-      fetch('http://localhost:5000/checkEmail' , {
+      fetch('https://bynsocial.onrender.com/checkEmail' , {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -44,21 +39,26 @@ const ForgotPassword = () => {
           inputTextEmail.classList.add('custom');
         }else if(res.status === 400){
           inputTextEmail.classList.remove('custom');
-          fetch('http://localhost:5000/sendOTP' , {
+          fetch('https://bynsocial.onrender.com/sendOTP' , {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({email: email})
+            body: JSON.stringify({
+              email: email
+            })
           }).then((res) => {
             if(res.status === 200){
-              window.location.href = '/verifyOTP';
+              navigate('/verifyOTP' , {
+                state: {
+                  email
+                }
+              });
             }
           });
         }
       });
     }
-
   }
 
   return (
@@ -85,5 +85,4 @@ const ForgotPassword = () => {
   );
 }
 
-export { EmailContext }
 export default ForgotPassword;

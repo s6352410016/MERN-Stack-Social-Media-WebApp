@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link , useLocation} from 'react-router-dom';
 import './css/ContentLeft.css';
 import Snowfall from 'react-snowfall';
 import ContentRight from './ContentRight';
@@ -8,7 +8,8 @@ import { faArrowLeft , faEye , faEyeSlash } from '@fortawesome/free-solid-svg-ic
 import { useState } from 'react';
 
 const ResetPassword = () => {
-
+  const {state} = useLocation();
+  const emailFromPrevPage = state.emailFromPrevPage;
   const [newPassword , setNewPassword] = useState('');
   const [confirmNewPassword , setConfirmNewPassword] = useState('');
   const [errMsg , setErrMsg] = useState('');
@@ -74,6 +75,20 @@ const ResetPassword = () => {
       setErrMsg({});
       inputNewPassword.classList.remove('custom');
       inputConfirmNewPassword.classList.remove('custom');
+      fetch('https://bynsocial.onrender.com/resetPassword' , {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: emailFromPrevPage,
+          newPassword: confirmNewPassword
+        })
+      }).then((res) => {
+        if(res.status === 200){
+          window.location.href = '/pendingSuccess';
+        }
+      });
     }
     
   }

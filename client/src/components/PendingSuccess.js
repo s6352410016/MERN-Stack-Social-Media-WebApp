@@ -4,7 +4,7 @@ import './css/ContentLeft.css';
 import Snowfall from 'react-snowfall';
 import ContentRight from './ContentRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft , faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft , faUserCheck } from '@fortawesome/free-solid-svg-icons';
 
 const PendingSuccess = () => {
   return (
@@ -13,10 +13,10 @@ const PendingSuccess = () => {
       <div className='content-left'>
         <div className='container-content'>
           <div className='logo-container'>
-            <FontAwesomeIcon icon={faCircleCheck} className='check-logo'/>  
+            <FontAwesomeIcon icon={faUserCheck} className='check-logo'/>  
           </div>
           <h1>Successfully!</h1>
-          <p>Your password has been successfully reset.</p>
+          <p>Your password has been successfully to reset.</p>
           <p>Click below to sign in page.</p>
           <form>
             <Link to='/' className='button'>Continue</Link>

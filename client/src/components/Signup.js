@@ -383,7 +383,7 @@ const Signup = () => {
         inputPassword.classList.remove('custom');
         inputTextEmail.classList.add('custom');
       }else{
-        fetch('http://localhost:5000/checkUsername' , {
+        fetch('https://bynsocial.onrender.com/checkUsername' , {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -402,7 +402,7 @@ const Signup = () => {
             inputPassword.classList.remove('custom');
             inputTextEmail.classList.remove('custom');
           }else if(res.status === 200){
-            fetch('http://localhost:5000/checkEmail' , {
+            fetch('https://bynsocial.onrender.com/checkEmail' , {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -421,7 +421,7 @@ const Signup = () => {
                 inputPassword.classList.remove('custom');
                 inputTextEmail.classList.add('custom');
               }else if(res.status === 200){
-                fetch('http://localhost:5000/signup' , {
+                fetch('https://bynsocial.onrender.com/signup' , {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json'

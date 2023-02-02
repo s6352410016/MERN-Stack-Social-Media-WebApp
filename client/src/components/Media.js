@@ -6,7 +6,7 @@ const Media = () => {
   const [userData , setUserData] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:5000/authUser' , {
+    fetch('https://bynsocial.onrender.com/authUser' , {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
