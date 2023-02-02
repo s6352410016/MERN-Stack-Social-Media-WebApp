@@ -7,7 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 const ForgotPassword = () => {
+
   const navigate = useNavigate();
+  
   const [email , setEmail] = useState('');
   const [errMsg , setErrMsg] = useState('');
 

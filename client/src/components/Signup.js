@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Link} from 'react-router-dom';
+import {Link , useNavigate} from 'react-router-dom';
 import './css/ContentLeft.css';
 import Snowfall from 'react-snowfall';
 import ContentRight from './ContentRight';
@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye , faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 
 const Signup = () => {
+
+  const navigate = useNavigate();
 
   const [firstName , setFirstName] = useState('');
   const [lastName , setLastName] = useState('');
@@ -439,7 +441,7 @@ const Signup = () => {
                   }
                 }).then((res) => {
                   localStorage.setItem('token' , res.token);
-                  window.location.href = '/signupSuccess';
+                  navigate('/signupSuccess');
                 });
               } 
             });

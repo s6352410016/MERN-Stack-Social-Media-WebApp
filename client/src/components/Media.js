@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Media = () => {
+
+  const navigate = useNavigate();
 
   const [userData , setUserData] = useState('');
 
@@ -14,9 +17,9 @@ const Media = () => {
       }
     }).then((res) => {
       if(res.status === 401){
-        window.location.href = '/';
+        navigate('/');
       }else if(res.status === 403){
-        window.location.href = '/';
+        navigate('/');
       }else{
         return res.json();
       }
@@ -30,7 +33,7 @@ const Media = () => {
 
   const signOut = () => {
     localStorage.removeItem('token');
-    window.location.href = '/';
+    navigate('/');
   }
 
   return (

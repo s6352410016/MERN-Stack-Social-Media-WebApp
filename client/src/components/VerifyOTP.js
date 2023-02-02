@@ -8,9 +8,11 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 
 const VerifyOTP = () => {
+
   const navigate = useNavigate();
   const {state} = useLocation();
   const emailFromPrevPage = state.email;
+  
   const [otp , setOTP] = useState('');
   const [errMsg , setErrMsg] = useState('');
   const [resendOTPMSGSuccess , setResendOTPMSGSuccess] = useState('');

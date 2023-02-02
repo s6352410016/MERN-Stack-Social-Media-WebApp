@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import {Link} from 'react-router-dom';
+import {Link , useNavigate} from 'react-router-dom';
 import './css/ContentLeft.css';
 import Snowfall from 'react-snowfall';
 import ContentRight from './ContentRight';
@@ -9,6 +9,9 @@ import { faEye , faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Cookies from 'js-cookie';
 
 const Signin = () => {
+
+  const navigate = useNavigate();
+  
   const inputTextRef = useRef();
   const inputPasswordRef = useRef();
 
@@ -100,7 +103,7 @@ const Signin = () => {
           }
         }).then((res) => {
           localStorage.setItem('token' , res.token);
-          window.location.href = '/media';
+          navigate('/media');
         });
       }
     } 

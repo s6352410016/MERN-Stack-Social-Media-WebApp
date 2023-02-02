@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link , useLocation} from 'react-router-dom';
+import {Link , useLocation , useNavigate} from 'react-router-dom';
 import './css/ContentLeft.css';
 import Snowfall from 'react-snowfall';
 import ContentRight from './ContentRight';
@@ -8,8 +8,11 @@ import { faArrowLeft , faEye , faEyeSlash } from '@fortawesome/free-solid-svg-ic
 import { useState } from 'react';
 
 const ResetPassword = () => {
+
+  const navigate = useNavigate();
   const {state} = useLocation();
   const emailFromPrevPage = state.emailFromPrevPage;
+  
   const [newPassword , setNewPassword] = useState('');
   const [confirmNewPassword , setConfirmNewPassword] = useState('');
   const [errMsg , setErrMsg] = useState('');
@@ -86,7 +89,7 @@ const ResetPassword = () => {
         })
       }).then((res) => {
         if(res.status === 200){
-          window.location.href = '/pendingSuccess';
+          navigate('/pendingSuccess');
         }
       });
     }
