@@ -141,7 +141,7 @@ const Signin = () => {
             <br/>
             <div className='center-content'>
               <div>
-                <input type='checkbox' id='saveSignin'/> <span>Remember me</span>
+                <input type='checkbox' id='saveSignin' defaultChecked/> <span>Remember me</span>
               </div>
               <div>
                 <Link to='/forgotPassword' className='forgotPassword'>Forgot password</Link>
