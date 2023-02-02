@@ -72,7 +72,7 @@ const VerifyOTP = () => {
         return res.json();
       }).then((res) => {
         if(res.msg === 'Invalid email address.'){
-          setErrMsg('Invalid email address.');
+          setErrMsg('Invalid otp.');
           inputTextOTP.classList.add('custom');
         }else if(res.msg === 'OTP has expire.'){
           setErrMsg('OTP has expire.');
