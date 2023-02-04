@@ -1,15 +1,63 @@
 import React, { useEffect } from 'react';
-import { useState } from 'react';
+import { useState , useRef } from 'react';
 import { useNavigate , Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass , faBell , faComment , faGear , faAddressCard , faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass , faBell , faComment , faCaretDown , faUserPen , faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import './css/MediaPage.css';
+import Notification from './Notification';
 
 const Media = () => {
 
   const navigate = useNavigate();
 
   const [userData , setUserData] = useState('');
+  const [openMenus , setOpenMenus] = useState(false);
+  const [openNotifications , setOpenNotifications] = useState(false);
+
+  const dataUserNotification = [
+    {
+      image: require('../images/notificationImages/user1.png'),
+      username: 'Bell bunlung',
+      userContent: 'Create a new post now.',
+      modifyDate: '4 week ago.'
+    },
+    {
+      image: require('../images/notificationImages/user2.png'),
+      username: 'Prayut Chan O Cha',
+      userContent: 'Create a new post now.',
+      modifyDate: '1 minute ago.'
+    },
+    {
+      image: require('../images/notificationImages/user3.png'),
+      username: 'บัลลังก์ มาเอี่ยม',
+      userContent: 'like your post.',
+      modifyDate: '10 minutes ago.'
+    },
+    {
+      image: require('../images/notificationImages/user3.png'),
+      username: 'บัลลังก์ มาเอี่ยม',
+      userContent: 'like your post.',
+      modifyDate: '10 minutes ago.'
+    },
+    {
+      image: require('../images/notificationImages/user3.png'),
+      username: 'บัลลังก์ มาเอี่ยม',
+      userContent: 'like your post.',
+      modifyDate: '10 minutes ago.'
+    },
+    {
+      image: require('../images/notificationImages/user3.png'),
+      username: 'บัลลังก์ มาเอี่ยม',
+      userContent: 'like your post.',
+      modifyDate: '10 minutes ago.'
+    },
+    {
+      image: require('../images/notificationImages/user3.png'),
+      username: 'บัลลังก์ มาเอี่ยม',
+      userContent: 'like your post.',
+      modifyDate: '10 minutes ago.'
+    },
+  ];
 
   useEffect(() => {
     fetch('https://bynsocial.onrender.com/authUser' , {
@@ -34,23 +82,33 @@ const Media = () => {
     });
   } , []);
 
+  const dropdownPopup = () => {
+    setOpenMenus(!openMenus);
+    const closePopup = document.getElementById('close-popup');
+    closePopup.classList.add('close-popup');
+  }
+
+  const notificationPopup = () => {
+    setOpenNotifications(!openNotifications);
+    const closePopup = document.getElementById('close-popup');
+    closePopup.classList.add('close-popup');
+  }
+
+  const closeDropdown = () => {
+    setOpenMenus(false);
+    setOpenNotifications(false);
+    const closePopup = document.getElementById('close-popup');
+    closePopup.classList.remove('close-popup');
+  }
+
   const signOut = () => {
     localStorage.removeItem('token');
     navigate('/');
   }
 
-  const optionsPopup = () => {
-    const optionsPopup = document.querySelector('.dropdown-menu-settings');
-    optionsPopup.classList.toggle('options-popup');
-  }
-
-  // const removePopup = () => {
-  //   const optionsPopup = document.querySelector('.dropdown-menu-settings');
-  //   optionsPopup.classList.remove('options-popup');
-  // }
-
   return (
     <div className='container-media-page'>
+      <div id='close-popup' onClick={closeDropdown}></div>
       <header className='container-header'>
         <div className='content-left-header'>
           <Link to='/media' className='text-decoration-none'><h2 className='logo-header'>BYN</h2></Link>
@@ -62,28 +120,42 @@ const Media = () => {
           </div>
         </div>
         <div className='content-right-header'>
-          <ul className='options-in-media-page'>
-            <li className='container-options'>
-              <div className='alert-options'></div>
-              <FontAwesomeIcon className='option-font-style bell' icon={faBell}/>              
-            </li>
-            <li className='container-options'>
-              <div className='alert-options'></div>
-              <FontAwesomeIcon className='option-font-style message' icon={faComment}/>              
-            </li>
-            <li className='container-options position-relative'  onClick={optionsPopup}>
-              <div className='alert-options'></div>
-              <FontAwesomeIcon className='option-font-style gear' icon={faGear}/>
-              <ul className='dropdown-menu-settings'>
-                <li className='dropdown-menu-lists'>
-                  <FontAwesomeIcon icon={faAddressCard}/>&nbsp;&nbsp;&nbsp;Profile
-                </li>
-                <li className='dropdown-menu-lists' onClick={signOut}>
-                  <FontAwesomeIcon icon={faArrowRightFromBracket}/>&nbsp;&nbsp;&nbsp;SignOut
-                </li>
-              </ul>              
-            </li>
-          </ul>
+          <div className='container-icons' id='notification-id' onClick={notificationPopup}>
+            <div className='alert-red-circle'></div>
+            <FontAwesomeIcon className='icons-in-content-right-header' icon={faBell}/>
+            {openNotifications &&
+              <div className='notification-popup'>
+                <div className='notification-header'>
+                  <p className='p-notification-header'>Notification</p>
+                </div>
+                <hr style={{width: '100%' , height: '2px' , color: '#353535' , margin: '0'}}/>
+                <div className='notification-body'>
+                  {dataUserNotification.map((e) => (
+                    <Notification image={e.image} username={e.username} userContent={e.userContent} modifyDate={e.modifyDate}/>
+                  ))
+                  }
+                  {dataUserNotification.length === 0 && <p className='no-notification'>No notification at this time.</p>}
+                </div>
+              </div>
+            }
+          </div>
+          <div className='container-icons'>
+            <div className='alert-red-circle'></div>
+            <FontAwesomeIcon className='icons-in-content-right-header' icon={faComment}/>
+          </div>
+          <div className='container-icons' id='dropdown-menus-id' onClick={dropdownPopup}>
+            <FontAwesomeIcon className='icons-in-content-right-header fix-icon' icon={faCaretDown}/>
+            {openMenus && 
+              <div className='dropdown-menus-class'>
+                <div className='menus-in-dropdown'>
+                  <FontAwesomeIcon className='icons-in-dropdown' icon={faUserPen}/>&nbsp;&nbsp;<span className='text-in-dropdown'>Edit profile</span>
+                </div>
+                <div className='menus-in-dropdown' onClick={signOut}>
+                  <FontAwesomeIcon className='icons-in-dropdown' icon={faArrowRightFromBracket}/>&nbsp;&nbsp;<span className='text-in-dropdown'>Signout</span>
+                </div>
+              </div>
+            }
+          </div>
         </div>
       </header>
     </div>
