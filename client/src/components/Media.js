@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { useState , useRef } from 'react';
 import { useNavigate , Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass , faBell , faComment , faCaretDown , faUserPen , faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass , faBell , faComment , faChevronDown , faUserPen , faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import './css/MediaPage.css';
 import Notification from './Notification';
+import SearchResult from './SearchResult';
 
 const Media = () => {
 
@@ -13,7 +14,7 @@ const Media = () => {
   const [userData , setUserData] = useState('');
   const [openMenus , setOpenMenus] = useState(false);
   const [openNotifications , setOpenNotifications] = useState(false);
-
+  
   const dataUserNotification = [
     {
       image: require('../images/notificationImages/user1.png'),
@@ -117,6 +118,9 @@ const Media = () => {
           <div className='container-input-header'>
             <FontAwesomeIcon className='icon-search-input' icon={faMagnifyingGlass}/>&nbsp;&nbsp;
             <input className='search-people' type='text' placeholder='Search people'/>
+            <div className='search-result'>
+              <SearchResult/>
+            </div>
           </div>
         </div>
         <div className='content-right-header'>
@@ -129,11 +133,10 @@ const Media = () => {
                   <p className='p-notification-header'>Notification</p>
                 </div>
                 <hr style={{width: '100%' , height: '2px' , color: '#353535' , margin: '0'}}/>
-                <div className='notification-body'>
-                  {dataUserNotification.map((e) => (
-                    <Notification image={e.image} username={e.username} userContent={e.userContent} modifyDate={e.modifyDate}/>
-                  ))
-                  }
+                <div className='notification-body' style={dataUserNotification.length === 1 ? {height: '100px'} : dataUserNotification.length === 2 ? {height: '200px'} : dataUserNotification.length === 3 ? {height: '300px'} : dataUserNotification.length === 4 ? {height: '400px'} : dataUserNotification.length > 4 ? {height: '400px'} : {height: 'auto'}}>
+                  {dataUserNotification.map((e , index) => (
+                    <Notification key={index} image={e.image} username={e.username} userContent={e.userContent} modifyDate={e.modifyDate}/>
+                  ))}
                   {dataUserNotification.length === 0 && <p className='no-notification'>No notification at this time.</p>}
                 </div>
               </div>
@@ -144,7 +147,7 @@ const Media = () => {
             <FontAwesomeIcon className='icons-in-content-right-header' icon={faComment}/>
           </div>
           <div className='container-icons' id='dropdown-menus-id' onClick={dropdownPopup}>
-            <FontAwesomeIcon className='icons-in-content-right-header fix-icon' icon={faCaretDown}/>
+            <FontAwesomeIcon className='icons-in-content-right-header fix-icon' icon={faChevronDown}/>
             {openMenus && 
               <div className='dropdown-menus-class'>
                 <div className='menus-in-dropdown'>
