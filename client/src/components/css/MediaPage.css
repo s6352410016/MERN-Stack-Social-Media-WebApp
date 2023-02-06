@@ -318,16 +318,17 @@
 
 .search-result{
     position: absolute;
-    top: 132%;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 400px;
-    height: 200px;
+    top: 100%;
+    width: 100%;
+    height: auto;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px #cacaca;
-    padding: 10px !important;
+}
+
+.serach-result-text-decoration-none{
+    display: block;
+    margin: 10px;
 }
 
 .search-result-container{
@@ -346,7 +347,7 @@
 }
 
 .search-result-image-user{
-    width: 20%;
+    width: 15%;
     height: 100%;
     display: flex;
     justify-content: flex-start;
@@ -371,10 +372,11 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    width: 80%;
+    width: 85%;
     height: 100%;
     color: #353535;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 .search-fullname-user{
@@ -383,4 +385,19 @@
 
 .serach-result-text-decoration-none{
     text-decoration: none;
+}
+
+.no-search-result-container{
+    width: 100%;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-search-result{
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    color: #353535;
+    font-size: 1rem;
 }

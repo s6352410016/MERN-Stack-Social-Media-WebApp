@@ -14,6 +14,8 @@ const Media = () => {
   const [userData , setUserData] = useState('');
   const [openMenus , setOpenMenus] = useState(false);
   const [openNotifications , setOpenNotifications] = useState(false);
+  const [openSearchResult , setOpenSearchResult] = useState(false);
+  const [searchResult , setSearchResult] = useState('');
   
   const dataUserNotification = [
     {
@@ -60,6 +62,21 @@ const Media = () => {
     },
   ];
 
+  const dataUserSearchResult = [
+    {
+      image: require('../images/notificationImages/user1.png'),
+      fullname: 'Bell bunlung'
+    },
+    {
+      image: require('../images/notificationImages/user2.png'),
+      fullname: 'Prayut Chan O Cha'
+    },
+    {
+      image: require('../images/notificationImages/user3.png'),
+      fullname: 'บัลลังก์ มาเอี่ยม'
+    }
+  ];
+
   useEffect(() => {
     fetch('https://bynsocial.onrender.com/authUser' , {
       method: 'GET',
@@ -85,12 +102,24 @@ const Media = () => {
 
   const dropdownPopup = () => {
     setOpenMenus(!openMenus);
+    setOpenNotifications(false);
+    setOpenSearchResult(false);
     const closePopup = document.getElementById('close-popup');
     closePopup.classList.add('close-popup');
   }
 
   const notificationPopup = () => {
     setOpenNotifications(!openNotifications);
+    setOpenMenus(false);
+    setOpenSearchResult(false);
+    const closePopup = document.getElementById('close-popup');
+    closePopup.classList.add('close-popup');
+  }
+
+  const SearchResultPopup = () => {
+    setOpenSearchResult(!openSearchResult);
+    setOpenMenus(false);
+    setOpenNotifications(false);
     const closePopup = document.getElementById('close-popup');
     closePopup.classList.add('close-popup');
   }
@@ -98,6 +127,7 @@ const Media = () => {
   const closeDropdown = () => {
     setOpenMenus(false);
     setOpenNotifications(false);
+    setOpenSearchResult(false);
     const closePopup = document.getElementById('close-popup');
     closePopup.classList.remove('close-popup');
   }
@@ -115,12 +145,19 @@ const Media = () => {
           <Link to='/media' className='text-decoration-none'><h2 className='logo-header'>BYN</h2></Link>
         </div>
         <div className='content-center-header'>
-          <div className='container-input-header'>
+          <div className='container-input-header' onClick={SearchResultPopup}>
             <FontAwesomeIcon className='icon-search-input' icon={faMagnifyingGlass}/>&nbsp;&nbsp;
-            <input className='search-people' type='text' placeholder='Search people'/>
-            <div className='search-result'>
-              <SearchResult/>
-            </div>
+            <input className='search-people' type='text' placeholder='Search people' onChange={(e) => setSearchResult(e.target.value)}/>
+            {openSearchResult && 
+              <div className='search-result'>
+                {dataUserSearchResult.filter((e) => {
+                  return searchResult !== '' && e.fullname.toLowerCase().includes(searchResult.toLowerCase());          
+                }).map((e , index) => (
+                  <SearchResult key={index} image={e.image} fullname={e.fullname}/>
+                ))}
+                {searchResult === '' && <div className='no-search-result-container'><p className='no-search-result'>Users not found.</p></div>}
+              </div>
+            }
           </div>
         </div>
         <div className='content-right-header'>
