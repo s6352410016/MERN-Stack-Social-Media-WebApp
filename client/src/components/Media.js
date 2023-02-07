@@ -198,6 +198,45 @@ const Media = () => {
           </div>
         </div>
       </header>
+      <div className='container-body-in-media-page'>
+        <div className='content-left-in-body'>
+          <div className='container-profile-user-in-body'>
+            <div className='image-background-user'>
+              <img src='https://cdn.pixabay.com/photo/2022/06/20/17/17/mountain-7274247_640.jpg' alt='backgroundImageUser'/>
+            </div>
+            <div className='image-profile-user-in-body'>
+              <img src='https://wallpapers.com/images/featured/4co57dtwk64fb7lv.jpg' alt='imageProfileUser'/>
+            </div>
+            <div className='fullname-and-info-user-in-body'>
+              <b>{userData.firstname} {userData.lastname}</b>
+              <p>Backend Developer</p>
+              <span className='border-bottom-in-fullname-and-info-user-in-body'></span>
+            </div>
+            <div className='status-user-in-body'>
+              <div className='followings'>
+                <b>125</b>
+                <p>Followings</p>
+              </div>
+              <div className='followers'>
+                <b>7,125</b>
+                <p>Followers</p>
+              </div>
+              <div className='posts'>
+                <b>5</b>
+                <p>Posts</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='content-center-in-body'>
+          <div className='container-center-in-body'>
+            <h2>Center</h2>
+          </div>
+        </div>
+        <div className='content-right-in-body'>
+          <h2>Right</h2>
+        </div>
+      </div>
     </div>
   );
 }
