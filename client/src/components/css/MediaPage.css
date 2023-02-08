@@ -561,7 +561,146 @@
 
 .create-post-container{
     width: 100%;
-    height: 100px;
+    height: 140px;
     background-color: #fff;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem !important;
+}
+
+.container-post-content{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.link-to-profile-post{
+    height: 100%;
+}
+
+.box-of-user-profile-img{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-user-profile-img{
+    width: 60px;
+    height: 60px;
+    border: 2rem;
+    overflow: hidden;
+}
+
+.container-user-profile-img img{
+    width: 100%;
+    height: 100%;
+}
+
+.container-input-post{
+    flex-grow: 1;
+    height: 90%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 2rem;
+    overflow: hidden;
+    background-color: #F5F6F7;
+    padding: 10px 15px !important;
+    transition: .2s;
+}
+
+.container-input-post:hover{
+    background-color: #f2f2f2;
+}
+
+.container-input-post input{
+    border: none;
+    outline: none;
+    width: 100%;
+    color: #353535;
+    font-size: 1.1rem;
+    background: none;
+}
+
+.container-icons-post{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.image-upload-icon , .video-upload-icon{
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.image-upload-icon p , .video-upload-icon p{
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+.image-upload-icon p{
+    color: #57CB6E;
+}
+
+.video-upload-icon p{
+    color: #BB34D3;
+}
+
+.display-none-input-file{
+    display: none;
+}
+
+.style-icon-post{
+    font-size: 1.9rem;
+    cursor: pointer;
+}
+
+#color-icon-image{
+    color: #57CB6E;
+}
+
+#color-icon-video{
+    color: #BB34D3;
+}
+
+.post-button-container{
+    border-radius: 10px;
+    overflow: hidden;
+    width: 20%;
+    height: 100%;
+}
+
+.post-button-container button{
+    border: none;
+    background: none;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right, #00c6ff 0%, #0072ff 51%, #00c6ff 100%);
+    background-size: 200% auto;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: .5s;
+}
+
+.post-button-container button:hover{
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
 }
