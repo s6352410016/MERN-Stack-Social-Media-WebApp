@@ -22,7 +22,8 @@
 
 .container-header{
     height: 7vh;
-    background: linear-gradient(to right, #00c6ff 0%, #0072ff  51%, #00c6ff  100%);
+    background-image: linear-gradient(to right, #00c6ff 0%, #0072ff  51%, #00c6ff  100%);
+    background-size: 200% auto;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -215,7 +216,7 @@
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px #cacaca;
-    padding: 5px 1rem 1rem 1rem !important;
+    padding: 5px 1rem 5px 1rem !important;
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -245,11 +246,11 @@
 
 .notification-body::-webkit-scrollbar-thumb{
     border-radius: 1rem;
-    background-color: rgba(0, 0, 0, .4);
+    background-color: rgba(0, 0, 0, .2);
 }
 
 .notification-body::-webkit-scrollbar-thumb:hover{
-    background-color: rgba(0, 0, 0, .5);
+    background-color: rgba(0, 0, 0, .3);
 }
 
 .notification-users-container{
@@ -312,7 +313,7 @@
 
 .no-notification{
     margin-bottom: 0;
-    margin-top: 1rem;
+    margin: 10px 0;
     color: #353535;
 }
 
@@ -409,7 +410,7 @@
 }
 
 .content-left-in-body , .content-right-in-body{
-    width: 23%;
+    width: 25%;
     height: 100%;
     padding: 1rem !important;
 }
@@ -420,94 +421,147 @@
     padding: 1rem 0 !important;
 }
 
-.content-left-in-body{
+.container-left-in-body{
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-}
-
-.container-profile-user-in-body{
-    width: 100%;
-    height: 40%;
     background-color: #fff;
-    border-radius: 1.5rem;
-    overflow: hidden;
-    position: relative;
-    box-shadow:  0 0 10px #cacaca;
+    border-radius: 10px;
+    padding: 1rem 1rem 10px 1rem !important;
 }
 
-.image-background-user{
-    width: 100%;
-    height: 100px;
-}
-
-.image-background-user img{
-    width: 100%;
-    height: 100%;
-}
-
-.image-profile-user-in-body{
-    width: 100px;
-    height: 100px;
-    border-radius: 3.5rem;
-    overflow: hidden;
-    position: absolute;
-    top: 15%;
-    left: 50%;
-    transform: translateX(-50%);
-    box-shadow: 0 0 10px #cacaca;
-}
-
-.image-profile-user-in-body img{
-    width: 100%;
-    height: 100%;
-}
-
-.fullname-and-info-user-in-body{
-    width: 100%;
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 3rem !important;
-    color: #353535;
+.header-text-people-you-may-know{
     font-size: 1.1rem;
+    font-weight: bold;
+    color: #353535;
+    text-transform: capitalize;
 }
 
-.border-bottom-in-fullname-and-info-user-in-body{
-    width: 1px;
-    height: 1px;
-    width: 85%;
-    background-color: #A9A9A9;
-    margin-top: 10px;
-}
-
-.status-user-in-body{
+.border-top-people-you-may-know{
     width: 100%;
-    height: 100px;
+    height: 1px;
+    background-color: #606770;
+    opacity: .5;
+    margin-bottom: 5px;
+}
+
+.overflow-auto-caontainer-fix{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.container-people-you-may-know{
+    width: 100%;
+    height: 85px;
+    border-radius: 1.5rem;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    margin: 5px 0;
+    cursor: pointer;
 }
 
-.followings , .followers , .posts{
+.container-people-you-may-know:hover{
+    background-color: #F3F3F3;
+}
+
+.container-image-people-you-may-know{
+    width: 100%;
+    height: 100%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 33%;
-    height: 80%;
+}
+
+.img-container-people-you-may-know{
+    width: 60px;
+    height: 60px;
+    border-radius: 3.5rem;
+    overflow: hidden;
+}
+
+.img-container-people-you-may-know img{
+    width: 100%;
+    height: 100%;
+}
+
+.container-fullname-people-you-may-know{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-fullname-people-you-may-know b{
     color: #353535;
     font-size: 1rem;
-}
-
-.followings , .followers{
-    border-right: 1px solid #A9A9A9;
-}
-
-.container-center-in-body{
     width: 100%;
-    height: 500px;
+    text-align: start;
+    padding-left: 10px !important;
+}
+
+.container-button-follow-people-you-may-know{
+    flex-grow: 1;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-button-follow-people-you-may-know button{
+    width: 80%;
+    height: 35px;
+    border: none;
+    background-image: linear-gradient(to right, #00c6ff 0%, #0072ff  51%, #00c6ff  100%);
+    background-size: 200% auto;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 1rem;
+    transition: .5s;
+    font-weight: 500;
+}
+
+.container-button-follow-people-you-may-know button:hover{
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
+}
+
+.text-decoration-none-in-container-people-you-may-know{
+    text-decoration: none;
+    height: 100%;
+}
+
+#fix-container-img{
+    width: 20%;
+}
+
+#fix-container-fullname{
+    width: 50%;
+}
+
+.overflow-auto-caontainer-fix::-webkit-scrollbar{
+    width: 5px;
+}
+
+.overflow-auto-caontainer-fix::-webkit-scrollbar-thumb{
+    border-radius: 1rem;
+    background-color: rgba(0, 0, 0, .2);
+}
+
+.overflow-auto-caontainer-fix::-webkit-scrollbar-thumb:hover{
+    background-color: rgba(0, 0, 0, .3);
+}
+
+.create-post-container{
+    width: 100%;
+    height: 100px;
+    background-color: #fff;
+    border-radius: 10px;
 }

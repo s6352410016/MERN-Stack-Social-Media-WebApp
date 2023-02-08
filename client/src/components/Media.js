@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { useState , useRef } from 'react';
 import { useNavigate , Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass , faBell , faComment , faChevronDown , faUserPen , faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass , faBell , faComment , faChevronDown , faUserPen , faArrowRightFromBracket , faImage , faCirclePlay} from '@fortawesome/free-solid-svg-icons';
 import './css/MediaPage.css';
 import Notification from './Notification';
 import SearchResult from './SearchResult';
+import PeopleYouMayKnow from './PeopleYouMayKnow';
 
 const Media = () => {
 
@@ -19,62 +20,110 @@ const Media = () => {
   
   const dataUserNotification = [
     {
-      image: require('../images/notificationImages/user1.png'),
+      image: require('../images/allUserProfileImg/user1.png'),
       username: 'Bell bunlung',
       userContent: 'Create a new post now.',
       modifyDate: '4 week ago.'
     },
     {
-      image: require('../images/notificationImages/user2.png'),
+      image: require('../images/allUserProfileImg/user2.png'),
       username: 'Prayut Chan O Cha',
       userContent: 'Create a new post now.',
       modifyDate: '1 minute ago.'
     },
     {
-      image: require('../images/notificationImages/user3.png'),
+      image: require('../images/allUserProfileImg/user3.png'),
       username: 'บัลลังก์ มาเอี่ยม',
       userContent: 'like your post.',
       modifyDate: '10 minutes ago.'
     },
     {
-      image: require('../images/notificationImages/user3.png'),
-      username: 'บัลลังก์ มาเอี่ยม',
+      image: require('../images/allUserProfileImg/user4.png'),
+      username: 'มากมี ศรีสุข',
       userContent: 'like your post.',
       modifyDate: '10 minutes ago.'
     },
     {
-      image: require('../images/notificationImages/user3.png'),
-      username: 'บัลลังก์ มาเอี่ยม',
+      image: require('../images/allUserProfileImg/user5.png'),
+      username: 'ดวงใจ มากมาย',
       userContent: 'like your post.',
       modifyDate: '10 minutes ago.'
     },
     {
-      image: require('../images/notificationImages/user3.png'),
-      username: 'บัลลังก์ มาเอี่ยม',
+      image: require('../images/allUserProfileImg/user6.png'),
+      username: 'สมพร ดวงดี',
       userContent: 'like your post.',
       modifyDate: '10 minutes ago.'
     },
     {
-      image: require('../images/notificationImages/user3.png'),
-      username: 'บัลลังก์ มาเอี่ยม',
+      image: require('../images/allUserProfileImg/user7.png'),
+      username: 'สมหมาย ใจงาม',
       userContent: 'like your post.',
       modifyDate: '10 minutes ago.'
     },
   ];
 
-  const dataUserSearchResult = [
+  const dataForUser = [
     {
-      image: require('../images/notificationImages/user1.png'),
+      image: require('../images/allUserProfileImg/user1.png'),
       fullname: 'Bell bunlung'
     },
     {
-      image: require('../images/notificationImages/user2.png'),
+      image: require('../images/allUserProfileImg/user2.png'),
       fullname: 'Prayut Chan O Cha'
     },
     {
-      image: require('../images/notificationImages/user3.png'),
+      image: require('../images/allUserProfileImg/user3.png'),
       fullname: 'บัลลังก์ มาเอี่ยม'
-    }
+    },
+    {
+      image: require('../images/allUserProfileImg/user4.png'),
+      fullname: 'มากมี ศรีสุข'
+    },
+    {
+      image: require('../images/allUserProfileImg/user5.png'),
+      fullname: 'ดวงใจ มากมาย'
+    },
+    {
+      image: require('../images/allUserProfileImg/user6.png'),
+      fullname: 'สมพร ดวงดี'
+    },
+    {
+      image: require('../images/allUserProfileImg/user7.png'),
+      fullname: 'สมหมาย ใจงาม'
+    },
+    {
+      image: require('../images/allUserProfileImg/user8.png'),
+      fullname: 'สมคิด จิตสงบ'
+    },
+    {
+      image: require('../images/allUserProfileImg/user9.png'),
+      fullname: 'บุญมี มากล้น'
+    },
+    {
+      image: require('../images/allUserProfileImg/user10.png'),
+      fullname: 'บุญงาม พอแล้ว'
+    },
+    {
+      image: require('../images/allUserProfileImg/user11.png'),
+      fullname: 'สมควร รวยมาก'
+    },
+    {
+      image: require('../images/allUserProfileImg/user12.png'),
+      fullname: 'สมจิตร จงจอหอ'
+    },
+    {
+      image: require('../images/allUserProfileImg/user13.png'),
+      fullname: 'พอดี พอแล้ว'
+    },
+    {
+      image: require('../images/allUserProfileImg/user14.png'),
+      fullname: 'Mark Sukkerberg'
+    },
+    {
+      image: require('../images/allUserProfileImg/user15.png'),
+      fullname: 'Elon Mask'
+    },
   ];
 
   useEffect(() => {
@@ -150,7 +199,7 @@ const Media = () => {
             <input className='search-people' type='text' placeholder='Search people' onChange={(e) => setSearchResult(e.target.value)}/>
             {openSearchResult && 
               <div className='search-result'>
-                {dataUserSearchResult.filter((e) => {
+                {dataForUser.filter((e) => {
                   return searchResult !== '' && e.fullname.toLowerCase().includes(searchResult.toLowerCase());          
                 }).map((e , index) => (
                   <SearchResult key={index} image={e.image} fullname={e.fullname}/>
@@ -200,37 +249,45 @@ const Media = () => {
       </header>
       <div className='container-body-in-media-page'>
         <div className='content-left-in-body'>
-          <div className='container-profile-user-in-body'>
-            <div className='image-background-user'>
-              <img src='https://cdn.pixabay.com/photo/2022/06/20/17/17/mountain-7274247_640.jpg' alt='backgroundImageUser'/>
-            </div>
-            <div className='image-profile-user-in-body'>
-              <img src='https://wallpapers.com/images/featured/4co57dtwk64fb7lv.jpg' alt='imageProfileUser'/>
-            </div>
-            <div className='fullname-and-info-user-in-body'>
-              <b>{userData.firstname} {userData.lastname}</b>
-              <p>Backend Developer</p>
-              <span className='border-bottom-in-fullname-and-info-user-in-body'></span>
-            </div>
-            <div className='status-user-in-body'>
-              <div className='followings'>
-                <b>125</b>
-                <p>Followings</p>
-              </div>
-              <div className='followers'>
-                <b>7,125</b>
-                <p>Followers</p>
-              </div>
-              <div className='posts'>
-                <b>5</b>
-                <p>Posts</p>
-              </div>
-            </div>
+          <div className='container-left-in-body'>
+            <p className='header-text-people-you-may-know'>People you may know</p>
+            <div className='border-top-people-you-may-know'></div>
+              <div className='overflow-auto-caontainer-fix'>
+                {dataForUser.map((e , index) => (
+                  <PeopleYouMayKnow key={index} image={e.image} fullname={e.fullname}/>
+                ))}
+              </div>    
           </div>
         </div>
         <div className='content-center-in-body'>
-          <div className='container-center-in-body'>
-            <h2>Center</h2>
+          <div className='create-post-container'>
+            <div className='container-post-content'>
+              <div className='box-of-user-profile-img'>
+                <div className='container-user-profile-img'>
+                  <img src={require('../images/allUserProfileImg/user1.png')}/>
+                </div>
+              </div>
+              <div className='container-input-post'>
+                <input type='text' placeholder="what's happening"/>
+              </div>
+            </div>
+            <div className='container-icons-post'>
+              <div className='image-upload-icon'>
+                <label for='image'>
+                  <FontAwesomeIcon icon={faImage}/>
+                  <input type='file' id='image'/> 
+                </label>
+              </div>
+              <div className='video-upload-icon'>
+                <label for='video'>
+                  <FontAwesomeIcon icon={faCirclePlay}/>
+                  <input type='file' id='video'/> 
+                </label>
+              </div>
+              <div className='post-button-container'>
+                <button>Post</button>
+              </div>
+            </div>
           </div>
         </div>
         <div className='content-right-in-body'>
