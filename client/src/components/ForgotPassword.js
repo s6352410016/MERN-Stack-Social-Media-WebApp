@@ -50,11 +50,13 @@ const ForgotPassword = () => {
               email: email
             })
           }).then((res) => {
-            navigate('/verifyOTP' , {
-              state: {
-                email
-              }
-            });
+            if(res.status === 200){
+              navigate('/verifyOTP' , {
+                state: {
+                  email
+                }
+              });
+            }
           });
         }
       });
