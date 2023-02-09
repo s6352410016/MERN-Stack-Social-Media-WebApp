@@ -191,7 +191,7 @@ const Media = () => {
       <div id='close-popup' onClick={closeDropdown}></div>
       <header className='container-header'>
         <div className='content-left-header'>
-          <Link to='/media' className='text-decoration-none'><h2 className='logo-header'>BYN</h2></Link>
+          <Link to='/media' className='text-decoration-none'><h2 className='logo-header'>BYNSocial</h2></Link>
         </div>
         <div className='content-center-header'>
           <div className='container-input-header' onClick={SearchResultPopup}>
@@ -249,53 +249,58 @@ const Media = () => {
       </header>
       <div className='container-body-in-media-page'>
         <div className='content-left-in-body'>
-          <div className='container-left-in-body'>
-            <p className='header-text-people-you-may-know'>People you may know</p>
-            <div className='border-top-people-you-may-know'></div>
-              <div className='overflow-auto-caontainer-fix'>
-                {dataForUser.map((e , index) => (
-                  <PeopleYouMayKnow key={index} image={e.image} fullname={e.fullname}/>
-                ))}
-              </div>    
+          <div className='fix-container-content-left-in-body'>
+            <div className='container-left-in-body'>
+              <p className='header-text-people-you-may-know'>People you may know</p>
+              <div className='border-top-people-you-may-know'></div>
+                <div className='overflow-auto-caontainer-fix'>
+                  {dataForUser.map((e , index) => (
+                    <PeopleYouMayKnow key={index} image={e.image} fullname={e.fullname}/>
+                  ))}
+                </div>    
+            </div>
           </div>
         </div>
         <div className='content-center-in-body'>
-          <div className='create-post-container'>
-            <div className='container-post-content'>
-              <Link to='/profile' className='link-to-profile-post'>
-                <div className='box-of-user-profile-img'>
-                  <div className='container-user-profile-img'>
-                    <img src={require('../images/allUserProfileImg/user1.png')}/>
+          <div className='container-content-center-in-body'>
+            <div className='create-post-container'>
+              <div className='container-post-content'>
+                <Link to='/profile' className='link-to-profile-post'>
+                  <div className='box-of-user-profile-img'>
+                    <div className='container-user-profile-img'>
+                      <img src={require('../images/allUserProfileImg/user1.png')}/>
+                    </div>
                   </div>
+                </Link>
+                <div className='container-input-post'>
+                  <input type='text' placeholder="what's happening"/>
                 </div>
-              </Link>
-              <div className='container-input-post'>
-                <input type='text' placeholder="what's happening"/>
               </div>
-            </div>
-            <div className='container-icons-post'>
-              <div className='image-upload-icon'>
-                <label for='image'>
-                  <FontAwesomeIcon icon={faImage} className='style-icon-post' id='color-icon-image'/>
-                  <input type='file' id='image' className='display-none-input-file'/> 
-                </label>
-                <p>Photo</p>
-              </div>
-              <div className='video-upload-icon'>
-                <label for='video'>
-                  <FontAwesomeIcon icon={faCirclePlay} className='style-icon-post' id='color-icon-video'/>
-                  <input type='file' id='video' className='display-none-input-file'/> 
-                </label>
-                <p>Video</p>
-              </div>
-              <div className='post-button-container'>
-                <button>Post</button>
+              <div className='container-icons-post'>
+                <div className='image-upload-icon'>
+                  <label for='image'>
+                    <FontAwesomeIcon icon={faImage} className='style-icon-post' id='color-icon-image'/>
+                    <input type='file' id='image' className='display-none-input-file'/> 
+                  </label>
+                  <p>Photo</p>
+                </div>
+                <div className='video-upload-icon'>
+                  <label for='video'>
+                    <FontAwesomeIcon icon={faCirclePlay} className='style-icon-post' id='color-icon-video'/>
+                    <input type='file' id='video' className='display-none-input-file'/> 
+                  </label>
+                  <p>Video</p>
+                </div>
+                <div className='post-button-container'>
+                  <button>Post</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div className='content-right-in-body'>
-          <h2>Right</h2>
+          <div className='container-content-right-in-body'>
+          </div>
         </div>
       </div>
     </div>

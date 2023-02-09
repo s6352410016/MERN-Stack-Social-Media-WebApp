@@ -9,7 +9,7 @@
 .container-media-page{
     min-width: 100vw;
     min-height: 100vh;
-    background-color: #F5F6F7;
+    background-color: #f5f6f7;
     position: relative;
 }
 
@@ -22,8 +22,7 @@
 
 .container-header{
     height: 7vh;
-    background-image: linear-gradient(to right, #00c6ff 0%, #0072ff  51%, #00c6ff  100%);
-    background-size: 200% auto;
+    background-color: #fff;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -57,11 +56,9 @@
 
 .logo-header{
     margin-top: 5px;
-    font-weight: 900;
-    font-size: 2.5rem;
-    letter-spacing: 5px;
-    line-height: 0;
-    color: #fff;
+    font-size: 1.9rem;
+    color: #353535;
+    font-weight: bold;
 }
 
 .content-center-header{
@@ -75,18 +72,18 @@
 
 .container-input-header{
     width: 100%;
-    height: 35px;
-    background-color: #fff;
+    height: 40px;
+    background-color: #f5f6f7;
     padding: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 1rem;
+    border-radius: 2rem;
     transition: .2s;
 }
 
 .container-input-header:hover{
-    background-color: #F3F3F3;
+    background-color: #F2F3F5;
 }
 
 .search-people{
@@ -117,20 +114,20 @@
 }
 
 .container-icons{
-    width: 40px;
-    height: 40px;
-    background-color: #fff;
+    width: 45px;
+    height: 45px;
+    background-color: #EBEDF0;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 1.2rem;
+    border-radius: 2rem;
     position: relative;
     transition: .2s;
     cursor: pointer;
 }
 
 .container-icons:hover{
-    background-color: #F3F3F3;
+    background-color: #DADDE1;
 }
 
 .alert-red-circle{
@@ -140,7 +137,7 @@
     border-radius: 1rem;
     position: absolute;
     top: 0;
-    right: 0;
+    right: 5%;
 }
 
 .icons-in-content-right-header{
@@ -404,21 +401,36 @@
 }
 
 .container-body-in-media-page{
-    width: 100vw;
+    max-width: 1500px;
     height: 93vh;
+    margin: 0 auto;
     display: flex;
 }
 
 .content-left-in-body , .content-right-in-body{
-    width: 25%;
+    width: 28%;
     height: 100%;
     padding: 1rem !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.fix-container-content-left-in-body{
+    width: 100%;
+    height: 100%;
 }
 
 .content-center-in-body{
     flex-grow: 1;
     height: 100%;
     padding: 1rem 0 !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 10px;
 }
 
 .container-left-in-body{
@@ -559,9 +571,19 @@
     background-color: rgba(0, 0, 0, .3);
 }
 
+.container-content-center-in-body{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 10px;
+}
+
 .create-post-container{
     width: 100%;
-    height: 140px;
+    height: 125px;
     background-color: #fff;
     border-radius: 10px;
     display: flex;
@@ -574,7 +596,7 @@
 
 .container-post-content{
     width: 100%;
-    height: 50%;
+    height: 45%;
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -593,8 +615,8 @@
 }
 
 .container-user-profile-img{
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
     border: 2rem;
     overflow: hidden;
 }
@@ -606,19 +628,19 @@
 
 .container-input-post{
     flex-grow: 1;
-    height: 90%;
+    height: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     border-radius: 2rem;
     overflow: hidden;
-    background-color: #F5F6F7;
+    background-color: #f5f6f7;
     padding: 10px 15px !important;
     transition: .2s;
 }
 
 .container-input-post:hover{
-    background-color: #f2f2f2;
+    background-color: #F2F3F5;
 }
 
 .container-input-post input{
@@ -632,7 +654,7 @@
 
 .container-icons-post{
     width: 100%;
-    height: 50%;
+    height: 55%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -645,12 +667,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: .5rem;
 }
 
 .image-upload-icon p , .video-upload-icon p{
     margin-bottom: 0;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 400;
 }
 
@@ -667,7 +689,7 @@
 }
 
 .style-icon-post{
-    font-size: 1.9rem;
+    font-size: 1.3rem;
     cursor: pointer;
 }
 
@@ -683,7 +705,7 @@
     border-radius: 10px;
     overflow: hidden;
     width: 20%;
-    height: 100%;
+    height: 95%;
 }
 
 .post-button-container button{
@@ -703,4 +725,11 @@
     background-position: right center;
     color: #fff;
     text-decoration: none;
+}
+
+.container-content-right-in-body{
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 10px;
 }
