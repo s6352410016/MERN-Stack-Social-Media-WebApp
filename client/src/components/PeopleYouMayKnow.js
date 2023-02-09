@@ -1,5 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faUserPlus} from '@fortawesome/free-solid-svg-icons';
 
 const PeopleYouMayKnow = ({image , fullname}) => {
   return (
@@ -17,7 +19,9 @@ const PeopleYouMayKnow = ({image , fullname}) => {
             </div>
         </Link>
         <div className='container-button-follow-people-you-may-know'>
-            <button>Follow</button>
+            <button>
+                <FontAwesomeIcon icon={faUserPlus} className='follower-user-icon'/>
+            </button>
         </div>
     </div>
   );

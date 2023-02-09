@@ -116,7 +116,7 @@
 .container-icons{
     width: 45px;
     height: 45px;
-    background-color: #EBEDF0;
+    background-color: #E7E9EB;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -478,7 +478,7 @@
 }
 
 .container-people-you-may-know:hover{
-    background-color: #F3F3F3;
+    background-color: #f3f3f3;
 }
 
 .container-image-people-you-may-know{
@@ -526,23 +526,25 @@
 }
 
 .container-button-follow-people-you-may-know button{
-    width: 80%;
-    height: 35px;
+    width: 45px;
+    height: 45px;
     border: none;
-    background-image: linear-gradient(to right, #00c6ff 0%, #0072ff  51%, #00c6ff  100%);
-    background-size: 200% auto;
-    border-radius: 10px;
+    border-radius: 2rem;
     cursor: pointer;
     color: #fff;
     font-size: 1rem;
     transition: .5s;
     font-weight: 500;
+    background-color: #E7E9EB;
 }
 
 .container-button-follow-people-you-may-know button:hover{
-    background-position: right center;
-    color: #fff;
-    text-decoration: none;
+    background-color: #DADDE1;
+}
+
+.follower-user-icon{
+    font-size: 17px;
+    color: #353535;
 }
 
 .text-decoration-none-in-container-people-you-may-know{
