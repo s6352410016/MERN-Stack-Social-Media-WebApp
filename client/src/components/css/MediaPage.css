@@ -265,6 +265,10 @@
     background-color: #f3f3f3;
 }
 
+#no-bg-skeleton-load-in-notification{
+    background-color: #fff;
+}
+
 .notification-users-header{
     width: 30%;
     height: 100%;
@@ -274,8 +278,8 @@
 }
 
 .notification-users-header-container{
-    width: 65px;
-    height: 65px;
+    width: 60px;
+    height: 60px;
     border-radius: 3rem;
     overflow: hidden;
     margin: 0 10px 0 7px;
@@ -322,6 +326,7 @@
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px #cacaca;
+    z-index: 999;
 }
 
 .serach-result-text-decoration-none{
@@ -342,6 +347,10 @@
 
 .search-result-container:hover{
     background-color: #F3F3F3;
+}
+
+#no-bg-skeleton-load-in-search-result{
+    background-color: #fff;
 }
 
 .search-result-image-user{
@@ -479,6 +488,10 @@
 
 .container-people-you-may-know:hover{
     background-color: #f3f3f3;
+}
+
+#no-bg-in-skeleton-load:hover{
+    background-color: #fff;
 }
 
 .container-image-people-you-may-know{
@@ -621,6 +634,11 @@
     height: 55px;
     border: 2rem;
     overflow: hidden;
+}
+
+#fix-height-skeletion-load{
+    width: 55px;
+    height: 60px;
 }
 
 .container-user-profile-img img{

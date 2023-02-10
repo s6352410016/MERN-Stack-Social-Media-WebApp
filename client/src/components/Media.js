@@ -7,6 +7,11 @@ import './css/MediaPage.css';
 import Notification from './Notification';
 import SearchResult from './SearchResult';
 import PeopleYouMayKnow from './PeopleYouMayKnow';
+import SkeletonPeopleYouMayKnow from './SkeletonPeopleYouMayKnow';
+import CreatePost from './CreatePost';
+import SkeletonCreatePost from './SkeletonCreatePost';
+import SkeletonNotification from './SkeletonNotification';
+import SkeletonSearchResult from './SkeletonSearchResult';
 
 const Media = () => {
 
@@ -16,12 +21,16 @@ const Media = () => {
   const [openMenus , setOpenMenus] = useState(false);
   const [openNotifications , setOpenNotifications] = useState(false);
   const [openSearchResult , setOpenSearchResult] = useState(false);
+  const [showSkeletonPeopleYouMayKnow , setShowSkeletonPeopleYouMayKnow] = useState(true);
+  const [showSkeletonCreatePost , setShowSkeletonCreatePost] = useState(true);
+  const [showSkeletonNotification , setShowSkeletonNotification] = useState(true);
+  const [showSkeletonSearchResult , setShowSkeletonSearchResult] = useState(true);
   const [searchResult , setSearchResult] = useState('');
   
   const dataUserNotification = [
     {
       image: require('../images/allUserProfileImg/user1.png'),
-      username: 'Bell bunlung',
+      username: 'Bell bunlun',
       userContent: 'Create a new post now.',
       modifyDate: '4 week ago.'
     },
@@ -149,6 +158,15 @@ const Media = () => {
     });
   } , []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setShowSkeletonPeopleYouMayKnow(false);
+      setShowSkeletonCreatePost(false);
+      setShowSkeletonNotification(false);
+      setShowSkeletonSearchResult(false);
+    } , 3000);
+  } , []);
+
   const dropdownPopup = () => {
     setOpenMenus(!openMenus);
     setOpenNotifications(false);
@@ -199,11 +217,20 @@ const Media = () => {
             <input className='search-people' type='text' placeholder='Search people' onChange={(e) => setSearchResult(e.target.value)}/>
             {openSearchResult && 
               <div className='search-result'>
-                {dataForUser.filter((e) => {
-                  return searchResult !== '' && e.fullname.toLowerCase().includes(searchResult.toLowerCase());          
-                }).map((e , index) => (
-                  <SearchResult key={index} image={e.image} fullname={e.fullname}/>
-                ))}
+                {showSkeletonSearchResult 
+                  ?
+                  dataForUser.filter((e) => {
+                    return searchResult !== '' && e.fullname.toLowerCase().includes(searchResult.toLowerCase());          
+                  }).map((e , index) => (
+                    <SkeletonSearchResult/>
+                  ))
+                  :
+                  dataForUser.filter((e) => {
+                    return searchResult !== '' && e.fullname.toLowerCase().includes(searchResult.toLowerCase());          
+                  }).map((e , index) => (
+                    <SearchResult key={index} image={e.image} fullname={e.fullname}/>
+                  ))
+                }
                 {searchResult === '' && <div className='no-search-result-container'><p className='no-search-result'>Users not found.</p></div>}
               </div>
             }
@@ -220,9 +247,16 @@ const Media = () => {
                 </div>
                 <hr style={{width: '100%' , height: '2px' , color: '#353535' , margin: '0'}}/>
                 <div className='notification-body' style={dataUserNotification.length === 1 ? {height: '100px'} : dataUserNotification.length === 2 ? {height: '200px'} : dataUserNotification.length === 3 ? {height: '300px'} : dataUserNotification.length === 4 ? {height: '400px'} : dataUserNotification.length > 4 ? {height: '400px'} : {height: 'auto'}}>
-                  {dataUserNotification.map((e , index) => (
-                    <Notification key={index} image={e.image} username={e.username} userContent={e.userContent} modifyDate={e.modifyDate}/>
-                  ))}
+                  {showSkeletonNotification 
+                    ?
+                    dataUserNotification.map((e , index) => (
+                      <SkeletonNotification key={index}/>
+                    ))
+                    :
+                    dataUserNotification.map((e , index) => (
+                      <Notification key={index} image={e.image} username={e.username} userContent={e.userContent} modifyDate={e.modifyDate}/>
+                    ))
+                  }  
                   {dataUserNotification.length === 0 && <p className='no-notification'>No notification at this time.</p>}
                 </div>
               </div>
@@ -254,49 +288,27 @@ const Media = () => {
               <p className='header-text-people-you-may-know'>People you may know</p>
               <div className='border-top-people-you-may-know'></div>
                 <div className='overflow-auto-caontainer-fix'>
-                  {dataForUser.map((e , index) => (
+                {showSkeletonPeopleYouMayKnow 
+                  ?
+                  dataForUser.map((e , index) => (
+                    <SkeletonPeopleYouMayKnow key={index}/>
+                  ))
+                  : 
+                  dataForUser.map((e , index) => (
                     <PeopleYouMayKnow key={index} image={e.image} fullname={e.fullname}/>
-                  ))}
+                  ))
+                }
                 </div>    
             </div>
           </div>
         </div>
         <div className='content-center-in-body'>
-          <div className='container-content-center-in-body'>
-            <div className='create-post-container'>
-              <div className='container-post-content'>
-                <Link to='/profile' className='link-to-profile-post'>
-                  <div className='box-of-user-profile-img'>
-                    <div className='container-user-profile-img'>
-                      <img src={require('../images/allUserProfileImg/user1.png')}/>
-                    </div>
-                  </div>
-                </Link>
-                <div className='container-input-post'>
-                  <input type='text' placeholder="what's happening"/>
-                </div>
-              </div>
-              <div className='container-icons-post'>
-                <div className='image-upload-icon'>
-                  <label for='image'>
-                    <FontAwesomeIcon icon={faImage} className='style-icon-post' id='color-icon-image'/>
-                    <input type='file' id='image' className='display-none-input-file'/> 
-                  </label>
-                  <p>Photo</p>
-                </div>
-                <div className='video-upload-icon'>
-                  <label for='video'>
-                    <FontAwesomeIcon icon={faCirclePlay} className='style-icon-post' id='color-icon-video'/>
-                    <input type='file' id='video' className='display-none-input-file'/> 
-                  </label>
-                  <p>Video</p>
-                </div>
-                <div className='post-button-container'>
-                  <button>Post</button>
-                </div>
-              </div>
-            </div>
-          </div>
+          {showSkeletonCreatePost 
+            ? 
+            <SkeletonCreatePost/>
+            :
+            <CreatePost/>
+          }
         </div>
         <div className='content-right-in-body'>
           <div className='container-content-right-in-body'>

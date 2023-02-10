@@ -6,6 +6,7 @@ import ContentRight from './ContentRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft , faEye , faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
+import Cookies from 'js-cookie';
 
 const ResetPassword = () => {
 
@@ -90,6 +91,8 @@ const ResetPassword = () => {
       }).then((res) => {
         if(res.status === 200){
           navigate('/pendingSuccess');
+          Cookies.remove('usernameOrEmail');
+          Cookies.remove('password');
         }
       });
     }
