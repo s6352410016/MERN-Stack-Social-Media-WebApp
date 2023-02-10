@@ -12,6 +12,8 @@ import CreatePost from './CreatePost';
 import SkeletonCreatePost from './SkeletonCreatePost';
 import SkeletonNotification from './SkeletonNotification';
 import SkeletonSearchResult from './SkeletonSearchResult';
+import ChatPopup from './ChatPopup';
+import SkeletonChatsPopup from './SkeletonChatsPopup';
 
 const Media = () => {
 
@@ -21,16 +23,18 @@ const Media = () => {
   const [openMenus , setOpenMenus] = useState(false);
   const [openNotifications , setOpenNotifications] = useState(false);
   const [openSearchResult , setOpenSearchResult] = useState(false);
+  const [openChats , setOpenChats] = useState(false);
   const [showSkeletonPeopleYouMayKnow , setShowSkeletonPeopleYouMayKnow] = useState(true);
   const [showSkeletonCreatePost , setShowSkeletonCreatePost] = useState(true);
   const [showSkeletonNotification , setShowSkeletonNotification] = useState(true);
   const [showSkeletonSearchResult , setShowSkeletonSearchResult] = useState(true);
+  const [showSkeletonChatsPopup , setShowSkeletonChatsPopup] = useState(true);
   const [searchResult , setSearchResult] = useState('');
   
   const dataUserNotification = [
     {
       image: require('../images/allUserProfileImg/user1.png'),
-      username: 'Bell bunlun',
+      username: 'Bell bunlung',
       userContent: 'Create a new post now.',
       modifyDate: '4 week ago.'
     },
@@ -69,6 +73,44 @@ const Media = () => {
       username: 'สมหมาย ใจงาม',
       userContent: 'like your post.',
       modifyDate: '10 minutes ago.'
+    },
+  ];
+
+  const dataUserChats = [
+    {
+      image: require('../images/allUserProfileImg/user1.png'),
+      fullname: 'Bell bunlung',
+      senderChat: 'ไงเพื่อนเป็นไงช่วงนี้'
+    },
+    {
+      image: require('../images/allUserProfileImg/user2.png'),
+      fullname: 'Prayut Chan O Cha',
+      senderChat: 'สวัสดีครับ นายกตู่ !!'
+    },
+    {
+      image: require('../images/allUserProfileImg/user3.png'),
+      fullname: 'บัลลังก์ มาเอี่ยม',
+      senderChat: 'เย็นนี้กินข้าวไหนอะ'
+    },
+    {
+      image: require('../images/allUserProfileImg/user4.png'),
+      fullname: 'มากมี ศรีสุข',
+      senderChat: 'เห้ยเพื่อน ศุกร์นี้แดกเหล้าปะ'
+    },
+    {
+      image: require('../images/allUserProfileImg/user5.png'),
+      fullname: 'ดวงใจ มากมาย',
+      senderChat: 'ไอสัสเอ้ย กูติด F หวะ'
+    },
+    {
+      image: require('../images/allUserProfileImg/user6.png'),
+      fullname: 'สมพร ดวงดี',
+      senderChat: 'เจอกันเพื่อน...'
+    },
+    {
+      image: require('../images/allUserProfileImg/user7.png'),
+      fullname: 'สมหมาย ใจงาม',
+      senderChat: 'เกรดเทอมนี้ 4.00 ครับผม'
     },
   ];
 
@@ -164,6 +206,7 @@ const Media = () => {
       setShowSkeletonCreatePost(false);
       setShowSkeletonNotification(false);
       setShowSkeletonSearchResult(false);
+      setShowSkeletonChatsPopup(false);
     } , 3000);
   } , []);
 
@@ -171,6 +214,7 @@ const Media = () => {
     setOpenMenus(!openMenus);
     setOpenNotifications(false);
     setOpenSearchResult(false);
+    setOpenChats(false);
     const closePopup = document.getElementById('close-popup');
     closePopup.classList.add('close-popup');
   }
@@ -179,6 +223,7 @@ const Media = () => {
     setOpenNotifications(!openNotifications);
     setOpenMenus(false);
     setOpenSearchResult(false);
+    setOpenChats(false);
     const closePopup = document.getElementById('close-popup');
     closePopup.classList.add('close-popup');
   }
@@ -187,6 +232,16 @@ const Media = () => {
     setOpenSearchResult(!openSearchResult);
     setOpenMenus(false);
     setOpenNotifications(false);
+    setOpenChats(false);
+    const closePopup = document.getElementById('close-popup');
+    closePopup.classList.add('close-popup');
+  }
+
+  const chatsPopup = () => {
+    setOpenChats(!openChats);
+    setOpenMenus(false);
+    setOpenNotifications(false);
+    setOpenSearchResult(false);
     const closePopup = document.getElementById('close-popup');
     closePopup.classList.add('close-popup');
   }
@@ -195,6 +250,7 @@ const Media = () => {
     setOpenMenus(false);
     setOpenNotifications(false);
     setOpenSearchResult(false);
+    setOpenChats(false);
     const closePopup = document.getElementById('close-popup');
     closePopup.classList.remove('close-popup');
   }
@@ -243,7 +299,7 @@ const Media = () => {
             {openNotifications &&
               <div className='notification-popup'>
                 <div className='notification-header'>
-                  <p className='p-notification-header'>Notification</p>
+                  <p className='p-notification-header'>Notifications</p>
                 </div>
                 <hr style={{width: '100%' , height: '2px' , color: '#353535' , margin: '0'}}/>
                 <div className='notification-body' style={dataUserNotification.length === 1 ? {height: '100px'} : dataUserNotification.length === 2 ? {height: '200px'} : dataUserNotification.length === 3 ? {height: '300px'} : dataUserNotification.length === 4 ? {height: '400px'} : dataUserNotification.length > 4 ? {height: '400px'} : {height: 'auto'}}>
@@ -262,9 +318,30 @@ const Media = () => {
               </div>
             }
           </div>
-          <div className='container-icons'>
+          <div className='container-icons' onClick={chatsPopup}>
             <div className='alert-red-circle'></div>
             <FontAwesomeIcon className='icons-in-content-right-header' icon={faComment}/>
+            {openChats &&
+              <div className='container-chats-popup'>
+                <div className='content-header-in-chat-popup'>
+                  <p>Chats</p>
+                </div>
+                <hr style={{width: '100%' , height: '2px' , color: '#353535' , margin: '0'}}/>
+                <div className='content-center-in-chat-popup' style={dataUserChats.length === 1 ? {height: '90px'} : dataUserChats.length === 2 ? {height: '180px'} : dataUserChats.length === 3 ? {height: '270px'} : dataUserChats.length === 4 ? {height: '360px'} : dataUserChats.length > 4 ? {height: '400px'} : {height: 'auto'}}>
+                {showSkeletonChatsPopup 
+                  ? 
+                  dataUserChats.map((e , index) => (
+                    <SkeletonChatsPopup key={index}/>
+                  ))
+                  :
+                  dataUserChats.map((e , index) => (
+                    <ChatPopup key={index} image={e.image}  fullname={e.fullname} senderChat={e.senderChat}/>
+                  ))
+                }
+                {dataUserChats.length === 0 && <p className='no-notification'>No chats from user.</p>}
+                </div>
+              </div>
+            }
           </div>
           <div className='container-icons' id='dropdown-menus-id' onClick={dropdownPopup}>
             <FontAwesomeIcon className='icons-in-content-right-header fix-icon' icon={faChevronDown}/>
