@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage , faCirclePlay} from '@fortawesome/free-solid-svg-icons';
+import { faImage , faCirclePlay , faFaceGrinBeam} from '@fortawesome/free-solid-svg-icons';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
@@ -23,18 +23,18 @@ const SkeletonCreatePost = () => {
             </div>
             <div className='container-icons-post'>
                 <div className='image-upload-icon'>
-                  <label for='image'>
-                    <FontAwesomeIcon icon={faImage} className='style-icon-post' id='color-icon-image'/>
-                    <input type='file' id='image' className='display-none-input-file'/> 
-                  </label>
+                  <FontAwesomeIcon icon={faImage} className='style-icon-post' id='color-icon-image'/>
+                  <input type='file' id='image' className='display-none-input-file'/> 
                   <p>Photo</p>
                 </div>
                 <div className='video-upload-icon'>
-                  <label for='video'>
-                    <FontAwesomeIcon icon={faCirclePlay} className='style-icon-post' id='color-icon-video'/>
-                    <input type='file' id='video' className='display-none-input-file'/> 
-                  </label>
+                  <FontAwesomeIcon icon={faCirclePlay} className='style-icon-post' id='color-icon-video'/>
+                  <input type='file' id='video' className='display-none-input-file'/> 
                   <p>Video</p>
+                </div>
+                <div className='emoji-text-container'> 
+                  <FontAwesomeIcon icon={faFaceGrinBeam} className='style-icon-post' id='color-icon-emoji'/>
+                  <p>Emoji</p>
                 </div>
                 <div className='post-button-container'>
                   <button>Post</button>

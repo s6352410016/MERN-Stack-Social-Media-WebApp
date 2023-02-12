@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { useState , useRef } from 'react';
+import { useState } from 'react';
 import { useNavigate , Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass , faBell , faComment , faChevronDown , faUserPen , faArrowRightFromBracket , faImage , faCirclePlay} from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass , faBell , faComment , faChevronDown , faUserPen , faArrowRightFromBracket} from '@fortawesome/free-solid-svg-icons';
 import './css/MediaPage.css';
 import Notification from './Notification';
 import SearchResult from './SearchResult';
@@ -80,37 +80,37 @@ const Media = () => {
     {
       image: require('../images/allUserProfileImg/user1.png'),
       fullname: 'Bell bunlung',
-      senderChat: 'ไงเพื่อนเป็นไงช่วงนี้'
+      senderChat: 'Hello...'
     },
     {
       image: require('../images/allUserProfileImg/user2.png'),
       fullname: 'Prayut Chan O Cha',
-      senderChat: 'สวัสดีครับ นายกตู่ !!'
+      senderChat: 'Hello...'
     },
     {
       image: require('../images/allUserProfileImg/user3.png'),
       fullname: 'บัลลังก์ มาเอี่ยม',
-      senderChat: 'เย็นนี้กินข้าวไหนอะ'
+      senderChat: 'Hello...'
     },
     {
       image: require('../images/allUserProfileImg/user4.png'),
       fullname: 'มากมี ศรีสุข',
-      senderChat: 'เห้ยเพื่อน ศุกร์นี้แดกเหล้าปะ'
+      senderChat: 'Hello...'
     },
     {
       image: require('../images/allUserProfileImg/user5.png'),
       fullname: 'ดวงใจ มากมาย',
-      senderChat: 'ไอสัสเอ้ย กูติด F หวะ'
+      senderChat: 'Hello...'
     },
     {
       image: require('../images/allUserProfileImg/user6.png'),
       fullname: 'สมพร ดวงดี',
-      senderChat: 'เจอกันเพื่อน...'
+      senderChat: 'Hello...'
     },
     {
       image: require('../images/allUserProfileImg/user7.png'),
       fullname: 'สมหมาย ใจงาม',
-      senderChat: 'เกรดเทอมนี้ 4.00 ครับผม'
+      senderChat: 'Hello...'
     },
   ];
 
@@ -293,9 +293,11 @@ const Media = () => {
           </div>
         </div>
         <div className='content-right-header'>
-          <div className='container-icons' id='notification-id' onClick={notificationPopup}>
-            <div className='alert-red-circle'></div>
-            <FontAwesomeIcon className='icons-in-content-right-header' icon={faBell}/>
+          <div className='container-icons' id='notification-id'>
+            <div className='bell-onclick' onClick={notificationPopup}>
+              <div className='alert-red-circle'></div>
+              <FontAwesomeIcon className='icons-in-content-right-header' icon={faBell}/>
+            </div>
             {openNotifications &&
               <div className='notification-popup'>
                 <div className='notification-header'>

@@ -123,11 +123,19 @@
     border-radius: 2rem;
     position: relative;
     transition: .2s;
-    cursor: pointer;
 }
 
 .container-icons:hover{
     background-color: #DADDE1;
+}
+
+.bell-onclick{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 
 .alert-red-circle{
@@ -352,6 +360,7 @@
     display: flex;
     flex-direction: column;
     align-items: start;
+    z-index: 999;
 }
 
 .p-notification-header{
@@ -817,8 +826,27 @@
     gap: 2rem;
 }
 
-.image-upload-icon , .video-upload-icon{
+.image-upload-icon , .video-upload-icon , .emoji-text-container{
     width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.image-upload-icon:hover , .video-upload-icon:hover , .emoji-text-container:hover{
+    opacity: .85;
+}
+
+.emoji-text-container{
+    position: relative;
+}
+
+.emoji-onclick{
+    width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -826,7 +854,18 @@
     gap: .5rem;
 }
 
-.image-upload-icon p , .video-upload-icon p{
+.EmojiPickerReact.epr-main {
+    position: absolute !important;
+    top: 150% !important;
+    left: -27% !important;
+    padding: 10px !important;
+}
+
+.EmojiPickerReact .epr-search-container input.epr-search{
+    padding-left: 2rem !important;
+}
+
+.image-upload-icon p , .video-upload-icon p , .emoji-text-container p{
     margin-bottom: 0;
     font-size: 1rem;
     font-weight: 400;
@@ -838,6 +877,10 @@
 
 .video-upload-icon p{
     color: #BB34D3;
+}
+
+.emoji-text-container P{
+    color: #EF4040;
 }
 
 .display-none-input-file{
@@ -857,11 +900,15 @@
     color: #BB34D3;
 }
 
+#color-icon-emoji{
+    color: #EF4040;
+}
+
 .post-button-container{
-    border-radius: 10px;
+    border-radius: 5px;
     overflow: hidden;
     width: 20%;
-    height: 95%;
+    height: 100%;
 }
 
 .post-button-container button{
@@ -888,4 +935,13 @@
     height: 100%;
     background-color: #fff;
     border-radius: 10px;
+}
+
+.background-emoji-text-container{
+    position: fixed !important;
+    min-width: 100vw !important;  
+    min-height: 100vh !important;
+    background-color: transparent;
+    top: 0;
+    left: 0;
 }
