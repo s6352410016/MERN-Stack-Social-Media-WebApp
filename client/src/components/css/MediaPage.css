@@ -122,11 +122,6 @@
     align-items: center;
     border-radius: 2rem;
     position: relative;
-    transition: .2s;
-}
-
-.container-icons:hover{
-    background-color: #DADDE1;
 }
 
 .bell-onclick{
@@ -136,6 +131,45 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    transition: .2s;
+    border-radius: 2rem;
+    overflow: hidden;
+}
+
+.bell-onclick:hover{
+    background-color: #DADDE1;
+}
+
+.bg-hover-msg{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .2s;
+    border-radius: 2rem;
+    overflow: hidden;
+}
+
+.bg-hover-msg:hover{
+    background-color: #DADDE1;
+}
+
+.bg-hover-arrow-down{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .2s;
+    border-radius: 2rem;
+    overflow: hidden;
+}
+
+.bg-hover-arrow-down:hover{
+    background-color: #DADDE1;
 }
 
 .alert-red-circle{
@@ -319,6 +353,7 @@
     align-items: center;
     padding-left: 1rem !important;
     transition: .2s;
+    cursor: pointer;
 }
 
 .menus-in-dropdown:hover{

@@ -321,8 +321,10 @@ const Media = () => {
             }
           </div>
           <div className='container-icons' onClick={chatsPopup}>
-            <div className='alert-red-circle'></div>
-            <FontAwesomeIcon className='icons-in-content-right-header' icon={faComment}/>
+            <div className='bg-hover-msg'>
+              <div className='alert-red-circle'></div>
+              <FontAwesomeIcon className='icons-in-content-right-header' icon={faComment}/>
+            </div>
             {openChats &&
               <div className='container-chats-popup'>
                 <div className='content-header-in-chat-popup'>
@@ -346,7 +348,9 @@ const Media = () => {
             }
           </div>
           <div className='container-icons' id='dropdown-menus-id' onClick={dropdownPopup}>
-            <FontAwesomeIcon className='icons-in-content-right-header fix-icon' icon={faChevronDown}/>
+            <div className='bg-hover-arrow-down'>
+              <FontAwesomeIcon className='icons-in-content-right-header fix-icon' icon={faChevronDown}/>
+            </div>
             {openMenus && 
               <div className='dropdown-menus-class'>
                 <div className='menus-in-dropdown'>
