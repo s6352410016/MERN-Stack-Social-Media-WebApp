@@ -79,7 +79,7 @@ const ResetPassword = () => {
       setErrMsg({});
       inputNewPassword.classList.remove('custom');
       inputConfirmNewPassword.classList.remove('custom');
-      fetch('https://bynsocial.onrender.com/resetPassword' , {
+      fetch('http://localhost:5000/resetPassword' , {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

@@ -16,8 +16,7 @@ const CreatePost = () => {
   const [filesImg, setFilesImg] = useState([]);
   const [openPreviewImg, setOpenPreviewImg] = useState(false);
   const [openVideoFilePreview , setOpenVideoFilePreview] = useState(false);
-  const [videoFile , setVideoFile] = useState([]);
-  console.log(videoFile);
+  const [videoFile , setVideoFile] = useState();
 
   const emojiClick = ({ emoji }) => {
     inputRef.current.focus();
@@ -36,7 +35,7 @@ const CreatePost = () => {
     if(files.length > 0){
       setOpenPreviewImg(true);
       setOpenVideoFilePreview(false);
-      setVideoFile([]);
+      setVideoFile();
     }  
   }
 
@@ -46,19 +45,18 @@ const CreatePost = () => {
   }
 
   const videoFileUpload = (e) => {
-    const file = e.target.files[0];
-    const arrFile = Array.from(file);
-    if(arrFile){
+    const file = e.target.files;
+    if(file.length > 0){
+      setVideoFile(e.target.files[0]);
       setOpenVideoFilePreview(true);
       setOpenPreviewImg(false);
       setFilesImg([]);
-      setVideoFile(arrFile[0]);
     }
   }
 
   const clearVideoFile = () => {
     setOpenVideoFilePreview(false); 
-    setVideoFile([]);
+    setVideoFile();
   }
 
   useEffect(() => {

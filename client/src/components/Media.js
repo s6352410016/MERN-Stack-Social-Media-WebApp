@@ -178,7 +178,7 @@ const Media = () => {
   ];
 
   useEffect(() => {
-    fetch('https://bynsocial.onrender.com/authUser' , {
+    fetch('http://localhost:5000/authUser' , {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

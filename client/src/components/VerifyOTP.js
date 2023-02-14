@@ -26,7 +26,7 @@ const VerifyOTP = () => {
   const emailObscureWithAsterisk = `${firstTextEmail}${asteriskEmail}${lastTextEmail}@${domain}`;
 
   const resendOTP = () => {
-    fetch('https://bynsocial.onrender.com/resendOTP' , {
+    fetch('http://localhost:5000/resendOTP' , {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -59,7 +59,7 @@ const VerifyOTP = () => {
     }else{
       setErrMsg('');
       inputTextOTP.classList.remove('custom');
-      fetch('https://bynsocial.onrender.com/verifyOTP' , {
+      fetch('http://localhost:5000/verifyOTP' , {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

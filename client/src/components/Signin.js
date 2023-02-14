@@ -75,7 +75,7 @@ const Signin = () => {
         inputTextUsernameOrEmail.classList.remove('custom');
         inputPassword.classList.add('custom');
       }else{
-        fetch('https://bynsocial.onrender.com/signin' , {
+        fetch('http://localhost:5000/signin' , {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
