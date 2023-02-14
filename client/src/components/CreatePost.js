@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage, faCirclePlay, faFaceGrinBeam , faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { faImage, faCirclePlay, faFaceGrinBeam , faCircleXmark , faFileVideo , faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useRef, useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 
@@ -13,8 +13,11 @@ const CreatePost = () => {
   const [openEmojiPicker, setOpenEmojiPicker] = useState(false);
   const [postMsg, setPostMsg] = useState('');
   const [cursorPosition, setCursorPosition] = useState();
-  const [previewImg, setPreviewImg] = useState([]);
+  const [filesImg, setFilesImg] = useState([]);
   const [openPreviewImg, setOpenPreviewImg] = useState(false);
+  const [openVideoFilePreview , setOpenVideoFilePreview] = useState(false);
+  const [videoFile , setVideoFile] = useState([]);
+  console.log(videoFile);
 
   const emojiClick = ({ emoji }) => {
     inputRef.current.focus();
@@ -29,8 +32,33 @@ const CreatePost = () => {
     const files = e.target.files;
     const arrFiles = Array.from(files);
     const createUrlFromFiles = arrFiles.map((files) => URL.createObjectURL(files));
-    setPreviewImg(createUrlFromFiles);
-    setOpenPreviewImg(true);
+    setFilesImg(createUrlFromFiles);
+    if(files.length > 0){
+      setOpenPreviewImg(true);
+      setOpenVideoFilePreview(false);
+      setVideoFile([]);
+    }  
+  }
+
+  const clearImageFiles = () => {
+    setOpenPreviewImg(false);
+    setFilesImg([]);
+  }
+
+  const videoFileUpload = (e) => {
+    const file = e.target.files[0];
+    const arrFile = Array.from(file);
+    if(arrFile){
+      setOpenVideoFilePreview(true);
+      setOpenPreviewImg(false);
+      setFilesImg([]);
+      setVideoFile(arrFile[0]);
+    }
+  }
+
+  const clearVideoFile = () => {
+    setOpenVideoFilePreview(false); 
+    setVideoFile([]);
   }
 
   useEffect(() => {
@@ -61,7 +89,7 @@ const CreatePost = () => {
             </div>
             <div className='video-upload-icon' onClick={() => videoIconRef.current.click()}>
               <FontAwesomeIcon icon={faCirclePlay} className='style-icon-post' id='color-icon-video' />
-              <input type='file' className='display-none-input-file' ref={videoIconRef} />
+              <input type='file' accept='video/mp4' className='display-none-input-file' ref={videoIconRef} onChange={(e) => videoFileUpload(e)}/>
               <p>Video</p>
             </div>
             <div className='emoji-text-container'>
@@ -83,11 +111,24 @@ const CreatePost = () => {
         </div>
         {openPreviewImg &&
         <div className='container-of-preview-img'>
-          <FontAwesomeIcon icon={faCircleXmark} className='style-xmark' onClick={() => setOpenPreviewImg(false)}/>
+          <FontAwesomeIcon icon={faCircleXmark} className='style-xmark' onClick={clearImageFiles}/>
           <div className='container-img-in-preview'>
-            {previewImg.map((files, index) => (
-              <img src={files} key={index} alt='previewImg' />
+            {filesImg.map((files, index) => (
+              <img src={files} key={index} alt='previewImg'/>
             ))}
+          </div>
+        </div>
+      }
+      {openVideoFilePreview &&
+        <div className='container-of-video-file-preview'>
+          <div className='container-of-icon-video'>
+            <FontAwesomeIcon icon={faFileVideo} className='video-icon-in-caontainer-of-video-file-preview'/>
+          </div>
+          <div className='container-of-file-name'>
+            <span>{videoFile.name}</span>
+          </div>
+          <div className='container-of-icon-xmark'>
+            <FontAwesomeIcon icon={faXmark} className='xmark-icon-in-caontainer-of-video-file-preview' onClick={clearVideoFile}/>
           </div>
         </div>
       }
