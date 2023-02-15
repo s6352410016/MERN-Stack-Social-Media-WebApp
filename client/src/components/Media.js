@@ -14,6 +14,7 @@ import SkeletonNotification from './SkeletonNotification';
 import SkeletonSearchResult from './SkeletonSearchResult';
 import ChatPopup from './ChatPopup';
 import SkeletonChatsPopup from './SkeletonChatsPopup';
+import Posts from './Posts';
 
 const Media = () => {
 
@@ -278,7 +279,7 @@ const Media = () => {
                   dataForUser.filter((e) => {
                     return searchResult !== '' && e.fullname.toLowerCase().includes(searchResult.toLowerCase());          
                   }).map((e , index) => (
-                    <SkeletonSearchResult/>
+                    <SkeletonSearchResult key={index}/>
                   ))
                   :
                   dataForUser.filter((e) => {
@@ -392,9 +393,13 @@ const Media = () => {
             :
             <CreatePost/>
           }
+          <div className='overflow-y-auto-in-post-content-of-users'>
+            <Posts/>
+          </div>
         </div>
         <div className='content-right-in-body'>
           <div className='container-content-right-in-body'>
+            {userData.firstname} {userData.lastname}
           </div>
         </div>
       </div>

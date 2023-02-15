@@ -20,6 +20,7 @@
     "react-input-emoji": "^4.3.0",
     "react-loader-spinner": "^5.3.4",
     "react-loading-skeleton": "^3.1.0",
+    "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.7.0",
     "react-scripts": "5.0.1",
     "react-snowfall": "^1.2.1",
