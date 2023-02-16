@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsis, faPenToSquare, faTrash , faCircleArrowRight , faCircleArrowLeft} from '@fortawesome/free-solid-svg-icons';
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
+import { faEllipsis , faPenToSquare , faTrash  } from '@fortawesome/free-solid-svg-icons';
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Pagination } from "swiper";
+import { AiOutlineHeart , AiOutlineShareAlt} from "react-icons/ai";
+import { VscComment } from "react-icons/vsc";
 
 const Posts = () => {
     const [settingInPostPopup, setSettingInPostPopup] = useState(false);
@@ -18,7 +22,7 @@ const Posts = () => {
                         </div>
                     </div>
                 </Link>
-                <div className='content-center-in-post-of-users'>
+                <div className='content-center-in-header-in-post-of-users'>
                     <Link to='id' className='link-in-container-of-fullname-user'><p className='fullname-of-post-users'>Bell bunlung</p></Link>
                     <p className='modify-date-post-of-users'>15 minutes ago.</p>
                 </div>
@@ -41,13 +45,34 @@ const Posts = () => {
                     }
                 </div>
             </div>
+            <div className='message-in-post-container'>
+                <p>Holy Fucking Shit!!!.</p>
+            </div>
             <div className='content-center-in-post-of-users'>
                 <div className='container-img-post-of-users'>
-                    <Carousel showThumbs={false} showStatus={false}>         
-                        <img className='img-post-style' src='https://cdn.pixabay.com/photo/2022/03/23/18/56/beach-7087722_640.jpg' alt='imgPost'/>           
-                        <img className='img-post-style' src='https://cdn.pixabay.com/photo/2022/03/11/10/55/couple-7061929__340.jpg' alt='imgPost'/>
-                        <img className='img-post-style' src='https://cdn.pixabay.com/photo/2022/10/25/19/55/beach-7546731__340.jpg' alt='imgPost'/>
-                    </Carousel>
+                    <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
+                        <SwiperSlide><img src='https://cdn.pixabay.com/photo/2023/01/27/06/17/pheasant-7747830_960_720.jpg' alt='postImg' /></SwiperSlide>
+                        <SwiperSlide><img src='https://cdn.pixabay.com/photo/2022/09/07/17/26/vintage-pocket-watch-7439233_960_720.jpg' alt='postImg' /></SwiperSlide>
+                        <SwiperSlide><img src='https://cdn.pixabay.com/photo/2022/12/25/04/05/living-room-7676789_640.jpg' alt='postImg' /></SwiperSlide>
+                        <SwiperSlide><img src='https://cdn.pixabay.com/photo/2023/02/14/18/55/flowers-7790227_640.jpg' alt='postImg' /></SwiperSlide>
+                        <SwiperSlide><img src='https://cdn.pixabay.com/photo/2023/02/04/09/20/castle-7766794__340.jpg' alt='postImg' /></SwiperSlide>
+                    </Swiper>
+                </div>
+            </div>
+            <div className='content-footer-in-post-of-users'>
+                <div className='container-icons-in-content-footer'>
+                    <div className='heart-icon-container'>
+                        <div className='box-of-icon-heart-in-container'>
+                            <AiOutlineHeart className='heart-icon'/>
+                        </div>&nbsp;
+                        <span>1,284 Likes</span>
+                    </div>
+                    <div className='comment-icon-container'>
+                        <VscComment className='comment-icon'/>&nbsp;&nbsp;&nbsp;<span className='span-comment-icon-hover'>Comments</span>
+                    </div>
+                    <div className='share-icon-container'>
+                        <AiOutlineShareAlt className='share-icon'/>&nbsp;&nbsp;&nbsp;<span className='span-share-icon-hover'>Share</span>
+                    </div>
                 </div>
             </div>
         </div>
