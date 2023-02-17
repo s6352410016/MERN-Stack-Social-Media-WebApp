@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { useNavigate , Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass , faBell , faComment , faChevronDown , faUserPen , faArrowRightFromBracket} from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faBell, faComment, faChevronDown, faUserPen, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import './css/MediaPage.css';
 import Notification from './Notification';
 import SearchResult from './SearchResult';
@@ -14,24 +14,24 @@ import SkeletonNotification from './SkeletonNotification';
 import SkeletonSearchResult from './SkeletonSearchResult';
 import ChatPopup from './ChatPopup';
 import SkeletonChatsPopup from './SkeletonChatsPopup';
-import Posts from './Posts';
+import PostWithImages from './PostWithImages';
 
 const Media = () => {
 
   const navigate = useNavigate();
 
-  const [userData , setUserData] = useState('');
-  const [openMenus , setOpenMenus] = useState(false);
-  const [openNotifications , setOpenNotifications] = useState(false);
-  const [openSearchResult , setOpenSearchResult] = useState(false);
-  const [openChats , setOpenChats] = useState(false);
-  const [showSkeletonPeopleYouMayKnow , setShowSkeletonPeopleYouMayKnow] = useState(true);
-  const [showSkeletonCreatePost , setShowSkeletonCreatePost] = useState(true);
-  const [showSkeletonNotification , setShowSkeletonNotification] = useState(true);
-  const [showSkeletonSearchResult , setShowSkeletonSearchResult] = useState(true);
-  const [showSkeletonChatsPopup , setShowSkeletonChatsPopup] = useState(true);
-  const [searchResult , setSearchResult] = useState('');
-  
+  const [userData, setUserData] = useState('');
+  const [openMenus, setOpenMenus] = useState(false);
+  const [openNotifications, setOpenNotifications] = useState(false);
+  const [openSearchResult, setOpenSearchResult] = useState(false);
+  const [openChats, setOpenChats] = useState(false);
+  const [showSkeletonPeopleYouMayKnow, setShowSkeletonPeopleYouMayKnow] = useState(true);
+  const [showSkeletonCreatePost, setShowSkeletonCreatePost] = useState(true);
+  const [showSkeletonNotification, setShowSkeletonNotification] = useState(true);
+  const [showSkeletonSearchResult, setShowSkeletonSearchResult] = useState(true);
+  const [showSkeletonChatsPopup, setShowSkeletonChatsPopup] = useState(true);
+  const [searchResult, setSearchResult] = useState('');
+
   const dataUserNotification = [
     {
       image: require('../images/allUserProfileImg/user1.png'),
@@ -179,18 +179,18 @@ const Media = () => {
   ];
 
   useEffect(() => {
-    fetch('http://localhost:5000/authUser' , {
+    fetch('http://localhost:5000/authUser', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'x-access-token': localStorage.getItem('token')
       }
     }).then((res) => {
-      if(res.status === 401){
+      if (res.status === 401) {
         navigate('/');
-      }else if(res.status === 403){
+      } else if (res.status === 403) {
         navigate('/');
-      }else{
+      } else {
         return res.json();
       }
     }).then((res) => {
@@ -199,7 +199,7 @@ const Media = () => {
         lastname: res.lastname
       });
     });
-  } , []);
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -208,8 +208,8 @@ const Media = () => {
       setShowSkeletonNotification(false);
       setShowSkeletonSearchResult(false);
       setShowSkeletonChatsPopup(false);
-    } , 3000);
-  } , []);
+    }, 3000);
+  }, []);
 
   const dropdownPopup = () => {
     setOpenMenus(!openMenus);
@@ -270,22 +270,22 @@ const Media = () => {
         </div>
         <div className='content-center-header'>
           <div className='container-input-header' onClick={SearchResultPopup}>
-            <FontAwesomeIcon className='icon-search-input' icon={faMagnifyingGlass}/>&nbsp;&nbsp;
-            <input className='search-people' type='text' placeholder='Search people' onChange={(e) => setSearchResult(e.target.value)}/>
-            {openSearchResult && 
+            <FontAwesomeIcon className='icon-search-input' icon={faMagnifyingGlass} />&nbsp;&nbsp;
+            <input className='search-people' type='text' placeholder='Search people' onChange={(e) => setSearchResult(e.target.value)} />
+            {openSearchResult &&
               <div className='search-result'>
-                {showSkeletonSearchResult 
+                {showSkeletonSearchResult
                   ?
                   dataForUser.filter((e) => {
-                    return searchResult !== '' && e.fullname.toLowerCase().includes(searchResult.toLowerCase());          
-                  }).map((e , index) => (
-                    <SkeletonSearchResult key={index}/>
+                    return searchResult !== '' && e.fullname.toLowerCase().includes(searchResult.toLowerCase());
+                  }).map((e, index) => (
+                    <SkeletonSearchResult key={index} />
                   ))
                   :
                   dataForUser.filter((e) => {
-                    return searchResult !== '' && e.fullname.toLowerCase().includes(searchResult.toLowerCase());          
-                  }).map((e , index) => (
-                    <SearchResult key={index} image={e.image} fullname={e.fullname}/>
+                    return searchResult !== '' && e.fullname.toLowerCase().includes(searchResult.toLowerCase());
+                  }).map((e, index) => (
+                    <SearchResult key={index} image={e.image} fullname={e.fullname} />
                   ))
                 }
                 {searchResult === '' && <div className='no-search-result-container'><p className='no-search-result'>Users not found.</p></div>}
@@ -297,25 +297,25 @@ const Media = () => {
           <div className='container-icons' id='notification-id'>
             <div className='bell-onclick' onClick={notificationPopup}>
               <div className='alert-red-circle'></div>
-              <FontAwesomeIcon className='icons-in-content-right-header' icon={faBell}/>
+              <FontAwesomeIcon className='icons-in-content-right-header' icon={faBell} />
             </div>
             {openNotifications &&
               <div className='notification-popup'>
                 <div className='notification-header'>
                   <p className='p-notification-header'>Notifications</p>
                 </div>
-                <hr style={{width: '100%' , height: '2px' , color: '#353535' , margin: '0'}}/>
-                <div className='notification-body' style={dataUserNotification.length === 1 ? {height: '100px'} : dataUserNotification.length === 2 ? {height: '200px'} : dataUserNotification.length === 3 ? {height: '300px'} : dataUserNotification.length === 4 ? {height: '400px'} : dataUserNotification.length > 4 ? {height: '400px'} : {height: 'auto'}}>
-                  {showSkeletonNotification 
+                <hr style={{ width: '100%', height: '2px', color: '#353535', margin: '0' }} />
+                <div className='notification-body' style={dataUserNotification.length === 1 ? { height: '100px' } : dataUserNotification.length === 2 ? { height: '200px' } : dataUserNotification.length === 3 ? { height: '300px' } : dataUserNotification.length === 4 ? { height: '400px' } : dataUserNotification.length > 4 ? { height: '400px' } : { height: 'auto' }}>
+                  {showSkeletonNotification
                     ?
-                    dataUserNotification.map((e , index) => (
-                      <SkeletonNotification key={index}/>
+                    dataUserNotification.map((e, index) => (
+                      <SkeletonNotification key={index} />
                     ))
                     :
-                    dataUserNotification.map((e , index) => (
-                      <Notification key={index} image={e.image} username={e.username} userContent={e.userContent} modifyDate={e.modifyDate}/>
+                    dataUserNotification.map((e, index) => (
+                      <Notification key={index} image={e.image} username={e.username} userContent={e.userContent} modifyDate={e.modifyDate} />
                     ))
-                  }  
+                  }
                   {dataUserNotification.length === 0 && <p className='no-notification'>No notification at this time.</p>}
                 </div>
               </div>
@@ -324,41 +324,41 @@ const Media = () => {
           <div className='container-icons' onClick={chatsPopup}>
             <div className='bg-hover-msg'>
               <div className='alert-red-circle'></div>
-              <FontAwesomeIcon className='icons-in-content-right-header' icon={faComment}/>
+              <FontAwesomeIcon className='icons-in-content-right-header' icon={faComment} />
             </div>
             {openChats &&
               <div className='container-chats-popup'>
                 <div className='content-header-in-chat-popup'>
                   <p>Chats</p>
                 </div>
-                <hr style={{width: '100%' , height: '2px' , color: '#353535' , margin: '0'}}/>
-                <div className='content-center-in-chat-popup' style={dataUserChats.length === 1 ? {height: '90px'} : dataUserChats.length === 2 ? {height: '180px'} : dataUserChats.length === 3 ? {height: '270px'} : dataUserChats.length === 4 ? {height: '360px'} : dataUserChats.length > 4 ? {height: '400px'} : {height: 'auto'}}>
-                {showSkeletonChatsPopup 
-                  ? 
-                  dataUserChats.map((e , index) => (
-                    <SkeletonChatsPopup key={index}/>
-                  ))
-                  :
-                  dataUserChats.map((e , index) => (
-                    <ChatPopup key={index} image={e.image}  fullname={e.fullname} senderChat={e.senderChat}/>
-                  ))
-                }
-                {dataUserChats.length === 0 && <p className='no-notification'>No chats from user.</p>}
+                <hr style={{ width: '100%', height: '2px', color: '#353535', margin: '0' }} />
+                <div className='content-center-in-chat-popup' style={dataUserChats.length === 1 ? { height: '90px' } : dataUserChats.length === 2 ? { height: '180px' } : dataUserChats.length === 3 ? { height: '270px' } : dataUserChats.length === 4 ? { height: '360px' } : dataUserChats.length > 4 ? { height: '400px' } : { height: 'auto' }}>
+                  {showSkeletonChatsPopup
+                    ?
+                    dataUserChats.map((e, index) => (
+                      <SkeletonChatsPopup key={index} />
+                    ))
+                    :
+                    dataUserChats.map((e, index) => (
+                      <ChatPopup key={index} image={e.image} fullname={e.fullname} senderChat={e.senderChat} />
+                    ))
+                  }
+                  {dataUserChats.length === 0 && <p className='no-notification'>No chats from user.</p>}
                 </div>
               </div>
             }
           </div>
           <div className='container-icons' id='dropdown-menus-id' onClick={dropdownPopup}>
             <div className='bg-hover-arrow-down'>
-              <FontAwesomeIcon className='icons-in-content-right-header fix-icon' icon={faChevronDown}/>
+              <FontAwesomeIcon className='icons-in-content-right-header fix-icon' icon={faChevronDown} />
             </div>
-            {openMenus && 
+            {openMenus &&
               <div className='dropdown-menus-class'>
                 <div className='menus-in-dropdown'>
-                  <FontAwesomeIcon className='icons-in-dropdown' icon={faUserPen}/>&nbsp;&nbsp;<span className='text-in-dropdown'>Edit profile</span>
+                  <FontAwesomeIcon className='icons-in-dropdown' icon={faUserPen} />&nbsp;&nbsp;<span className='text-in-dropdown'>Profile</span>
                 </div>
                 <div className='menus-in-dropdown' onClick={signOut}>
-                  <FontAwesomeIcon className='icons-in-dropdown' icon={faArrowRightFromBracket}/>&nbsp;&nbsp;<span className='text-in-dropdown'>Signout</span>
+                  <FontAwesomeIcon className='icons-in-dropdown' icon={faArrowRightFromBracket} />&nbsp;&nbsp;<span className='text-in-dropdown'>Signout</span>
                 </div>
               </div>
             }
@@ -371,30 +371,30 @@ const Media = () => {
             <div className='container-left-in-body'>
               <p className='header-text-people-you-may-know'>People you may know</p>
               <div className='border-top-people-you-may-know'></div>
-                <div className='overflow-auto-caontainer-fix'>
-                {showSkeletonPeopleYouMayKnow 
+              <div className='overflow-auto-caontainer-fix'>
+                {showSkeletonPeopleYouMayKnow
                   ?
-                  dataForUser.map((e , index) => (
-                    <SkeletonPeopleYouMayKnow key={index}/>
+                  dataForUser.map((e, index) => (
+                    <SkeletonPeopleYouMayKnow key={index} />
                   ))
-                  : 
-                  dataForUser.map((e , index) => (
-                    <PeopleYouMayKnow key={index} image={e.image} fullname={e.fullname}/>
+                  :
+                  dataForUser.map((e, index) => (
+                    <PeopleYouMayKnow key={index} image={e.image} fullname={e.fullname} />
                   ))
                 }
-                </div>    
+              </div>
             </div>
           </div>
         </div>
         <div className='content-center-in-body'>
-          {showSkeletonCreatePost 
-            ? 
-            <SkeletonCreatePost/>
+          {showSkeletonCreatePost
+            ?
+            <SkeletonCreatePost />
             :
-            <CreatePost/>
+            <CreatePost />
           }
           <div className='overflow-y-auto-in-post-content-of-users'>
-            <Posts/>
+            <PostWithImages />
           </div>
         </div>
         <div className='content-right-in-body'>
