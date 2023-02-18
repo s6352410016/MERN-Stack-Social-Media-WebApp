@@ -313,6 +313,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
+    word-break: break-word;
 }
 
 .container-sender-msg-chats-of-users{
@@ -321,6 +322,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
+    word-break: break-word;
 }
 
 .container-fullname-chats-of-users p , .container-sender-msg-chats-of-users p{
@@ -489,6 +491,7 @@
 
 .notofication-username , .notification-user-content , .notification-modify-date{
     width: 100%;
+    word-break: break-word;
 }
 
 .span-username , .span-user-content  , .span-user-modify-date{
@@ -572,6 +575,7 @@
     color: #353535;
     font-size: 1rem;
     font-weight: 500;
+    word-break: break-word;
 }
 
 .search-fullname-user{
@@ -710,6 +714,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    word-break: break-word;
 }
 
 .container-fullname-people-you-may-know b{
@@ -1227,6 +1232,7 @@
     text-decoration: none;
     display: flex;
     align-items: flex-end;
+    word-break: break-word;
 }
 
 .fullname-of-post-users{
@@ -1234,6 +1240,10 @@
     color: #353535;
     font-size: 1rem;
     font-weight: bold;
+}
+
+.fullname-of-post-users:hover{
+    text-decoration: underline;
 }
 
 .modify-date-post-of-users{
@@ -1244,6 +1254,7 @@
     margin-bottom: 0;
     color: #353535;
     font-size: 1rem;
+    word-break: break-word;
 }
 
 .icon-settings-post-of-users{
@@ -1261,19 +1272,19 @@
     height: 30px;
     cursor: pointer;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
-    transition: .2s;
     position: relative;
     z-index: 997;
+    border-radius: 1rem;
 }
 
 .container-icon-three-dots:hover{
-    opacity: .8;
+    background-color: #f5f6f7;
 }
 
 .icon-three-dots-horizontal{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: #353535;
 }
 
@@ -1332,6 +1343,7 @@
 .message-in-post-container{
     width: 100%;
     height: auto;
+    word-break: break-word;
 }
 
 .message-in-post-container p{
@@ -1488,7 +1500,6 @@
     justify-content: space-between;
     align-items: center;
     gap: 10px;
-    margin-top: 1rem;
 }
 
 .container-img-profile-in-create-comment-container-in-post-of-users{
@@ -1777,4 +1788,136 @@
     height: 100%;
     background-color: transparent;
     z-index: 998;
+}
+
+.container-comments-of-users{
+    width: 100%;
+    height: auto;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.container-comments-of-users::-webkit-scrollbar{
+    display: none;
+}
+
+.container-comments-of-user-detail-in-container-comments-of-users{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.box-of-container-img-profile-in-container-comments-of-user-detail-in-container-comments-of-users{
+    width: 40px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.container-img-profile-in-container-comments-of-user-detail-in-container-comments-of-users{
+    text-decoration: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 2rem;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.container-img-profile-in-container-comments-of-user-detail-in-container-comments-of-users img{
+    width: 100%;
+    height: 100%;
+}
+
+.container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users{
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 10px !important;
+    background-color: #f5f6f7;
+    border-radius: 1.2rem;
+}
+
+.container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users{
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    word-break: break-word;
+}
+
+.fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users{
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users .fullname-of-users-in-container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users{
+    margin-bottom: 0;
+    color: #353535;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users:hover .fullname-of-users-in-container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users{
+    text-decoration: underline;
+}
+
+.container-comment-msg-in-container-comments-of-user-detail-in-container-comments-of-users{
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    word-break: break-word;
+}
+
+.container-comment-msg-in-container-comments-of-user-detail-in-container-comments-of-users p{
+    margin-bottom: 0;
+    color: #353535;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users{
+    flex-grow: 1;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-self: flex-start;
+}
+
+.container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users{
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 1rem;
+}
+
+.container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users:hover{
+    background-color: #f5f6f7;
+}
+
+.icon-dots-vertical-in-container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users{
+    font-size: 1.2rem;
+    color: #353535;
 }

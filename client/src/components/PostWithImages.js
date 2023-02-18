@@ -13,6 +13,7 @@ import { BsEmojiSmile } from "react-icons/bs";
 import { HiXMark } from "react-icons/hi2";
 import EmojiPicker from 'emoji-picker-react';
 import PeopleLikedYourPost from './PeopleLikedYourPost';
+import Comment from './Comment';
 
 const PostWithImages = () => {
     const selectFileIconRef = useRef();
@@ -67,8 +68,8 @@ const PostWithImages = () => {
                     <p className='modify-date-post-of-users'>15 minutes ago.</p>
                 </div>
                 <div className='icon-settings-post-of-users'>
-                    <div className='container-icon-three-dots'>
-                        <FontAwesomeIcon icon={faEllipsis} className='icon-three-dots-horizontal' onClick={() => setSettingInPostPopup(!settingInPostPopup)} />
+                    <div className='container-icon-three-dots' onClick={() => setSettingInPostPopup(!settingInPostPopup)} >
+                        <FontAwesomeIcon icon={faEllipsis} className='icon-three-dots-horizontal'/>
                     </div>
                     {settingInPostPopup &&
                         <>
@@ -138,6 +139,9 @@ const PostWithImages = () => {
                         <AiOutlineShareAlt className='share-icon' />&nbsp;&nbsp;&nbsp;<span className='span-share-icon-hover'>Share</span>
                     </div>
                 </div>
+            </div>
+            <div className='container-comments-of-users'>
+                <Comment/>
             </div>
             <div className='create-comment-container-in-post-of-users'>
                 <Link to='/profile' className='container-img-profile-in-create-comment-container-in-post-of-users'>
