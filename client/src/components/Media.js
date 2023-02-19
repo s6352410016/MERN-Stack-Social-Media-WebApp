@@ -31,46 +31,47 @@ const Media = () => {
   const [showSkeletonSearchResult, setShowSkeletonSearchResult] = useState(true);
   const [showSkeletonChatsPopup, setShowSkeletonChatsPopup] = useState(true);
   const [searchResult, setSearchResult] = useState('');
+  console.log(process.env);
 
   const dataUserNotification = [
     {
-      image: require('../images/allUserProfileImg/user1.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`,
       username: 'Bell bunlung',
       userContent: 'Create a new post now.',
       modifyDate: '4 week ago.'
     },
     {
-      image: require('../images/allUserProfileImg/user2.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user2.png`,
       username: 'Prayut Chan O Cha',
       userContent: 'Create a new post now.',
       modifyDate: '1 minute ago.'
     },
     {
-      image: require('../images/allUserProfileImg/user3.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user3.png`,
       username: 'บัลลังก์ มาเอี่ยม',
       userContent: 'like your post.',
       modifyDate: '10 minutes ago.'
     },
     {
-      image: require('../images/allUserProfileImg/user4.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user4.png`,
       username: 'มากมี ศรีสุข',
       userContent: 'like your post.',
       modifyDate: '10 minutes ago.'
     },
     {
-      image: require('../images/allUserProfileImg/user5.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user5.png`,
       username: 'ดวงใจ มากมาย',
       userContent: 'like your post.',
       modifyDate: '10 minutes ago.'
     },
     {
-      image: require('../images/allUserProfileImg/user6.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user6.png`,
       username: 'สมพร ดวงดี',
       userContent: 'like your post.',
       modifyDate: '10 minutes ago.'
     },
     {
-      image: require('../images/allUserProfileImg/user7.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user7.png`,
       username: 'สมหมาย ใจงาม',
       userContent: 'like your post.',
       modifyDate: '10 minutes ago.'
@@ -79,37 +80,37 @@ const Media = () => {
 
   const dataUserChats = [
     {
-      image: require('../images/allUserProfileImg/user1.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`,
       fullname: 'Bell bunlung',
       senderChat: 'Hello...'
     },
     {
-      image: require('../images/allUserProfileImg/user2.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user2.png`,
       fullname: 'Prayut Chan O Cha',
       senderChat: 'Hello...'
     },
     {
-      image: require('../images/allUserProfileImg/user3.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user3.png`,
       fullname: 'บัลลังก์ มาเอี่ยม',
       senderChat: 'Hello...'
     },
     {
-      image: require('../images/allUserProfileImg/user4.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user4.png`,
       fullname: 'มากมี ศรีสุข',
       senderChat: 'Hello...'
     },
     {
-      image: require('../images/allUserProfileImg/user5.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user5.png`,
       fullname: 'ดวงใจ มากมาย',
       senderChat: 'Hello...'
     },
     {
-      image: require('../images/allUserProfileImg/user6.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user6.png`,
       fullname: 'สมพร ดวงดี',
       senderChat: 'Hello...'
     },
     {
-      image: require('../images/allUserProfileImg/user7.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user7.png`,
       fullname: 'สมหมาย ใจงาม',
       senderChat: 'Hello...'
     },
@@ -117,63 +118,63 @@ const Media = () => {
 
   const dataForUser = [
     {
-      image: require('../images/allUserProfileImg/user1.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`,
       fullname: 'Bell bunlung'
     },
     {
-      image: require('../images/allUserProfileImg/user2.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user2.png`,
       fullname: 'Prayut Chan O Cha'
     },
     {
-      image: require('../images/allUserProfileImg/user3.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user3.png`,
       fullname: 'บัลลังก์ มาเอี่ยม'
     },
     {
-      image: require('../images/allUserProfileImg/user4.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user4.png`,
       fullname: 'มากมี ศรีสุข'
     },
     {
-      image: require('../images/allUserProfileImg/user5.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user5.png`,
       fullname: 'ดวงใจ มากมาย'
     },
     {
-      image: require('../images/allUserProfileImg/user6.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user6.png`,
       fullname: 'สมพร ดวงดี'
     },
     {
-      image: require('../images/allUserProfileImg/user7.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user7.png`,
       fullname: 'สมหมาย ใจงาม'
     },
     {
-      image: require('../images/allUserProfileImg/user8.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user8.png`,
       fullname: 'สมคิด จิตสงบ'
     },
     {
-      image: require('../images/allUserProfileImg/user9.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user9.png`,
       fullname: 'บุญมี มากล้น'
     },
     {
-      image: require('../images/allUserProfileImg/user10.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user10.png`,
       fullname: 'บุญงาม พอแล้ว'
     },
     {
-      image: require('../images/allUserProfileImg/user11.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user11.png`,
       fullname: 'สมควร รวยมาก'
     },
     {
-      image: require('../images/allUserProfileImg/user12.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user12.png`,
       fullname: 'สมจิตร จงจอหอ'
     },
     {
-      image: require('../images/allUserProfileImg/user13.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user13.png`,
       fullname: 'พอดี พอแล้ว'
     },
     {
-      image: require('../images/allUserProfileImg/user14.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user14.png`,
       fullname: 'Mark Sukkerberg'
     },
     {
-      image: require('../images/allUserProfileImg/user15.png'),
+      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user15.png`,
       fullname: 'Elon Mask'
     },
   ];

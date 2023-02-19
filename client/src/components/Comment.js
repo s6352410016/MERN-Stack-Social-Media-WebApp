@@ -68,7 +68,7 @@ const Comment = () => {
             <div className='container-comments-of-user-detail-in-container-comments-of-users'>
                 <div className='box-of-container-img-profile-in-container-comments-of-user-detail-in-container-comments-of-users'>
                     <Link to='id' className='container-img-profile-in-container-comments-of-user-detail-in-container-comments-of-users'>
-                        <img src={require('../images/allUserProfileImg/user9.png')} alt='imgProfile' />
+                        <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`} alt='imgProfile' />
                     </Link>
                 </div>
                 {openEditComment
@@ -78,7 +78,7 @@ const Comment = () => {
                     <div className='container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>
                         <div className='container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
                             <Link to='id' className='fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
-                                <p className='fullname-of-users-in-container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>Alex Jacob</p>
+                                <p className='fullname-of-users-in-container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>Bell bunlung</p>
                             </Link>
                             <span className='modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>5 Minutes</span>
                         </div>

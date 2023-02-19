@@ -79,7 +79,7 @@ const ResetPassword = () => {
       setErrMsg({});
       inputNewPassword.classList.remove('custom');
       inputConfirmNewPassword.classList.remove('custom');
-      fetch('http://localhost:5000/resetPassword' , {
+      fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/resetPassword` , {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

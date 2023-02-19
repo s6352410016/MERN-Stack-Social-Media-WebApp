@@ -59,7 +59,7 @@ const PostWithImages = () => {
                 <Link to='id' className='link-container-of-img'>
                     <div className='container-of-img-profile-users'>
                         <div className='container-width-full-img'>
-                            <img src={require('../images/allUserProfileImg/user1.png')} alt='profileImg' />
+                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`}  alt='profileImg'/>
                         </div>
                     </div>
                 </Link>
@@ -149,7 +149,7 @@ const PostWithImages = () => {
             </div>
             <div className='create-comment-container-in-post-of-users'>
                 <Link to='/profile' className='container-img-profile-in-create-comment-container-in-post-of-users'>
-                    <img src={require('../images/allUserProfileImg/user1.png')} alt='imgProfileUser' />
+                    <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`} alt='imgProfileUser' />
                 </Link>
                 <div className='write-comment-container-in-create-comment-container-in-post-of-users'>
                     <form encType='multipart/form-data'>

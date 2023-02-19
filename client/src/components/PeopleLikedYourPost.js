@@ -15,7 +15,7 @@ const PeopleLikedYourPost = () => {
     return (
         <div className='container-profile-card-in-people-likes-post-list'>
             <Link to='id' className='container-img-in-center-in-people-likes-post-list'>
-                <img src={require('../images/allUserProfileImg/user10.png')} alt='imgProfile' />
+                <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user15.png`} alt='imgProfile' />
             </Link>
             <Link to='id' className='container-fullname-in-center-in-people-likes-post-list'>
                 <b>Prayut Chan O Cha</b>

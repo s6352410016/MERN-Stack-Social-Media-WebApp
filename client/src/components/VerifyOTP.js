@@ -26,7 +26,7 @@ const VerifyOTP = () => {
   const emailObscureWithAsterisk = `${firstTextEmail}${asteriskEmail}${lastTextEmail}@${domain}`;
 
   const resendOTP = () => {
-    fetch('http://localhost:5000/resendOTP' , {
+    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/resendOTP` , {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -59,7 +59,7 @@ const VerifyOTP = () => {
     }else{
       setErrMsg('');
       inputTextOTP.classList.remove('custom');
-      fetch('http://localhost:5000/verifyOTP' , {
+      fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/verifyOTP` , {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

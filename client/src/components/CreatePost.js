@@ -70,7 +70,7 @@ const CreatePost = () => {
           <Link to='/profile' className='link-to-profile-post'>
             <div className='box-of-user-profile-img'>
               <div className='container-user-profile-img'>
-                <img src={require('../images/allUserProfileImg/user1.png')} alt='imgProfile' />
+                <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`} alt='imgProfile' />
               </div>
             </div>
           </Link>

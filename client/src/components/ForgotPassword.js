@@ -29,7 +29,7 @@ const ForgotPassword = () => {
     }else{
       setErrMsg('');
       inputTextEmail.classList.remove('custom');
-      fetch('http://localhost:5000/checkEmail' , {
+      fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/checkEmail` , {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ const ForgotPassword = () => {
           inputTextEmail.classList.add('custom');
         }else if(res.status === 400){
           inputTextEmail.classList.remove('custom');
-          fetch('http://localhost:5000/sendOTP' , {
+          fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/sendOTP` , {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
