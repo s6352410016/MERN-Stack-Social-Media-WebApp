@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsis, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsis, faPenToSquare , faTrash , faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -10,7 +10,6 @@ import { AiOutlineHeart, AiOutlineShareAlt } from "react-icons/ai";
 import { VscComment } from "react-icons/vsc";
 import { SlPaperClip } from "react-icons/sl";
 import { BsEmojiSmile } from "react-icons/bs";
-import { HiXMark } from "react-icons/hi2";
 import EmojiPicker from 'emoji-picker-react';
 import PeopleLikedYourPost from './PeopleLikedYourPost';
 import Comment from './Comment';
@@ -26,6 +25,7 @@ const PostWithImages = () => {
     const [previewImgFile, setPreviewImgFile] = useState('');
     const [openPreviewImg, setOpenImgPreview] = useState(false);
     const [openPeopleLikedYourPost, setOpenPeopleLikeYourPost] = useState(false);
+    const [openComments , setOpenComments] = useState(false);
 
     const EmojiClickInCreateComment = ({ emoji }) => {
         inputCommentRef.current.focus();
@@ -106,14 +106,14 @@ const PostWithImages = () => {
                         <div className='box-of-icon-heart-in-container'>
                             <AiOutlineHeart className='heart-icon' />
                         </div>&nbsp;
-                        <span onClick={() => setOpenPeopleLikeYourPost(true)}>1 Like</span>
+                        <span onClick={() => setOpenPeopleLikeYourPost(true)}>10 Likes</span>
                         {openPeopleLikedYourPost &&
                             <div className='bg-people-likes-post-list'>
                                 <>
                                     <div className='bg-onclick-to-close-people-likes-post-list' onClick={() => setOpenPeopleLikeYourPost(false)}></div>
                                     <div className='container-people-likes-post-list'>
                                         <div className='container-header-in-people-likes-post-list'>
-                                            <p>People Liked Your Post</p>
+                                            <p>People liked your post</p>
                                         </div>
                                         <div className='container-center-in-people-likes-post-list'>
                                             <PeopleLikedYourPost />
@@ -132,7 +132,7 @@ const PostWithImages = () => {
                             </div>
                         }
                     </div>
-                    <div className='comment-icon-container'>
+                    <div className='comment-icon-container' onClick={() => setOpenComments(!openComments)}>
                         <VscComment className='comment-icon' />&nbsp;&nbsp;&nbsp;<span className='span-comment-icon-hover'>Comment</span>
                     </div>
                     <div className='share-icon-container'>
@@ -141,7 +141,11 @@ const PostWithImages = () => {
                 </div>
             </div>
             <div className='container-comments-of-users'>
-                <Comment/>
+                {openComments &&
+                    <>
+                        <Comment/>
+                    </>
+                }
             </div>
             <div className='create-comment-container-in-post-of-users'>
                 <Link to='/profile' className='container-img-profile-in-create-comment-container-in-post-of-users'>
@@ -172,9 +176,7 @@ const PostWithImages = () => {
             {openPreviewImg &&
                 <div className='img-preview-container-in-create-comment-container-in-post-of-users'>
                     <div className='box-of-img-container-in-create-comment-container-in-post-of-users'>
-                        <div className='container-xmark-icon-in-box-of-img-container-in-create-comment-container-in-post-of-users' onClick={clearFileToSelect}>
-                            <HiXMark className='xmark-icon-in-container-xmark-icon-in-box-of-img-container-in-create-comment-container-in-post-of-users' />
-                        </div>
+                        <FontAwesomeIcon onClick={clearFileToSelect} icon={faCircleXmark} className='xmark-icon-in-container-xmark-icon-in-box-of-img-container-in-create-comment-container-in-post-of-users' />
                         <img src={previewImgFile} alt='previewImgComment' />
                     </div>
                 </div>

@@ -518,6 +518,11 @@
     border-radius: 10px;
     box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
     z-index: 999;
+    overflow-y: auto;
+}
+
+.search-result::-webkit-scrollbar{
+    display: none;
 }
 
 .serach-result-text-decoration-none{
@@ -1045,9 +1050,9 @@
 
 .style-xmark{
     position: absolute;
-    top: 5%;
-    right: 5%;
-    font-size: 2rem;
+    top: 3%;
+    right: 2%;
+    font-size: 1.7rem;
     cursor: pointer;
     transition: .2s;
     color: #fff;
@@ -1157,7 +1162,7 @@
 }
 
 .overflow-y-auto-in-post-content-of-users::-webkit-scrollbar{
-    width: 5px;
+    display: none;
 }
 
 .overflow-y-auto-in-post-content-of-users::-webkit-scrollbar-thumb{
@@ -1275,7 +1280,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    z-index: 997;
+    z-index: 998;
     border-radius: 1rem;
 }
 
@@ -1290,10 +1295,10 @@
 
 .setting-post-popup{
     position: absolute;
-    top: 70%;
-    right: 0;
+    top: 20%;
+    right: 18%;
     width: 140px;
-    height: 100px;
+    height: 70px;
     background-color: #fff;
     display: flex;
     flex-direction: column;
@@ -1301,8 +1306,9 @@
     justify-content: center;
     border-radius: 10px;
     overflow: hidden;
-    z-index: 997;
+    z-index: 998;
     box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    transition-delay: 1s;
 }
 
 .icon-edit-post , .icon-delete-post{
@@ -1337,7 +1343,7 @@
     width: 100%;
     height: 100%;
     background: transparent;
-    z-index: 996;
+    z-index: 997;
 }
 
 .message-in-post-container{
@@ -1422,11 +1428,11 @@
 }
 
 .comment-icon-container:hover .comment-icon{
-    color: #393939;
+    opacity: .8;
 }
 
 .comment-icon-container:hover .span-comment-icon-hover{
-    color: #393939;
+    opacity: .8;
 }
 
 .box-of-icon-heart-in-container{
@@ -1453,11 +1459,11 @@
 }
 
 .share-icon-container:hover .share-icon{
-    color: #393939;
+    opacity: .8;
 }
 
 .share-icon-container:hover .span-share-icon-hover{
-    color: #393939;
+    opacity: .8;
 }
 
 .heart-icon-container span{
@@ -1467,7 +1473,7 @@
 
 .heart-icon-container span:hover{
     text-decoration: underline;
-    color: #393939;
+    opacity: .8;
 }
 
 .heart-icon-container span , .comment-icon-container span, .share-icon-container span{
@@ -1532,7 +1538,7 @@
     bottom: 110%;
     right: 0;
     height: 300px;
-    z-index: 993;
+    z-index: 999;
     box-shadow: rgb(17 17 26 / 5%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
     border-radius: 10px;
 }
@@ -1544,7 +1550,7 @@
     background-color: transparent;
     width: 100%;
     height: 100%;
-    z-index: 992;
+    z-index: 998;
 }
 
 .write-comment-container-in-create-comment-container-in-post-of-users:hover{
@@ -1578,10 +1584,12 @@
     align-items: center;
     cursor: pointer;
     transition: .2s;
+    position: relative;
+    z-index: 999;
 }
 
 .emoji-picker-container-in-create-comment-container-in-post-of-users:hover .emoji-picker-icon-in-create-comment-container-in-post-of-users, .photo-upload-container-in-create-comment-container-in-post-of-users:hover .photo-upload-icon-in-create-comment-container-in-post-of-users{
-    opacity: .9;
+    opacity: .8;
 }
 
 .emoji-picker-icon-in-create-comment-container-in-post-of-users{
@@ -1616,29 +1624,19 @@
     height: 100%;
 }
 
-.container-xmark-icon-in-box-of-img-container-in-create-comment-container-in-post-of-users{
+.xmark-icon-in-container-xmark-icon-in-box-of-img-container-in-create-comment-container-in-post-of-users{
+    font-size: 1.5rem;
+    color: #fff;
+    font-weight: bold;
     position: absolute;
     top: 5%;
     right: 3%;
     cursor: pointer;
-    background-color: #F52929;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
     transition: .2s;
 }
 
-.container-xmark-icon-in-box-of-img-container-in-create-comment-container-in-post-of-users:hover{
-    background-color: #F20D0D;
-}
-
-.xmark-icon-in-container-xmark-icon-in-box-of-img-container-in-create-comment-container-in-post-of-users{
-    font-size: 15px;
-    color: #fff;
-    font-weight: bold;
+.xmark-icon-in-container-xmark-icon-in-box-of-img-container-in-create-comment-container-in-post-of-users:hover{
+    color: #f3f3f3;
 }
 
 .bg-people-likes-post-list{
@@ -1681,7 +1679,7 @@
 .container-header-in-people-likes-post-list p{
     margin-bottom: 0;
     color: #353535;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: bold;
 }
 
@@ -1793,7 +1791,6 @@
 .container-comments-of-users{
     width: 100%;
     height: auto;
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -1805,6 +1802,16 @@
     display: none;
 }
 
+.fix-ui-container-comments-of-user-detail-in-container-comments-of-users{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
 .container-comments-of-user-detail-in-container-comments-of-users{
     width: 100%;
     height: auto;
@@ -1812,7 +1819,6 @@
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
-    margin-bottom: 1rem;
 }
 
 .box-of-container-img-profile-in-container-comments-of-user-detail-in-container-comments-of-users{
@@ -1849,6 +1855,123 @@
     border-radius: 1.2rem;
 }
 
+.container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users{
+    flex-grow: 1;
+    height: 40px;
+    background-color: #f5f6f7;
+    border-radius: 1.5rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 5px 15px !important;
+    position: relative;
+}
+
+.container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users form{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 5px;
+}
+
+.container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users form input[type='text']{
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: 1.1rem;
+    color: #353535;
+}
+
+.container-icon-emoji-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users , .container-icon-clip-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users{
+    width: 30px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.container-icon-emoji-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users:hover .emoji-icon-in-container-icon-emoji-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users , .container-icon-clip-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users:hover .clip-icon-in-container-icon-emoji-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users{
+    opacity: .8;
+}
+
+.container-emoji-picker-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users{
+    position: absolute;
+    bottom: 110%;
+    right: 0;
+    height: 300px;
+    z-index: 993;
+    box-shadow: rgb(17 17 26 / 5%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+    border-radius: 10px;
+}
+
+.bg-onclick-to-close-emoji-picker-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    z-index: 992;
+}
+
+.container-img-preview-in-edit-comment-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users{
+    width: 200px;
+    height: 100px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.box-of-img-in-container-img-preview-in-edit-comment-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.box-of-img-in-container-img-preview-in-edit-comment-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users img{
+    width: 100%;
+    height: 100%;
+}
+
+.icon-xmark-in-box-of-img-in-container-img-preview-in-edit-comment-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users{
+    font-size: 1.5rem;
+    color: #fff;
+    font-weight: bold;
+    position: absolute;
+    top: 5%;
+    right: 3%;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.icon-xmark-in-box-of-img-in-container-img-preview-in-edit-comment-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users:hover{
+    color: #f3f3f3;
+}
+
+.emoji-icon-in-container-icon-emoji-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users , .clip-icon-in-container-icon-emoji-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users{
+    font-size: 1.4rem;
+    color: #353535;
+}
+
+.cancel-edit-comment-style-in-container-comments-of-user-detail-in-container-comments-of-users{
+    color: #353535;
+    font-size: .9rem;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.cancel-edit-comment-style-in-container-comments-of-user-detail-in-container-comments-of-users:hover{
+    opacity: .8;
+}
+
 .container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users{
     width: auto;
     height: auto;
@@ -1879,6 +2002,11 @@
     text-decoration: underline;
 }
 
+.modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users{
+    color: #3A3A3A;
+    font-size: 14px;
+}
+
 .container-comment-msg-in-container-comments-of-user-detail-in-container-comments-of-users{
     width: auto;
     height: auto;
@@ -1901,6 +2029,7 @@
     display: flex;
     justify-content: flex-end;
     align-self: flex-start;
+    position: relative;
 }
 
 .container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users{
@@ -1911,6 +2040,8 @@
     align-items: center;
     cursor: pointer;
     border-radius: 1rem;
+    position: relative;
+    z-index: 999;
 }
 
 .container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users:hover{
@@ -1920,4 +2051,143 @@
 .icon-dots-vertical-in-container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users{
     font-size: 1.2rem;
     color: #353535;
+}
+
+.comment-options-popup-in-container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users{
+    position: absolute;
+    top: 0;
+    right: 10%;
+    width: 140px;
+    height: 70px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 999;
+    box-shadow: rgb(17 17 26 / 5%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+    cursor: pointer;
+}
+
+.container-icon-edit-comment-in-comment-options-popup-in-container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users , .container-icon-delete-comment-in-comment-options-popup-in-container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    transition: .2s;
+    padding-left: 1rem !important;
+}
+
+.container-icon-edit-comment-in-comment-options-popup-in-container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users:hover , .container-icon-delete-comment-in-comment-options-popup-in-container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users:hover{
+    background-color: #DADDE1;
+}
+
+.icon-edit-comment-in-container-icon-edit-comment-in-comment-options-popup-in-container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users , .icon-delete-comment-in-container-icon-delete-comment-in-comment-options-popup-in-container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users{
+    font-size: 1rem;
+    color: #353535;
+}
+
+.container-icon-edit-comment-in-comment-options-popup-in-container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users span , .container-icon-delete-comment-in-comment-options-popup-in-container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users span{
+    font-size: .9rem;
+    color: #353535;
+}
+
+.bg-onclick-to-close-comment-options{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    z-index: 998;
+}
+
+.container-confirm-to-delete-comment-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, .3);
+    z-index: 999;
+}
+
+.container-alert-confirm-to-delete-comment-in-container-confirm-to-delete-comment-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users{
+    box-shadow: rgb(17 17 26 / 5%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+    padding: 1rem 1rem 10px 1rem !important;
+    width: 500px;
+    height: 130px;
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 999;
+}
+
+.confirm-delete-text-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #cacaca;
+    padding-bottom: 1rem !important;
+}
+
+.confirm-delete-text-container p{
+    margin-bottom: 0;
+    color: #353535;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.container-botton-in-container-alert-confirm-to-delete-comment-in-container-alert-confirm-to-delete-comment-in-container-confirm-to-delete-comment-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 35px;
+    gap: 1rem;
+}
+
+.cancel-button-in-container-botton-in-container-alert-confirm-to-delete-comment-in-container-alert-confirm-to-delete-comment-in-container-confirm-to-delete-comment-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users{
+    border: none;
+    background-color: transparent;
+    height: 100%;
+    width: 100px;
+    border-radius: 5px;
+    color: #353535;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: .1s;
+}
+
+.cancel-button-in-container-botton-in-container-alert-confirm-to-delete-comment-in-container-alert-confirm-to-delete-comment-in-container-confirm-to-delete-comment-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users:hover{
+    background-color: #E7E9EB;
+}
+
+.confirm-button-in-container-botton-in-container-alert-confirm-to-delete-comment-in-container-alert-confirm-to-delete-comment-in-container-confirm-to-delete-comment-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users{
+    border: none;
+    background-color: transparent;
+    height: 100%;
+    width: 100px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: .1s;
+    background-image: linear-gradient(to right, #00c6ff 0%, #0072ff 51%, #00c6ff 100%);
+    background-size: 200% auto;
+    transition: .5s;
+}
+
+.confirm-button-in-container-botton-in-container-alert-confirm-to-delete-comment-in-container-alert-confirm-to-delete-comment-in-container-confirm-to-delete-comment-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users:hover{
+    background-position: right center;
 }
