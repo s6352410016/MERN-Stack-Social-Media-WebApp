@@ -31,7 +31,6 @@ const Media = () => {
   const [showSkeletonSearchResult, setShowSkeletonSearchResult] = useState(true);
   const [showSkeletonChatsPopup, setShowSkeletonChatsPopup] = useState(true);
   const [searchResult, setSearchResult] = useState('');
-  console.log(process.env);
 
   const dataUserNotification = [
     {
@@ -180,7 +179,7 @@ const Media = () => {
   ];
 
   useEffect(() => {
-    fetch('http://localhost:5000/authUser', {
+    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/authUser`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

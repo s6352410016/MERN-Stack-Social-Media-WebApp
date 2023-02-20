@@ -1,15 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsis, faPenToSquare , faTrash , faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsis, faPenToSquare, faTrash, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper";
-import { AiOutlineHeart, AiOutlineShareAlt } from "react-icons/ai";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { VscComment } from "react-icons/vsc";
 import { SlPaperClip } from "react-icons/sl";
 import { BsEmojiSmile } from "react-icons/bs";
+import { CiShare1 } from "react-icons/ci";
+import { HiOutlineXMark } from "react-icons/hi2";
 import EmojiPicker from 'emoji-picker-react';
 import PeopleLikedYourPost from './PeopleLikedYourPost';
 import Comment from './Comment';
@@ -17,6 +19,7 @@ import Comment from './Comment';
 const PostWithImages = () => {
     const selectFileIconRef = useRef();
     const inputCommentRef = useRef();
+    const inputInSharePostRef = useRef();
 
     const [settingInPostPopup, setSettingInPostPopup] = useState(false);
     const [openEmojiPickerInComment, setOpenEmojiPickerInComment] = useState(false);
@@ -25,7 +28,12 @@ const PostWithImages = () => {
     const [previewImgFile, setPreviewImgFile] = useState('');
     const [openPreviewImg, setOpenImgPreview] = useState(false);
     const [openPeopleLikedYourPost, setOpenPeopleLikeYourPost] = useState(false);
-    const [openComments , setOpenComments] = useState(false);
+    const [openComments, setOpenComments] = useState(false);
+    const [iconLikeToggle, setIconLikeToggle] = useState(false);
+    const [openSharePostPopup, setOpenSharePostPopup] = useState(false);
+    const [openEmojiPickerInSharePost, setOpenEmojiPickerInSharePost] = useState(false);
+    const [msgInSharePost , setMsgInSharePost] = useState('');
+    const [inputMsgInSharePostCursorPosition , setInputMsgInSharePostCursorPosition] = useState();
 
     const EmojiClickInCreateComment = ({ emoji }) => {
         inputCommentRef.current.focus();
@@ -34,6 +42,15 @@ const PostWithImages = () => {
         const msg = start + emoji + end;
         setCommentMsg(msg);
         setCursorPosition(start.length + emoji.length);
+    }
+
+    const EmojiClickInSharePost = ({ emoji }) => {
+        inputInSharePostRef.current.focus();
+        const start = msgInSharePost.substring(0, inputInSharePostRef.current.selectionStart);
+        const end = msgInSharePost.substring(inputInSharePostRef.current.selectionStart);
+        const msg = start + emoji + end;
+        setMsgInSharePost(msg);
+        setInputMsgInSharePostCursorPosition(start.length + emoji.length);
     }
 
     const selectFileToUploadInComment = (e) => {
@@ -49,9 +66,19 @@ const PostWithImages = () => {
         setOpenImgPreview(false);
     }
 
+    const closeSharePostPopup = () => {
+        setOpenSharePostPopup(false);
+        setOpenEmojiPickerInSharePost(false);
+    }
+
     useEffect(() => {
         inputCommentRef.current.selectionEnd = cursorPosition;
-    }, [cursorPosition]);
+
+        if(openSharePostPopup){
+            inputInSharePostRef.current.selectionEnd = inputMsgInSharePostCursorPosition;
+        }
+
+    }, [cursorPosition , inputMsgInSharePostCursorPosition]);
 
     return (
         <div className='container-post-of-users'>
@@ -59,7 +86,7 @@ const PostWithImages = () => {
                 <Link to='id' className='link-container-of-img'>
                     <div className='container-of-img-profile-users'>
                         <div className='container-width-full-img'>
-                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`}  alt='profileImg'/>
+                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`} alt='profileImg' />
                         </div>
                     </div>
                 </Link>
@@ -69,7 +96,7 @@ const PostWithImages = () => {
                 </div>
                 <div className='icon-settings-post-of-users'>
                     <div className='container-icon-three-dots' onClick={() => setSettingInPostPopup(!settingInPostPopup)} >
-                        <FontAwesomeIcon icon={faEllipsis} className='icon-three-dots-horizontal'/>
+                        <FontAwesomeIcon icon={faEllipsis} className='icon-three-dots-horizontal' />
                     </div>
                     {settingInPostPopup &&
                         <>
@@ -103,8 +130,13 @@ const PostWithImages = () => {
             <div className='content-footer-in-post-of-users'>
                 <div className='container-icons-in-content-footer'>
                     <div className='heart-icon-container'>
-                        <div className='box-of-icon-heart-in-container'>
-                            <AiOutlineHeart className='heart-icon' />
+                        <div className='box-of-icon-heart-in-container' onClick={() => setIconLikeToggle(!iconLikeToggle)}>
+                            {iconLikeToggle
+                                ?
+                                <AiFillHeart className='heart-icon-active' />
+                                :
+                                <AiOutlineHeart className='heart-icon' />
+                            }
                         </div>&nbsp;
                         <span onClick={() => setOpenPeopleLikeYourPost(true)}>10 Likes</span>
                         {openPeopleLikedYourPost &&
@@ -114,6 +146,9 @@ const PostWithImages = () => {
                                     <div className='container-people-likes-post-list'>
                                         <div className='container-header-in-people-likes-post-list'>
                                             <p>People liked your post</p>
+                                            <div onClick={() => setOpenPeopleLikeYourPost(false)} className='container-icon-xmark-in-container-header-in-people-likes-post-list'>
+                                                <HiOutlineXMark className='icon-xmark-in-container-icon-xmark-in-container-header-in-people-likes-post-list' />
+                                            </div>
                                         </div>
                                         <div className='container-center-in-people-likes-post-list'>
                                             <PeopleLikedYourPost />
@@ -135,15 +170,58 @@ const PostWithImages = () => {
                     <div className='comment-icon-container' onClick={() => setOpenComments(!openComments)}>
                         <VscComment className='comment-icon' />&nbsp;&nbsp;&nbsp;<span className='span-comment-icon-hover'>Comment</span>
                     </div>
-                    <div className='share-icon-container'>
-                        <AiOutlineShareAlt className='share-icon' />&nbsp;&nbsp;&nbsp;<span className='span-share-icon-hover'>Share</span>
+                    <div className='share-icon-container' onClick={() => setOpenSharePostPopup(true)}>
+                        <CiShare1 className='share-icon' />&nbsp;&nbsp;&nbsp;<span className='span-share-icon-hover'>Share</span>
                     </div>
+                    {openSharePostPopup &&
+                        <>
+                            <div className='container-share-post-in-container-icons-in-content-footer'>
+                                <div onClick={closeSharePostPopup} className='bg-on-click-to-close-share-post-popup'></div>
+                                <div className='container-share-content-post-in-container-icons-in-content-footer'>
+                                    {openEmojiPickerInSharePost &&
+                                        <div onClick={() => setOpenEmojiPickerInSharePost(false)} className='bg-on-click-to-close-emoji-picker-in-container-share-post-in-container-icons-in-content-footer'></div>
+                                    }
+                                    <div className='header-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                        <p>Share post</p>
+                                        <div onClick={closeSharePostPopup} className='container-icon-xmark-in-header-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                            <HiOutlineXMark className='icon-xmark-in-container-icon-xmark-in-header-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer' />
+                                        </div>
+                                    </div>
+                                    <div className='body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                        <div className='container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                            <Link to='id' className='container-img-profile-in-container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`} alt='imgProfile' />
+                                            </Link>
+                                            <div className='container-fullname-of-user-in-container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                <Link to='id' className='text-decoration-in-container-fullname-of-user-in-container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                    <p>Bell bunlung</p>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                        <div className='container-msg-in-share-post-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                            <textarea value={msgInSharePost} ref={inputInSharePostRef} onChange={(e) => setMsgInSharePost(e.target.value)} placeholder='What are you thinking' className='msg-style-in-container-msg-in-share-post-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer' />
+                                            <div className='emoji-container-in-share-post-in-container-msg-in-share-post-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                <div onClick={() => setOpenEmojiPickerInSharePost(!openEmojiPickerInSharePost)} className='fix-container-onclick-in-emoji-container-in-share-post-in-container-msg-in-share-post-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                    <BsEmojiSmile className='emoji-icon-in-emoji-container-in-share-post-in-container-msg-in-share-post-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer' />
+                                                </div>
+                                                {openEmojiPickerInSharePost &&
+                                                    <div className='container-emoji-picker-in-container-msg-in-share-post-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                        <EmojiPicker onEmojiClick={EmojiClickInSharePost}/>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </>
+                    }
                 </div>
             </div>
             <div className='container-comments-of-users'>
                 {openComments &&
                     <>
-                        <Comment/>
+                        <Comment />
                     </>
                 }
             </div>

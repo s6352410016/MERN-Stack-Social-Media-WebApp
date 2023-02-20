@@ -166,6 +166,51 @@ form .err-style:focus{
     height: 40px;
 }
 
+.container-alert-resend-otp-sucessess{
+    width: 100%;
+    height: 4.5rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #a8f0c6;
+    border-left: 5px solid #178344;
+    padding: 1rem !important;
+    margin-bottom: 1.4rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    border-radius: 5px;
+}
+
+.msg-success-in-container-alert-resend-otp-sucessess{
+    font-size: 1rem;
+    margin-bottom: 0;
+    color: #178344;
+    width: 80%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-icon-xmark-in-container-alert-resend-otp-sucessess{
+    flex-grow: 1;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.icon-xmark-in-container-icon-xmark-in-container-alert-resend-otp-sucessess{
+    font-size: 1.8rem;
+    color: #178344;
+    cursor: pointer;
+    transition: .1s;
+    transition: .1s;
+}
+
+.icon-xmark-in-container-icon-xmark-in-container-alert-resend-otp-sucessess:hover{
+    color: #0B6630;
+}
+
 .content-left p{
     color: #848484;
     font-size: 1rem;
@@ -275,16 +320,50 @@ form .err-style:focus{
     width: 50%;
 }
 
-.container-content .checkSigninErr{
-    color: #E92727;
+.container-alert-box-sign-in-err{
     width: 100%;
-    height: 3.5rem;
+    height: 4.5rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #FFBDBD;
+    border-left: 5px solid #DE4040;
+    padding: 1rem !important;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    border-radius: 5px;
+}
+
+.container-content .checkSigninErr{
+    font-size: 1rem;
+    margin-bottom: 0;
+    color: #DE4040;
+    width: 80%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #F6DBDB;
-    font-size: 1rem;
 }
+
+.container-icon-xmark-in-container-alert-box-sign-in-err{
+    flex-grow: 1;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.icon-xmark-in-container-icon-xmark-in-container-alert-box-sign-in-err{
+    font-size: 1.8rem;
+    color: #DE4040;
+    cursor: pointer;
+    transition: .1s;
+}
+
+.icon-xmark-in-container-icon-xmark-in-container-alert-box-sign-in-err:hover{
+    color: #DF1E1E;
+}
+
+
 
 @media (max-width: 1200px){
     .content-left form {
@@ -315,6 +394,14 @@ form .err-style:focus{
 
     .content-left .check-logo{
         font-size: 3rem;
+    }
+
+    .container-alert-box-sign-in-err{
+        width: 300px;
+    }
+
+    .container-alert-resend-otp-sucessess{
+        width: 300px;
     }
 }
 
@@ -364,6 +451,14 @@ form .err-style:focus{
     .content-left .check-logo{
         font-size: 2.5rem;
     }
+
+    .container-alert-box-sign-in-err{
+        width: 250px;
+    }
+
+    .container-alert-resend-otp-sucessess{
+        width: 250px;
+    }
 }
 
 @media (max-width: 480px){
@@ -385,4 +480,11 @@ form .err-style:focus{
         width: 100%;
     }
 
+    .container-alert-box-sign-in-err{
+        width: 300px;
+    }
+
+    .container-alert-resend-otp-sucessess{
+        width: 300px;
+    }
 }

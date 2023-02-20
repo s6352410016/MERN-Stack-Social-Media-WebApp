@@ -82,7 +82,7 @@ const verifyOTP = async (req , res) => {
                     await otpModel.deleteMany({
                         userEmail: email
                     });
-                    res.status(200).json({msg: 'Verify otp successfullt.'});
+                    res.status(200).json({msg: 'Verify otp successfully.'});
                 }else{
                     res.status(400).json({msg: 'Invalid otp.'});
                 }

@@ -5,6 +5,7 @@ import Snowfall from 'react-snowfall';
 import ContentRight from './ContentRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye , faEyeSlash} from '@fortawesome/free-solid-svg-icons';
+import Cookies from 'js-cookie';
 
 const Signup = () => {
 
@@ -437,6 +438,8 @@ const Signup = () => {
                   })
                 }).then((res) => {
                   if(res.status === 201){
+                    Cookies.remove('usernameOrEmail');
+                    Cookies.remove('password');
                     return res.json();
                   }
                 }).then((res) => {

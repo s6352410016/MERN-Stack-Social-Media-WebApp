@@ -7,6 +7,7 @@ import { useState , useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye , faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Cookies from 'js-cookie';
+import { CiCircleRemove } from 'react-icons/ci';
 
 const Signin = () => {
 
@@ -125,7 +126,14 @@ const Signin = () => {
       <div className='content-left'>
         <div className='container-content'>
           <h1>Welcome to BYN</h1>
-          {errMsg.signinErr && <p className='checkSigninErr'>{errMsg.signinErr}</p>}
+          {errMsg.signinErr && 
+            <div className='container-alert-box-sign-in-err'>
+              <h3 className='checkSigninErr'>{errMsg.signinErr}</h3>
+              <div className='container-icon-xmark-in-container-alert-box-sign-in-err'>
+                <CiCircleRemove onClick={() => setErrMsg({})} className='icon-xmark-in-container-icon-xmark-in-container-alert-box-sign-in-err'/>
+              </div>
+            </div>
+          }
           <form onSubmit={(e) => signIn(e)}>
             <label>Username / Email:</label>
             <br/>

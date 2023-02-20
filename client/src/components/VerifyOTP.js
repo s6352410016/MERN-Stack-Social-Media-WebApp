@@ -6,6 +6,7 @@ import ContentRight from './ContentRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
+import { CiCircleRemove } from 'react-icons/ci';
 
 const VerifyOTP = () => {
 
@@ -80,7 +81,7 @@ const VerifyOTP = () => {
         }else if(res.msg === 'Invalid otp.'){
           setErrMsg('Invalid otp.');
           inputTextOTP.classList.add('custom');
-        }else if(res.msg === 'Verify otp successfullt.'){
+        }else if(res.msg === 'Verify otp successfully.'){
           inputTextOTP.classList.remove('custom');
           navigate('/resetPassword' , {
             state: {
@@ -99,7 +100,14 @@ const VerifyOTP = () => {
       <div className='content-left'>
         <div className='container-content'>
           <h1>Verifying OTP</h1>
-          {resendOTPMSGSuccess && <p style={{height: '3rem' , display: 'flex' , justifyContent: 'center' , alignItems: 'center' , backgroundColor: '#82DE98' , color: '#fff'}}>{resendOTPMSGSuccess}</p>}
+          {resendOTPMSGSuccess && 
+            <div className='container-alert-resend-otp-sucessess'>
+              <h3 className='msg-success-in-container-alert-resend-otp-sucessess'>{resendOTPMSGSuccess}</h3>
+              <div className='container-icon-xmark-in-container-alert-resend-otp-sucessess'>
+                <CiCircleRemove onClick={() => setResendOTPMSGSuccess('')} className='icon-xmark-in-container-icon-xmark-in-container-alert-resend-otp-sucessess'/>
+              </div>
+            </div>
+          }
           {resendOTPMSGErr && <p style={{height: '3rem' , display: 'flex' , justifyContent: 'center' , alignItems: 'center' , backgroundColor: '#F6DBDB' , color: '#fff'}}>{resendOTPMSGErr}</p>}
           <p>OTP has been sent to email.</p>
           <p>Check your email <span style={{color: '#2E2E2E' , fontWeight: '500'}}>{emailObscureWithAsterisk}</span></p>

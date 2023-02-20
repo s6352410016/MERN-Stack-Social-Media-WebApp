@@ -133,7 +133,8 @@ const Comment = () => {
                                     </div>
                                 </div>
                                 {openAlertConfirmToDeleteComment &&
-                                    <div onClick={closeAlertConfirmToDeleteComment} className='container-confirm-to-delete-comment-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                    <div className='container-confirm-to-delete-comment-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                        <div onClick={closeAlertConfirmToDeleteComment} className='bg-on-click-in-container-confirm-to-delete-comment-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users'></div>
                                         <div className='container-alert-confirm-to-delete-comment-in-container-confirm-to-delete-comment-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                             <div className='confirm-delete-text-container'>
                                                 <p>Are you sure to delete a comment?</p>
