@@ -61,7 +61,7 @@ const Comment = () => {
 
     useEffect(() => {
         setEditCommentMsg(commentMsg);
-    }, [commentMsg]);
+    } , [openEditComment]);
 
     return (
         <div className='fix-ui-container-comments-of-user-detail-in-container-comments-of-users'>

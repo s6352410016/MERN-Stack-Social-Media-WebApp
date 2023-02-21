@@ -14,7 +14,7 @@ import SkeletonNotification from './SkeletonNotification';
 import SkeletonSearchResult from './SkeletonSearchResult';
 import ChatPopup from './ChatPopup';
 import SkeletonChatsPopup from './SkeletonChatsPopup';
-import PostWithImages from './PostWithImages';
+import Post from './Post';
 
 const Media = () => {
 
@@ -175,6 +175,61 @@ const Media = () => {
     {
       image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user15.png`,
       fullname: 'Elon Mask'
+    },
+  ];
+
+  const postOfusers = [
+    {
+      postId: '01',
+      userId: dataForUser.find((e) => e.fullname === 'Bell bunlung'),
+      postMsg: 'This is a new post...',
+      postImgsName: [
+        'https://cdn.pixabay.com/photo/2023/01/27/06/17/pheasant-7747830_960_720.jpg' , 
+        'https://cdn.pixabay.com/photo/2022/09/07/17/26/vintage-pocket-watch-7439233_960_720.jpg',
+        'https://cdn.pixabay.com/photo/2022/12/25/04/05/living-room-7676789_640.jpg',
+        'https://cdn.pixabay.com/photo/2023/02/14/18/55/flowers-7790227_640.jpg',
+        'https://cdn.pixabay.com/photo/2023/02/04/09/20/castle-7766794__340.jpg'
+      ],
+      postVideoName: '',
+      postModifyDate: '1 minute',
+      postLikes: ['01' , '02' , '03' , '04' , '05' , '06' , '07' , '08' , '09' , '10']
+    },
+    {
+      postId: '02',
+      userId: dataForUser.find((e) => e.fullname === 'Mark Sukkerberg'),
+      postMsg: 'Holy Shit!!!',
+      postImgsName: [
+        
+      ],
+      postVideoName: '',
+      postModifyDate: '1 week',
+      postLikes: ['01']
+    },
+    {
+      postId: '03',
+      userId: dataForUser.find((e) => e.fullname === 'Prayut Chan O Cha'),
+      postMsg: 'What The Fuck...',
+      postImgsName: [
+        'https://cdn.pixabay.com/photo/2023/02/08/08/50/frequency-wave-7776034__340.jpg' , 
+        'https://cdn.pixabay.com/photo/2023/02/13/10/30/eye-7787024__340.jpg',
+        'https://cdn.pixabay.com/photo/2022/10/26/18/19/architecture-7549184__340.jpg',
+        'https://cdn.pixabay.com/photo/2022/08/09/09/24/boho-art-7374559_640.jpg',
+        'https://cdn.pixabay.com/photo/2022/06/27/18/56/grass-7288141__340.jpg'
+      ],
+      postVideoName: '',
+      postModifyDate: '10 minutes',
+      postLikes: ['01' , '02' , '03' , '04' , '05' , '06' , '07' , '08' , '09' , '10' , '11' , '12']
+    },
+    {
+      postId: '04',
+      userId: dataForUser.find((e) => e.fullname === 'สมจิตร จงจอหอ'),
+      postMsg: 'โครตดึง',
+      postImgsName: [
+        
+      ],
+      postVideoName: 'video1',
+      postModifyDate: '30 minutes',
+      postLikes: []
     },
   ];
 
@@ -394,7 +449,9 @@ const Media = () => {
             <CreatePost />
           }
           <div className='overflow-y-auto-in-post-content-of-users'>
-            <PostWithImages />
+            {postOfusers.map((e , index) => (
+              <Post key={index} postId={e.postId} userId={e.userId} postMsg={e.postMsg} postImgsName={e.postImgsName} postVideoName={e.postVideoName} postModifyDate={e.postModifyDate} postLikes={e.postLikes}/>
+            ))}
           </div>
         </div>
         <div className='content-right-in-body'>

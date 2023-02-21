@@ -16,10 +16,11 @@ import EmojiPicker from 'emoji-picker-react';
 import PeopleLikedYourPost from './PeopleLikedYourPost';
 import Comment from './Comment';
 
-const PostWithImages = () => {
+const Post = ({ postId, userId, postMsg, postImgsName, postVideoName, postModifyDate, postLikes }) => {
     const selectFileIconRef = useRef();
     const inputCommentRef = useRef();
     const inputInSharePostRef = useRef();
+    const inputInEditPostRef = useRef();
 
     const [settingInPostPopup, setSettingInPostPopup] = useState(false);
     const [openEmojiPickerInComment, setOpenEmojiPickerInComment] = useState(false);
@@ -32,8 +33,12 @@ const PostWithImages = () => {
     const [iconLikeToggle, setIconLikeToggle] = useState(false);
     const [openSharePostPopup, setOpenSharePostPopup] = useState(false);
     const [openEmojiPickerInSharePost, setOpenEmojiPickerInSharePost] = useState(false);
-    const [msgInSharePost , setMsgInSharePost] = useState('');
-    const [inputMsgInSharePostCursorPosition , setInputMsgInSharePostCursorPosition] = useState();
+    const [msgInSharePost, setMsgInSharePost] = useState('');
+    const [inputMsgInSharePostCursorPosition, setInputMsgInSharePostCursorPosition] = useState();
+    const [openEditPostPopup, setOpenEditPostPopup] = useState(false);
+    const [openEmojiPickerInEditPost, setOpenEmojiPickerInEditPost] = useState(false);
+    const [msgInEditPost , setMsgInEditPost] = useState('');
+    const [inputInEditPostCursorPosition , setInputInEditPostCursorPosition] = useState();
 
     const EmojiClickInCreateComment = ({ emoji }) => {
         inputCommentRef.current.focus();
@@ -53,12 +58,26 @@ const PostWithImages = () => {
         setInputMsgInSharePostCursorPosition(start.length + emoji.length);
     }
 
+    const EmojiClickInEditPost = ({ emoji }) => {
+        inputInEditPostRef.current.focus();
+        const start = msgInEditPost.substring(0, inputInEditPostRef.current.selectionStart);
+        const end = msgInEditPost.substring(inputInEditPostRef.current.selectionStart);
+        const msg = start + emoji + end;
+        setMsgInEditPost(msg);
+        setInputInEditPostCursorPosition(start.length + emoji.length);
+    }
+
     const selectFileToUploadInComment = (e) => {
         if (e.target.files.length > 0) {
-            const imgUrl = URL.createObjectURL(e.target.files[0]);
+            const imgUrl = URL.createObjectURL(e.target.files[0]);  
             setPreviewImgFile(imgUrl);
             setOpenImgPreview(true);
         }
+    }
+
+    const openPostEditPopup = () => {
+        setSettingInPostPopup(false);
+        setOpenEditPostPopup(!openEditPostPopup);
     }
 
     const clearFileToSelect = () => {
@@ -69,16 +88,32 @@ const PostWithImages = () => {
     const closeSharePostPopup = () => {
         setOpenSharePostPopup(false);
         setOpenEmojiPickerInSharePost(false);
+        setMsgInSharePost('');
+    }
+
+    const closeEditPostPopup = () => {
+        setOpenEditPostPopup(false);
+        setOpenEmojiPickerInEditPost(false);
     }
 
     useEffect(() => {
         inputCommentRef.current.selectionEnd = cursorPosition;
 
-        if(openSharePostPopup){
+        if (openSharePostPopup) {
             inputInSharePostRef.current.selectionEnd = inputMsgInSharePostCursorPosition;
         }
 
-    }, [cursorPosition , inputMsgInSharePostCursorPosition]);
+        if(openEditPostPopup){
+            inputInEditPostRef.current.selectionEnd = inputInEditPostCursorPosition;
+        }
+
+    }, [cursorPosition, inputMsgInSharePostCursorPosition , inputInEditPostCursorPosition]);
+
+    useEffect(() => {
+        if(openEditPostPopup){
+            setMsgInEditPost(postMsg);
+        }
+    } , [openEditPostPopup]);
 
     return (
         <div className='container-post-of-users'>
@@ -86,13 +121,13 @@ const PostWithImages = () => {
                 <Link to='id' className='link-container-of-img'>
                     <div className='container-of-img-profile-users'>
                         <div className='container-width-full-img'>
-                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`} alt='profileImg' />
+                            <img src={userId.image} alt='profileImg' />
                         </div>
                     </div>
                 </Link>
                 <div className='content-center-in-header-in-post-of-users'>
-                    <Link to='id' className='link-in-container-of-fullname-user'><p className='fullname-of-post-users'>Bell bunlung</p></Link>
-                    <p className='modify-date-post-of-users'>15 minutes ago.</p>
+                    <Link to='id' className='link-in-container-of-fullname-user'><p className='fullname-of-post-users'>{userId.fullname}</p></Link>
+                    <p className='modify-date-post-of-users'>{postModifyDate}</p>
                 </div>
                 <div className='icon-settings-post-of-users'>
                     <div className='container-icon-three-dots' onClick={() => setSettingInPostPopup(!settingInPostPopup)} >
@@ -102,7 +137,7 @@ const PostWithImages = () => {
                         <>
                             <div className='bg-toggle-onclick-in-tree-dots' onClick={() => setSettingInPostPopup(false)}></div>
                             <div className='setting-post-popup'>
-                                <div className='icon-edit-post' onClick={() => setSettingInPostPopup(false)}>
+                                <div className='icon-edit-post' onClick={openPostEditPopup}>
                                     <FontAwesomeIcon className='icon-edit-post-style' icon={faPenToSquare} />&nbsp;&nbsp;<span className='span-in-post-style'>Edit post</span>
                                 </div>
                                 <div className='icon-delete-post' onClick={() => setSettingInPostPopup(false)}>
@@ -111,22 +146,83 @@ const PostWithImages = () => {
                             </div>
                         </>
                     }
+                    {openEditPostPopup &&
+                        <div className='container-edit-post-in-icon-settings-post-of-users'>
+                            <div onClick={closeEditPostPopup} className='bg-onclick-to-close-edit-post-popup-in-container-edit-post-in-icon-settings-post-of-users'></div>
+                            <div className='container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                {openEmojiPickerInEditPost &&
+                                    <div onClick={() => setOpenEmojiPickerInEditPost(false)} className='bg-onclick-to-close-emoji-picker-in-edit-post-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'></div>
+                                }
+                                <div className='container-header-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                    <p>Edit post</p>
+                                    <div onClick={() => setOpenEditPostPopup(false)} className='container-icon-xmark-in-container-header-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                        <HiOutlineXMark className='icon-xmark-in-container-icon-xmark-in-container-header-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users' />
+                                    </div>
+                                </div>
+                                <div className='container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                    <div className='container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                        <Link to='id' className='container-img-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`} />
+                                        </Link>
+                                        <div className='container-fullname-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                            <Link to='id' className='link-container-in-container-fullname-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                                <p>Bell bunlung</p>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                    <div className='container-body-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                        <div className='container-textarea-in-container-body-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                            <textarea onChange={(e) => setMsgInEditPost(e.target.value)} value={msgInEditPost} ref={inputInEditPostRef} placeholder='Write something...'></textarea>
+                                        </div>
+                                        <div className='container-emoji-icon-in-container-body-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                            <div onClick={() => setOpenEmojiPickerInEditPost(!openEmojiPickerInEditPost)} className='fix-container-in-container-emoji-icon-in-container-body-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                                <BsEmojiSmile className='icon-emoji-in-container-emoji-icon-in-container-body-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users' />
+                                            </div>
+                                            {openEmojiPickerInEditPost &&
+                                                <div className='container-emoji-picker-in-container-emoji-icon-in-container-body-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                                    <EmojiPicker onEmojiClick={EmojiClickInEditPost}/>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
-            <div className='message-in-post-container'>
-                <p>Holy Fucking Shit!!!.</p>
-            </div>
-            <div className='content-center-in-post-of-users'>
-                <div className='container-img-post-of-users'>
-                    <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
-                        <SwiperSlide><img src='https://cdn.pixabay.com/photo/2023/01/27/06/17/pheasant-7747830_960_720.jpg' alt='postImg' /></SwiperSlide>
-                        <SwiperSlide><img src='https://cdn.pixabay.com/photo/2022/09/07/17/26/vintage-pocket-watch-7439233_960_720.jpg' alt='postImg' /></SwiperSlide>
-                        <SwiperSlide><img src='https://cdn.pixabay.com/photo/2022/12/25/04/05/living-room-7676789_640.jpg' alt='postImg' /></SwiperSlide>
-                        <SwiperSlide><img src='https://cdn.pixabay.com/photo/2023/02/14/18/55/flowers-7790227_640.jpg' alt='postImg' /></SwiperSlide>
-                        <SwiperSlide><img src='https://cdn.pixabay.com/photo/2023/02/04/09/20/castle-7766794__340.jpg' alt='postImg' /></SwiperSlide>
-                    </Swiper>
+            {postMsg !== ''
+                ?
+                <div className='message-in-post-container'>
+                    <p>{postMsg}</p>
                 </div>
-            </div>
+                :
+                <></>
+            }
+            {postImgsName.length !== 0
+                ?
+                <div className='content-center-in-post-of-users'>
+                    <div className='container-img-post-of-users'>
+                        <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
+                            {postImgsName.map((e, index) => (
+                                <SwiperSlide key={index}><img src={e} alt='postImg' /></SwiperSlide>
+                            ))}
+                        </Swiper>
+                    </div>
+                </div>
+                :
+                <></>
+            }
+            {postVideoName !== ''
+                ?
+                < div className='container-post-video-in-container-post-of-users'>
+                    <video controls>
+                        <source src={`${process.env.REACT_APP_SERVER_DOMAIN}/postVideo/video1.mp4`}></source>
+                    </video>
+                </div>
+                :
+                <></>
+            }
             <div className='content-footer-in-post-of-users'>
                 <div className='container-icons-in-content-footer'>
                     <div className='heart-icon-container'>
@@ -138,7 +234,7 @@ const PostWithImages = () => {
                                 <AiOutlineHeart className='heart-icon' />
                             }
                         </div>&nbsp;
-                        <span onClick={() => setOpenPeopleLikeYourPost(true)}>10 Likes</span>
+                        <span onClick={() => setOpenPeopleLikeYourPost(true)}>{postLikes.length === 0 ? '' : postLikes.length} {postLikes.length === 0 ? 'Like' : 'Likes'}</span>
                         {openPeopleLikedYourPost &&
                             <div className='bg-people-likes-post-list'>
                                 <>
@@ -206,11 +302,63 @@ const PostWithImages = () => {
                                                 </div>
                                                 {openEmojiPickerInSharePost &&
                                                     <div className='container-emoji-picker-in-container-msg-in-share-post-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                        <EmojiPicker onEmojiClick={EmojiClickInSharePost}/>
+                                                        <EmojiPicker onEmojiClick={EmojiClickInSharePost} />
                                                     </div>
                                                 }
                                             </div>
                                         </div>
+                                        <div className='container-post-of-user-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                            {postImgsName.length !== 0
+                                                ?
+                                                <div className='content-center-in-post-of-users-in-container-post-of-user-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                    <div className='container-img-post-of-users-in-content-center-in-post-of-users-in-container-post-of-user-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                        <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
+                                                            {postImgsName.map((e, index) => (
+                                                                <SwiperSlide key={index}><img src={e} alt='postImg' className='border-radius-none-in-container-img-post-of-users-in-content-center-in-post-of-users-in-container-post-of-user-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer' /></SwiperSlide>
+                                                            ))}
+                                                        </Swiper>
+                                                    </div>
+                                                </div>
+                                                :
+                                                <></>
+                                            }
+                                            {postVideoName !== ''
+                                                ?
+                                                <div className='container-video-in-post-to-share-in-container-post-of-user-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                    <video controls>
+                                                        <source src={`${process.env.REACT_APP_SERVER_DOMAIN}/postVideo/video1.mp4`}></source>
+                                                    </video>
+                                                </div>
+                                                :
+                                                <></>
+                                            }
+                                            <div className='container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                <div className='container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                    <Link to='id' className='container-img-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                        <img src={userId.image} alt='imgProfile' />
+                                                    </Link>
+                                                    <div className='container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                        <Link to='id' className='text-decoration-none-in-container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                            <p>{userId.fullname}</p>
+                                                        </Link>
+                                                        <div className='container-modifydate-post-in-container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                            <p>{postModifyDate}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {postMsg !== ''
+                                                    ?
+                                                    <div className='container-post-msg-of-user-to-share-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                        <p>{postMsg}</p>
+                                                    </div>
+                                                    :
+                                                    <></>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='container-footer-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                        <button>Post</button>
                                     </div>
                                 </div>
                             </div>
@@ -244,14 +392,22 @@ const PostWithImages = () => {
                     {openEmojiPickerInComment &&
                         <>
                             <div className='bg-onclick-to-close-emoji-popup-picker-in-create-comment-container-in-post-of-users' onClick={() => setOpenEmojiPickerInComment(false)}></div>
-                            <div className='style-emoji-picker-fix-in-write-comment-container-in-create-comment-container-in-post-of-users'>
-                                <EmojiPicker onEmojiClick={EmojiClickInCreateComment} />
-                            </div>
+                            {postImgsName.length !== 0 || postVideoName !== ''
+                                ?
+                                <div className='style-emoji-picker-fix-in-write-comment-container-in-create-comment-container-in-post-of-users'>
+                                    <EmojiPicker onEmojiClick={EmojiClickInCreateComment} />
+                                </div>
+                                :
+                                <div style={{ top: '110%' }} className='style-emoji-picker-fix-in-write-comment-container-in-create-comment-container-in-post-of-users'>
+                                    <EmojiPicker onEmojiClick={EmojiClickInCreateComment} />
+                                </div>
+                            }
                         </>
                     }
                 </div>
             </div>
-            {openPreviewImg &&
+            {
+                openPreviewImg &&
                 <div className='img-preview-container-in-create-comment-container-in-post-of-users'>
                     <div className='box-of-img-container-in-create-comment-container-in-post-of-users'>
                         <FontAwesomeIcon onClick={clearFileToSelect} icon={faCircleXmark} className='xmark-icon-in-container-xmark-icon-in-box-of-img-container-in-create-comment-container-in-post-of-users' />
@@ -259,8 +415,8 @@ const PostWithImages = () => {
                     </div>
                 </div>
             }
-        </div>
+        </div >
     );
 }
 
-export default PostWithImages;
+export default Post;
