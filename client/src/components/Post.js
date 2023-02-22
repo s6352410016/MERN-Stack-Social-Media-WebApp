@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsis, faPenToSquare, faTrash, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsis, faPenToSquare, faTrash, faCircleXmark, faFileCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -10,7 +10,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { VscComment } from "react-icons/vsc";
 import { SlPaperClip } from "react-icons/sl";
 import { BsEmojiSmile } from "react-icons/bs";
-import { CiShare1 } from "react-icons/ci";
+import { CiShare1, CiImageOn } from "react-icons/ci";
 import { HiOutlineXMark } from "react-icons/hi2";
 import EmojiPicker from 'emoji-picker-react';
 import PeopleLikedYourPost from './PeopleLikedYourPost';
@@ -21,6 +21,8 @@ const Post = ({ postId, userId, postMsg, postImgsName, postVideoName, postModify
     const inputCommentRef = useRef();
     const inputInSharePostRef = useRef();
     const inputInEditPostRef = useRef();
+    const inputFileImgsInEditPostRef = useRef();
+    const inputFileVideoInEditPostRef = useRef();
 
     const [settingInPostPopup, setSettingInPostPopup] = useState(false);
     const [openEmojiPickerInComment, setOpenEmojiPickerInComment] = useState(false);
@@ -37,8 +39,12 @@ const Post = ({ postId, userId, postMsg, postImgsName, postVideoName, postModify
     const [inputMsgInSharePostCursorPosition, setInputMsgInSharePostCursorPosition] = useState();
     const [openEditPostPopup, setOpenEditPostPopup] = useState(false);
     const [openEmojiPickerInEditPost, setOpenEmojiPickerInEditPost] = useState(false);
-    const [msgInEditPost , setMsgInEditPost] = useState('');
-    const [inputInEditPostCursorPosition , setInputInEditPostCursorPosition] = useState();
+    const [msgInEditPost, setMsgInEditPost] = useState('');
+    const [inputInEditPostCursorPosition, setInputInEditPostCursorPosition] = useState();
+    const [clearImgsInEditPost, setClearImgsInEditPost] = useState(true);
+    const [fileImgsInEditPost, setFileImgsInEditPost] = useState([]);
+    const [fileVideoInEditPost, setFileVideoInEditPost] = useState('');
+    const [openVideoInEditPost, setOpenVideoInEditPost] = useState(true);
 
     const EmojiClickInCreateComment = ({ emoji }) => {
         inputCommentRef.current.focus();
@@ -69,20 +75,55 @@ const Post = ({ postId, userId, postMsg, postImgsName, postVideoName, postModify
 
     const selectFileToUploadInComment = (e) => {
         if (e.target.files.length > 0) {
-            const imgUrl = URL.createObjectURL(e.target.files[0]);  
+            const imgUrl = URL.createObjectURL(e.target.files[0]);
             setPreviewImgFile(imgUrl);
             setOpenImgPreview(true);
+        }
+    }
+
+    const selectFileImgsToUploadInEditPost = (e) => {
+        if (e.target.files.length > 0) {
+            const files = e.target.files;
+            const arrFiles = Array.from(files);
+            const imgsUrl = arrFiles.map((e) => URL.createObjectURL(e));
+            setFileImgsInEditPost(imgsUrl);
+            setClearImgsInEditPost(true);
+        }
+    }
+
+    const selectFileVideoToUploadInEditPost = (e) => {
+        const file = e.target.files;
+        if (file.length > 0) {
+            setFileVideoInEditPost(file[0].name);
+        }
+    }
+
+    const openWindowFileImgUpload = () => {
+        if (!fileVideoInEditPost) {
+            inputFileImgsInEditPostRef.current.click();
+        }
+    }
+
+    const openWindowFileVideoUpload = () => {
+        if (fileImgsInEditPost.length === 0 || postImgsName.length === 0) {
+            inputFileVideoInEditPostRef.current.click();
         }
     }
 
     const openPostEditPopup = () => {
         setSettingInPostPopup(false);
         setOpenEditPostPopup(!openEditPostPopup);
+        setOpenVideoInEditPost(true);
     }
 
     const clearFileToSelect = () => {
         setPreviewImgFile('');
         setOpenImgPreview(false);
+    }
+
+    const clearFileImgsInEditPost = () => {
+        setClearImgsInEditPost(false);
+        setFileImgsInEditPost([]);
     }
 
     const closeSharePostPopup = () => {
@@ -94,7 +135,24 @@ const Post = ({ postId, userId, postMsg, postImgsName, postVideoName, postModify
     const closeEditPostPopup = () => {
         setOpenEditPostPopup(false);
         setOpenEmojiPickerInEditPost(false);
+        setFileImgsInEditPost([]);
+        setFileVideoInEditPost('');
     }
+
+    const closeEditPostPopupWithIconXmark = () => {
+        setOpenEditPostPopup(false)
+        setFileImgsInEditPost([]);
+        setFileVideoInEditPost('');
+    }
+
+    const closeOpenVideoInEditPost = () => {
+        setFileVideoInEditPost('');
+        setOpenVideoInEditPost(false);
+    }
+
+    useEffect(() => {
+        setFileImgsInEditPost(postImgsName);
+    }, []);
 
     useEffect(() => {
         inputCommentRef.current.selectionEnd = cursorPosition;
@@ -103,17 +161,18 @@ const Post = ({ postId, userId, postMsg, postImgsName, postVideoName, postModify
             inputInSharePostRef.current.selectionEnd = inputMsgInSharePostCursorPosition;
         }
 
-        if(openEditPostPopup){
+        if (openEditPostPopup) {
             inputInEditPostRef.current.selectionEnd = inputInEditPostCursorPosition;
         }
 
-    }, [cursorPosition, inputMsgInSharePostCursorPosition , inputInEditPostCursorPosition]);
+    }, [cursorPosition, inputMsgInSharePostCursorPosition, inputInEditPostCursorPosition]);
 
     useEffect(() => {
-        if(openEditPostPopup){
+        if (openEditPostPopup) {
             setMsgInEditPost(postMsg);
+            setClearImgsInEditPost(true);
         }
-    } , [openEditPostPopup]);
+    }, [openEditPostPopup]);
 
     return (
         <div className='container-post-of-users'>
@@ -155,14 +214,14 @@ const Post = ({ postId, userId, postMsg, postImgsName, postVideoName, postModify
                                 }
                                 <div className='container-header-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
                                     <p>Edit post</p>
-                                    <div onClick={() => setOpenEditPostPopup(false)} className='container-icon-xmark-in-container-header-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                    <div onClick={closeEditPostPopupWithIconXmark} className='container-icon-xmark-in-container-header-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
                                         <HiOutlineXMark className='icon-xmark-in-container-icon-xmark-in-container-header-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users' />
                                     </div>
                                 </div>
                                 <div className='container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
                                     <div className='container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
                                         <Link to='id' className='container-img-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
-                                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`} />
+                                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`} alt='imgProfile' />
                                         </Link>
                                         <div className='container-fullname-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
                                             <Link to='id' className='link-container-in-container-fullname-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
@@ -180,9 +239,90 @@ const Post = ({ postId, userId, postMsg, postImgsName, postVideoName, postModify
                                             </div>
                                             {openEmojiPickerInEditPost &&
                                                 <div className='container-emoji-picker-in-container-emoji-icon-in-container-body-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
-                                                    <EmojiPicker onEmojiClick={EmojiClickInEditPost}/>
+                                                    <EmojiPicker onEmojiClick={EmojiClickInEditPost} />
                                                 </div>
                                             }
+                                        </div>
+                                    </div>
+                                    {fileImgsInEditPost.length !== 0
+                                        ?
+                                        <div className='container-img-swipper-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                            {clearImgsInEditPost &&
+                                                <div onClick={clearFileImgsInEditPost} className='container-icon-xmark-in-container-img-swipper-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                                    <FontAwesomeIcon icon={faCircleXmark} className='icon-xmark-in-container-icon-xmark-in-container-img-swipper-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users' />
+                                                </div>
+                                            }
+                                            {clearImgsInEditPost &&
+                                                <div className='container-img-in-container-img-swipper-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                                    <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
+                                                        {fileImgsInEditPost.map((e, index) => (
+                                                            <SwiperSlide key={index}><img src={e} alt='postImg' /></SwiperSlide>
+                                                        ))}
+                                                    </Swiper>
+                                                </div>
+                                            }
+                                        </div>
+                                        :
+                                        postImgsName.length !== 0
+                                            ?
+                                            <div className='container-img-swipper-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                                {clearImgsInEditPost &&
+                                                    <div onClick={clearFileImgsInEditPost} className='container-icon-xmark-in-container-img-swipper-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                                        <FontAwesomeIcon icon={faCircleXmark} className='icon-xmark-in-container-icon-xmark-in-container-img-swipper-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users' />
+                                                    </div>
+                                                }
+                                                {clearImgsInEditPost &&
+                                                    <div className='container-img-in-container-img-swipper-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                                        <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
+                                                            {postImgsName.map((e, index) => (
+                                                                <SwiperSlide key={index}><img src={e} alt='postImg' /></SwiperSlide>
+                                                            ))}
+                                                        </Swiper>
+                                                    </div>
+                                                }
+                                            </div>
+                                            :
+                                            <></>
+                                    }
+                                    {postVideoName !== ''
+                                        ?
+                                        openVideoInEditPost &&
+                                            <div className='container-video-in-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                                <div onClick={closeOpenVideoInEditPost} className='container-icon-xmark-in-container-video-in-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                                    <FontAwesomeIcon icon={faCircleXmark} className='icon-smark-in-container-icon-xmark-in-container-video-in-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users' />
+                                                </div>
+                                                <video controls>
+                                                    <source src={`${process.env.REACT_APP_SERVER_DOMAIN}/postVideo/video1.mp4`}></source>
+                                                </video>
+                                            </div>
+                                        :
+                                        <></>
+                                    }
+                                    {fileVideoInEditPost !== ''
+                                        ?
+                                        <div className='container-show-file-video-name-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                            <FontAwesomeIcon icon={faFileCircleCheck} className='icon-file-video-in-container-show-file-video-name-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users' />
+                                            <p>{fileVideoInEditPost}</p>
+                                            <div onClick={() => setFileVideoInEditPost('')} className='container-icon-xmark-in-container-show-file-video-name-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                                <HiOutlineXMark className='icon-xmark-in-container-icon-xmark-in-container-show-file-video-name-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users' />
+                                            </div>
+                                        </div>
+                                        :
+                                        <></>
+                                    }
+                                </div>
+                                <div className='container-footer-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                    <div className='add-to-your-post-container-in-container-footer-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                        <p>Add to your post</p>
+                                    </div>
+                                    <div className='container-all-icon-in-container-footer-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                        <div onClick={openWindowFileImgUpload} className='container-icon-img-in-container-all-icon-in-container-footer-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                            <CiImageOn className='icon-img-in-container-icon-img-in-container-all-icon-in-container-footer-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users' />
+                                            <input onClick={(e) => e.target.value = null} onChange={(e) => selectFileImgsToUploadInEditPost(e)} ref={inputFileImgsInEditPostRef} type='file' accept='image/png , image/jpeg , image/webp' multiple style={{ display: 'none' }} />
+                                        </div>
+                                        <div onClick={openWindowFileVideoUpload} className='container-icon-clip-in-container-all-icon-in-container-footer-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                            <SlPaperClip className='icon-clip-in-container-icon-clip-in-container-all-icon-in-container-footer-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users' />
+                                            <input onClick={(e) => e.target.value = null} onChange={(e) => selectFileVideoToUploadInEditPost(e)} ref={inputFileVideoInEditPostRef} type='file' accept='video/mp4' style={{ display: 'none' }} />
                                         </div>
                                     </div>
                                 </div>
@@ -191,37 +331,40 @@ const Post = ({ postId, userId, postMsg, postImgsName, postVideoName, postModify
                     }
                 </div>
             </div>
-            {postMsg !== ''
-                ?
-                <div className='message-in-post-container'>
-                    <p>{postMsg}</p>
-                </div>
-                :
-                <></>
-            }
-            {postImgsName.length !== 0
-                ?
-                <div className='content-center-in-post-of-users'>
-                    <div className='container-img-post-of-users'>
-                        <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
-                            {postImgsName.map((e, index) => (
-                                <SwiperSlide key={index}><img src={e} alt='postImg' /></SwiperSlide>
-                            ))}
-                        </Swiper>
+            {
+                postMsg !== ''
+                    ?
+                    <div className='message-in-post-container'>
+                        <p>{postMsg}</p>
                     </div>
-                </div>
-                :
-                <></>
+                    :
+                    <></>
             }
-            {postVideoName !== ''
-                ?
-                < div className='container-post-video-in-container-post-of-users'>
-                    <video controls>
-                        <source src={`${process.env.REACT_APP_SERVER_DOMAIN}/postVideo/video1.mp4`}></source>
-                    </video>
-                </div>
-                :
-                <></>
+            {
+                postImgsName.length !== 0
+                    ?
+                    <div className='content-center-in-post-of-users'>
+                        <div className='container-img-post-of-users'>
+                            <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
+                                {postImgsName.map((e, index) => (
+                                    <SwiperSlide key={index}><img src={e} alt='postImg' /></SwiperSlide>
+                                ))}
+                            </Swiper>
+                        </div>
+                    </div>
+                    :
+                    <></>
+            }
+            {
+                postVideoName !== ''
+                    ?
+                    < div className='container-post-video-in-container-post-of-users'>
+                        <video controls>
+                            <source src={`${process.env.REACT_APP_SERVER_DOMAIN}/postVideo/video1.mp4`}></source>
+                        </video>
+                    </div>
+                    :
+                    <></>
             }
             <div className='content-footer-in-post-of-users'>
                 <div className='container-icons-in-content-footer'>
@@ -234,7 +377,7 @@ const Post = ({ postId, userId, postMsg, postImgsName, postVideoName, postModify
                                 <AiOutlineHeart className='heart-icon' />
                             }
                         </div>&nbsp;
-                        <span onClick={() => setOpenPeopleLikeYourPost(true)}>{postLikes.length === 0 ? '' : postLikes.length} {postLikes.length === 0 ? 'Like' : 'Likes'}</span>
+                        <span onClick={() => setOpenPeopleLikeYourPost(true)}>{postLikes.length === 0 ? '' : postLikes.length} {postLikes.length === 1 ? 'Like' : postLikes.length === 0 ? 'Like' : 'Likes'}</span>
                         {openPeopleLikedYourPost &&
                             <div className='bg-people-likes-post-list'>
                                 <>

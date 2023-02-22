@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage, faCirclePlay, faFaceGrinBeam, faCircleXmark, faFileVideo, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faImage, faCirclePlay, faFaceGrinBeam, faCircleXmark, faFileCircleCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useRef, useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 
@@ -114,7 +114,7 @@ const CreatePost = () => {
         {openVideoFilePreview &&
           <div className='container-of-video-file-preview'>
             <div className='container-of-icon-video'>
-              <FontAwesomeIcon icon={faFileVideo} className='video-icon-in-caontainer-of-video-file-preview' />
+              <FontAwesomeIcon icon={faFileCircleCheck} className='video-icon-in-caontainer-of-video-file-preview' />
             </div>
             <div className='container-of-file-name'>
               <span>{videoFile.name}</span>
