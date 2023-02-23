@@ -15,7 +15,7 @@ const SignupSuccess = () => {
           <div className='logo-container'>
             <FontAwesomeIcon icon={faCircleCheck} className='check-logo'/>  
           </div>
-          <h1>Successfully!</h1>
+          <h2>Successfully!</h2>
           <p>Your account has been successfully to signup.</p>
           <p>Click below to sign in page.</p>
           <form>

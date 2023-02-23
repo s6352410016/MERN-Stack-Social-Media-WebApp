@@ -1,32 +1,32 @@
 import React, { useEffect } from 'react';
-import {Link , useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './css/ContentLeft.css';
 import Snowfall from 'react-snowfall';
 import ContentRight from './ContentRight';
-import { useState , useRef } from 'react';
+import { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye , faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Cookies from 'js-cookie';
 import { CiCircleRemove } from 'react-icons/ci';
 
 const Signin = () => {
 
   const navigate = useNavigate();
-  
+
   const inputTextRef = useRef();
   const inputPasswordRef = useRef();
 
   useEffect(() => {
     setUsernameOrEmail(inputTextRef.current.defaultValue);
     setPassword(inputPasswordRef.current.defaultValue);
-  } , []);
+  }, []);
 
-  const [usernameOrEmail , setUsernameOrEmail] = useState('');
-  const [password , setPassword] = useState('');
-  const [errMsg , setErrMsg] = useState('');
+  const [usernameOrEmail, setUsernameOrEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errMsg, setErrMsg] = useState('');
 
-  const [type , setType] = useState('password');
-  const [icon , setIcon] = useState(faEye);
+  const [type, setType] = useState('password');
+  const [icon, setIcon] = useState(faEye);
 
   const signIn = (e) => {
     e.preventDefault();
@@ -39,44 +39,44 @@ const Signin = () => {
     const saveSignin = document.getElementById('saveSignin');
     const savePWDSignin = document.getElementById('savePWDSignin');
 
-    if(!usernameOrEmail && !!password){
+    if (!usernameOrEmail && !!password) {
       setErrMsg({
         usernameOrEmail: 'Username or email is required.'
       });
       inputTextUsernameOrEmail.classList.add('custom');
       inputPassword.classList.remove('custom');
-    }else if(!!usernameOrEmail && !password){
+    } else if (!!usernameOrEmail && !password) {
       setErrMsg({
         password: 'Password is required.'
       });
       inputTextUsernameOrEmail.classList.remove('custom');
       inputPassword.classList.add('custom');
-    }else if(!usernameOrEmail && !password){
+    } else if (!usernameOrEmail && !password) {
       setErrMsg({
         usernameOrEmail: 'Username or email is required.',
         password: 'Password is required.'
       });
       inputTextUsernameOrEmail.classList.add('custom');
       inputPassword.classList.add('custom');
-    }else if(!!usernameOrEmail && !!password){
+    } else if (!!usernameOrEmail && !!password) {
       setErrMsg({});
       inputTextUsernameOrEmail.classList.remove('custom');
       inputPassword.classList.remove('custom');
 
-      if(regExForUsername.test(usernameOrEmail) === false){
+      if (regExForUsername.test(usernameOrEmail) === false) {
         setErrMsg({
           regExErrUsername: 'Username or email is not formatted.'
         });
         inputTextUsernameOrEmail.classList.add('custom');
         inputPassword.classList.remove('custom');
-      }else if(regExForPassword.test(password) === false){
+      } else if (regExForPassword.test(password) === false) {
         setErrMsg({
           regExErrPassword: 'Password must have 8-20 characters'
         });
         inputTextUsernameOrEmail.classList.remove('custom');
         inputPassword.classList.add('custom');
-      }else{
-        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/signin` , {
+      } else {
+        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/signin`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -86,35 +86,36 @@ const Signin = () => {
             password: password
           })
         }).then((res) => {
-          if(res.status === 400){
+          if (res.status === 400) {
             setErrMsg({
               signinErr: 'Invalid username / email or password'
             });
-          }else if(res.status === 200){
-            if(saveSignin.checked){
-              Cookies.set('usernameOrEmail' , usernameOrEmail , {expires: 7});
-              Cookies.set('password' , password , {expires: 7});
-            }else{
+          } else if (res.status === 200) {
+            setErrMsg('');
+            if (saveSignin.checked) {
+              Cookies.set('usernameOrEmail', usernameOrEmail, { expires: 7 });
+              Cookies.set('password', password, { expires: 7 });
+            } else {
               Cookies.remove('usernameOrEmail');
               Cookies.remove('password');
               inputTextUsernameOrEmail.value = '';
               savePWDSignin.value = '';
-            }  
+            }
             return res.json();
           }
         }).then((res) => {
-          localStorage.setItem('token' , res.token);
+          localStorage.setItem('token', res.token);
           navigate('/media');
         });
       }
-    } 
+    }
   }
 
   const eyePopup = () => {
-    if(type === 'password'){
+    if (type === 'password') {
       setType('text');
       setIcon(faEyeSlash);
-    }else{
+    } else {
       setType('password');
       setIcon(faEye);
     }
@@ -122,40 +123,38 @@ const Signin = () => {
 
   return (
     <div className='container'>
-      <Snowfall/>
+      <Snowfall />
       <div className='content-left'>
         <div className='container-content'>
-          <h1>Welcome to BYN</h1>
-          {errMsg.signinErr && 
+          <h2>Sign in</h2>
+          {errMsg.signinErr &&
             <div className='container-alert-box-sign-in-err'>
               <h3 className='checkSigninErr'>{errMsg.signinErr}</h3>
               <div className='container-icon-xmark-in-container-alert-box-sign-in-err'>
-                <CiCircleRemove onClick={() => setErrMsg({})} className='icon-xmark-in-container-icon-xmark-in-container-alert-box-sign-in-err'/>
+                <CiCircleRemove onClick={() => setErrMsg({})} className='icon-xmark-in-container-icon-xmark-in-container-alert-box-sign-in-err' />
               </div>
             </div>
           }
           <form onSubmit={(e) => signIn(e)}>
             <label>Username / Email:</label>
-            <br/>
-            <input type='text' className='err-style' onChange={(e) => setUsernameOrEmail(e.target.value)} ref={inputTextRef} defaultValue={Cookies.get('usernameOrEmail')}/>
-            {errMsg && <span className='errMsg'>{errMsg.usernameOrEmail}{errMsg.regExErrUsername}</span>}
-            <br/>
+            <br />
+            <input type='text' className='err-style' onChange={(e) => setUsernameOrEmail(e.target.value)} ref={inputTextRef} defaultValue={Cookies.get('usernameOrEmail')} />
+            {errMsg.usernameOrEmail || errMsg.regExErrUsername ? <span className='errMsg'>{errMsg.usernameOrEmail}{errMsg.regExErrUsername}</span> : <></>}
             <label>Password:</label>
-            <br/>
+            <br />
             <div className='password-effect'>
-              <input id='savePWDSignin' type={type}  onChange={(e) => setPassword(e.target.value)} ref={inputPasswordRef} defaultValue={Cookies.get('password')}/> <FontAwesomeIcon className='icon' onClick={eyePopup} icon={icon}/>
+              <input id='savePWDSignin' type={type} onChange={(e) => setPassword(e.target.value)} ref={inputPasswordRef} defaultValue={Cookies.get('password')} /> <FontAwesomeIcon className='icon' onClick={eyePopup} icon={icon} />
             </div>
             {errMsg && <span className='errMsg'>{errMsg.password}{errMsg.regExErrPassword}</span>}
-            <br/>
             <div className='center-content'>
-              <div>
-                <input type='checkbox' id='saveSignin' defaultChecked/> <span>Remember me</span>
+              <div className='container-remember-in-center-content'>
+                <input type='checkbox' id='saveSignin' defaultChecked /> <span>Remember me</span>
               </div>
-              <div>
+              <div className='container-forgot-password-in-center-content'>
                 <Link to='/forgotPassword' className='forgotPassword'>Forgot password</Link>
               </div>
             </div>
-            <button type='submit'>Sign In</button>
+            <button type='submit'>Sign in</button>
             <div className='buttom-content'>
               <div>
                 Don't have an account?&nbsp;&nbsp;&nbsp;
@@ -165,7 +164,7 @@ const Signin = () => {
           </form>
         </div>
       </div>
-      <ContentRight/>
+      <ContentRight />
     </div>
   );
 }

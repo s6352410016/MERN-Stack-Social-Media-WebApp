@@ -880,7 +880,7 @@
 
 .container-icons-post{
     width: 100%;
-    height: 35px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1016,18 +1016,15 @@
     background: none;
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(to right, #00c6ff 0%, #0072ff 51%, #00c6ff 100%);
-    background-size: 200% auto;
+    background-color: #1982FF;
     color: #fff;
     font-size: 1.1rem;
     font-weight: 500;
-    transition: .5s;
+    transition: .2s;
 }
 
 .post-button-container button:hover{
-    background-position: right center;
-    color: #fff;
-    text-decoration: none;
+    background-color: #0074FE;
 }
 
 .container-content-right-in-body{
@@ -2203,7 +2200,7 @@
     justify-content: flex-end;
     align-items: center;
     width: 100%;
-    height: 35px;
+    height: 40px;
     gap: 1rem;
 }
 
@@ -2232,14 +2229,12 @@
     color: #fff;
     font-weight: 500;
     font-size: 1rem;
-    transition: .1s;
-    background-image: linear-gradient(to right, #00c6ff 0%, #0072ff 51%, #00c6ff 100%);
-    background-size: 200% auto;
-    transition: .5s;
+    transition: .2s;
+    background-color: #1982FF;
 }
 
 .confirm-button-in-container-botton-in-container-alert-confirm-to-delete-comment-in-container-alert-confirm-to-delete-comment-in-container-confirm-to-delete-comment-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users:hover{
-    background-position: right center;
+    background-color: #0074FE;
 }
 
 .container-share-post-in-container-icons-in-content-footer{
@@ -2570,7 +2565,7 @@
 
 .container-footer-in-container-share-content-post-in-container-icons-in-content-footer{
     width: 100%;
-    height: 35px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -2587,13 +2582,12 @@
     color: #fff;
     font-weight: 500;
     font-size: 1.1rem;
-    background-image: linear-gradient(to right, #00c6ff 0%, #0072ff 51%, #00c6ff 100%);
-    background-size: 200% auto;
-    transition: .5s;
+    background-color: #1982FF;
+    transition: .2s;
 }
 
 .container-footer-in-container-share-content-post-in-container-icons-in-content-footer button:hover{
-    background-position: right center;
+    background-color: #0074FE;
 }
 
 .container-edit-post-in-icon-settings-post-of-users{

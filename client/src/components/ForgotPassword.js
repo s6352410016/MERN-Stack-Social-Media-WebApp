@@ -68,7 +68,7 @@ const ForgotPassword = () => {
       <Snowfall/>
       <div className='content-left'>
         <div className='container-content'>
-          <h1>Reset password</h1>
+          <h2>Reset password</h2>
           <p>We'll send an otp for verification to your email.</p>
           <form onSubmit={(e) => sendOTP(e)}>
             <label>Email</label>

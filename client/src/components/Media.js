@@ -31,6 +31,7 @@ const Media = () => {
   const [showSkeletonSearchResult, setShowSkeletonSearchResult] = useState(true);
   const [showSkeletonChatsPopup, setShowSkeletonChatsPopup] = useState(true);
   const [searchResult, setSearchResult] = useState('');
+  const [postDataOfUsers , setPostDataOfUsers] = useState([]);
 
   const dataUserNotification = [
     {
@@ -266,6 +267,12 @@ const Media = () => {
     }, 3000);
   }, []);
 
+  useEffect(() => {
+    const mapImgsInPost = postOfusers.map((e) => e);
+    setPostDataOfUsers(mapImgsInPost);
+  } , []);
+  console.log(postDataOfUsers);
+
   const dropdownPopup = () => {
     setOpenMenus(!openMenus);
     setOpenNotifications(false);
@@ -449,8 +456,8 @@ const Media = () => {
             <CreatePost />
           }
           <div className='overflow-y-auto-in-post-content-of-users'>
-            {postOfusers.map((e , index) => (
-              <Post key={index} postId={e.postId} userId={e.userId} postMsg={e.postMsg} postImgsName={e.postImgsName} postVideoName={e.postVideoName} postModifyDate={e.postModifyDate} postLikes={e.postLikes}/>
+            {postDataOfUsers.map((e , index) => (
+              <Post key={index} postId={e.postId} userId={e.userId} postMsg={e.postMsg} postImgsName={e.postImgsName} setPostDataOfUsers={setPostDataOfUsers} postVideoName={e.postVideoName} postModifyDate={e.postModifyDate} postLikes={e.postLikes}/>
             ))}
           </div>
         </div>

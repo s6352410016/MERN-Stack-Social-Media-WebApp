@@ -124,7 +124,7 @@ const ResetPassword = () => {
       <Snowfall/>
       <div className='content-left'>
         <div className='container-content'>
-          <h1>Change password</h1>
+          <h2>Change password</h2>
           <form onSubmit={(e) => resetPassword(e)}>
             <label>New password:</label>
             <br/>
@@ -132,15 +132,13 @@ const ResetPassword = () => {
               <input type={type1}  onChange={(e) => setNewPassword(e.target.value)}/> <FontAwesomeIcon className='icon' onClick={eyePopup1} icon={icon1}/>
             </div>
             {errMsg && <span className='errMsg'>{errMsg.ErrNewPassword}{errMsg.ErrPasswordNotMatch}{errMsg.RegExErrNewPassword}</span>}
-            <br/>
             <label>Confirm new password:</label>
             <br/>
             <div className='password-effect'>
               <input type={type2}  onChange={(e) => setConfirmNewPassword(e.target.value)}/> <FontAwesomeIcon className='icon' onClick={eyePopup2} icon={icon2}/>
             </div>
             {errMsg && <span className='errMsg' style={{marginBottom: '0'}}>{errMsg.ErrConfirmNewPassword}{errMsg.ErrPasswordNotMatch}{errMsg.RegExErrConfirmNewPassword}</span>}
-            <br/>
-            <button type='submit'>Reset password</button>
+            <button type='submit'>Confirm</button>
             <div className='buttom-content'>
               <Link to='/' className='signup'><FontAwesomeIcon icon={faArrowLeft}/>&nbsp;&nbsp;Back to sign in</Link>
             </div>

@@ -469,21 +469,23 @@ const Signup = () => {
       <Snowfall/>
       <div className='content-left'>
         <div className='container-content'>
-          <h1>Create account</h1>
+          <h2>Sign up</h2>
           <form onSubmit={(e) => signIn(e)}>
             <div className='input-head'>
-              <div>
+              <div className='container-fullname-of-user-in-form'>
                 <label>Firstname:</label>
                 <br/>
                 <input type='text' className='err-style' onChange={(e) => setFirstName(e.target.value)}/>
+                <div style={{display: 'none'}} className='Errmsg-popup-in-768px'>{errMsg && <span className='errMsg' >{errMsg.firstname}{errMsg.regExErrFirstname}</span>}</div>
               </div>
-              <div>
+              <div className='container-fullname-of-user-in-form'>
                 <label>Lastname:</label>
                 <br/>
                 <input type='text' className='err-style' onChange={(e) => setLastName(e.target.value)}/>
+                <div style={{display: 'none'}} className='Errmsg-popup-in-768px'>{errMsg && <span className='errMsg' style={{textAlign: 'start'}}>{errMsg.lastname}{errMsg.regExErrLastname}</span>}</div>
               </div>
             </div>
-            <div className='errMsg-container'>
+            <div className='errMsg-container' style={{marginBottom: '0'}}>
               {errMsg && <span className='errMsg' >{errMsg.firstname}{errMsg.regExErrFirstname}</span>}
               {errMsg && <span className='errMsg' style={{textAlign: 'start'}}>{errMsg.lastname}{errMsg.regExErrLastname}</span>}
             </div>
@@ -491,19 +493,17 @@ const Signup = () => {
             <br/>
             <input type='text' className='err-style' onChange={(e) => setUsername(e.target.value)}/>
             {errMsg && <span className='errMsg'>{errMsg.username}{errMsg.regExErrUsername}</span>}
-            <br/>
             <label>Password:</label>
             <br/>
             <div className='password-effect'>
               <input type={type}  onChange={(e) => setPassword(e.target.value)}/> <FontAwesomeIcon onClick={eyePopup} className='icon' icon={icon}/>
             </div>
-            {errMsg && <span className='errMsg'>{errMsg.password}{errMsg.regExErrPassword}</span>}
-            <br/>
+            {errMsg && <><span className='errMsg'>{errMsg.password}{errMsg.regExErrPassword}</span></>}
             <label>Email:</label>
             <br/>
             <input type='text' className='err-style' onChange={(e) => setEmail(e.target.value)}/>
-            {errMsg && <span className='errMsg'>{errMsg.email}{errMsg.regExErrEmail}</span>}
-            <button type='submit'>Sign Up</button>
+            {errMsg && <span style={{marginBottom: '0'}} className='errMsg'>{errMsg.email}{errMsg.regExErrEmail}</span>}
+            <button type='submit'>Sign up</button>
             <div className='buttom-content'>
               <div>
                 Have already an account?&nbsp;&nbsp;&nbsp;

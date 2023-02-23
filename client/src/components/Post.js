@@ -16,7 +16,7 @@ import EmojiPicker from 'emoji-picker-react';
 import PeopleLikedYourPost from './PeopleLikedYourPost';
 import Comment from './Comment';
 
-const Post = ({ postId, userId, postMsg, postImgsName, postVideoName, postModifyDate, postLikes }) => {
+const Post = ({ postId, userId, postMsg, postImgsName, setPostDataOfUsers, postVideoName, postModifyDate, postLikes }) => {
     const selectFileIconRef = useRef();
     const inputCommentRef = useRef();
     const inputInSharePostRef = useRef();
@@ -95,19 +95,17 @@ const Post = ({ postId, userId, postMsg, postImgsName, postVideoName, postModify
         const file = e.target.files;
         if (file.length > 0) {
             setFileVideoInEditPost(file[0].name);
+            setFileImgsInEditPost([]);
+            setPostDataOfUsers((prev) => [...prev.fill(prev.find((e) => e.postId === postId) , 0 , 1)]);
         }
     }
 
     const openWindowFileImgUpload = () => {
-        if (!fileVideoInEditPost) {
-            inputFileImgsInEditPostRef.current.click();
-        }
+        inputFileImgsInEditPostRef.current.click();
     }
 
     const openWindowFileVideoUpload = () => {
-        if (fileImgsInEditPost.length === 0 || postImgsName.length === 0) {
-            inputFileVideoInEditPostRef.current.click();
-        }
+        inputFileVideoInEditPostRef.current.click();
     }
 
     const openPostEditPopup = () => {
@@ -287,14 +285,14 @@ const Post = ({ postId, userId, postMsg, postImgsName, postVideoName, postModify
                                     {postVideoName !== ''
                                         ?
                                         openVideoInEditPost &&
-                                            <div className='container-video-in-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
-                                                <div onClick={closeOpenVideoInEditPost} className='container-icon-xmark-in-container-video-in-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
-                                                    <FontAwesomeIcon icon={faCircleXmark} className='icon-smark-in-container-icon-xmark-in-container-video-in-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users' />
-                                                </div>
-                                                <video controls>
-                                                    <source src={`${process.env.REACT_APP_SERVER_DOMAIN}/postVideo/video1.mp4`}></source>
-                                                </video>
+                                        <div className='container-video-in-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                            <div onClick={closeOpenVideoInEditPost} className='container-icon-xmark-in-container-video-in-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                                <FontAwesomeIcon icon={faCircleXmark} className='icon-smark-in-container-icon-xmark-in-container-video-in-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users' />
                                             </div>
+                                            <video controls>
+                                                <source src={`${process.env.REACT_APP_SERVER_DOMAIN}/postVideo/video1.mp4`}></source>
+                                            </video>
+                                        </div>
                                         :
                                         <></>
                                     }

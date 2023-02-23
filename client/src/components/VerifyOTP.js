@@ -99,7 +99,7 @@ const VerifyOTP = () => {
       <Snowfall/>
       <div className='content-left'>
         <div className='container-content'>
-          <h1>Verifying OTP</h1>
+          <h2>Verifying OTP</h2>
           {resendOTPMSGSuccess && 
             <div className='container-alert-resend-otp-sucessess'>
               <h3 className='msg-success-in-container-alert-resend-otp-sucessess'>{resendOTPMSGSuccess}</h3>
@@ -113,7 +113,7 @@ const VerifyOTP = () => {
           <p>Check your email <span style={{color: '#2E2E2E' , fontWeight: '500'}}>{emailObscureWithAsterisk}</span></p>
           <form onSubmit={(e) => verifyOTP(e)}>
             <input type='text' className='err-style' placeholder='Enter OTP' onChange={(e) => setOTP(e.target.value)}/>
-            {errMsg && <span className='errMsg'>{errMsg}</span>}
+            {errMsg && <span style={{marginBottom: '0'}} className='errMsg'>{errMsg}</span>}
             <button type='submit'>Confirm</button>
             <div className='resend-otp'>
               <span className='first-span'>Don't receive an otp?</span>&nbsp;&nbsp;&nbsp;<span className='last-span' onClick={resendOTP}>Click to resend</span>

@@ -15,7 +15,7 @@ const PendingSuccess = () => {
           <div className='logo-container'>
             <FontAwesomeIcon icon={faUserCheck} className='check-logo'/>  
           </div>
-          <h1>Successfully!</h1>
+          <h2>Successfully!</h2>
           <p>Your password has been successfully to reset.</p>
           <p>Click below to sign in page.</p>
           <form>
