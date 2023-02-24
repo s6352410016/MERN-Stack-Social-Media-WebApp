@@ -16,6 +16,7 @@ const signin = async (req , res) => {
             if(result){
                 const token = await jwt.sign(
                     {userData: {
+                        userId: doc._id,
                         firstname: doc.firstname,
                         lastname: doc.lastname
                     }},

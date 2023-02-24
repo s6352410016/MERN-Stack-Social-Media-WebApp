@@ -46,7 +46,7 @@
 
 form .err-style{
     width: 100%;
-    height: 45px;
+    height: 40px;
     outline: none;
     border: 1px solid #cacaca;
     margin-bottom: 1rem;
@@ -81,7 +81,7 @@ form .err-style{
          
 .content-left button{
     width: 100%;
-    height: 45px;
+    height: 40px;
     text-align: center;
     transition: .2s;
     background-color: #1982FF;
@@ -155,7 +155,7 @@ form .err-style{
 }
 
 .input-head div input{
-    height: 45px;
+    height: 40px;
 }
 
 .container-alert-resend-otp-sucessess{
@@ -253,7 +253,7 @@ form .err-style{
 
 .err-style.custom , .err-style.custom:focus{
     width: 100%;
-    height: 45px;
+    height: 40px;
     outline: none;
     margin-bottom: 1rem;
     font-size: 17px;
@@ -269,7 +269,7 @@ form .err-style{
 
 .password-effect.custom , .password-effect.custom:focus{
     width: 100%;
-    height: 45px;
+    height: 40px;
     outline: none;
     margin-bottom: 1rem;
     font-size: 17px;
@@ -281,7 +281,7 @@ form .err-style{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 45px;
+    height: 40px;
     width: 100%;
     border: 1px solid #cacaca;
     border-radius: 5px;

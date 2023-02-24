@@ -17,7 +17,6 @@ import SkeletonChatsPopup from './SkeletonChatsPopup';
 import Post from './Post';
 
 const Media = () => {
-
   const navigate = useNavigate();
 
   const [userData, setUserData] = useState('');
@@ -31,208 +30,258 @@ const Media = () => {
   const [showSkeletonSearchResult, setShowSkeletonSearchResult] = useState(true);
   const [showSkeletonChatsPopup, setShowSkeletonChatsPopup] = useState(true);
   const [searchResult, setSearchResult] = useState('');
-  const [postDataOfUsers , setPostDataOfUsers] = useState([]);
+  const [postDataOfUsers, setPostDataOfUsers] = useState([]);
+  const [dataUserNotification, setDataUserNotification] = useState(
+    [
+      {
+        image: `user1.png`,
+        username: 'Bell bunlung',
+        userContent: 'Create a new post now.',
+        modifyDate: '4 week ago.'
+      },
+      {
+        image: `user2.png`,
+        username: 'Prayut Chan O Cha',
+        userContent: 'Create a new post now.',
+        modifyDate: '1 minute ago.'
+      },
+      {
+        image: `user3.png`,
+        username: 'บัลลังก์ มาเอี่ยม',
+        userContent: 'like your post.',
+        modifyDate: '10 minutes ago.'
+      },
+      {
+        image: `user4.png`,
+        username: 'มากมี ศรีสุข',
+        userContent: 'like your post.',
+        modifyDate: '10 minutes ago.'
+      },
+      {
+        image: `user5.png`,
+        username: 'ดวงใจ มากมาย',
+        userContent: 'like your post.',
+        modifyDate: '10 minutes ago.'
+      },
+      {
+        image: `user6.png`,
+        username: 'สมพร ดวงดี',
+        userContent: 'like your post.',
+        modifyDate: '10 minutes ago.'
+      },
+      {
+        image: `user7.png`,
+        username: 'สมหมาย ใจงาม',
+        userContent: 'like your post.',
+        modifyDate: '10 minutes ago.'
+      },
+    ]
+  );
+  const [dataUserChats, setDataUserChats] = useState(
+    [
+      {
+        image: `user1.png`,
+        fullname: 'Bell bunlung',
+        senderChat: 'Hello...'
+      },
+      {
+        image: `user2.png`,
+        fullname: 'Prayut Chan O Cha',
+        senderChat: 'Hello...'
+      },
+      {
+        image: `user3.png`,
+        fullname: 'บัลลังก์ มาเอี่ยม',
+        senderChat: 'Hello...'
+      },
+      {
+        image: `user4.png`,
+        fullname: 'มากมี ศรีสุข',
+        senderChat: 'Hello...'
+      },
+      {
+        image: `user5.png`,
+        fullname: 'ดวงใจ มากมาย',
+        senderChat: 'Hello...'
+      },
+      {
+        image: `user6.png`,
+        fullname: 'สมพร ดวงดี',
+        senderChat: 'Hello...'
+      },
+      {
+        image: `user7.png`,
+        fullname: 'สมหมาย ใจงาม',
+        senderChat: 'Hello...'
+      },
+    ]
+  );
+  const [dataForUser, setDataForUser] = useState(
+    [
+      {
+        image: `user1.png`,
+        fullname: 'bunlung maieam',
+        id: '63db82a0028c87f7d37c6628'
+      },
+      {
+        image: `user2.png`,
+        fullname: 'Prayut Chan O Cha',
+        id: '02'
+      },
+      {
+        image: `user3.png`,
+        fullname: 'บัลลังก์ มาเอี่ยม',
+        id: '03'
+      },
+      {
+        image: `user4.png`,
+        fullname: 'มากมี ศรีสุข',
+        id: '04'
+      },
+      {
+        image: `user5.png`,
+        fullname: 'ดวงใจ มากมาย',
+        id: '05'
+      },
+      {
+        image: `user6.png`,
+        fullname: 'สมพร ดวงดี',
+        id: '06'
+      },
+      {
+        image: `user7.png`,
+        fullname: 'สมหมาย ใจงาม',
+        id: '07'
+      },
+      {
+        image: `user8.png`,
+        fullname: 'สมคิด จิตสงบ',
+        id: '08'
+      },
+      {
+        image: `user9.png`,
+        fullname: 'บุญมี มากล้น',
+        id: '09'
+      },
+      {
+        image: `user10.png`,
+        fullname: 'บุญงาม พอแล้ว',
+        id: '10'
+      },
+      {
+        image: `user11.png`,
+        fullname: 'สมควร รวยมาก',
+        id: '11'
+      },
+      {
+        image: `user12.png`,
+        fullname: 'สมจิตร จงจอหอ',
+        id: '12'
+      },
+      {
+        image: `user13.png`,
+        fullname: 'พอดี พอแล้ว',
+        id: '13'
+      },
+      {
+        image: `user14.png`,
+        fullname: 'Mark Sukkerberg',
+        id: '14'
+      },
+      {
+        image: `user15.png`,
+        fullname: 'Elon Mask',
+        id: '15'
+      },
+    ]
+  );
+  const [postOfusers, setPostOfusers] = useState(
+    [
+      {
+        postId: '01',
+        userId: dataForUser.find((e) => e.fullname === 'bunlung maieam'),
+        postMsg: 'This is a new post...',
+        postImgs: [
+          'img1.webp',
+          'img2.jpg',
+        ],
+        postVideo: '',
+        postModifyDate: '1 minute',
+        postLikes: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']
+      },
+      {
+        postId: '02',
+        userId: dataForUser.find((e) => e.fullname === 'Mark Sukkerberg'),
+        postMsg: 'Holy Shit!!!',
+        postImgs: [
+          'img3.jpg',
+          'img4.jpg',
+          'img5.webp',
+        ],
+        postVideo: '',
+        postModifyDate: '1 week',
+        postLikes: ['01']
+      },
+      {
+        postId: '03',
+        userId: dataForUser.find((e) => e.fullname === 'Prayut Chan O Cha'),
+        postMsg: 'What The Fuck...',
+        postImgs: [
+          'img6.webp',
+          'img7.jpg',
+          'img8.jpg',
+          'img9.webp',
+        ],
+        postVideo: '',
+        postModifyDate: '10 minutes',
+        postLikes: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+      },
+      {
+        postId: '04',
+        userId: dataForUser.find((e) => e.fullname === 'สมจิตร จงจอหอ'),
+        postMsg: 'โครตดึง',
+        postImgs: [
 
-  const dataUserNotification = [
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`,
-      username: 'Bell bunlung',
-      userContent: 'Create a new post now.',
-      modifyDate: '4 week ago.'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user2.png`,
-      username: 'Prayut Chan O Cha',
-      userContent: 'Create a new post now.',
-      modifyDate: '1 minute ago.'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user3.png`,
-      username: 'บัลลังก์ มาเอี่ยม',
-      userContent: 'like your post.',
-      modifyDate: '10 minutes ago.'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user4.png`,
-      username: 'มากมี ศรีสุข',
-      userContent: 'like your post.',
-      modifyDate: '10 minutes ago.'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user5.png`,
-      username: 'ดวงใจ มากมาย',
-      userContent: 'like your post.',
-      modifyDate: '10 minutes ago.'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user6.png`,
-      username: 'สมพร ดวงดี',
-      userContent: 'like your post.',
-      modifyDate: '10 minutes ago.'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user7.png`,
-      username: 'สมหมาย ใจงาม',
-      userContent: 'like your post.',
-      modifyDate: '10 minutes ago.'
-    },
-  ];
-
-  const dataUserChats = [
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`,
-      fullname: 'Bell bunlung',
-      senderChat: 'Hello...'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user2.png`,
-      fullname: 'Prayut Chan O Cha',
-      senderChat: 'Hello...'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user3.png`,
-      fullname: 'บัลลังก์ มาเอี่ยม',
-      senderChat: 'Hello...'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user4.png`,
-      fullname: 'มากมี ศรีสุข',
-      senderChat: 'Hello...'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user5.png`,
-      fullname: 'ดวงใจ มากมาย',
-      senderChat: 'Hello...'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user6.png`,
-      fullname: 'สมพร ดวงดี',
-      senderChat: 'Hello...'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user7.png`,
-      fullname: 'สมหมาย ใจงาม',
-      senderChat: 'Hello...'
-    },
-  ];
-
-  const dataForUser = [
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`,
-      fullname: 'Bell bunlung'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user2.png`,
-      fullname: 'Prayut Chan O Cha'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user3.png`,
-      fullname: 'บัลลังก์ มาเอี่ยม'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user4.png`,
-      fullname: 'มากมี ศรีสุข'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user5.png`,
-      fullname: 'ดวงใจ มากมาย'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user6.png`,
-      fullname: 'สมพร ดวงดี'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user7.png`,
-      fullname: 'สมหมาย ใจงาม'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user8.png`,
-      fullname: 'สมคิด จิตสงบ'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user9.png`,
-      fullname: 'บุญมี มากล้น'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user10.png`,
-      fullname: 'บุญงาม พอแล้ว'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user11.png`,
-      fullname: 'สมควร รวยมาก'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user12.png`,
-      fullname: 'สมจิตร จงจอหอ'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user13.png`,
-      fullname: 'พอดี พอแล้ว'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user14.png`,
-      fullname: 'Mark Sukkerberg'
-    },
-    {
-      image: `${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user15.png`,
-      fullname: 'Elon Mask'
-    },
-  ];
-
-  const postOfusers = [
-    {
-      postId: '01',
-      userId: dataForUser.find((e) => e.fullname === 'Bell bunlung'),
-      postMsg: 'This is a new post...',
-      postImgsName: [
-        'https://cdn.pixabay.com/photo/2023/01/27/06/17/pheasant-7747830_960_720.jpg' , 
-        'https://cdn.pixabay.com/photo/2022/09/07/17/26/vintage-pocket-watch-7439233_960_720.jpg',
-        'https://cdn.pixabay.com/photo/2022/12/25/04/05/living-room-7676789_640.jpg',
-        'https://cdn.pixabay.com/photo/2023/02/14/18/55/flowers-7790227_640.jpg',
-        'https://cdn.pixabay.com/photo/2023/02/04/09/20/castle-7766794__340.jpg'
-      ],
-      postVideoName: '',
-      postModifyDate: '1 minute',
-      postLikes: ['01' , '02' , '03' , '04' , '05' , '06' , '07' , '08' , '09' , '10']
-    },
-    {
-      postId: '02',
-      userId: dataForUser.find((e) => e.fullname === 'Mark Sukkerberg'),
-      postMsg: 'Holy Shit!!!',
-      postImgsName: [
-        
-      ],
-      postVideoName: '',
-      postModifyDate: '1 week',
-      postLikes: ['01']
-    },
-    {
-      postId: '03',
-      userId: dataForUser.find((e) => e.fullname === 'Prayut Chan O Cha'),
-      postMsg: 'What The Fuck...',
-      postImgsName: [
-        'https://cdn.pixabay.com/photo/2023/02/08/08/50/frequency-wave-7776034__340.jpg' , 
-        'https://cdn.pixabay.com/photo/2023/02/13/10/30/eye-7787024__340.jpg',
-        'https://cdn.pixabay.com/photo/2022/10/26/18/19/architecture-7549184__340.jpg',
-        'https://cdn.pixabay.com/photo/2022/08/09/09/24/boho-art-7374559_640.jpg',
-        'https://cdn.pixabay.com/photo/2022/06/27/18/56/grass-7288141__340.jpg'
-      ],
-      postVideoName: '',
-      postModifyDate: '10 minutes',
-      postLikes: ['01' , '02' , '03' , '04' , '05' , '06' , '07' , '08' , '09' , '10' , '11' , '12']
-    },
-    {
-      postId: '04',
-      userId: dataForUser.find((e) => e.fullname === 'สมจิตร จงจอหอ'),
-      postMsg: 'โครตดึง',
-      postImgsName: [
-        
-      ],
-      postVideoName: 'video1',
-      postModifyDate: '30 minutes',
-      postLikes: []
-    },
-  ];
+        ],
+        postVideo: 'video1.mp4',
+        postModifyDate: '30 minutes',
+        postLikes: []
+      },
+      {
+        postId: '05',
+        userId: dataForUser.find((e) => e.fullname === 'สมควร รวยมาก'),
+        postMsg: 'วัยรุ่นคำมี',
+        postImgs: [
+          'img10.webp',
+        ],
+        postVideo: '',
+        postModifyDate: '40 minutes',
+        postLikes: ['01', '02', '03', '04', '05', '06', '07']
+      },
+      {
+        postId: '06',
+        userId: dataForUser.find((e) => e.fullname === 'พอดี พอแล้ว'),
+        postMsg: 'ซีมอกเหล่าตั๊ก',
+        postImgs: [
+          
+        ],
+        postVideo: 'video2.mp4',
+        postModifyDate: '40 minutes',
+        postLikes: ['01']
+      },
+      {
+        postId: '07',
+        userId: dataForUser.find((e) => e.fullname === 'bunlung maieam'),
+        postMsg: 'Test+++',
+        postImgs: [
+          'img2.jpg',
+        ],
+        postVideo: '',
+        postModifyDate: '1 minute',
+        postLikes: ['01', '02', '03', '04']
+      },
+    ]
+  );
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/authUser`, {
@@ -243,14 +292,15 @@ const Media = () => {
       }
     }).then((res) => {
       if (res.status === 401) {
-        navigate('/');
+        window.location.href = '/';
       } else if (res.status === 403) {
-        navigate('/');
+        window.location.href = '/';
       } else {
         return res.json();
       }
     }).then((res) => {
       setUserData({
+        userId: res.userId,
         firstname: res.firstname,
         lastname: res.lastname
       });
@@ -268,10 +318,8 @@ const Media = () => {
   }, []);
 
   useEffect(() => {
-    const mapImgsInPost = postOfusers.map((e) => e);
-    setPostDataOfUsers(mapImgsInPost);
-  } , []);
-  console.log(postDataOfUsers);
+    setPostDataOfUsers(postOfusers.map((e) => e));
+  }, []);
 
   const dropdownPopup = () => {
     setOpenMenus(!openMenus);
@@ -456,14 +504,14 @@ const Media = () => {
             <CreatePost />
           }
           <div className='overflow-y-auto-in-post-content-of-users'>
-            {postDataOfUsers.map((e , index) => (
-              <Post key={index} postId={e.postId} userId={e.userId} postMsg={e.postMsg} postImgsName={e.postImgsName} setPostDataOfUsers={setPostDataOfUsers} postVideoName={e.postVideoName} postModifyDate={e.postModifyDate} postLikes={e.postLikes}/>
+            {postDataOfUsers.map((e, index) => (
+              <Post key={index} activeUserId={userData.userId} postId={e.postId} userId={e.userId} postMsg={e.postMsg} postImgs={e.postImgs} setPostDataOfUsers={setPostDataOfUsers} postVideo={e.postVideo} postModifyDate={e.postModifyDate} postLikes={e.postLikes} />
             ))}
           </div>
         </div>
         <div className='content-right-in-body'>
           <div className='container-content-right-in-body'>
-            {userData.firstname} {userData.lastname}
+          {userData.userId} {userData.firstname} {userData.lastname}
           </div>
         </div>
       </div>

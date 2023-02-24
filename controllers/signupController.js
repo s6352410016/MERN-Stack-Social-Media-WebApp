@@ -47,6 +47,7 @@ const signup = async (req , res) => {
         await saveSignup.save();
         const token = await jwt.sign(
             {userData:{
+                userId: saveSignup._id,
                 firstname: saveSignup.firstname,
                 lastname: saveSignup.lastname,
             }},

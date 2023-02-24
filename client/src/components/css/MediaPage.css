@@ -2403,13 +2403,13 @@
 }
 
 .emoji-icon-in-emoji-container-in-share-post-in-container-msg-in-share-post-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer{
-    color: #9D9D9D;
+    color: #353535;
     font-size: 1.5rem;
     transition: .2s;
 }
 
 .emoji-container-in-share-post-in-container-msg-in-share-post-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer:hover .emoji-icon-in-emoji-container-in-share-post-in-container-msg-in-share-post-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer{
-    color: #5F5F5F;
+    opacity: .8;
 }
 
 .bg-on-click-to-close-share-post-popup{
@@ -2744,6 +2744,8 @@
     height: 100% !important;
     outline: none;
     padding-right: 5px !important;
+    word-break: break-all;
+    font-weight: 500;
 }
 
 .container-textarea-in-container-body-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users textarea::-webkit-scrollbar{
@@ -2771,12 +2773,12 @@
 
 .icon-emoji-in-container-emoji-icon-in-container-body-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users{
     font-size: 1.5rem;
-    color: #9D9D9D;
+    color: #353535;
     transition: .2s;
 }
 
 .container-emoji-icon-in-container-body-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users:hover .icon-emoji-in-container-emoji-icon-in-container-body-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users{
-    color: #5F5F5F;
+    opacity: .8;
 }
 
 .container-emoji-picker-in-container-emoji-icon-in-container-body-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users{
@@ -2976,4 +2978,129 @@
 
 .container-icon-xmark-in-container-video-in-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users:hover .icon-smark-in-container-icon-xmark-in-container-video-in-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users{
     color: #f3f3f3;
+}
+
+.container-button-save-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.container-button-save-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users button{
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: #1982FF;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: .2s;
+}
+
+.container-button-save-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users button:hover{
+   background-color: #0074FE;
+}
+
+.container-delete-post-in-icon-settings-post-of-users{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0 , 0 , 0 , .3);
+    z-index: 999;
+}
+
+.container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users{
+    box-shadow: rgb(17 17 26 / 5%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+    padding: 1rem 1rem 10px 1rem !important;
+    width: 500px;
+    height: 130px;
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 999;
+}
+
+.container-header-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #cacaca;
+    padding-bottom: 1rem !important;
+}
+
+.container-header-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users p{
+    margin-bottom: 0;
+    color: #353535;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.container-body-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    gap: 1rem;
+}
+
+.container-cancel-button-in-container-body-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users , .container-confirm-button-in-container-body-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users{
+    width: 100px;
+    height: 100%;
+}
+
+.container-cancel-button-in-container-body-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users button{
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: transparent;
+    transition: .1s;
+    border-radius: 5px;
+    color: #353535;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.container-cancel-button-in-container-body-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users button:hover{
+    background-color: #E7E9EB;
+}
+
+.container-confirm-button-in-container-body-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users button{
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: #1982FF;
+    transition: .2s;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.container-confirm-button-in-container-body-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users button:hover{
+    background-color: #0074FE;
+}
+
+.bg-onclick-to-close-delete-post-popup-in-icon-settings-post-of-users{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    z-index: 998;
 }

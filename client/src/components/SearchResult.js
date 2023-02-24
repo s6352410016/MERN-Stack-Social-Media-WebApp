@@ -7,7 +7,7 @@ const SearchResult = ({image , fullname}) => {
       <div className='search-result-container'>
         <div className='search-result-image-user'>
           <div className='search-result-image-container'>
-              <img className='search-img-user' src={image} alt='imageUser'/>
+              <img className='search-img-user' src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${image}`} alt='imageUser'/>
           </div>
         </div> 
         <div className='search-result-fullname-user'>

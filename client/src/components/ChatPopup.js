@@ -7,7 +7,7 @@ const ChatPopup = ({image , fullname , senderChat}) => {
       <div className='container-chats-of-users'>
         <div className='content-header-chats-of-users'>
           <div className='container-img-chats-of-users'>
-            <img src={image} alt='userImgProfile'/>
+            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${image}`} alt='userImgProfile'/>
           </div>
         </div>
         <div className='content-center-chats-of-users'>

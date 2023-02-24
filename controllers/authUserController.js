@@ -11,7 +11,7 @@ const authUser = async (req , res) => {
             if(err){
                 return res.status(403).json({msg: 'Forbidden'});
             }
-            res.status(200).json({firstname: decoded.userData.firstname , lastname: decoded.userData.lastname});
+            res.status(200).json({userId: decoded.userData.userId , firstname: decoded.userData.firstname , lastname: decoded.userData.lastname});
         });
     }catch(err){
         res.status(500).json(err);

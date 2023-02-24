@@ -5,7 +5,7 @@ const Notification = ({image , username , userContent , modifyDate}) => {
     <div className='notification-users-container'>
       <div className='notification-users-header'>
         <div className='notification-users-header-container'>
-          <img src={image} alt='imageForUser' className='img-notification-user-profile'></img>
+          <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${image}`} alt='imageForUser' className='img-notification-user-profile'></img>
         </div>
       </div>
       <div className='notification-users-body'>
