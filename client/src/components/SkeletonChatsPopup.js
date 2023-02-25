@@ -5,7 +5,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 const SkeletonChatsPopup = () => {
   return (
-    <Link className='link-container-chats-of-users'>
+    <Link className='link-container-chats-of-users cursor-default'>
       <div className='container-chats-of-users' id='no-bg-skeleton-load-in-chats-of-users'>
         <div className='content-header-chats-of-users'>
           <div className='container-img-chats-of-users'>

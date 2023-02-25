@@ -258,6 +258,10 @@
     text-decoration: none;
 }
 
+.link-container-chats-of-users.cursor-default{
+    cursor: default;
+}
+
 .container-chats-of-users{
     width: 100%;
     height: 80px;
@@ -771,6 +775,10 @@
     height: 100%;
 }
 
+.text-decoration-none-in-container-people-you-may-know.cursor-default , .text-decoration-none-in-container-people-you-may-know.cursor-default , .container-button-follow-people-you-may-know.cursor-default{
+    cursor: default;
+}
+
 #fix-container-img{
     width: 20%;
 }
@@ -826,6 +834,10 @@
 .link-to-profile-post{
     width: 12%;
     height: 100%;
+}
+
+.link-to-profile-post.cursor-default{
+    cursor: default;
 }
 
 .box-of-user-profile-img{
@@ -1197,6 +1209,10 @@
     text-decoration: none;
 }
 
+.link-container-of-img.cursor-none{
+    cursor: default;
+}
+
 .container-of-img-profile-users{
     width: 100%;
     height: 100%;
@@ -1204,6 +1220,10 @@
     justify-content: flex-start;
     align-items: center;
     cursor: pointer;
+}
+
+.container-of-img-profile-users.cursor-none{
+    cursor: default;
 }
 
 .container-width-full-img{
@@ -1234,6 +1254,10 @@
     display: flex;
     align-items: flex-end;
     word-break: break-word;
+}
+
+.link-in-container-of-fullname-user.cursor-none{
+    cursor: default;
 }
 
 .fullname-of-post-users{
@@ -1359,6 +1383,10 @@
     cursor: grab;
     /* border-radius: 10px; */
     overflow: hidden;
+}
+
+.content-center-in-post-of-users.cursor-none{
+    cursor: default;
 }
 
 .container-post-video-in-container-post-of-users{
@@ -1521,6 +1549,10 @@
     gap: 10px;
 }
 
+.create-comment-container-in-post-of-users.height-none{
+    margin-top: 1rem;
+}
+
 .container-img-profile-in-create-comment-container-in-post-of-users{
     width: 40px;
     height: 40px;
@@ -1544,6 +1576,10 @@
     border-radius: 2rem;
     transition: .2s;
     position: relative;
+}
+
+.write-comment-container-in-create-comment-container-in-post-of-users.fix-style{
+    padding: 0 !important;
 }
 
 .style-emoji-picker-fix-in-write-comment-container-in-create-comment-container-in-post-of-users{
@@ -2057,6 +2093,19 @@
     color: #353535;
     font-size: 1rem;
     font-weight: 500;
+}
+
+.container-comment-img-in-container-comments-of-user-detail-in-container-comments-of-users{
+    width: 200px;
+    height: 150px;
+    margin-top: 5px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.container-comment-img-in-container-comments-of-user-detail-in-container-comments-of-users img{
+    width: 100%;
+    height: 100%;
 }
 
 .container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users{

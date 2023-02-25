@@ -16,7 +16,7 @@ import EmojiPicker from 'emoji-picker-react';
 import PeopleLikedYourPost from './PeopleLikedYourPost';
 import Comment from './Comment';
 
-const Post = ({ activeUserId, postId, userId, postMsg, postImgs, setPostDataOfUsers, postVideo, postModifyDate, postLikes }) => {
+const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postImgs, postVideo, postModifyDate, postLikes }) => {
     const selectFileIconRef = useRef();
     const inputCommentRef = useRef();
     const inputInSharePostRef = useRef();
@@ -48,6 +48,36 @@ const Post = ({ activeUserId, postId, userId, postMsg, postImgs, setPostDataOfUs
     const [showImgsInEditPost, setShowImgsInEditPost] = useState(true);
     const [showVideoInEditPost, setShowVideoInEditPost] = useState(true);
     const [openDeletePostPopup, setOpenDeletePostPopup] = useState(false);
+    const [DataOfUserByUserId, setDataOfUserByUserId] = useState({});
+    const [dataOfUserActiveByUserId, setDataOfUserActiveByUserId] = useState({});
+    const [commentOfUsers, setCommentOfUsers] = useState(
+        [
+            {
+                commentId: 'cm01',
+                postIdToComment: '01',
+                userIdToComment: '63db82a0028c87f7d37c6628',
+                commentMsgs: '',
+                commentImg: 'img1.jpg',
+                modifyDate: '14 Minutes'
+            },
+            {
+                commentId: 'cm02',
+                postIdToComment: '02',
+                userIdToComment: '02',
+                commentMsgs: '+++',
+                commentImg: '',
+                modifyDate: '1 hour'
+            },
+            {
+                commentId: 'cm03',
+                postIdToComment: '02',
+                userIdToComment: '63db82a0028c87f7d37c6628',
+                commentMsgs: 'ตึงเกิ๊นนนน',
+                commentImg: '',
+                modifyDate: '2 hours'
+            }
+        ]
+    );
 
     const EmojiClickInCreateComment = ({ emoji }) => {
         inputCommentRef.current.focus();
@@ -181,22 +211,34 @@ const Post = ({ activeUserId, postId, userId, postMsg, postImgs, setPostDataOfUs
         }
     }, [openEditPostPopup]);
 
+    useEffect(() => {
+        if (userIdToPost) {
+            setDataOfUserByUserId(dataForUser.find((e) => e.userId === userIdToPost));
+        }
+    });
+
+    useEffect(() => {
+        if (activeUserId) {
+            setDataOfUserActiveByUserId(dataForUser.find((e) => e.userId === activeUserId));
+        }
+    });
+
     return (
         <div className='container-post-of-users'>
             <div className='content-header-in-post-of-users'>
                 <Link to='id' className='link-container-of-img'>
                     <div className='container-of-img-profile-users'>
                         <div className='container-width-full-img'>
-                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${userId.image}`} alt='profileImg' />
+                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${DataOfUserByUserId.image}`} alt='profileImg' />
                         </div>
                     </div>
                 </Link>
                 <div className='content-center-in-header-in-post-of-users'>
-                    <Link to='id' className='link-in-container-of-fullname-user'><p className='fullname-of-post-users'>{userId.fullname}</p></Link>
+                    <Link to='id' className='link-in-container-of-fullname-user'><p className='fullname-of-post-users'>{DataOfUserByUserId.fullname}</p></Link>
                     <p className='modify-date-post-of-users'>{postModifyDate}</p>
                 </div>
                 <div className='icon-settings-post-of-users'>
-                    {activeUserId === userId.id
+                    {activeUserId === DataOfUserByUserId.userId
                         ?
                         <div className='container-icon-three-dots' onClick={() => setSettingInPostPopup(!settingInPostPopup)} >
                             <FontAwesomeIcon icon={faEllipsis} className='icon-three-dots-horizontal' />
@@ -251,11 +293,11 @@ const Post = ({ activeUserId, postId, userId, postMsg, postImgs, setPostDataOfUs
                                 <div className='container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
                                     <div className='container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
                                         <Link to='id' className='container-img-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
-                                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`} alt='imgProfile' />
+                                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${DataOfUserByUserId.image}`} alt='imgProfile' />
                                         </Link>
                                         <div className='container-fullname-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
                                             <Link to='id' className='link-container-in-container-fullname-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
-                                                <p>Bell bunlung</p>
+                                                <p>{DataOfUserByUserId.fullname}</p>
                                             </Link>
                                         </div>
                                     </div>
@@ -426,16 +468,9 @@ const Post = ({ activeUserId, postId, userId, postMsg, postImgs, setPostDataOfUs
                                             </div>
                                         </div>
                                         <div className='container-center-in-people-likes-post-list'>
-                                            <PeopleLikedYourPost />
-                                            <PeopleLikedYourPost />
-                                            <PeopleLikedYourPost />
-                                            <PeopleLikedYourPost />
-                                            <PeopleLikedYourPost />
-                                            <PeopleLikedYourPost />
-                                            <PeopleLikedYourPost />
-                                            <PeopleLikedYourPost />
-                                            <PeopleLikedYourPost />
-                                            <PeopleLikedYourPost />
+                                            {postLikes.map((e , index) => (
+                                                <PeopleLikedYourPost key={index} UserIdToLikeInPost={e} dataForUser={dataForUser}/>
+                                            ))}
                                         </div>
                                     </div>
                                 </>
@@ -465,11 +500,11 @@ const Post = ({ activeUserId, postId, userId, postMsg, postImgs, setPostDataOfUs
                                     <div className='body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                         <div className='container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                             <Link to='id' className='container-img-profile-in-container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`} alt='imgProfile' />
+                                                <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${dataOfUserActiveByUserId.image}`} alt='imgProfile' />
                                             </Link>
                                             <div className='container-fullname-of-user-in-container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                 <Link to='id' className='text-decoration-in-container-fullname-of-user-in-container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                    <p>Bell bunlung</p>
+                                                    <p>{dataOfUserActiveByUserId.fullname}</p>
                                                 </Link>
                                             </div>
                                         </div>
@@ -514,11 +549,11 @@ const Post = ({ activeUserId, postId, userId, postMsg, postImgs, setPostDataOfUs
                                             <div className='container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                 <div className='container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                     <Link to='id' className='container-img-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                        <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${userId.image}`} alt='imgProfile' />
+                                                        <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${DataOfUserByUserId.image}`} alt='imgProfile' />
                                                     </Link>
                                                     <div className='container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                         <Link to='id' className='text-decoration-none-in-container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                            <p>{userId.fullname}</p>
+                                                            <p>{DataOfUserByUserId.fullname}</p>
                                                         </Link>
                                                         <div className='container-modifydate-post-in-container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                             <p>{postModifyDate}</p>
@@ -548,13 +583,17 @@ const Post = ({ activeUserId, postId, userId, postMsg, postImgs, setPostDataOfUs
             <div className='container-comments-of-users'>
                 {openComments &&
                     <>
-                        <Comment />
+                        {commentOfUsers.filter((e) => {
+                            return e.postIdToComment === postId;
+                        }).map((e , index) => (
+                            <Comment key={index} dataForUser={dataForUser} activeUserId={activeUserId} commentId={e.commentId} userIdToComment={e.userIdToComment} commentMsgs={e.commentMsgs} commentImg={e.commentImg} modifyDate={e.modifyDate} />
+                        ))}
                     </>
                 }
             </div>
             <div className='create-comment-container-in-post-of-users'>
                 <Link to='/profile' className='container-img-profile-in-create-comment-container-in-post-of-users'>
-                    <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`} alt='imgProfileUser' />
+                    <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${dataOfUserActiveByUserId.image}`} alt='imgProfileUser' />
                 </Link>
                 <div className='write-comment-container-in-create-comment-container-in-post-of-users'>
                     <form encType='multipart/form-data'>
