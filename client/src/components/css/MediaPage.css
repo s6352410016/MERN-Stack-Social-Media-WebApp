@@ -1182,6 +1182,32 @@
     background-color: rgba(0, 0, 0, .3);
 }
 
+.container-button-scroll-to-top-in-overflow-y-auto-in-post-content-of-users{
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 35px;
+    height: 35px;
+    border-radius: 3rem;
+    background-color: #1982FF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+}
+
+.container-button-scroll-to-top-in-overflow-y-auto-in-post-content-of-users:hover{
+    background-color: #0074FE;
+}
+
+.arrow-up-icon-in-container-button-scroll-to-top-in-overflow-y-auto-in-post-content-of-users{
+    color: #fff;
+    font-size: 1.1rem;
+}
+
 .container-post-of-users{
     width: 100%;
     height: auto;

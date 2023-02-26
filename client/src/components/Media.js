@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faBell, faComment, faChevronDown, faUserPen, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faBell, faComment, faChevronDown, faUserPen, faArrowRightFromBracket, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import './css/MediaPage.css';
 import Notification from './Notification';
 import SearchResult from './SearchResult';
@@ -16,6 +16,7 @@ import ChatPopup from './ChatPopup';
 import SkeletonChatsPopup from './SkeletonChatsPopup';
 import Post from './Post';
 import SkeletonPost from './SkeletonPost';
+import SharePost from './SharePost';
 
 const Media = () => {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ const Media = () => {
   const [showSkeletonSearchResult, setShowSkeletonSearchResult] = useState(true);
   const [showSkeletonChatsPopup, setShowSkeletonChatsPopup] = useState(true);
   const [showSkeletionPost, setShowSkeletonPost] = useState(true);
+  const [showIconScrollToTop, setShowIconScrollToTop] = useState(false);
   const [searchResult, setSearchResult] = useState('');
   const [dataUserNotification, setDataUserNotification] = useState(
     [
@@ -294,6 +296,16 @@ const Media = () => {
       },
     ]
   );
+  const [postOfUsersToShare , setPostOfUsersToShare] = useState(
+    [
+      {
+        shareId: 'share01',
+        userIdToShare: '63db82a0028c87f7d37c6628',
+        postIdToShare: '01',
+        shareMsg: 'Test Share...'
+      }
+    ]
+  ); 
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/authUser`, {
@@ -329,6 +341,25 @@ const Media = () => {
       setShowSkeletonPost(false);
     }, 3000);
   }, []);
+
+  useEffect(() => {
+    const containerPostScroll = document.querySelector('#container-post-scroll');
+    containerPostScroll.addEventListener('scroll', () => {
+      if (containerPostScroll.scrollTop > 399) {
+        setShowIconScrollToTop(true);
+      }else{
+        setShowIconScrollToTop(false);
+      }
+    });
+  } , []);
+
+  const scrollToTop = () => {
+    const containerPostScroll = document.querySelector('#container-post-scroll');
+    containerPostScroll.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
 
   const dropdownPopup = () => {
     setOpenMenus(!openMenus);
@@ -512,15 +543,23 @@ const Media = () => {
             :
             <CreatePost />
           }
-          <div className='overflow-y-auto-in-post-content-of-users'>
+          <div id='container-post-scroll' className='overflow-y-auto-in-post-content-of-users'>
+            {showIconScrollToTop &&
+              <div onClick={scrollToTop} className='container-button-scroll-to-top-in-overflow-y-auto-in-post-content-of-users'>
+                <FontAwesomeIcon icon={faArrowUp} className='arrow-up-icon-in-container-button-scroll-to-top-in-overflow-y-auto-in-post-content-of-users' />
+              </div>
+            }
             {showSkeletionPost
               ?
-              postOfusers.map((e , index) => (
-                <SkeletonPost key={index}/>
+              postOfusers.map((e, index) => (
+                <SkeletonPost key={index} />
               ))
               :
-              postOfusers.map((e, index) => (
-                <Post key={index} dataForUser={dataForUser} activeUserId={userData.userId} postId={e.postId} userIdToPost={e.userIdToPost} postMsg={e.postMsg} postImgs={e.postImgs} postVideo={e.postVideo} postModifyDate={e.postModifyDate} postLikes={e.postLikes} />
+              // postOfusers.map((e, index) => (
+              //   <Post key={index} dataForUser={dataForUser} activeUserId={userData.userId} postId={e.postId} userIdToPost={e.userIdToPost} postMsg={e.postMsg} postImgs={e.postImgs} postVideo={e.postVideo} postModifyDate={e.postModifyDate} postLikes={e.postLikes} />
+              // ))
+              postOfUsersToShare.map((e , index) => (
+                <SharePost key={index} shareId={e.shareId} userIdToShare={e.userIdToShare} postIdToShare={e.postIdToShare} shareMsg={e.shareMsg} dataForUser={dataForUser} activeUserId={userData.userId} postOfusers={postOfusers}/>
               ))
             }
           </div>
