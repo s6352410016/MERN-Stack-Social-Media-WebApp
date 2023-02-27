@@ -16,12 +16,13 @@ import EmojiPicker from 'emoji-picker-react';
 import PeopleLikedYourPost from './PeopleLikedYourPost';
 import Comment from './Comment';
 
-const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToShare, postIdToShare, shareMsg }) => {
+const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToShare, postIdToShare, shareMsg, sharePostLikes, shareModifyDate }) => {
     const selectFileIconRef = useRef();
     const inputCommentRef = useRef();
     const inputInSharePostRef = useRef();
     const inputInEditPostRef = useRef();
 
+    const [openReactFragmentWhileComponentRender, setOpenReactFragmentWhileComponentRender] = useState(true);
     const [settingInPostPopup, setSettingInPostPopup] = useState(false);
     const [openEmojiPickerInComment, setOpenEmojiPickerInComment] = useState(false);
     const [commetMsg, setCommentMsg] = useState('');
@@ -43,31 +44,32 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
     const [DataOfUserByUserId, setDataOfUserByUserId] = useState({});
     const [dataOfUserActiveByUserId, setDataOfUserActiveByUserId] = useState({});
     const [dataPostOfUserBySharePostId, setDataPostOfUserBySharePostId] = useState({});
+    const [dataUserIdToPostInSharePost, setDataUserIdToPostInSharePost] = useState({});
     const [commentOfUsers, setCommentOfUsers] = useState(
         [
             {
                 commentId: 'cm01',
-                postIdToComment: '01',
+                shareIdToPostToComment: 'share01',
                 userIdToComment: '63db82a0028c87f7d37c6628',
-                commentMsgs: '',
+                commentMsgs: 'วัยรุ่นคำมี',
                 commentImg: 'img1.jpg',
-                modifyDate: '14 Minutes'
+                modifyDate: '1 month'
             },
             {
                 commentId: 'cm02',
-                postIdToComment: '02',
-                userIdToComment: '02',
-                commentMsgs: '+++',
-                commentImg: '',
-                modifyDate: '1 hour'
+                shareIdToPostToComment: 'share02',
+                userIdToComment: '05',
+                commentMsgs: 'ตึงเกิ๊นนนน',
+                commentImg: 'img2.webp',
+                modifyDate: '2 hours'
             },
             {
                 commentId: 'cm03',
-                postIdToComment: '02',
-                userIdToComment: '63db82a0028c87f7d37c6628',
-                commentMsgs: 'ตึงเกิ๊นนนน',
+                shareIdToPostToComment: 'share01',
+                userIdToComment: '10',
+                commentMsgs: 'โครตเข้ม',
                 commentImg: '',
-                modifyDate: '2 hours'
+                modifyDate: '5 hours'
             }
         ]
     );
@@ -134,7 +136,8 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
     }
 
     const closeEditPostPopupWithIconXmark = () => {
-        setOpenEditPostPopup(false)
+        setOpenEditPostPopup(false);
+        setOpenEmojiPickerInEditPost(false);
     }
 
     useEffect(() => {
@@ -152,7 +155,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
 
     useEffect(() => {
         if (openEditPostPopup) {
-            setMsgInEditPost(dataPostOfUserBySharePostId.postMsg);
+            setMsgInEditPost(shareMsg);
         }
     }, [openEditPostPopup]);
 
@@ -160,19 +163,18 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
         if (userIdToShare) {
             setDataOfUserByUserId(dataForUser.find((e) => e.userId === userIdToShare));
         }
-    });
-
-    useEffect(() => {
         if (activeUserId) {
             setDataOfUserActiveByUserId(dataForUser.find((e) => e.userId === activeUserId));
         }
-    });
-
-    useEffect(() => {
         if (postIdToShare) {
             setDataPostOfUserBySharePostId(postOfusers.find((e) => e.postId === postIdToShare));
         }
-    });
+        setOpenReactFragmentWhileComponentRender(false);
+    }, []);
+
+    useEffect(() => {
+        setDataUserIdToPostInSharePost(dataForUser.find((e) => e.userId === dataPostOfUserBySharePostId.userIdToPost));
+    }, [dataPostOfUserBySharePostId]);
 
     return (
         <div className='container-post-of-users'>
@@ -186,7 +188,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                 </Link>
                 <div className='content-center-in-header-in-post-of-users'>
                     <Link to='id' className='link-in-container-of-fullname-user'><p className='fullname-of-post-users'>{DataOfUserByUserId.fullname}</p></Link>
-                    <p className='modify-date-post-of-users'>{dataPostOfUserBySharePostId.postModifyDate}</p>
+                    <p className='modify-date-post-of-users'>{shareModifyDate}</p>
                 </div>
                 <div className='icon-settings-post-of-users'>
                     {activeUserId === DataOfUserByUserId.userId
@@ -276,41 +278,72 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                     }
                 </div>
             </div>
-            {
-                dataPostOfUserBySharePostId.postMsg !== ''
-                    ?
-                    <div className='message-in-post-container'>
-                        <p>{dataPostOfUserBySharePostId.postMsg}</p>
-                    </div>
-                    :
-                    <></>
+            {shareMsg !== ''
+                ?
+                <div className='container-share-post-msg-in-container-post-of-users'>
+                    <p>{shareMsg}</p>
+                </div>
+                :
+                <></>
             }
-            {
-                dataPostOfUserBySharePostId.postImgs.length !== 0
+            <div className='container-post-to-share-in-container-post-of-users'>
+                {openReactFragmentWhileComponentRender
                     ?
-                    <div className='content-center-in-post-of-users'>
-                        <div className='container-img-post-of-users'>
-                            <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
-                                {dataPostOfUserBySharePostId.postImgs.map((e, index) => (
-                                    <SwiperSlide key={index}><img src={`${process.env.REACT_APP_SERVER_DOMAIN}/postImg/${e}`} alt='postImg' /></SwiperSlide>
-                                ))}
-                            </Swiper>
+                    <></>
+                    :
+                    dataPostOfUserBySharePostId.postImgs.length !== 0
+                        ?
+                        <div className='content-center-in-post-of-users' style={{ marginTop: '0' }}>
+                            <div className='container-img-post-of-users'>
+                                <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
+                                    {dataPostOfUserBySharePostId.postImgs.map((e, index) => (
+                                        <SwiperSlide key={index}><img src={`${process.env.REACT_APP_SERVER_DOMAIN}/postImg/${e}`} alt='postImg' /></SwiperSlide>
+                                    ))}
+                                </Swiper>
+                            </div>
                         </div>
-                    </div>
-                    :
-                    <></>
-            }
-            {
-                dataPostOfUserBySharePostId.postVideo !== ''
+                        :
+                        <></>
+                }
+                {
+                    dataPostOfUserBySharePostId.postVideo !== '' && dataPostOfUserBySharePostId.postVideo !== undefined
+                        ?
+                        <div className='container-post-video-in-container-post-of-users' style={{ marginTop: '0' }}>
+                            <video controls>
+                                <source src={`${process.env.REACT_APP_SERVER_DOMAIN}/postVideo/${dataPostOfUserBySharePostId.postVideo}`}></source>
+                            </video>
+                        </div>
+                        :
+                        <></>
+                }
+                {!dataUserIdToPostInSharePost
                     ?
-                    < div className='container-post-video-in-container-post-of-users'>
-                        <video controls>
-                            <source src={`${process.env.REACT_APP_SERVER_DOMAIN}/postVideo/${dataPostOfUserBySharePostId.postVideo}`}></source>
-                        </video>
-                    </div>
-                    :
                     <></>
-            }
+                    :
+                    <div className='container-footer-in-container-post-to-share-in-container-post-of-users'>
+                        <div className='container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users'>
+                            <Link to='id' className='container-img-profile-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users'>
+                                <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileimg/${dataUserIdToPostInSharePost.image}`} alt='userProfile' />
+                            </Link>
+                            <div className='container-fullname-user-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users'>
+                                <Link to='id' className='container-fullname-in-container-fullname-user-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users'>
+                                    <p>{dataUserIdToPostInSharePost.fullname}</p>
+                                </Link>
+                                <span>{dataPostOfUserBySharePostId.postModifyDate}</span>
+                            </div>
+                        </div>
+                        {
+                            dataPostOfUserBySharePostId.postMsg !== ''
+                                ?
+                                <div className='container-post-msg-to-share-in-container-footer-in-container-post-to-share-in-container-post-of-users'>
+                                    <p>{dataPostOfUserBySharePostId.postMsg}</p>
+                                </div>
+                                :
+                                <></>
+                        }
+                    </div>
+                }
+            </div>
             <div className='content-footer-in-post-of-users'>
                 <div className='container-icons-in-content-footer'>
                     <div className='heart-icon-container'>
@@ -322,7 +355,12 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                                 <AiOutlineHeart className='heart-icon' />
                             }
                         </div>&nbsp;
-                        <span onClick={() => setOpenPeopleLikeYourPost(true)}>{dataPostOfUserBySharePostId.postLikes.length === 0 ? '' : dataPostOfUserBySharePostId.postLikes.length} {dataPostOfUserBySharePostId.postLikes.length === 1 ? 'Like' : dataPostOfUserBySharePostId.postLikes.length === 0 ? 'Like' : 'Likes'}</span>
+                        {openReactFragmentWhileComponentRender
+                            ?
+                            <></>
+                            :
+                            <span onClick={() => setOpenPeopleLikeYourPost(true)}>{sharePostLikes.length === 0 ? '' : sharePostLikes.length} {sharePostLikes.length === 1 ? 'Like' : sharePostLikes.length === 0 ? 'Like' : 'Likes'}</span>
+                        }
                         {openPeopleLikedYourPost &&
                             <div className='bg-people-likes-post-list'>
                                 <>
@@ -335,9 +373,16 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                                             </div>
                                         </div>
                                         <div className='container-center-in-people-likes-post-list'>
-                                            {dataPostOfUserBySharePostId.postLikes.map((e, index) => (
-                                                <PeopleLikedYourPost key={index} UserIdToLikeInPost={e} dataForUser={dataForUser} />
-                                            ))}
+                                            {sharePostLikes.length === 0
+                                                ?
+                                                <div className='container-no-one-like-in-container-profile-card-in-people-likes-post-list'>
+                                                    <p>No one likes</p>
+                                                </div>
+                                                :
+                                                sharePostLikes.map((e, index) => (
+                                                    <PeopleLikedYourPost key={index} UserIdToLikeInPost={e} dataForUser={dataForUser} />
+                                                ))
+                                            }
                                         </div>
                                     </div>
                                 </>
@@ -416,11 +461,11 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                                             <div className='container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                 <div className='container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                     <Link to='id' className='container-img-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                        <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${DataOfUserByUserId.image}`} alt='imgProfile' />
+                                                        <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${dataUserIdToPostInSharePost.image}`} alt='imgProfile' />
                                                     </Link>
                                                     <div className='container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                         <Link to='id' className='text-decoration-none-in-container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                            <p>{DataOfUserByUserId.fullname}</p>
+                                                            <p>{dataUserIdToPostInSharePost.fullname}</p>
                                                         </Link>
                                                         <div className='container-modifydate-post-in-container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                             <p>{dataPostOfUserBySharePostId.postModifyDate}</p>
@@ -451,7 +496,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                 {openComments &&
                     <>
                         {commentOfUsers.filter((e) => {
-                            return e.postIdToComment === dataPostOfUserBySharePostId.postId;
+                            return e.shareIdToPostToComment === shareId;
                         }).map((e, index) => (
                             <Comment key={index} dataForUser={dataForUser} activeUserId={activeUserId} commentId={e.commentId} userIdToComment={e.userIdToComment} commentMsgs={e.commentMsgs} commentImg={e.commentImg} modifyDate={e.modifyDate} />
                         ))}

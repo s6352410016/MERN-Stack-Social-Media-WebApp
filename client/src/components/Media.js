@@ -301,9 +301,35 @@ const Media = () => {
       {
         shareId: 'share01',
         userIdToShare: '63db82a0028c87f7d37c6628',
-        postIdToShare: '01',
-        shareMsg: 'Test Share...'
-      }
+        postIdToShare: '02',
+        shareMsg: 'Test Share...',
+        sharePostLikes: ['63db82a0028c87f7d37c6628'],
+        shareModifyDate: '2 minutes'
+      },
+      {
+        shareId: 'share02',
+        userIdToShare: '02',
+        postIdToShare: '03',
+        shareMsg: '',
+        sharePostLikes: [],
+        shareModifyDate: '27 minutes'
+      },
+      {
+        shareId: 'share03',
+        userIdToShare: '63db82a0028c87f7d37c6628',
+        postIdToShare: '06',
+        shareMsg: '...',
+        sharePostLikes: ['02' , '03'],
+        shareModifyDate: '2 hours'
+      },
+      {
+        shareId: 'share04',
+        userIdToShare: '09',
+        postIdToShare: '04',
+        shareMsg: '555+',
+        sharePostLikes: [],
+        shareModifyDate: '10 week'
+      },
     ]
   ); 
 
@@ -555,12 +581,12 @@ const Media = () => {
                 <SkeletonPost key={index} />
               ))
               :
-              // postOfusers.map((e, index) => (
-              //   <Post key={index} dataForUser={dataForUser} activeUserId={userData.userId} postId={e.postId} userIdToPost={e.userIdToPost} postMsg={e.postMsg} postImgs={e.postImgs} postVideo={e.postVideo} postModifyDate={e.postModifyDate} postLikes={e.postLikes} />
-              // ))
-              postOfUsersToShare.map((e , index) => (
-                <SharePost key={index} shareId={e.shareId} userIdToShare={e.userIdToShare} postIdToShare={e.postIdToShare} shareMsg={e.shareMsg} dataForUser={dataForUser} activeUserId={userData.userId} postOfusers={postOfusers}/>
+              postOfusers.map((e, index) => (
+                <Post key={index} dataForUser={dataForUser} activeUserId={userData.userId} postId={e.postId} userIdToPost={e.userIdToPost} postMsg={e.postMsg} postImgs={e.postImgs} postVideo={e.postVideo} postModifyDate={e.postModifyDate} postLikes={e.postLikes} />
               ))
+              // postOfUsersToShare.map((e , index) => (
+              //   <SharePost key={index} shareId={e.shareId} userIdToShare={e.userIdToShare} postIdToShare={e.postIdToShare} shareMsg={e.shareMsg} sharePostLikes={e.sharePostLikes} shareModifyDate={e.shareModifyDate} dataForUser={dataForUser} activeUserId={userData.userId} postOfusers={postOfusers}/>
+              // ))
             }
           </div>
         </div>

@@ -1405,9 +1405,9 @@
 .content-center-in-post-of-users{
     width: 100%;
     height: 400px;
-    margin-top: 1rem;
+    margin-top: 10px;
     cursor: grab;
-    /* border-radius: 10px; */
+    border-radius: 10px;
     overflow: hidden;
 }
 
@@ -1439,11 +1439,10 @@
 .swiper-backface-hidden .swiper-slide img{
     width: 100%;
     height: 100%;
-    /* border-radius: 10px; */
 }
 
 .swiper-pagination-bullet.swiper-pagination-bullet-active.swiper-pagination-bullet-active-main{
-    background-color: #fff !important;
+    background-color: #0074FE !important;
 }
 
 .content-footer-in-post-of-users{
@@ -1806,6 +1805,21 @@
     background-color: rgba(0, 0, 0, .3);
 }
 
+.container-no-one-like-in-container-profile-card-in-people-likes-post-list{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.container-no-one-like-in-container-profile-card-in-people-likes-post-list p{
+    margin-bottom: 0;
+    color: #838383;
+    font-size: 1rem;
+}
+
 .container-profile-card-in-people-likes-post-list{
     width: 100%;
     height: 85px;
@@ -1864,9 +1878,8 @@
     width: 100%;
     height: 40px;
     border-radius: 5px;
-    color: #fff;
     background-color: #E7E9EB;
-    transition: .5s;
+    transition: .3s;
     font-size: 1rem;
     font-weight: 500;
     color: #353535;
@@ -2525,6 +2538,8 @@
     align-items: center;
     border: 1px solid #cacaca;
     cursor: grab;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .container-video-in-post-to-share-in-container-post-of-user-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer{
@@ -3178,4 +3193,100 @@
     height: 100%;
     background-color: transparent;
     z-index: 998;
+}
+
+.container-post-to-share-in-container-post-of-users{
+    width: 100%;
+    height: auto;
+    border: 1px solid #cacaca;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.container-footer-in-container-post-to-share-in-container-post-of-users{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 1rem !important;
+}
+
+.container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users{
+    width: 100%;
+    height: 45px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.container-img-profile-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users{
+    text-decoration: none;
+    width: 45px;
+    height: 100%;
+    border-radius: 2rem;
+    overflow: hidden;
+}
+
+.container-img-profile-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users img{
+    width: 100%;
+    height: 100%;
+}
+
+.container-fullname-in-container-fullname-user-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users{
+    text-decoration: none;
+}
+
+.container-fullname-user-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users{
+    width: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    word-break: break-word;
+}
+
+.container-fullname-user-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users p{
+    margin-bottom: 0;
+    display: flex;
+    align-items: flex-end;   
+    color: #353535;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.container-fullname-user-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users span{
+    color: #A0A0A0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.container-post-msg-to-share-in-container-footer-in-container-post-to-share-in-container-post-of-users{
+    width: 100%;
+    height: auto;
+    word-break: break-word;
+    margin-top: 10px;
+}
+
+.container-post-msg-to-share-in-container-footer-in-container-post-to-share-in-container-post-of-users p{
+    word-break: break-word;
+    margin-bottom: 0;
+    font-size: 1rem;
+    color: #353535;
+    font-weight: 500;
+}
+
+.container-share-post-msg-in-container-post-of-users{
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    word-break: break-word;
+}
+
+.container-share-post-msg-in-container-post-of-users p{
+    margin-bottom: 0;
+    color: #353535;
+    font-weight: 500;
+    font-size: 1rem;
 }

@@ -181,6 +181,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
     }
 
     const closeEditPostPopupWithIconXmark = () => {
+        setOpenEmojiPickerInEditPost(false);
         setOpenEditPostPopup(false)
         setFileImgsInEditPost([]);
         setFileVideoInEditPost('');
@@ -468,9 +469,16 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                                             </div>
                                         </div>
                                         <div className='container-center-in-people-likes-post-list'>
-                                            {postLikes.map((e , index) => (
-                                                <PeopleLikedYourPost key={index} UserIdToLikeInPost={e} dataForUser={dataForUser}/>
-                                            ))}
+                                            {postLikes.length === 0
+                                                ?
+                                                <div className='container-no-one-like-in-container-profile-card-in-people-likes-post-list'>
+                                                    <p>No one likes</p>
+                                                </div>
+                                                :
+                                                postLikes.map((e, index) => (
+                                                    <PeopleLikedYourPost key={index} UserIdToLikeInPost={e} dataForUser={dataForUser} />
+                                                ))
+                                            }
                                         </div>
                                     </div>
                                 </>
@@ -585,7 +593,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                     <>
                         {commentOfUsers.filter((e) => {
                             return e.postIdToComment === postId;
-                        }).map((e , index) => (
+                        }).map((e, index) => (
                             <Comment key={index} dataForUser={dataForUser} activeUserId={activeUserId} commentId={e.commentId} userIdToComment={e.userIdToComment} commentMsgs={e.commentMsgs} commentImg={e.commentImg} modifyDate={e.modifyDate} />
                         ))}
                     </>

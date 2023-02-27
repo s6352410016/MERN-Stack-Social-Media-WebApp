@@ -17,7 +17,7 @@ const PeopleLikedYourPost = ({UserIdToLikeInPost , dataForUser}) => {
         if(UserIdToLikeInPost){
             setDataOfUserToLikeInPostByUserId(dataForUser.find((e) => e.userId === UserIdToLikeInPost));
         }
-    });
+    } , []);
 
     return (
         <div className='container-profile-card-in-people-likes-post-list'>
@@ -29,7 +29,7 @@ const PeopleLikedYourPost = ({UserIdToLikeInPost , dataForUser}) => {
             </Link>
             <div className='container-follow-icon-in-center-in-people-likes-post-list'>
                 <button onClick={delayChangeIconFollower}><FontAwesomeIcon icon={changeIconFollower ? faUserCheck : faUserPlus}/>&nbsp;&nbsp;{changeIconFollower ? 'Following' : 'Follow'}</button>
-            </div>
+            </div>   
         </div>
     );
 }

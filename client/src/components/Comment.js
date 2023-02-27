@@ -45,12 +45,19 @@ const Comment = ({ dataForUser, commentId, activeUserId, userIdToComment, commen
     const openCommentEdit = () => {
         setOpenEditComment(true);
         setOpenCommentOptions(false);
+        setOpenImgPreviewInEditComment(true);
         inputEditCommentRef.current.focus();
     }
 
     const closeAlertConfirmToDeleteComment = () => {
         setOpenCommentOptions(false);
         setOpenAlertConfirmToDeleteComment(false);
+    }
+
+    const closeAllImgPreview = () => {
+        setPreviewImgFileInEditComment('');
+        setOpenEditComment(false);
+        setOpenImgPreviewInEditComment(false);
     }
 
     useEffect(() => {
@@ -64,10 +71,10 @@ const Comment = ({ dataForUser, commentId, activeUserId, userIdToComment, commen
     }, [openEditComment]);
 
     useEffect(() => {
-        if(userIdToComment){
+        if (userIdToComment) {
             setDataCommentOfUserByUserId(dataForUser.find((e) => e.userId === userIdToComment));
         }
-    });
+    }, []);
 
     return (
         <div className='fix-ui-container-comments-of-user-detail-in-container-comments-of-users'>
@@ -81,21 +88,26 @@ const Comment = ({ dataForUser, commentId, activeUserId, userIdToComment, commen
                     ?
                     <></>
                     :
-                    commentMsgs !== ''
+                    commentMsgs !== '' && commentImg !== ''
                         ?
-                        <div className='container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>
-                            <div className='container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
-                                <Link to='id' className='fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
-                                    <p className='fullname-of-users-in-container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>{dataCommentOfUserByUserId.fullname}</p>
-                                </Link>
-                                <span className='modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>{modifyDate}</span>
+                        <>
+                            <div className='container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                <div className='container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                    <Link to='id' className='fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                        <p className='fullname-of-users-in-container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>{dataCommentOfUserByUserId.fullname}</p>
+                                    </Link>
+                                    <span className='modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>{modifyDate}</span>
+                                </div>
+                                <div className='container-comment-msg-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                    <p>{commentMsgs}</p>
+                                </div>
+                                <div className='container-comment-img-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                    <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/commentImg/${commentImg}`} alt='commentImg' />
+                                </div>
                             </div>
-                            <div className='container-comment-msg-in-container-comments-of-user-detail-in-container-comments-of-users'>
-                                <p>{commentMsgs}</p>
-                            </div>
-                        </div>
+                        </>
                         :
-                        commentImg !== ''
+                        commentMsgs !== ''
                             ?
                             <div className='container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                 <div className='container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
@@ -104,12 +116,26 @@ const Comment = ({ dataForUser, commentId, activeUserId, userIdToComment, commen
                                     </Link>
                                     <span className='modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>{modifyDate}</span>
                                 </div>
-                                <div className='container-comment-img-in-container-comments-of-user-detail-in-container-comments-of-users'>
-                                    <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/commentImg/${commentImg}`} />
+                                <div className='container-comment-msg-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                    <p>{commentMsgs}</p>
                                 </div>
                             </div>
                             :
-                            <></>
+                            commentImg !== ''
+                                ?
+                                <div className='container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                    <div className='container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                        <Link to='id' className='fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                            <p className='fullname-of-users-in-container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>{dataCommentOfUserByUserId.fullname}</p>
+                                        </Link>
+                                        <span className='modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>{modifyDate}</span>
+                                    </div>
+                                    <div className='container-comment-img-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                        <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/commentImg/${commentImg}`} alt='commentImg' />
+                                    </div>
+                                </div>
+                                :
+                                <></>
                 }
                 {openEditComment &&
                     <>
@@ -134,7 +160,7 @@ const Comment = ({ dataForUser, commentId, activeUserId, userIdToComment, commen
                                 </>
                             }
                         </div>
-                        <span onClick={() => setOpenEditComment(false)} className='cancel-edit-comment-style-in-container-comments-of-user-detail-in-container-comments-of-users'>Cancel</span>
+                        <span onClick={closeAllImgPreview} className='cancel-edit-comment-style-in-container-comments-of-user-detail-in-container-comments-of-users'>Cancel</span>
                     </>
                 }
                 {openEditComment
@@ -181,13 +207,30 @@ const Comment = ({ dataForUser, commentId, activeUserId, userIdToComment, commen
                 }
             </div>
             {openImgPreviewInEditComment &&
-                <div className='container-img-preview-in-edit-comment-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
-                    <div className='box-of-img-in-container-img-preview-in-edit-comment-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
-                        <FontAwesomeIcon onClick={clearFileToSelect} icon={faCircleXmark} className='icon-xmark-in-box-of-img-in-container-img-preview-in-edit-comment-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users' />
-                        <img src={previewImgFileInEditComment} alt='imgPreviewInEditComment' />
-                    </div>
-                </div>
+                <>
+                    {!!previewImgFileInEditComment
+                        ?
+                        <div className='container-img-preview-in-edit-comment-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                            <div className='box-of-img-in-container-img-preview-in-edit-comment-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                <FontAwesomeIcon onClick={clearFileToSelect} icon={faCircleXmark} className='icon-xmark-in-box-of-img-in-container-img-preview-in-edit-comment-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users' />
+                                <img src={previewImgFileInEditComment} alt='imgPreviewInEditComment' />
+                            </div>
+                        </div>
+                        :
+                        commentImg !== ''
+                            ?
+                            <div className='container-img-preview-in-edit-comment-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                <div className='box-of-img-in-container-img-preview-in-edit-comment-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                    <FontAwesomeIcon onClick={clearFileToSelect} icon={faCircleXmark} className='icon-xmark-in-box-of-img-in-container-img-preview-in-edit-comment-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users' />
+                                    <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/commentImg/${commentImg}`} alt='imgPreviewInEditComment' />
+                                </div>
+                            </div>
+                            :
+                            <></>
+                    }
+                </>
             }
+
         </div>
     );
 }
