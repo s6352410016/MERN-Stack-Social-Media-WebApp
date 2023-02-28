@@ -17,6 +17,7 @@ import SkeletonChatsPopup from './SkeletonChatsPopup';
 import Post from './Post';
 import SkeletonPost from './SkeletonPost';
 import SharePost from './SharePost';
+const moment = require('moment');
 
 const Media = () => {
   const navigate = useNavigate();
@@ -209,7 +210,7 @@ const Media = () => {
           'img2.jpg',
         ],
         postVideo: '',
-        postModifyDate: '1 minute',
+        modifyDate: '1 minute',
         postLikes: ['63db82a0028c87f7d37c6628', '02', '03']
       },
       {
@@ -222,7 +223,7 @@ const Media = () => {
           'img5.webp',
         ],
         postVideo: '',
-        postModifyDate: '1 week',
+        modifyDate: '1 week',
         postLikes: ['63db82a0028c87f7d37c6628', '10', '05', '09', '06']
       },
       {
@@ -236,7 +237,7 @@ const Media = () => {
           'img9.webp',
         ],
         postVideo: '',
-        postModifyDate: '10 minutes',
+        modifyDate: '10 minutes',
         postLikes: []
       },
       {
@@ -247,7 +248,7 @@ const Media = () => {
 
         ],
         postVideo: 'video1.mp4',
-        postModifyDate: '30 minutes',
+        modifyDate: '30 minutes',
         postLikes: []
       },
       {
@@ -258,7 +259,7 @@ const Media = () => {
           'img10.webp',
         ],
         postVideo: '',
-        postModifyDate: '40 minutes',
+        modifyDate: '40 minutes',
         postLikes: []
       },
       {
@@ -269,7 +270,7 @@ const Media = () => {
 
         ],
         postVideo: 'video2.mp4',
-        postModifyDate: '40 minutes',
+        modifyDate: '40 minutes',
         postLikes: ['63db82a0028c87f7d37c6628']
       },
       {
@@ -280,7 +281,7 @@ const Media = () => {
           'img2.jpg',
         ],
         postVideo: '',
-        postModifyDate: '1 minute',
+        modifyDate: '1 minute',
         postLikes: []
       },
       {
@@ -291,12 +292,12 @@ const Media = () => {
 
         ],
         postVideo: '',
-        postModifyDate: '1 minute',
+        modifyDate: '1 minute',
         postLikes: []
       },
     ]
   );
-  const [postOfUsersToShare , setPostOfUsersToShare] = useState(
+  const [postOfUsersToShare, setPostOfUsersToShare] = useState(
     [
       {
         shareId: 'share01',
@@ -304,7 +305,7 @@ const Media = () => {
         postIdToShare: '02',
         shareMsg: 'Test Share...',
         sharePostLikes: ['63db82a0028c87f7d37c6628'],
-        shareModifyDate: '2 minutes'
+        modifyDate: '2 minutes'
       },
       {
         shareId: 'share02',
@@ -312,15 +313,15 @@ const Media = () => {
         postIdToShare: '03',
         shareMsg: '',
         sharePostLikes: [],
-        shareModifyDate: '27 minutes'
+        modifyDate: '27 minutes'
       },
       {
         shareId: 'share03',
         userIdToShare: '63db82a0028c87f7d37c6628',
         postIdToShare: '06',
         shareMsg: '...',
-        sharePostLikes: ['02' , '03'],
-        shareModifyDate: '2 hours'
+        sharePostLikes: ['02', '03'],
+        modifyDate: '2 hours'
       },
       {
         shareId: 'share04',
@@ -328,10 +329,10 @@ const Media = () => {
         postIdToShare: '04',
         shareMsg: '555+',
         sharePostLikes: [],
-        shareModifyDate: '10 week'
+        modifyDate: '10 week'
       },
     ]
-  ); 
+  );
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/authUser`, {
@@ -358,6 +359,13 @@ const Media = () => {
   }, []);
 
   useEffect(() => {
+    const sortedPosts = [...postOfusers, ...postOfUsersToShare].sort((a, b) => {
+      
+    });
+
+  }, [postOfusers, postOfUsersToShare]);
+
+  useEffect(() => {
     setTimeout(() => {
       setShowSkeletonPeopleYouMayKnow(false);
       setShowSkeletonCreatePost(false);
@@ -365,7 +373,7 @@ const Media = () => {
       setShowSkeletonSearchResult(false);
       setShowSkeletonChatsPopup(false);
       setShowSkeletonPost(false);
-    }, 3000);
+    }, 2000);
   }, []);
 
   useEffect(() => {
@@ -373,11 +381,11 @@ const Media = () => {
     containerPostScroll.addEventListener('scroll', () => {
       if (containerPostScroll.scrollTop > 399) {
         setShowIconScrollToTop(true);
-      }else{
+      } else {
         setShowIconScrollToTop(false);
       }
     });
-  } , []);
+  }, []);
 
   const scrollToTop = () => {
     const containerPostScroll = document.querySelector('#container-post-scroll');
@@ -577,16 +585,23 @@ const Media = () => {
             }
             {showSkeletionPost
               ?
-              postOfusers.map((e, index) => (
-                <SkeletonPost key={index} />
-              ))
+              <>
+                {postOfusers.map((e, index) => (
+                  <SkeletonPost key={index} />
+                ))}
+                {postOfUsersToShare.map((e, index) => (
+                  <SkeletonPost key={index} />
+                ))}
+              </>
               :
-              postOfusers.map((e, index) => (
-                <Post key={index} dataForUser={dataForUser} activeUserId={userData.userId} postId={e.postId} userIdToPost={e.userIdToPost} postMsg={e.postMsg} postImgs={e.postImgs} postVideo={e.postVideo} postModifyDate={e.postModifyDate} postLikes={e.postLikes} />
-              ))
-              // postOfUsersToShare.map((e , index) => (
-              //   <SharePost key={index} shareId={e.shareId} userIdToShare={e.userIdToShare} postIdToShare={e.postIdToShare} shareMsg={e.shareMsg} sharePostLikes={e.sharePostLikes} shareModifyDate={e.shareModifyDate} dataForUser={dataForUser} activeUserId={userData.userId} postOfusers={postOfusers}/>
-              // ))
+              <>
+                {postOfusers.map((e, index) => (
+                  <Post key={index} dataForUser={dataForUser} activeUserId={userData.userId} postId={e.postId} userIdToPost={e.userIdToPost} postMsg={e.postMsg} postImgs={e.postImgs} postVideo={e.postVideo} modifyDate={e.modifyDate} postLikes={e.postLikes} />
+                ))}
+                {postOfUsersToShare.map((e, index) => (
+                  <SharePost key={index} shareId={e.shareId} userIdToShare={e.userIdToShare} postIdToShare={e.postIdToShare} shareMsg={e.shareMsg} sharePostLikes={e.sharePostLikes} modifyDate={e.modifyDate} dataForUser={dataForUser} activeUserId={userData.userId} postOfusers={postOfusers} />
+                ))}
+              </>
             }
           </div>
         </div>

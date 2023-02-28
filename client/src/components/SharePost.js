@@ -16,7 +16,7 @@ import EmojiPicker from 'emoji-picker-react';
 import PeopleLikedYourPost from './PeopleLikedYourPost';
 import Comment from './Comment';
 
-const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToShare, postIdToShare, shareMsg, sharePostLikes, shareModifyDate }) => {
+const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToShare, postIdToShare, shareMsg, sharePostLikes, modifyDate }) => {
     const selectFileIconRef = useRef();
     const inputCommentRef = useRef();
     const inputInSharePostRef = useRef();
@@ -188,7 +188,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                 </Link>
                 <div className='content-center-in-header-in-post-of-users'>
                     <Link to='id' className='link-in-container-of-fullname-user'><p className='fullname-of-post-users'>{DataOfUserByUserId.fullname}</p></Link>
-                    <p className='modify-date-post-of-users'>{shareModifyDate}</p>
+                    <p className='modify-date-post-of-users'>{modifyDate}</p>
                 </div>
                 <div className='icon-settings-post-of-users'>
                     {activeUserId === DataOfUserByUserId.userId
@@ -329,7 +329,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                                 <Link to='id' className='container-fullname-in-container-fullname-user-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users'>
                                     <p>{dataUserIdToPostInSharePost.fullname}</p>
                                 </Link>
-                                <span>{dataPostOfUserBySharePostId.postModifyDate}</span>
+                                <span>{dataPostOfUserBySharePostId.modifyDate}</span>
                             </div>
                         </div>
                         {
@@ -468,7 +468,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                                                             <p>{dataUserIdToPostInSharePost.fullname}</p>
                                                         </Link>
                                                         <div className='container-modifydate-post-in-container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                            <p>{dataPostOfUserBySharePostId.postModifyDate}</p>
+                                                            <p>{dataPostOfUserBySharePostId.modifyDate}</p>
                                                         </div>
                                                     </div>
                                                 </div>

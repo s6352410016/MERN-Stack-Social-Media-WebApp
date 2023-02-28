@@ -16,7 +16,7 @@ import EmojiPicker from 'emoji-picker-react';
 import PeopleLikedYourPost from './PeopleLikedYourPost';
 import Comment from './Comment';
 
-const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postImgs, postVideo, postModifyDate, postLikes }) => {
+const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postImgs, postVideo, modifyDate, postLikes }) => {
     const selectFileIconRef = useRef();
     const inputCommentRef = useRef();
     const inputInSharePostRef = useRef();
@@ -236,7 +236,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                 </Link>
                 <div className='content-center-in-header-in-post-of-users'>
                     <Link to='id' className='link-in-container-of-fullname-user'><p className='fullname-of-post-users'>{DataOfUserByUserId.fullname}</p></Link>
-                    <p className='modify-date-post-of-users'>{postModifyDate}</p>
+                    <p className='modify-date-post-of-users'>{modifyDate}</p>
                 </div>
                 <div className='icon-settings-post-of-users'>
                     {activeUserId === DataOfUserByUserId.userId
@@ -437,10 +437,12 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
             {
                 postVideo !== ''
                     ?
-                    < div className='container-post-video-in-container-post-of-users'>
-                        <video controls>
-                            <source src={`${process.env.REACT_APP_SERVER_DOMAIN}/postVideo/${postVideo}`}></source>
-                        </video>
+                    <div className='container-post-video-in-container-post-of-users-fix'>
+                        <div className='container-post-video-in-container-post-of-users'>
+                            <video controls>
+                                <source src={`${process.env.REACT_APP_SERVER_DOMAIN}/postVideo/${postVideo}`}></source>
+                            </video>
+                        </div>
                     </div>
                     :
                     <></>
@@ -564,7 +566,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                                                             <p>{DataOfUserByUserId.fullname}</p>
                                                         </Link>
                                                         <div className='container-modifydate-post-in-container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                            <p>{postModifyDate}</p>
+                                                            <p>{modifyDate}</p>
                                                         </div>
                                                     </div>
                                                 </div>
