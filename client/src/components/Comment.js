@@ -5,8 +5,9 @@ import { faEllipsisVertical, faPenToSquare, faTrash, faCircleXmark } from '@fort
 import { SlPaperClip } from "react-icons/sl";
 import { BsEmojiSmile } from "react-icons/bs";
 import EmojiPicker from 'emoji-picker-react';
+import { format } from 'timeago.js';
 
-const Comment = ({ dataForUser, commentId, activeUserId, userIdToComment, commentMsgs, commentImg, modifyDate }) => {
+const Comment = ({ dataForUser, commentId, activeUserId, userIdToComment, commentMsgs, commentImg, createdAt }) => {
     const editSelectFileRef = useRef();
     const inputEditCommentRef = useRef();
 
@@ -46,7 +47,6 @@ const Comment = ({ dataForUser, commentId, activeUserId, userIdToComment, commen
         setOpenEditComment(true);
         setOpenCommentOptions(false);
         setOpenImgPreviewInEditComment(true);
-        inputEditCommentRef.current.focus();
     }
 
     const closeAlertConfirmToDeleteComment = () => {
@@ -65,6 +65,12 @@ const Comment = ({ dataForUser, commentId, activeUserId, userIdToComment, commen
             inputEditCommentRef.current.selectionEnd = cursorPosition;
         }
     }, [cursorPosition]);
+
+    useEffect(() => {
+        if (openEditComment) {
+            inputEditCommentRef.current.focus();
+        }
+    });
 
     useEffect(() => {
         setEditCommentMsg(commentMsgs);
@@ -96,7 +102,7 @@ const Comment = ({ dataForUser, commentId, activeUserId, userIdToComment, commen
                                     <Link to='id' className='fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                         <p className='fullname-of-users-in-container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>{dataCommentOfUserByUserId.fullname}</p>
                                     </Link>
-                                    <span className='modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>{modifyDate}</span>
+                                    <span className='modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>{format(createdAt)}</span>
                                 </div>
                                 <div className='container-comment-msg-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                     <p>{commentMsgs}</p>
@@ -114,7 +120,7 @@ const Comment = ({ dataForUser, commentId, activeUserId, userIdToComment, commen
                                     <Link to='id' className='fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                         <p className='fullname-of-users-in-container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>{dataCommentOfUserByUserId.fullname}</p>
                                     </Link>
-                                    <span className='modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>{modifyDate}</span>
+                                    <span className='modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>{format(createdAt)}</span>
                                 </div>
                                 <div className='container-comment-msg-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                     <p>{commentMsgs}</p>
@@ -128,7 +134,7 @@ const Comment = ({ dataForUser, commentId, activeUserId, userIdToComment, commen
                                         <Link to='id' className='fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                             <p className='fullname-of-users-in-container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>{dataCommentOfUserByUserId.fullname}</p>
                                         </Link>
-                                        <span className='modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>{modifyDate}</span>
+                                        <span className='modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>{format(createdAt)}</span>
                                     </div>
                                     <div className='container-comment-img-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                         <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/commentImg/${commentImg}`} alt='commentImg' />

@@ -17,7 +17,6 @@ import SkeletonChatsPopup from './SkeletonChatsPopup';
 import Post from './Post';
 import SkeletonPost from './SkeletonPost';
 import SharePost from './SharePost';
-const moment = require('moment');
 
 const Media = () => {
   const navigate = useNavigate();
@@ -35,6 +34,7 @@ const Media = () => {
   const [showSkeletionPost, setShowSkeletonPost] = useState(true);
   const [showIconScrollToTop, setShowIconScrollToTop] = useState(false);
   const [searchResult, setSearchResult] = useState('');
+  const [sortAllPostAscening, setSortAllPostAscending] = useState([]);
   const [dataUserNotification, setDataUserNotification] = useState(
     [
       {
@@ -210,7 +210,7 @@ const Media = () => {
           'img2.jpg',
         ],
         postVideo: '',
-        modifyDate: '1 minute',
+        createdAt: '2023-02-02T09:30:09.048+00:00',
         postLikes: ['63db82a0028c87f7d37c6628', '02', '03']
       },
       {
@@ -223,7 +223,7 @@ const Media = () => {
           'img5.webp',
         ],
         postVideo: '',
-        modifyDate: '1 week',
+        createdAt: '2023-02-02T09:43:05.427+00:00',
         postLikes: ['63db82a0028c87f7d37c6628', '10', '05', '09', '06']
       },
       {
@@ -237,7 +237,7 @@ const Media = () => {
           'img9.webp',
         ],
         postVideo: '',
-        modifyDate: '10 minutes',
+        createdAt: '2023-02-02T09:43:36.020+00:00',
         postLikes: []
       },
       {
@@ -248,7 +248,7 @@ const Media = () => {
 
         ],
         postVideo: 'video1.mp4',
-        modifyDate: '30 minutes',
+        createdAt: '2023-02-02T09:45:36.031+00:00',
         postLikes: []
       },
       {
@@ -259,7 +259,7 @@ const Media = () => {
           'img10.webp',
         ],
         postVideo: '',
-        modifyDate: '40 minutes',
+        createdAt: '2023-02-19T14:27:00.554+00:00',
         postLikes: []
       },
       {
@@ -270,7 +270,7 @@ const Media = () => {
 
         ],
         postVideo: 'video2.mp4',
-        modifyDate: '40 minutes',
+        createdAt: '2023-02-23T09:06:20.966+00:00',
         postLikes: ['63db82a0028c87f7d37c6628']
       },
       {
@@ -281,7 +281,7 @@ const Media = () => {
           'img2.jpg',
         ],
         postVideo: '',
-        modifyDate: '1 minute',
+        createdAt: '2023-02-23T09:06:20.966+00:00',
         postLikes: []
       },
       {
@@ -292,7 +292,40 @@ const Media = () => {
 
         ],
         postVideo: '',
-        modifyDate: '1 minute',
+        createdAt: '2023-02-19T14:27:00.554+00:00',
+        postLikes: []
+      },
+      {
+        postId: '09',
+        userIdToPost: '10',
+        postMsg: 'Hello world...',
+        postImgs: [
+
+        ],
+        postVideo: '',
+        createdAt: '2023-02-19T14:27:00.554+00:00',
+        postLikes: []
+      },
+      {
+        postId: '10',
+        userIdToPost: '63db82a0028c87f7d37c6628',
+        postMsg: 'Hello React...',
+        postImgs: [
+
+        ],
+        postVideo: '',
+        createdAt: '2023-02-19T14:27:00.554+00:00',
+        postLikes: []
+      },
+      {
+        postId: '11',
+        userIdToPost: '06',
+        postMsg: '5555+',
+        postImgs: [
+          'img10.webp'
+        ],
+        postVideo: '',
+        createdAt: '2023-02-19T14:27:00.554+00:00',
         postLikes: []
       },
     ]
@@ -305,7 +338,7 @@ const Media = () => {
         postIdToShare: '02',
         shareMsg: 'Test Share...',
         sharePostLikes: ['63db82a0028c87f7d37c6628'],
-        modifyDate: '2 minutes'
+        createdAt: '2023-02-19T14:27:00.554+00:00'
       },
       {
         shareId: 'share02',
@@ -313,7 +346,7 @@ const Media = () => {
         postIdToShare: '03',
         shareMsg: '',
         sharePostLikes: [],
-        modifyDate: '27 minutes'
+        createdAt: '2023-02-19T14:27:00.554+00:00'
       },
       {
         shareId: 'share03',
@@ -321,7 +354,7 @@ const Media = () => {
         postIdToShare: '06',
         shareMsg: '...',
         sharePostLikes: ['02', '03'],
-        modifyDate: '2 hours'
+        createdAt: '2023-02-19T14:27:00.554+00:00'
       },
       {
         shareId: 'share04',
@@ -329,7 +362,7 @@ const Media = () => {
         postIdToShare: '04',
         shareMsg: '555+',
         sharePostLikes: [],
-        modifyDate: '10 week'
+        createdAt: '2023-02-02T09:43:36.020+00:00'
       },
     ]
   );
@@ -360,10 +393,10 @@ const Media = () => {
 
   useEffect(() => {
     const sortedPosts = [...postOfusers, ...postOfUsersToShare].sort((a, b) => {
-      
+      return new Date(b.createdAt) - new Date(a.createdAt);
     });
-
-  }, [postOfusers, postOfUsersToShare]);
+    setSortAllPostAscending(sortedPosts);
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -585,23 +618,17 @@ const Media = () => {
             }
             {showSkeletionPost
               ?
-              <>
-                {postOfusers.map((e, index) => (
-                  <SkeletonPost key={index} />
-                ))}
-                {postOfUsersToShare.map((e, index) => (
-                  <SkeletonPost key={index} />
-                ))}
-              </>
+              sortAllPostAscening.map((e, index) => (
+                <SkeletonPost key={index} />
+              ))
               :
-              <>
-                {postOfusers.map((e, index) => (
-                  <Post key={index} dataForUser={dataForUser} activeUserId={userData.userId} postId={e.postId} userIdToPost={e.userIdToPost} postMsg={e.postMsg} postImgs={e.postImgs} postVideo={e.postVideo} modifyDate={e.modifyDate} postLikes={e.postLikes} />
-                ))}
-                {postOfUsersToShare.map((e, index) => (
-                  <SharePost key={index} shareId={e.shareId} userIdToShare={e.userIdToShare} postIdToShare={e.postIdToShare} shareMsg={e.shareMsg} sharePostLikes={e.sharePostLikes} modifyDate={e.modifyDate} dataForUser={dataForUser} activeUserId={userData.userId} postOfusers={postOfusers} />
-                ))}
-              </>
+              sortAllPostAscening.map((e, index) => {
+                if (e.postId) {
+                  return <Post key={index} dataForUser={dataForUser} activeUserId={userData.userId} postId={e.postId} userIdToPost={e.userIdToPost} postMsg={e.postMsg} postImgs={e.postImgs} postVideo={e.postVideo} createdAt={e.createdAt} postLikes={e.postLikes} />;
+                } else {
+                  return <SharePost key={index} shareId={e.shareId} userIdToShare={e.userIdToShare} postIdToShare={e.postIdToShare} shareMsg={e.shareMsg} sharePostLikes={e.sharePostLikes} createdAt={e.createdAt} dataForUser={dataForUser} activeUserId={userData.userId} postOfusers={postOfusers} />;
+                }
+              })
             }
           </div>
         </div>

@@ -15,8 +15,9 @@ import { HiOutlineXMark } from "react-icons/hi2";
 import EmojiPicker from 'emoji-picker-react';
 import PeopleLikedYourPost from './PeopleLikedYourPost';
 import Comment from './Comment';
+import { format } from 'timeago.js';
 
-const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postImgs, postVideo, modifyDate, postLikes }) => {
+const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postImgs, postVideo, createdAt, postLikes }) => {
     const selectFileIconRef = useRef();
     const inputCommentRef = useRef();
     const inputInSharePostRef = useRef();
@@ -58,7 +59,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                 userIdToComment: '63db82a0028c87f7d37c6628',
                 commentMsgs: '',
                 commentImg: 'img1.jpg',
-                modifyDate: '14 Minutes'
+                createdAt: '2023-02-19T14:27:00.554+00:00'
             },
             {
                 commentId: 'cm02',
@@ -66,7 +67,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                 userIdToComment: '02',
                 commentMsgs: '+++',
                 commentImg: '',
-                modifyDate: '1 hour'
+                createdAt: '2023-02-19T14:27:00.554+00:00'
             },
             {
                 commentId: 'cm03',
@@ -74,8 +75,24 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                 userIdToComment: '63db82a0028c87f7d37c6628',
                 commentMsgs: 'ตึงเกิ๊นนนน',
                 commentImg: '',
-                modifyDate: '2 hours'
-            }
+                createdAt: '2023-02-02T09:43:36.020+00:00'
+            },
+            {
+                commentId: 'cm04',
+                postIdToComment: '05',
+                userIdToComment: '06',
+                commentMsgs: 'เฟี่๊ยวจัด',
+                commentImg: 'img5.webp',
+                createdAt: '2023-02-02T09:43:36.020+00:00'
+            },
+            {
+                commentId: 'cm05',
+                postIdToComment: '05',
+                userIdToComment: '63db82a0028c87f7d37c6628',
+                commentMsgs: '...',
+                commentImg: 'img4.webp',
+                createdAt: '2023-02-02T09:43:36.020+00:00'
+            },
         ]
     );
 
@@ -193,6 +210,27 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
     }
 
     useEffect(() => {
+        const sortedComments = [...commentOfUsers].sort((a , b) => {
+            return new Date(b.createdAt) - new Date(a.createdAt);
+        })
+        setCommentOfUsers(sortedComments);
+    } , []);
+
+    useEffect(() => {
+        if (openSharePostPopup) {
+            inputInSharePostRef.current.focus();
+        }
+    });
+
+    useEffect(() => {
+        if (openEditPostPopup) {
+            const length = inputInEditPostRef.current.value.length;
+            inputInEditPostRef.current.focus();
+            inputInEditPostRef.current.setSelectionRange(length, length);
+        }
+    }, [openEditPostPopup]);
+
+    useEffect(() => {
         inputCommentRef.current.selectionEnd = cursorPosition;
 
         if (openSharePostPopup) {
@@ -216,13 +254,13 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
         if (userIdToPost) {
             setDataOfUserByUserId(dataForUser.find((e) => e.userId === userIdToPost));
         }
-    });
+    }, []);
 
     useEffect(() => {
         if (activeUserId) {
             setDataOfUserActiveByUserId(dataForUser.find((e) => e.userId === activeUserId));
         }
-    });
+    }, []);
 
     return (
         <div className='container-post-of-users'>
@@ -236,7 +274,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                 </Link>
                 <div className='content-center-in-header-in-post-of-users'>
                     <Link to='id' className='link-in-container-of-fullname-user'><p className='fullname-of-post-users'>{DataOfUserByUserId.fullname}</p></Link>
-                    <p className='modify-date-post-of-users'>{modifyDate}</p>
+                    <p className='modify-date-post-of-users'>{format(createdAt)}</p>
                 </div>
                 <div className='icon-settings-post-of-users'>
                     {activeUserId === DataOfUserByUserId.userId
@@ -422,7 +460,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
             {
                 postImgs.length !== 0
                     ?
-                    <div className='content-center-in-post-of-users'>
+                    <div style={{cursor: postImgs.length === 1 ? 'default' : 'grab'}} className='content-center-in-post-of-users'>
                         <div className='container-img-post-of-users'>
                             <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
                                 {postImgs.map((e, index) => (
@@ -534,7 +572,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                                         <div className='container-post-of-user-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                             {postImgs.length !== 0
                                                 ?
-                                                <div className='content-center-in-post-of-users-in-container-post-of-user-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                <div style={{cursor : postImgs.length === 1 ? 'default' : 'grab'}} className='content-center-in-post-of-users-in-container-post-of-user-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                     <div className='container-img-post-of-users-in-content-center-in-post-of-users-in-container-post-of-user-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                         <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
                                                             {postImgs.map((e, index) => (
@@ -566,7 +604,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                                                             <p>{DataOfUserByUserId.fullname}</p>
                                                         </Link>
                                                         <div className='container-modifydate-post-in-container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                            <p>{modifyDate}</p>
+                                                            <p>{format(createdAt)}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -596,7 +634,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                         {commentOfUsers.filter((e) => {
                             return e.postIdToComment === postId;
                         }).map((e, index) => (
-                            <Comment key={index} dataForUser={dataForUser} activeUserId={activeUserId} commentId={e.commentId} userIdToComment={e.userIdToComment} commentMsgs={e.commentMsgs} commentImg={e.commentImg} modifyDate={e.modifyDate} />
+                            <Comment key={index} dataForUser={dataForUser} activeUserId={activeUserId} commentId={e.commentId} userIdToComment={e.userIdToComment} commentMsgs={e.commentMsgs} commentImg={e.commentImg} createdAt={e.createdAt} />
                         ))}
                     </>
                 }

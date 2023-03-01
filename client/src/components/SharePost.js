@@ -15,8 +15,9 @@ import { HiOutlineXMark } from "react-icons/hi2";
 import EmojiPicker from 'emoji-picker-react';
 import PeopleLikedYourPost from './PeopleLikedYourPost';
 import Comment from './Comment';
+import { format } from 'timeago.js';
 
-const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToShare, postIdToShare, shareMsg, sharePostLikes, modifyDate }) => {
+const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToShare, postIdToShare, shareMsg, sharePostLikes, createdAt }) => {
     const selectFileIconRef = useRef();
     const inputCommentRef = useRef();
     const inputInSharePostRef = useRef();
@@ -53,7 +54,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                 userIdToComment: '63db82a0028c87f7d37c6628',
                 commentMsgs: 'วัยรุ่นคำมี',
                 commentImg: 'img1.jpg',
-                modifyDate: '1 month'
+                createdAt: '2023-02-19T14:27:00.554+00:00'
             },
             {
                 commentId: 'cm02',
@@ -61,7 +62,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                 userIdToComment: '05',
                 commentMsgs: 'ตึงเกิ๊นนนน',
                 commentImg: 'img2.webp',
-                modifyDate: '2 hours'
+                createdAt: '2023-02-02T09:43:36.020+00:00'
             },
             {
                 commentId: 'cm03',
@@ -69,8 +70,8 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                 userIdToComment: '10',
                 commentMsgs: 'โครตเข้ม',
                 commentImg: '',
-                modifyDate: '5 hours'
-            }
+                createdAt: '2023-02-02T09:43:36.020+00:00'
+            },
         ]
     );
 
@@ -141,6 +142,21 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
     }
 
     useEffect(() => {
+        const sortedComments = [...commentOfUsers].sort((a, b) => {
+            return new Date(b.createdAt) - new Date(a.createdAt);
+        })
+        setCommentOfUsers(sortedComments);
+    }, []);
+
+    useEffect(() => {
+        if (openEditPostPopup) {
+            const length = inputInEditPostRef.current.value.length;
+            inputInEditPostRef.current.focus();
+            inputInEditPostRef.current.setSelectionRange(length, length);
+        }
+    }, [openEditPostPopup]);
+
+    useEffect(() => {
         inputCommentRef.current.selectionEnd = cursorPosition;
 
         if (openSharePostPopup) {
@@ -188,7 +204,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                 </Link>
                 <div className='content-center-in-header-in-post-of-users'>
                     <Link to='id' className='link-in-container-of-fullname-user'><p className='fullname-of-post-users'>{DataOfUserByUserId.fullname}</p></Link>
-                    <p className='modify-date-post-of-users'>{modifyDate}</p>
+                    <p className='modify-date-post-of-users'>{format(createdAt)}</p>
                 </div>
                 <div className='icon-settings-post-of-users'>
                     {activeUserId === DataOfUserByUserId.userId
@@ -293,7 +309,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                     :
                     dataPostOfUserBySharePostId.postImgs.length !== 0
                         ?
-                        <div className='content-center-in-post-of-users' style={{ marginTop: '0' }}>
+                        <div style={{ cursor: dataPostOfUserBySharePostId.postImgs.length === 1 ? 'default' : 'grab', marginTop: '0', borderBottomRightRadius: '0', borderBottomLeftRadius: '0' }} className='content-center-in-post-of-users'>
                             <div className='container-img-post-of-users'>
                                 <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
                                     {dataPostOfUserBySharePostId.postImgs.map((e, index) => (
@@ -329,7 +345,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                                 <Link to='id' className='container-fullname-in-container-fullname-user-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users'>
                                     <p>{dataUserIdToPostInSharePost.fullname}</p>
                                 </Link>
-                                <span>{dataPostOfUserBySharePostId.modifyDate}</span>
+                                <span>{format(dataPostOfUserBySharePostId.createdAt)}</span>
                             </div>
                         </div>
                         {
@@ -421,7 +437,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                                             </div>
                                         </div>
                                         <div className='container-msg-in-share-post-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                            <textarea value={msgInSharePost} ref={inputInSharePostRef} onChange={(e) => setMsgInSharePost(e.target.value)} placeholder='What are you thinking' className='msg-style-in-container-msg-in-share-post-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer' />
+                                            <textarea autoFocus value={msgInSharePost} ref={inputInSharePostRef} onChange={(e) => setMsgInSharePost(e.target.value)} placeholder='What are you thinking' className='msg-style-in-container-msg-in-share-post-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer' />
                                             <div className='emoji-container-in-share-post-in-container-msg-in-share-post-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                 <div onClick={() => setOpenEmojiPickerInSharePost(!openEmojiPickerInSharePost)} className='fix-container-onclick-in-emoji-container-in-share-post-in-container-msg-in-share-post-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                     <BsEmojiSmile className='emoji-icon-in-emoji-container-in-share-post-in-container-msg-in-share-post-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer' />
@@ -436,7 +452,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                                         <div className='container-post-of-user-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                             {dataPostOfUserBySharePostId.postImgs.length !== 0
                                                 ?
-                                                <div className='content-center-in-post-of-users-in-container-post-of-user-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                <div style={{ cursor: dataPostOfUserBySharePostId.postImgs.length === 1 ? 'default' : 'grab' }} className='content-center-in-post-of-users-in-container-post-of-user-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                     <div className='container-img-post-of-users-in-content-center-in-post-of-users-in-container-post-of-user-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                         <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
                                                             {dataPostOfUserBySharePostId.postImgs.map((e, index) => (
@@ -468,7 +484,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                                                             <p>{dataUserIdToPostInSharePost.fullname}</p>
                                                         </Link>
                                                         <div className='container-modifydate-post-in-container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                            <p>{dataPostOfUserBySharePostId.modifyDate}</p>
+                                                            <p>{format(dataPostOfUserBySharePostId.createdAt)}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -498,7 +514,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                         {commentOfUsers.filter((e) => {
                             return e.shareIdToPostToComment === shareId;
                         }).map((e, index) => (
-                            <Comment key={index} dataForUser={dataForUser} activeUserId={activeUserId} commentId={e.commentId} userIdToComment={e.userIdToComment} commentMsgs={e.commentMsgs} commentImg={e.commentImg} modifyDate={e.modifyDate} />
+                            <Comment key={index} dataForUser={dataForUser} activeUserId={activeUserId} commentId={e.commentId} userIdToComment={e.userIdToComment} commentMsgs={e.commentMsgs} commentImg={e.commentImg} createdAt={e.createdAt} />
                         ))}
                     </>
                 }

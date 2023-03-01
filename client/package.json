@@ -28,6 +28,7 @@
     "react-scripts": "5.0.1",
     "react-snowfall": "^1.2.1",
     "swiper": "^9.0.5",
+    "timeago.js": "^4.0.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
