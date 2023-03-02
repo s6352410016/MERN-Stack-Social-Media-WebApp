@@ -13,7 +13,7 @@ const SkeletonCreatePost = () => {
                 <Link className='link-to-profile-post cursor-default'>
                   <div className='box-of-user-profile-img'>
                     <div className='container-user-profile-img' id='fix-height-skeletion-load'>
-                        <Skeleton circle={true} height={60} width={60}/>
+                        <Skeleton circle={true} height={50} width={50}/>
                     </div>
                   </div>
                 </Link>

@@ -17,6 +17,7 @@ import SkeletonChatsPopup from './SkeletonChatsPopup';
 import Post from './Post';
 import SkeletonPost from './SkeletonPost';
 import SharePost from './SharePost';
+import StatusUsers from './StatusUsers';
 
 const Media = () => {
   const navigate = useNavigate();
@@ -224,7 +225,7 @@ const Media = () => {
         ],
         postVideo: '',
         createdAt: '2023-02-02T09:43:05.427+00:00',
-        postLikes: ['63db82a0028c87f7d37c6628', '10', '05', '09', '06']
+        postLikes: ['63db82a0028c87f7d37c6628', '10', '05', '09', '06' , '07']
       },
       {
         postId: '03',
@@ -366,6 +367,7 @@ const Media = () => {
       },
     ]
   );
+  const [userDataInActive, setUserDataInActive] = useState({});
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/authUser`, {
@@ -390,6 +392,11 @@ const Media = () => {
       });
     });
   }, []);
+
+  useEffect(() => {
+    setUserDataInActive(dataForUser.find((e) => e.userId === userData.userId));
+  }, [userData]);
+  console.log(userDataInActive);
 
   useEffect(() => {
     const sortedPosts = [...postOfusers, ...postOfUsersToShare].sort((a, b) => {
@@ -521,7 +528,7 @@ const Media = () => {
                 <div className='notification-header'>
                   <p className='p-notification-header'>Notifications</p>
                 </div>
-                <hr style={{ width: '100%', height: '2px', color: '#353535', margin: '0' }} />
+                <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0' , opacity: '.5'}} />
                 <div className='notification-body' style={dataUserNotification.length === 1 ? { height: '100px' } : dataUserNotification.length === 2 ? { height: '200px' } : dataUserNotification.length === 3 ? { height: '300px' } : dataUserNotification.length === 4 ? { height: '400px' } : dataUserNotification.length > 4 ? { height: '400px' } : { height: 'auto' }}>
                   {showSkeletonNotification
                     ?
@@ -548,7 +555,7 @@ const Media = () => {
                 <div className='content-header-in-chat-popup'>
                   <p>Chats</p>
                 </div>
-                <hr style={{ width: '100%', height: '2px', color: '#353535', margin: '0' }} />
+                <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0' , opacity: '.5'}} />
                 <div className='content-center-in-chat-popup' style={dataUserChats.length === 1 ? { height: '90px' } : dataUserChats.length === 2 ? { height: '180px' } : dataUserChats.length === 3 ? { height: '270px' } : dataUserChats.length === 4 ? { height: '360px' } : dataUserChats.length > 4 ? { height: '400px' } : { height: 'auto' }}>
                   {showSkeletonChatsPopup
                     ?
@@ -587,7 +594,7 @@ const Media = () => {
           <div className='fix-container-content-left-in-body'>
             <div className='container-left-in-body'>
               <p className='header-text-people-you-may-know'>People you may know</p>
-              <div className='border-top-people-you-may-know'></div>
+              <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0' , opacity: '.5'}} />
               <div className='overflow-auto-caontainer-fix'>
                 {showSkeletonPeopleYouMayKnow
                   ?
@@ -634,7 +641,43 @@ const Media = () => {
         </div>
         <div className='content-right-in-body'>
           <div className='container-content-right-in-body'>
-            {userData.userId} {userData.firstname} {userData.lastname}
+            <Link to='/profile' className='container-user-profile-in-container-content-right-in-body'>
+              {userDataInActive === undefined
+                ?
+                <></>
+                :
+                <>
+                  <div className='container-img-container-user-profile-in-container-content-right-in-body'>
+                    <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${userDataInActive.image}`} alt='profileImg' />
+                    <div className='status-online-in-container-img-container-user-profile-in-container-content-right-in-body'></div>
+                  </div>
+                  <div className='container-fullname-active-user-in-container-user-profile-in-container-content-right-in-body'>
+                    <b>{userDataInActive.fullname}</b>
+                  </div>
+                </>
+              }
+            </Link>
+          </div>
+          <div className='container-user-online-list-in-content-right-in-body'>
+            <p className='status-user-text-in-container-user-online-list-in-content-right-in-body'>Status users</p>
+            <div className='border-bottom-of-status-user-text-in-container-user-online-list-in-content-right-in-body'></div>
+            <div className='container-body-in-container-user-online-list-in-content-right-in-body'>
+              <StatusUsers/>
+              <StatusUsers/>
+              <StatusUsers/>
+              <StatusUsers/>
+              <StatusUsers/>
+              <StatusUsers/>
+              <StatusUsers/>
+              <StatusUsers/>
+              <StatusUsers/>
+              <StatusUsers/>
+              <StatusUsers/>
+              <StatusUsers/>
+              <StatusUsers/>
+              <StatusUsers/>
+              <StatusUsers/>
+            </div>
           </div>
         </div>
       </div>

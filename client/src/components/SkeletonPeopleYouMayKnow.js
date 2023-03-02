@@ -9,7 +9,7 @@ const SkeletonPeopleYouMayKnow = () => {
         <Link className='text-decoration-none-in-container-people-you-may-know cursor-default' id='fix-container-img'>
             <div className='container-image-people-you-may-know'>
                 <div className='img-container-people-you-may-know'>
-                    <Skeleton circle={true} height={60} width={60}/>
+                    <Skeleton circle={true} height={50} width={50}/>
                 </div>          
             </div>
         </Link>

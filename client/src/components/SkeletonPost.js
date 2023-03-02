@@ -14,7 +14,7 @@ const SkeletonPost = () => {
                 <Link className='link-container-of-img cursor-none'>
                     <div className='container-of-img-profile-users cursor-none'>
                         <div className='container-width-full-img'>
-                            <Skeleton circle={true} height={60} width={60} />
+                            <Skeleton circle={true} height={50} width={50} />
                         </div>
                     </div>
                 </Link>

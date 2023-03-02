@@ -235,6 +235,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                                 <div className='container-header-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users'>
                                     <p>Are you sure to delete a post?</p>
                                 </div>
+                                <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0' , opacity: '.5'}} />
                                 <div className='container-body-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users'>
                                     <div onClick={() => setOpenDeletePostPopup(false)} className='container-cancel-button-in-container-body-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users'>
                                         <button>Cancel</button>
@@ -259,6 +260,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                                         <HiOutlineXMark className='icon-xmark-in-container-icon-xmark-in-container-header-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users' />
                                     </div>
                                 </div>
+                                <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0' , opacity: '.5'}} />
                                 <div className='container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
                                     <div className='container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
                                         <Link to='id' className='container-img-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
@@ -388,6 +390,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                                                 <HiOutlineXMark className='icon-xmark-in-container-icon-xmark-in-container-header-in-people-likes-post-list' />
                                             </div>
                                         </div>
+                                        <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0' , opacity: '.5'}} />
                                         <div className='container-center-in-people-likes-post-list'>
                                             {sharePostLikes.length === 0
                                                 ?
@@ -425,6 +428,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                                             <HiOutlineXMark className='icon-xmark-in-container-icon-xmark-in-header-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer' />
                                         </div>
                                     </div>
+                                    <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0' , opacity: '.5'}} />
                                     <div className='body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                         <div className='container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                             <Link to='id' className='container-img-profile-in-container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>

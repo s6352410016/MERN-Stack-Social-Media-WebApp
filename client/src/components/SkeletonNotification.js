@@ -7,7 +7,7 @@ const SkeletonNotification = () => {
     <div className='notification-users-container' id='no-bg-skeleton-load-in-notification'>
       <div className='notification-users-header'>
         <div className='notification-users-header-container'>
-          <Skeleton circle={true} height={60} width={60}/>
+          <Skeleton circle={true} height={50} width={50}/>
         </div>
       </div>
       <div className='notification-users-body'>

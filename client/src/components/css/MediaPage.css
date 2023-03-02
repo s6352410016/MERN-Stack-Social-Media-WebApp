@@ -234,7 +234,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 3px;
+    margin-top: 5px;
     transition: .1s;
 }
 
@@ -281,18 +281,17 @@
 }
 
 .content-header-chats-of-users{
-    width: 25%;
+    width: 22%;
     height: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 }
 
 .container-img-chats-of-users{
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 3rem;
-    overflow: hidden;
     margin: 0 5px 0 5px;
 }
 
@@ -427,7 +426,7 @@
     transition: .1s;
     border-radius: 10px;
     overflow-y: auto;
-    margin-top: 3px;
+    margin-top: 5px;
 }
 
 .notification-body::-webkit-scrollbar{
@@ -463,18 +462,17 @@
 }
 
 .notification-users-header{
-    width: 25%;
+    width: 22%;
     height: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 }
 
 .notification-users-header-container{
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 3rem;
-    overflow: hidden;
     margin: 0 5px 0 5px;
 }
 
@@ -553,7 +551,7 @@
 }
 
 .search-result-image-user{
-    width: 15%;
+    width: 13%;
     height: 100%;
     display: flex;
     justify-content: flex-start;
@@ -561,12 +559,10 @@
 }
 
 .search-result-image-container{
-    width: 55px;
-    height: 55px;
+    width: 50px;
+    height: 50px;
     border-radius: 3rem;
-    overflow: hidden;
     margin-left: 7px;
-    margin-right: 10px;
 }
 
 .search-img-user{
@@ -663,7 +659,7 @@
 .border-top-people-you-may-know{
     width: 100%;
     height: 1px;
-    background-color: #606770;
+    background-color: #cacaca;
     opacity: .5;
     margin-bottom: 5px;
 }
@@ -672,6 +668,7 @@
     width: 100%;
     height: 100%;
     overflow-y: auto;
+    margin-top: 5px;
 }
 
 .container-people-you-may-know{
@@ -679,11 +676,11 @@
     height: 85px;
     border-radius: 10px;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
     margin: 5px 0;
     cursor: pointer;
-    padding: 0 10px !important;
+    padding-right: 10px !important;
     transition: .2s;
 }
 
@@ -704,10 +701,9 @@
 }
 
 .img-container-people-you-may-know{
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 3.5rem;
-    overflow: hidden;
 }
 
 .img-container-people-you-may-know img{
@@ -748,7 +744,7 @@
     cursor: pointer;
     color: #fff;
     font-size: 1rem;
-    transition: .5s;
+    transition: .3s;
     font-weight: 500;
     background-color: #E7E9EB;
     display: flex;
@@ -818,7 +814,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 10px;
     padding: 1rem !important;
 }
 
@@ -831,7 +827,7 @@
 }
 
 .link-to-profile-post{
-    width: 12%;
+    width: 10%;
     height: 100%;
 }
 
@@ -848,8 +844,8 @@
 }
 
 .container-user-profile-img{
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 2rem;
 }
 
@@ -1040,9 +1036,180 @@
 
 .container-content-right-in-body{
     width: 100%;
-    height: 100%;
+    height: 10%;
     background-color: #fff;
     border-radius: 10px;
+    padding: 1rem !important;
+    margin-bottom: 1rem;
+}
+
+.container-user-profile-in-container-content-right-in-body{
+    text-decoration: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    transition: .2s;
+    border-radius: 10px;
+    gap: 1rem;
+}
+
+.container-img-container-user-profile-in-container-content-right-in-body{
+    width: 50px;
+    height: 50px;
+    border-radius: 2rem;
+    position: relative;
+}
+
+.container-img-container-user-profile-in-container-content-right-in-body img{
+    width: 100%;
+    height: 100%;
+}
+
+.status-online-in-container-img-container-user-profile-in-container-content-right-in-body{
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-color: #57CB6E;
+    border-radius: 1rem;
+    bottom: 0;
+    right: 0;
+    border: 2px solid #fff;
+}
+
+.container-fullname-active-user-in-container-user-profile-in-container-content-right-in-body{
+    flex-grow: 1;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.container-fullname-active-user-in-container-user-profile-in-container-content-right-in-body b{
+    margin-bottom: 0;
+    color: #353535;
+    font-size: 1rem;
+}
+
+.container-user-online-list-in-content-right-in-body{
+    width: 100%;
+    height: 90%;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 1rem 1rem 10px 1rem !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.status-user-text-in-container-user-online-list-in-content-right-in-body{
+    color: #353535;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.border-bottom-of-status-user-text-in-container-user-online-list-in-content-right-in-body{
+    width: 100%;
+    height: 1px;
+    background-color: #cacaca;
+    opacity: .5;
+}
+
+.container-body-in-container-user-online-list-in-content-right-in-body{
+    width: 100%;
+    height: auto;
+    overflow-y: auto;
+    margin-top: 5px;
+}
+
+.container-body-in-container-user-online-list-in-content-right-in-body::-webkit-scrollbar{
+    width: 5px;
+    /* display: none; */
+}
+
+.container-body-in-container-user-online-list-in-content-right-in-body::-webkit-scrollbar-thumb{
+    border-radius: 1rem;
+    background-color: rgba(0, 0, 0, .2);
+}
+
+.container-body-in-container-user-online-list-in-content-right-in-body::-webkit-scrollbar-thumb:hover{
+    background-color: rgba(0, 0, 0, .3);
+}
+
+.container-status-users-in-container-body-in-container-user-online-list-in-content-right-in-body{
+    width: 100%;
+    height: 85px;
+    margin: 5px 0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    transition: .2s;
+    padding: 0 10px !important;
+    gap: 1rem;
+}
+
+.container-status-users-in-container-body-in-container-user-online-list-in-content-right-in-body:hover{
+    background-color: #f3f3f3;
+}
+
+.container-user-profile-img-container-status-users-in-container-body-in-container-user-online-list-in-content-right-in-body{
+    width: 50px;
+    height: 50px;
+    border-radius: 2rem;
+    text-decoration: none;
+    position: relative;
+}
+
+.container-user-profile-img-container-status-users-in-container-body-in-container-user-online-list-in-content-right-in-body img{
+    width: 100%;
+    height: 100%;
+}
+
+.status-of-user-in-container-status-users-in-container-body-in-container-user-online-list-in-content-right-in-body{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 15px;
+    height: 15px;
+    border-radius: 1rem;
+    border: 2px solid #fff;
+    background-color: #D6D6D6;
+}
+
+.container-user-fullname-in-container-status-users-in-container-body-in-container-user-online-list-in-content-right-in-body{
+    flex-grow: 1;
+    height: 100%;
+    text-decoration: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.container-user-fullname-in-container-status-users-in-container-body-in-container-user-online-list-in-content-right-in-body p{
+    color: #353535;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.container-button-follow-or-unfollow-in-container-status-users-in-container-body-in-container-user-online-list-in-content-right-in-body{
+    width: 45px;
+    height: 45px;
+    border-radius: 2rem;
+    background-color: #E7E9EB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.container-button-follow-or-unfollow-in-container-status-users-in-container-body-in-container-user-online-list-in-content-right-in-body:hover{
+    background-color: #DADDE1;
 }
 
 .container-of-preview-img{
@@ -1221,11 +1388,10 @@
 
 .content-header-in-post-of-users{
     width: 100%;
-    height: 80px;
+    height: 65px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 10px;
 }
 
 .link-container-of-img{
@@ -1252,10 +1418,10 @@
 }
 
 .container-width-full-img{
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 2rem;
-    overflow: hidden;
+    
 }
 
 .container-width-full-img img{
@@ -1422,7 +1588,7 @@
 }
 
 .container-post-video-in-container-post-of-users{
-    width: 100%;
+    width: auto;
     height: auto;
 }
 
@@ -1751,7 +1917,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 1px solid #cacaca;
     padding-bottom: 1rem !important;
     position: relative;
 }
@@ -1788,11 +1953,7 @@
 
 .container-center-in-people-likes-post-list{
     width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+    height: 100%;
     overflow-y: auto;
     margin-top: 5px;
 }
@@ -1845,8 +2006,8 @@
 
 .container-img-in-center-in-people-likes-post-list{
     text-decoration: none;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 2rem;
     overflow: hidden;
 }
@@ -1863,6 +2024,7 @@
     justify-content: flex-start;
     align-items: center;
     text-decoration: none;
+    word-break: break-word;
 }
 
 .container-fullname-in-center-in-people-likes-post-list b{
@@ -2261,7 +2423,7 @@
     box-shadow: rgb(17 17 26 / 5%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
     padding: 1rem 1rem 10px 1rem !important;
     width: 500px;
-    height: 130px;
+    height: auto;
     background-color: #fff;
     border-radius: 10px;
     display: flex;
@@ -2277,7 +2439,6 @@
     align-items: center;
     width: 100%;
     height: 50px;
-    border-bottom: 1px solid #cacaca;
     padding-bottom: 1rem !important;
 }
 
@@ -2295,6 +2456,7 @@
     width: 100%;
     height: 40px;
     gap: 1rem;
+    margin-top: 1rem;
 }
 
 .cancel-button-in-container-botton-in-container-alert-confirm-to-delete-comment-in-container-alert-confirm-to-delete-comment-in-container-confirm-to-delete-comment-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users{
@@ -2353,7 +2515,6 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 1rem;
     position: relative;
     z-index: 999;
     box-shadow: rgb(17 17 26 / 5%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
@@ -2365,9 +2526,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 1px solid #cacaca;
-    padding-bottom: 1rem !important;
     position: relative;
+    padding-bottom: 1rem !important;
 }
 
 .header-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer p {
@@ -2408,11 +2568,12 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    margin-top: 1rem;
 }
 
 .container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer{
     width: 100%;
-    height: 45px;
+    height: 50px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -2420,7 +2581,7 @@
 }
 
 .container-img-profile-in-container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer{
-    width: 45px;
+    width: 50px;
     height: 100%;
     border-radius: 2rem;
     overflow: hidden;
@@ -2572,7 +2733,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    padding: 1rem !important;
+    padding: 10px 1rem 1rem 1rem !important;
     gap: 10px;
 }
 
@@ -2587,8 +2748,8 @@
 
 .container-img-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer{
     text-decoration: none;
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
     border-radius: 2rem;
     overflow: hidden;
 }
@@ -2666,6 +2827,7 @@
     border-radius: 5px;   
     cursor: pointer;
     overflow: hidden;
+    margin-top: 1rem;
 }
 
 .container-footer-in-container-share-content-post-in-container-icons-in-content-footer button{
@@ -2716,7 +2878,6 @@
     width: 100%;
     height: 50px;
     padding-bottom: 1rem !important;
-    border-bottom: 1px solid #cacaca;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -2778,7 +2939,7 @@
 
 .container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users{
     width: 100%;
-    height: 45px;
+    height: 50px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -2787,7 +2948,7 @@
 
 .container-img-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users{
     text-decoration: none;
-    width: 45px;
+    width: 50px;
     height: 100%;
     border-radius: 2rem;
     overflow: hidden;
@@ -2899,6 +3060,8 @@
     height: auto;
     cursor: grab;
     position: relative;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .container-img-in-container-img-swipper-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users{
@@ -3113,9 +3276,9 @@
 
 .container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users{
     box-shadow: rgb(17 17 26 / 5%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-    padding: 1rem 1rem 10px 1rem !important;
+    padding: 1rem !important;
     width: 500px;
-    height: 130px;
+    height: auto;
     background-color: #fff;
     border-radius: 10px;
     display: flex;
@@ -3131,7 +3294,6 @@
     align-items: center;
     width: 100%;
     height: 50px;
-    border-bottom: 1px solid #cacaca;
     padding-bottom: 1rem !important;
 }
 
@@ -3149,6 +3311,7 @@
     width: 100%;
     height: 40px;
     gap: 1rem;
+    margin-top: 1rem;
 }
 
 .container-cancel-button-in-container-body-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users , .container-confirm-button-in-container-body-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users{

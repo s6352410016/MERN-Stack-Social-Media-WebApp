@@ -9,7 +9,7 @@ const SkeletonChatsPopup = () => {
       <div className='container-chats-of-users' id='no-bg-skeleton-load-in-chats-of-users'>
         <div className='content-header-chats-of-users'>
           <div className='container-img-chats-of-users'>
-            <Skeleton circle={true} height={60} width={60}/>
+            <Skeleton circle={true} height={50} width={50}/>
           </div>
         </div>
         <div className='content-center-chats-of-users'>
