@@ -726,6 +726,7 @@
     width: 100%;
     text-align: start;
     padding-left: 10px !important;
+    text-transform: capitalize;
 }
 
 .container-button-follow-people-you-may-know{
@@ -784,6 +785,7 @@
 
 .overflow-auto-caontainer-fix::-webkit-scrollbar{
     width: 5px;
+    display: none;
 }
 
 .overflow-auto-caontainer-fix::-webkit-scrollbar-thumb{
@@ -803,6 +805,8 @@
     justify-content: flex-start;
     align-items: center;
     border-radius: 10px;
+    position: relative;
+    z-index: 998;
 }
 
 .create-post-container{
@@ -1036,30 +1040,36 @@
 
 .container-content-right-in-body{
     width: 100%;
-    height: 10%;
+    height: 30%;
+    padding: 1rem !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     background-color: #fff;
     border-radius: 10px;
-    padding: 1rem !important;
     margin-bottom: 1rem;
 }
 
 .container-user-profile-in-container-content-right-in-body{
     text-decoration: none;
     display: flex;
-    justify-content: flex-start;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     width: 100%;
     height: 100%;
     transition: .2s;
     border-radius: 10px;
-    gap: 1rem;
 }
 
 .container-img-container-user-profile-in-container-content-right-in-body{
     width: 50px;
     height: 50px;
     border-radius: 2rem;
-    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .container-img-container-user-profile-in-container-content-right-in-body img{
@@ -1067,41 +1077,249 @@
     height: 100%;
 }
 
-.status-online-in-container-img-container-user-profile-in-container-content-right-in-body{
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    background-color: #57CB6E;
-    border-radius: 1rem;
-    bottom: 0;
-    right: 0;
-    border: 2px solid #fff;
-}
-
 .container-fullname-active-user-in-container-user-profile-in-container-content-right-in-body{
-    flex-grow: 1;
-    height: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    margin-top: 1rem;
+    text-decoration: none;
 }
 
 .container-fullname-active-user-in-container-user-profile-in-container-content-right-in-body b{
     margin-bottom: 0;
     color: #353535;
     font-size: 1rem;
+    text-transform: capitalize;
 }
 
-.container-user-online-list-in-content-right-in-body{
+.container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body{
     width: 100%;
-    height: 90%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #DADADA;
+    border-bottom: 1px solid #DADADA;
+    margin-top: 1rem;
+    padding: 1rem 0 !important;
+}
+
+.container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    word-break: break-word;
+    border-right: 1px solid #DADADA;
+    cursor: pointer;
+}
+
+.container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body:hover > *{
+    opacity: .9;
+}
+
+.container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body:first-child:hover > *{
+    opacity: 1;
+}
+
+.container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body:first-child{
+    cursor: default;
+}
+
+.container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body:last-child{
+    border: none;
+}
+
+.container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body p{
+    color: #353535;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body span{
+    color: #353535;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0 , 0 , 0 , .3);
+    z-index: 999;
+}
+
+.container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body{
+    width: 500px;
+    height: 500px;
     background-color: #fff;
-    border-radius: 10px;
     padding: 1rem 1rem 10px 1rem !important;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    z-index: 999;
+    box-shadow: rgb(17 17 26 / 5%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+}
+
+.container-header-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 1rem !important;
+    position: relative;
+}
+
+.container-header-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body p{
+    margin-bottom: 0;
+    color: #353535;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.container-icon-xmark-in-container-header-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body{
+    position: absolute;
+    right: 0;
+    width: 35px;
+    height: 35px;
+    border-radius: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #E7E9EB;
+    transition: .2s;
+    cursor: pointer;
+}
+
+.container-icon-xmark-in-container-header-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body:hover{
+    background-color: #DADDE1;
+}
+
+.icon-xmark-in-container-header-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body{
+    color: #353535;
+    font-size: 1.4rem;
+}
+
+.bg-onclick-to-close-follower-popup-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    z-index: 998;
+}
+
+.container-user-data-in-follower-popup-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    margin-top: 5px;
+}
+
+.container-user-data-in-follower-popup-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body::-webkit-scrollbar{
+    width: 5px;
+}
+
+.container-user-data-in-follower-popup-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body::-webkit-scrollbar-thumb{
+    border-radius: 1rem;
+    background-color: rgba(0, 0, 0, .2);
+}
+
+.container-user-data-in-follower-popup-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body::-webkit-scrollbar-thumb:hover{
+    background-color: rgba(0, 0, 0, .3);
+}
+
+.container-user-data-in-container-user-data-in-follower-popup-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body{
+    width: 100%;
+    height: 85px;
+    border-radius: 10px;
+    margin: 5px 0;
+    cursor: pointer;
+    transition: .3s;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 10px !important;
+}
+
+.container-user-data-in-container-user-data-in-follower-popup-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body:hover{
+    background-color: #f3f3f3;
+}
+
+.container-img-in-container-user-data-in-container-user-data-in-follower-popup-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body{
+    width: 50px;
+    height: 50px;
+    border-radius: 2rem;
+}
+
+.container-img-in-container-user-data-in-container-user-data-in-follower-popup-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body img{
+    width: 100%;
+    height: 100%;
+}
+
+.container-fullname-user-in-container-user-data-in-container-user-data-in-follower-popup-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body{
+    flex-grow: 1;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-decoration: none;
+}
+
+.container-fullname-user-in-container-user-data-in-container-user-data-in-follower-popup-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body p{
+    margin-bottom: 0;
+    color: #353535;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.container-button-follow-in-container-user-data-in-container-user-data-in-follower-popup-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body{
+    width: 125px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    transition: .3s;
+    background-color: #E7E9EB;
+    gap: 10px;
+}
+
+.container-button-follow-in-container-user-data-in-container-user-data-in-follower-popup-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body:hover{
+    background-color: #DADDE1;
+}
+
+.container-button-follow-in-container-user-data-in-container-user-data-in-follower-popup-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body p{
+    color: #353535;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.container-user-online-list-in-content-right-in-body{
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 1rem 1rem 10px 1rem !important;
+    overflow: hidden;
 }
 
 .status-user-text-in-container-user-online-list-in-content-right-in-body{
@@ -1127,7 +1345,7 @@
 
 .container-body-in-container-user-online-list-in-content-right-in-body::-webkit-scrollbar{
     width: 5px;
-    /* display: none; */
+    display: none;
 }
 
 .container-body-in-container-user-online-list-in-content-right-in-body::-webkit-scrollbar-thumb{
@@ -1156,6 +1374,10 @@
     background-color: #f3f3f3;
 }
 
+.container-status-users-in-container-body-in-container-user-online-list-in-content-right-in-body.hover-none:hover{
+    background-color: #fff;
+}
+
 .container-user-profile-img-container-status-users-in-container-body-in-container-user-online-list-in-content-right-in-body{
     width: 50px;
     height: 50px;
@@ -1177,7 +1399,11 @@
     height: 15px;
     border-radius: 1rem;
     border: 2px solid #fff;
-    background-color: #D6D6D6;
+    background-color: #d8d8d8;
+}
+
+.status-of-user-in-container-status-users-in-container-body-in-container-user-online-list-in-content-right-in-body.active{
+    background-color: #57CB6E;
 }
 
 .container-user-fullname-in-container-status-users-in-container-body-in-container-user-online-list-in-content-right-in-body{
@@ -1185,8 +1411,10 @@
     height: 100%;
     text-decoration: none;
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    word-break: break-word;
 }
 
 .container-user-fullname-in-container-status-users-in-container-body-in-container-user-online-list-in-content-right-in-body p{
@@ -1194,6 +1422,13 @@
     font-size: 1rem;
     font-weight: bold;
     margin-bottom: 0;
+}
+
+.container-user-fullname-in-container-status-users-in-container-body-in-container-user-online-list-in-content-right-in-body span{
+    color: #A0A0A0;
+    font-size: 14px;
+    word-break: break-word;
+    font-weight: 500;
 }
 
 .container-button-follow-or-unfollow-in-container-status-users-in-container-body-in-container-user-online-list-in-content-right-in-body{
@@ -1361,7 +1596,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    z-index: 999;
+    z-index: 997;
     box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
 }
 
@@ -1456,6 +1691,7 @@
     color: #353535;
     font-size: 1rem;
     font-weight: bold;
+    text-transform: capitalize;
 }
 
 .modify-date-post-of-users{
@@ -2030,6 +2266,7 @@
 .container-fullname-in-center-in-people-likes-post-list b{
     color: #353535;
     font-size: 1rem;
+    text-transform: capitalize;
 }
 
 .container-follow-icon-in-center-in-people-likes-post-list{
@@ -2277,6 +2514,7 @@
     color: #353535;
     font-size: 1rem;
     font-weight: bold;
+    text-transform: capitalize;
 }
 
 .modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users{
@@ -2610,6 +2848,7 @@
     color: #353535;
     font-size: 1rem;
     font-weight: bold;
+    text-transform: capitalize;
 }
 
 .container-msg-in-share-post-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer{
@@ -2789,6 +3028,7 @@
     font-size: 1rem;
     font-weight: bold;
     margin-bottom: 0;
+    text-transform: capitalize;
 }
 
 .container-modifydate-post-in-container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer{
@@ -2973,6 +3213,7 @@
     color: #353535;
     font-weight: bold;
     font-size: 1rem;
+    text-transform: capitalize;
 }
 
 .container-body-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users{
@@ -3420,6 +3661,7 @@
     color: #353535;
     font-weight: bold;
     cursor: pointer;
+    text-transform: capitalize;
 }
 
 .container-fullname-user-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users span{

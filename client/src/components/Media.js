@@ -18,6 +18,11 @@ import Post from './Post';
 import SkeletonPost from './SkeletonPost';
 import SharePost from './SharePost';
 import StatusUsers from './StatusUsers';
+import SkeletonStatusUsers from './SkeletonStatusUsers';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+import { HiOutlineXMark } from "react-icons/hi2";
+import FollowersList from './FollowersList';
 
 const Media = () => {
   const navigate = useNavigate();
@@ -33,7 +38,10 @@ const Media = () => {
   const [showSkeletonSearchResult, setShowSkeletonSearchResult] = useState(true);
   const [showSkeletonChatsPopup, setShowSkeletonChatsPopup] = useState(true);
   const [showSkeletionPost, setShowSkeletonPost] = useState(true);
+  const [showSkeletonStatusUser, setShowSkeletonStatusUsers] = useState(true);
+  const [showSkeletonProfileUser, setShowSkeletonProfileUser] = useState(true);
   const [showIconScrollToTop, setShowIconScrollToTop] = useState(false);
+  const [openFollowerPopup, setOpenFollowerPopup] = useState(false);
   const [searchResult, setSearchResult] = useState('');
   const [sortAllPostAscening, setSortAllPostAscending] = useState([]);
   const [dataUserNotification, setDataUserNotification] = useState(
@@ -126,77 +134,107 @@ const Media = () => {
       {
         image: `user1.png`,
         fullname: 'bunlung maieam',
-        userId: '63db82a0028c87f7d37c6628'
+        userId: '63db82a0028c87f7d37c6628',
+        follower: ['02' , '03' , '04' , '05' , '06' , '07' , '08' , '09' , '10'],
+        following: []
       },
       {
         image: `user2.png`,
         fullname: 'Prayut Chan O Cha',
-        userId: '02'
+        userId: '02',
+        follower: [],
+        following: []
       },
       {
         image: `user3.png`,
         fullname: 'บัลลังก์ มาเอี่ยม',
-        userId: '03'
+        userId: '03',
+        follower: [],
+        following: []
       },
       {
         image: `user4.png`,
         fullname: 'มากมี ศรีสุข',
-        userId: '04'
+        userId: '04',
+        follower: [],
+        following: []
       },
       {
         image: `user5.png`,
         fullname: 'ดวงใจ มากมาย',
-        userId: '05'
+        userId: '05',
+        follower: [],
+        following: []
       },
       {
         image: `user6.png`,
         fullname: 'สมพร ดวงดี',
-        userId: '06'
+        userId: '06',
+        follower: [],
+        following: []
       },
       {
         image: `user7.png`,
         fullname: 'สมหมาย ใจงาม',
-        userId: '07'
+        userId: '07',
+        follower: [],
+        following: []
       },
       {
         image: `user8.png`,
         fullname: 'สมคิด จิตสงบ',
-        userId: '08'
+        userId: '08',
+        follower: [],
+        following: []
       },
       {
         image: `user9.png`,
         fullname: 'บุญมี มากล้น',
-        userId: '09'
+        userId: '09',
+        follower: [],
+        following: []
       },
       {
         image: `user10.png`,
         fullname: 'บุญงาม พอแล้ว',
-        userId: '10'
+        userId: '10',
+        follower: [],
+        following: []
       },
       {
         image: `user11.png`,
         fullname: 'สมควร รวยมาก',
-        userId: '11'
+        userId: '11',
+        follower: [],
+        following: []
       },
       {
         image: `user12.png`,
         fullname: 'สมจิตร จงจอหอ',
-        userId: '12'
+        userId: '12',
+        follower: [],
+        following: []
       },
       {
         image: `user13.png`,
         fullname: 'พอดี พอแล้ว',
-        userId: '13'
+        userId: '13',
+        follower: [],
+        following: []
       },
       {
         image: `user14.png`,
         fullname: 'Mark Sukkerberg',
-        userId: '14'
+        userId: '14',
+        follower: [],
+        following: []
       },
       {
         image: `user15.png`,
         fullname: 'Elon Mask',
-        userId: '15'
+        userId: '15',
+        follower: [],
+        following: []
       },
     ]
   );
@@ -225,7 +263,7 @@ const Media = () => {
         ],
         postVideo: '',
         createdAt: '2023-02-02T09:43:05.427+00:00',
-        postLikes: ['63db82a0028c87f7d37c6628', '10', '05', '09', '06' , '07']
+        postLikes: ['63db82a0028c87f7d37c6628', '10', '05', '09', '06', '07']
       },
       {
         postId: '03',
@@ -396,7 +434,6 @@ const Media = () => {
   useEffect(() => {
     setUserDataInActive(dataForUser.find((e) => e.userId === userData.userId));
   }, [userData]);
-  console.log(userDataInActive);
 
   useEffect(() => {
     const sortedPosts = [...postOfusers, ...postOfUsersToShare].sort((a, b) => {
@@ -413,6 +450,8 @@ const Media = () => {
       setShowSkeletonSearchResult(false);
       setShowSkeletonChatsPopup(false);
       setShowSkeletonPost(false);
+      setShowSkeletonStatusUsers(false);
+      setShowSkeletonProfileUser(false);
     }, 2000);
   }, []);
 
@@ -528,7 +567,7 @@ const Media = () => {
                 <div className='notification-header'>
                   <p className='p-notification-header'>Notifications</p>
                 </div>
-                <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0' , opacity: '.5'}} />
+                <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0', opacity: '.5' }} />
                 <div className='notification-body' style={dataUserNotification.length === 1 ? { height: '100px' } : dataUserNotification.length === 2 ? { height: '200px' } : dataUserNotification.length === 3 ? { height: '300px' } : dataUserNotification.length === 4 ? { height: '400px' } : dataUserNotification.length > 4 ? { height: '400px' } : { height: 'auto' }}>
                   {showSkeletonNotification
                     ?
@@ -555,7 +594,7 @@ const Media = () => {
                 <div className='content-header-in-chat-popup'>
                   <p>Chats</p>
                 </div>
-                <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0' , opacity: '.5'}} />
+                <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0', opacity: '.5' }} />
                 <div className='content-center-in-chat-popup' style={dataUserChats.length === 1 ? { height: '90px' } : dataUserChats.length === 2 ? { height: '180px' } : dataUserChats.length === 3 ? { height: '270px' } : dataUserChats.length === 4 ? { height: '360px' } : dataUserChats.length > 4 ? { height: '400px' } : { height: 'auto' }}>
                   {showSkeletonChatsPopup
                     ?
@@ -594,15 +633,19 @@ const Media = () => {
           <div className='fix-container-content-left-in-body'>
             <div className='container-left-in-body'>
               <p className='header-text-people-you-may-know'>People you may know</p>
-              <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0' , opacity: '.5'}} />
+              <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0', opacity: '.5' }} />
               <div className='overflow-auto-caontainer-fix'>
                 {showSkeletonPeopleYouMayKnow
                   ?
-                  dataForUser.map((e, index) => (
+                  dataForUser.filter((e) => {
+                    return e.userId !== userData.userId;
+                  }).map((e, index) => (
                     <SkeletonPeopleYouMayKnow key={index} />
                   ))
                   :
-                  dataForUser.map((e, index) => (
+                  dataForUser.filter((e) => {
+                    return e.userId !== userData.userId;
+                  }).map((e, index) => (
                     <PeopleYouMayKnow key={index} image={e.image} fullname={e.fullname} />
                   ))
                 }
@@ -641,42 +684,109 @@ const Media = () => {
         </div>
         <div className='content-right-in-body'>
           <div className='container-content-right-in-body'>
-            <Link to='/profile' className='container-user-profile-in-container-content-right-in-body'>
+            <div className='container-user-profile-in-container-content-right-in-body'>
               {userDataInActive === undefined
                 ?
                 <></>
                 :
                 <>
                   <div className='container-img-container-user-profile-in-container-content-right-in-body'>
-                    <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${userDataInActive.image}`} alt='profileImg' />
-                    <div className='status-online-in-container-img-container-user-profile-in-container-content-right-in-body'></div>
+                    {showSkeletonProfileUser
+                      ?
+                      <Skeleton circle={true} height={50} width={50} />
+                      :
+                      <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${userDataInActive.image}`} alt='profileImg' />
+                    }
                   </div>
                   <div className='container-fullname-active-user-in-container-user-profile-in-container-content-right-in-body'>
-                    <b>{userDataInActive.fullname}</b>
+                    {showSkeletonProfileUser
+                      ?
+                      <Skeleton height={15} width={250} />
+                      :
+                      <b>{userDataInActive.fullname}</b>
+                    }
+                  </div>
+                  <div className='container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'>
+                    <div className='container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'>
+                      {showSkeletonProfileUser
+                        ?
+                        <Skeleton height={15} width={80} count={2} />
+                        :
+                        <>
+                          <p>Post</p>
+                          <span>0</span>
+                        </>
+                      }
+                    </div>
+                    <div onClick={() => setOpenFollowerPopup(true)} className='container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'>
+                      {showSkeletonProfileUser
+                        ?
+                        <Skeleton height={15} width={80} count={2} />
+                        :
+                        <>
+                          <p>Follower</p>
+                          <span>50</span>
+                        </>
+                      }
+                    </div>
+                    {openFollowerPopup &&
+                      <div className='container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'>
+                        <div onClick={() => setOpenFollowerPopup(false)} className='bg-onclick-to-close-follower-popup-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'></div>
+                        <div className='container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'>
+                          <div className='container-header-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'>
+                            <p>Follower</p>
+                            <div onClick={() => setOpenFollowerPopup(false)} className='container-icon-xmark-in-container-header-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'>
+                              <HiOutlineXMark className='icon-xmark-in-container-header-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body' />
+                            </div>
+                          </div>
+                          <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0', opacity: '.5' }} />
+                          <div className='container-user-data-in-follower-popup-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'>
+                            {userDataInActive === undefined
+                              ?
+                              <></>
+                              :
+                              userDataInActive.follower.map((e, index) => (
+                                <FollowersList key={index} followerUserId={e} dataForUser={dataForUser}/>
+                              ))
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    }
+                    <div className='container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'>
+                      {showSkeletonProfileUser
+                        ?
+                        <Skeleton height={15} width={80} count={2} />
+                        :
+                        <>
+                          <p>Following</p>
+                          <span>41</span>
+                        </>
+                      }
+                    </div>
                   </div>
                 </>
               }
-            </Link>
+            </div>
           </div>
           <div className='container-user-online-list-in-content-right-in-body'>
-            <p className='status-user-text-in-container-user-online-list-in-content-right-in-body'>Status users</p>
+            <p className='status-user-text-in-container-user-online-list-in-content-right-in-body'>Users status</p>
             <div className='border-bottom-of-status-user-text-in-container-user-online-list-in-content-right-in-body'></div>
             <div className='container-body-in-container-user-online-list-in-content-right-in-body'>
-              <StatusUsers/>
-              <StatusUsers/>
-              <StatusUsers/>
-              <StatusUsers/>
-              <StatusUsers/>
-              <StatusUsers/>
-              <StatusUsers/>
-              <StatusUsers/>
-              <StatusUsers/>
-              <StatusUsers/>
-              <StatusUsers/>
-              <StatusUsers/>
-              <StatusUsers/>
-              <StatusUsers/>
-              <StatusUsers/>
+              {showSkeletonStatusUser
+                ?
+                dataForUser.filter((e) => {
+                  return e.userId !== userData.userId
+                }).map((e, index) => (
+                  <SkeletonStatusUsers key={index} />
+                ))
+                :
+                dataForUser.filter((e) => {
+                  return e.userId !== userData.userId
+                }).map((e, index) => (
+                  <StatusUsers key={index} userId={e.userId} image={e.image} fullname={e.fullname} />
+                ))
+              }
             </div>
           </div>
         </div>
