@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faUserCheck } from '@fortawesome/free-solid-svg-icons';
 
-const FollowersList = ({followerUserId , dataForUser}) => {
+const FollowersAndFollowingsList = ({followerUserId , dataForUser}) => {
     const [changeIconFollower, setChangeIconFollower] = useState(false);
     const [dataOfFollower , setDataOfFollower] = useState({});
 
@@ -35,4 +35,4 @@ const FollowersList = ({followerUserId , dataForUser}) => {
     );
 }
 
-export default FollowersList;
+export default FollowersAndFollowingsList;

@@ -19,14 +19,14 @@ import SkeletonPost from './SkeletonPost';
 import SharePost from './SharePost';
 import StatusUsers from './StatusUsers';
 import SkeletonStatusUsers from './SkeletonStatusUsers';
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
 import { HiOutlineXMark } from "react-icons/hi2";
-import FollowersList from './FollowersList';
+import FollowersAndFollowingsList from './FollowersAndFollowingsList';
+import SkeletonUserProfileInMedia from './SkeletonUserProfileInMedia';
 
 const Media = () => {
   const navigate = useNavigate();
 
+  const [openHiddenMenuInHeader, setOpenHiddenMenuInHeader] = useState(false);
   const [userData, setUserData] = useState('');
   const [openMenus, setOpenMenus] = useState(false);
   const [openNotifications, setOpenNotifications] = useState(false);
@@ -42,6 +42,7 @@ const Media = () => {
   const [showSkeletonProfileUser, setShowSkeletonProfileUser] = useState(true);
   const [showIconScrollToTop, setShowIconScrollToTop] = useState(false);
   const [openFollowerPopup, setOpenFollowerPopup] = useState(false);
+  const [openFollowingPopup, setOpenFollowingPopup] = useState(false);
   const [searchResult, setSearchResult] = useState('');
   const [sortAllPostAscening, setSortAllPostAscending] = useState([]);
   const [dataUserNotification, setDataUserNotification] = useState(
@@ -135,7 +136,7 @@ const Media = () => {
         image: `user1.png`,
         fullname: 'bunlung maieam',
         userId: '63db82a0028c87f7d37c6628',
-        follower: ['02' , '03' , '04' , '05' , '06' , '07' , '08' , '09' , '10'],
+        follower: ['02', '03', '04', '05', '06', '07', '08', '09', '10'],
         following: []
       },
       {
@@ -474,6 +475,11 @@ const Media = () => {
     })
   }
 
+  const showHiddenMenuInHeader = () => {
+    const hiddenContentInHeaderPopup = document.querySelector('.hidden-content-in-header-popup');
+    hiddenContentInHeaderPopup.classList.toggle('active');
+  }
+
   const dropdownPopup = () => {
     setOpenMenus(!openMenus);
     setOpenNotifications(false);
@@ -627,6 +633,15 @@ const Media = () => {
             }
           </div>
         </div>
+        <div className='hamberger-menu-container' style={{ display: 'none' }}>
+          <div onClick={showHiddenMenuInHeader} className='hamburger-menu'>
+            <div className='bar1'></div>
+            <div className='bar2'></div>
+            <div className='bar3'></div>
+          </div>
+          <div className='hidden-content-in-header-popup'>
+          </div>
+        </div>
       </header>
       <div className='container-body-in-media-page'>
         <div className='content-left-in-body'>
@@ -684,90 +699,25 @@ const Media = () => {
         </div>
         <div className='content-right-in-body'>
           <div className='container-content-right-in-body'>
-            <div className='container-user-profile-in-container-content-right-in-body'>
-              {userDataInActive === undefined
-                ?
-                <></>
-                :
-                <>
-                  <div className='container-img-container-user-profile-in-container-content-right-in-body'>
-                    {showSkeletonProfileUser
-                      ?
-                      <Skeleton circle={true} height={50} width={50} />
-                      :
+            {showSkeletonProfileUser ?
+              <SkeletonUserProfileInMedia />
+              :
+              <Link to='/profile' className='container-user-profile-in-container-content-right-in-body'>
+                {userDataInActive === undefined
+                  ?
+                  <></>
+                  :
+                  <>
+                    <div className='container-img-container-user-profile-in-container-content-right-in-body'>
                       <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${userDataInActive.image}`} alt='profileImg' />
-                    }
-                  </div>
-                  <div className='container-fullname-active-user-in-container-user-profile-in-container-content-right-in-body'>
-                    {showSkeletonProfileUser
-                      ?
-                      <Skeleton height={15} width={250} />
-                      :
+                    </div>
+                    <div className='container-fullname-active-user-in-container-user-profile-in-container-content-right-in-body'>
                       <b>{userDataInActive.fullname}</b>
-                    }
-                  </div>
-                  <div className='container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'>
-                    <div className='container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'>
-                      {showSkeletonProfileUser
-                        ?
-                        <Skeleton height={15} width={80} count={2} />
-                        :
-                        <>
-                          <p>Post</p>
-                          <span>0</span>
-                        </>
-                      }
                     </div>
-                    <div onClick={() => setOpenFollowerPopup(true)} className='container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'>
-                      {showSkeletonProfileUser
-                        ?
-                        <Skeleton height={15} width={80} count={2} />
-                        :
-                        <>
-                          <p>Follower</p>
-                          <span>50</span>
-                        </>
-                      }
-                    </div>
-                    {openFollowerPopup &&
-                      <div className='container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'>
-                        <div onClick={() => setOpenFollowerPopup(false)} className='bg-onclick-to-close-follower-popup-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'></div>
-                        <div className='container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'>
-                          <div className='container-header-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'>
-                            <p>Follower</p>
-                            <div onClick={() => setOpenFollowerPopup(false)} className='container-icon-xmark-in-container-header-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'>
-                              <HiOutlineXMark className='icon-xmark-in-container-header-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body' />
-                            </div>
-                          </div>
-                          <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0', opacity: '.5' }} />
-                          <div className='container-user-data-in-follower-popup-in-container-follower-user-list-in-container-show-follower-of-user-in-container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'>
-                            {userDataInActive === undefined
-                              ?
-                              <></>
-                              :
-                              userDataInActive.follower.map((e, index) => (
-                                <FollowersList key={index} followerUserId={e} dataForUser={dataForUser}/>
-                              ))
-                            }
-                          </div>
-                        </div>
-                      </div>
-                    }
-                    <div className='container-show-status-in-container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body'>
-                      {showSkeletonProfileUser
-                        ?
-                        <Skeleton height={15} width={80} count={2} />
-                        :
-                        <>
-                          <p>Following</p>
-                          <span>41</span>
-                        </>
-                      }
-                    </div>
-                  </div>
-                </>
-              }
-            </div>
+                  </>
+                }
+              </Link>
+            }
           </div>
           <div className='container-user-online-list-in-content-right-in-body'>
             <p className='status-user-text-in-container-user-online-list-in-content-right-in-body'>Users status</p>
