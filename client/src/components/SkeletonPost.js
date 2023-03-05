@@ -13,30 +13,28 @@ const SkeletonPost = () => {
             <div className='content-header-in-post-of-users'>
                 <Link className='link-container-of-img cursor-none'>
                     <div className='container-of-img-profile-users cursor-none'>
-                        <div className='container-width-full-img'>
-                            <Skeleton circle={true} height={50} width={50} />
-                        </div>
+                        <Skeleton circle={true} height={50} width={50} className='style-skeleton-img' />
                     </div>
                 </Link>
                 <div className='content-center-in-header-in-post-of-users'>
-                    <Link className='link-in-container-of-fullname-user cursor-none'><Skeleton height={15} width={200} /></Link>
-                    <p className='modify-date-post-of-users'><Skeleton height={15} width={80} /></p>
+                    <Skeleton height={15} width={200} className='style-skeleton-fullname' />
+                    <Skeleton height={15} width={80} className='style-skeleton-modifydate' />
                 </div>
             </div>
             <div className='message-in-post-container'>
                 <Skeleton height={15} width={250} />
             </div>
-            <div className='content-center-in-post-of-users cursor-none' style={{marginTop: '10px'}}>
+            <div className='content-center-in-post-of-users cursor-none' style={{ marginTop: '10px' }}>
                 <div className='container-img-post-of-users'>
                     <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
                         <SwiperSlide><Skeleton height={'100%'} width={'100%'} /></SwiperSlide>
                     </Swiper>
                 </div>
             </div>
-            <div style={{marginTop: '1rem'}}/>
-            <Skeleton height={15} width={450}/>
-            <div style={{marginTop: '5px'}}/>
-            <Skeleton height={15} width={250}/>
+            <div style={{ marginTop: '1rem' }} />
+            <Skeleton height={15} width={450} />
+            <div style={{ marginTop: '5px' }} />
+            <Skeleton height={15} width={250} />
         </div >
     );
 }

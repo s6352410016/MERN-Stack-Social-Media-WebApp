@@ -7,10 +7,10 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { VscComment } from "react-icons/vsc";
+import { IoPaperPlaneOutline } from "react-icons/io5";
 import { SlPaperClip } from "react-icons/sl";
 import { BsEmojiSmile } from "react-icons/bs";
-import { CiShare1 } from "react-icons/ci";
+import { TbMessageCircle2 } from "react-icons/tb";
 import { HiOutlineXMark } from "react-icons/hi2";
 import EmojiPicker from 'emoji-picker-react';
 import PeopleLikedYourPost from './PeopleLikedYourPost';
@@ -108,6 +108,11 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
             setPreviewImgFile(imgUrl);
             setOpenImgPreview(true);
         }
+    }
+
+    const focusInputComment = () => {
+        setOpenComments(!openComments);
+        inputCommentRef.current.focus();
     }
 
     const openPostEditPopup = () => {
@@ -372,7 +377,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                                 :
                                 <AiOutlineHeart className='heart-icon' />
                             }
-                        </div>&nbsp;
+                        </div>
                         {openReactFragmentWhileComponentRender
                             ?
                             <></>
@@ -408,11 +413,11 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                             </div>
                         }
                     </div>
-                    <div className='comment-icon-container' onClick={() => setOpenComments(!openComments)}>
-                        <VscComment className='comment-icon' />&nbsp;&nbsp;&nbsp;<span className='span-comment-icon-hover'>Comment</span>
+                    <div className='comment-icon-container' onClick={focusInputComment}>
+                        <TbMessageCircle2 className='comment-icon' /><span className='span-comment-icon-hover'>Comment</span>
                     </div>
                     <div className='share-icon-container' onClick={() => setOpenSharePostPopup(true)}>
-                        <CiShare1 className='share-icon' />&nbsp;&nbsp;&nbsp;<span className='span-share-icon-hover'>Share</span>
+                        <IoPaperPlaneOutline className='share-icon' /><span className='span-share-icon-hover'>Share</span>
                     </div>
                     {openSharePostPopup &&
                         <>

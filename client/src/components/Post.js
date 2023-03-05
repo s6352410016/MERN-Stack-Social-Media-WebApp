@@ -7,10 +7,11 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { VscComment } from "react-icons/vsc";
+import { TbMessageCircle2 } from "react-icons/tb";
 import { SlPaperClip } from "react-icons/sl";
 import { BsEmojiSmile } from "react-icons/bs";
-import { CiShare1, CiImageOn } from "react-icons/ci";
+import { CiImageOn } from "react-icons/ci";
+import { IoPaperPlaneOutline } from "react-icons/io5";
 import { HiOutlineXMark } from "react-icons/hi2";
 import EmojiPicker from 'emoji-picker-react';
 import PeopleLikedYourPost from './PeopleLikedYourPost';
@@ -161,6 +162,11 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
         inputFileVideoInEditPostRef.current.click();
     }
 
+    const focusInputComment = () => {
+        setOpenComments(!openComments);
+        inputCommentRef.current.focus();
+    }
+
     const openPostEditPopup = () => {
         setSettingInPostPopup(false);
         setOpenEditPostPopup(!openEditPostPopup);
@@ -210,11 +216,11 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
     }
 
     useEffect(() => {
-        const sortedComments = [...commentOfUsers].sort((a , b) => {
+        const sortedComments = [...commentOfUsers].sort((a, b) => {
             return new Date(b.createdAt) - new Date(a.createdAt);
         })
         setCommentOfUsers(sortedComments);
-    } , []);
+    }, []);
 
     useEffect(() => {
         if (openSharePostPopup) {
@@ -305,7 +311,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                                 <div className='container-header-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users'>
                                     <p>Are you sure to delete a post?</p>
                                 </div>
-                                <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0' , opacity: '.5'}} />
+                                <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0', opacity: '.5' }} />
                                 <div className='container-body-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users'>
                                     <div onClick={() => setOpenDeletePostPopup(false)} className='container-cancel-button-in-container-body-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users'>
                                         <button>Cancel</button>
@@ -330,7 +336,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                                         <HiOutlineXMark className='icon-xmark-in-container-icon-xmark-in-container-header-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users' />
                                     </div>
                                 </div>
-                                <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0' , opacity: '.5'}} />
+                                <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0', opacity: '.5' }} />
                                 <div className='container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
                                     <div className='container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
                                         <Link to='id' className='container-img-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
@@ -462,7 +468,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
             {
                 postImgs.length !== 0
                     ?
-                    <div style={{cursor: postImgs.length === 1 ? 'default' : 'grab'}} className='content-center-in-post-of-users'>
+                    <div style={{ cursor: postImgs.length === 1 ? 'default' : 'grab' }} className='content-center-in-post-of-users'>
                         <div className='container-img-post-of-users'>
                             <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
                                 {postImgs.map((e, index) => (
@@ -497,7 +503,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                                 :
                                 <AiOutlineHeart className='heart-icon' />
                             }
-                        </div>&nbsp;
+                        </div>
                         <span onClick={() => setOpenPeopleLikeYourPost(true)}>{postLikes.length === 0 ? '' : postLikes.length} {postLikes.length === 1 ? 'Like' : postLikes.length === 0 ? 'Like' : 'Likes'}</span>
                         {openPeopleLikedYourPost &&
                             <div className='bg-people-likes-post-list'>
@@ -510,7 +516,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                                                 <HiOutlineXMark className='icon-xmark-in-container-icon-xmark-in-container-header-in-people-likes-post-list' />
                                             </div>
                                         </div>
-                                        <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0' , opacity: '.5'}} />
+                                        <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0', opacity: '.5' }} />
                                         <div className='container-center-in-people-likes-post-list'>
                                             {postLikes.length === 0
                                                 ?
@@ -528,11 +534,11 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                             </div>
                         }
                     </div>
-                    <div className='comment-icon-container' onClick={() => setOpenComments(!openComments)}>
-                        <VscComment className='comment-icon' />&nbsp;&nbsp;&nbsp;<span className='span-comment-icon-hover'>Comment</span>
+                    <div className='comment-icon-container' onClick={focusInputComment}>
+                        <TbMessageCircle2 className='comment-icon' /><span className='span-comment-icon-hover'>Comment</span>
                     </div>
                     <div className='share-icon-container' onClick={() => setOpenSharePostPopup(true)}>
-                        <CiShare1 className='share-icon' />&nbsp;&nbsp;&nbsp;<span className='span-share-icon-hover'>Share</span>
+                        <IoPaperPlaneOutline className='share-icon' /><span className='span-share-icon-hover'>Share</span>
                     </div>
                     {openSharePostPopup &&
                         <>
@@ -548,7 +554,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                                             <HiOutlineXMark className='icon-xmark-in-container-icon-xmark-in-header-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer' />
                                         </div>
                                     </div>
-                                    <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0' , opacity: '.5'}} />
+                                    <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0', opacity: '.5' }} />
                                     <div className='body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                         <div className='container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                             <Link to='id' className='container-img-profile-in-container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
@@ -576,7 +582,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                                         <div className='container-post-of-user-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                             {postImgs.length !== 0
                                                 ?
-                                                <div style={{cursor : postImgs.length === 1 ? 'default' : 'grab'}} className='content-center-in-post-of-users-in-container-post-of-user-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                <div style={{ cursor: postImgs.length === 1 ? 'default' : 'grab' }} className='content-center-in-post-of-users-in-container-post-of-user-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                     <div className='container-img-post-of-users-in-content-center-in-post-of-users-in-container-post-of-user-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                         <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
                                                             {postImgs.map((e, index) => (

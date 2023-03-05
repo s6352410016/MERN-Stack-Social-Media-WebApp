@@ -640,6 +640,7 @@ const Media = () => {
             <div className='bar3'></div>
           </div>
           <div className='hidden-content-in-header-popup'>
+            
           </div>
         </div>
       </header>
