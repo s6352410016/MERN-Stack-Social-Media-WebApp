@@ -1486,11 +1486,11 @@
     font-size: 1.7rem;
     cursor: pointer;
     transition: .2s;
-    color: #fff;
+    color: #EF4040;
 }
 
 .style-xmark:hover {
-    color: #f3f3f3;
+    color: #EE2525;
 }
 
 .container-img-in-preview {
@@ -1763,7 +1763,7 @@
 .setting-post-popup {
     position: absolute;
     top: 20%;
-    right: 18%;
+    right: 55%;
     width: 140px;
     height: 70px;
     background-color: #fff;
@@ -2139,7 +2139,7 @@
 
 .xmark-icon-in-container-xmark-icon-in-box-of-img-container-in-create-comment-container-in-post-of-users {
     font-size: 1.5rem;
-    color: #fff;
+    color: #EF4040;
     font-weight: bold;
     position: absolute;
     top: 5%;
@@ -2149,7 +2149,7 @@
 }
 
 .xmark-icon-in-container-xmark-icon-in-box-of-img-container-in-create-comment-container-in-post-of-users:hover {
-    color: #f3f3f3;
+    color: #EE2525;
 }
 
 .bg-people-likes-post-list {
@@ -2495,7 +2495,7 @@
 
 .icon-xmark-in-box-of-img-in-container-img-preview-in-edit-comment-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users {
     font-size: 1.5rem;
-    color: #fff;
+    color: #EF4040;
     font-weight: bold;
     position: absolute;
     top: 5%;
@@ -2505,7 +2505,7 @@
 }
 
 .icon-xmark-in-box-of-img-in-container-img-preview-in-edit-comment-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users:hover {
-    color: #f3f3f3;
+    color: #EE2525;
 }
 
 .emoji-icon-in-container-icon-emoji-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users,
@@ -3371,11 +3371,11 @@
 }
 
 .container-icon-xmark-in-container-img-swipper-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users:hover .icon-xmark-in-container-icon-xmark-in-container-img-swipper-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users {
-    color: #f3f3f3;
+    color: #EE2525;
 }
 
 .icon-xmark-in-container-icon-xmark-in-container-img-swipper-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users {
-    color: #fff;
+    color: #EF4040;
     font-size: 1.5rem;
     font-weight: bold;
     transition: .2s;
@@ -3817,6 +3817,18 @@
     .container-input-header {
         height: 45px;
     }
+
+    .container-of-preview-img {
+        height: 280px;
+    }
+
+    .setting-post-popup {
+        right: 95%;
+    }
+
+    .comment-options-popup-in-container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users {
+        right: 20%;
+    }
 }
 
 @media (max-width: 480px) {
@@ -3887,6 +3899,253 @@
         background-color: #fff;
         z-index: 998;
         transition: .2s;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .container-user-profile-in-hidden-content-in-header-popup {
+        width: 100%;
+        height: 60px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        text-decoration: none;
+        gap: 10px;
+        padding: 1rem !important;
+    }
+
+    .container-user-profile-in-hidden-content-in-header-popup img {
+        width: 40px;
+        height: 40px;
+        border-radius: 2rem;
+    }
+
+    .container-user-profile-in-hidden-content-in-header-popup p {
+        width: auto;
+        word-break: break-word;
+        margin-bottom: 0;
+        font-size: .9rem;
+        font-weight: bold;
+        color: #353535;
+    }
+
+    .container-menus-in-hidden-content-in-header-popup {
+        width: 100%;
+        height: 60px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0 1rem !important;
+        text-decoration: none;
+    }
+
+    .container-menus-in-hidden-content-in-header-popup p {
+        margin-bottom: 0;
+        color: #353535;
+        font-size: .9rem;
+        font-weight: 500;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .container-menus-in-hidden-content-in-header-popup .icon-search {
+        color: #353535;
+    }
+
+    .container-in-SearchPeopleInHamburgerMenu {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 1rem !important;
+    }
+
+    .container-header-in-container-in-SearchPeopleInHamburgerMenu {
+        width: 100%;
+        height: 5vh;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 1rem;
+    }
+
+    .icon-arrow-left-in-container-header-in-container-in-SearchPeopleInHamburgerMenu {
+        font-size: 1.1rem;
+        color: #353535;
+    }
+
+    .container-search-container-in-SearchPeopleInHamburgerMenu {
+        width: 100%;
+        height: 100%;
+        background-color: #f5f6f7;
+        border-radius: 2rem;
+        padding: 5px !important;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .container-search-container-in-SearchPeopleInHamburgerMenu input[type='text'] {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        width: 100%;
+        padding: 0 10px !important;
+        font-size: .9rem;
+    }
+
+    .icon-search-in-container-search-container-in-SearchPeopleInHamburgerMenu {
+        color: #353535;
+        margin-left: 5px;
+    }
+
+    .container-search-result-in-container-in-SearchPeopleInHamburgerMenu {
+        width: 100%;
+        height: 95vh;
+        overflow-y: auto;
+    }
+
+    .container-search-result-in-container-in-SearchPeopleInHamburgerMenu::-webkit-scrollbar {
+        width: 5px;
+        /* display: none; */
+    }
+
+    .container-search-result-in-container-in-SearchPeopleInHamburgerMenu::-webkit-scrollbar-thumb {
+        border-radius: 1rem;
+        background-color: rgba(0, 0, 0, .2);
+    }
+
+    .container-search-result-in-container-in-SearchPeopleInHamburgerMenu::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(0, 0, 0, .3);
+    }
+
+    .search-result-container {
+        height: 60px;
+        background-color: #f5f6f7;
+    }
+
+    .search-result-image-container {
+        width: 40px;
+        height: 40px;
+    }
+
+    .search-fullname-user {
+        font-size: .9rem;
+    }
+
+    .container-notification-in-NotificationsInHamburgerMenu {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 1rem !important;
+    }
+
+    .container-header-in-container-notification-in-NotificationsInHamburgerMenu {
+        width: 100%;
+        height: 5vh;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .container-header-in-container-notification-in-NotificationsInHamburgerMenu p {
+        color: #353535;
+        font-size: 1rem;
+        font-weight: bold;
+        margin-bottom: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .container-body-in-container-notification-in-NotificationsInHamburgerMenu {
+        width: 100%;
+        height: 95vh;
+        overflow-y: auto;
+        margin-top: 10px;
+    }
+
+    .notification-users-container {
+        height: 80px;
+    }
+
+    .notification-users-container:hover {
+        background-color: transparent;
+    }
+
+    .notification-users-header-container{
+        width: 40px;
+        height: 40px;
+    }
+
+    .span-username,
+    .span-user-content,
+    .span-user-modify-date {
+        font-size: .8rem;
+    }
+
+    .style-skeleton-fullname-user {
+        height: 13px !important;
+        width: 100px !important;
+    }
+
+    .style-skeleton-content-user {
+        height: 13px !important;
+        width: 150px !important;
+    }
+
+    .style-skeleton-modifidate {
+        height: 13px !important;
+        width: 50px !important;
+    }
+
+    .style-skeletion-img-notification{
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .notification-users-header{
+        width: 18%;
+    }
+
+    .style-skeleton-img-search-result{
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .style-skeleton-fullname-search-result{
+        width: 150px !important;
+        height: 13px !important;
+    }
+
+    .search-result-image-user{
+        width: 40px !important;
+        height: 100% !important;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .search-result-image-container{
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .serach-result-text-decoration-none{
+        margin: 10px 0 !important;
     }
 
     .hidden-content-in-header-popup.active {
@@ -4344,27 +4603,50 @@
         z-index: 997;
     }
 
-    .container-button-scroll-to-top-in-overflow-y-auto-in-post-content-of-users{
+    .container-button-scroll-to-top-in-overflow-y-auto-in-post-content-of-users {
         width: 30px;
         height: 30px;
     }
 
-    .arrow-up-icon-in-container-button-scroll-to-top-in-overflow-y-auto-in-post-content-of-users{
+    .arrow-up-icon-in-container-button-scroll-to-top-in-overflow-y-auto-in-post-content-of-users {
         font-size: 1rem;
     }
 
-    .style-skeleton-img{
+    .style-skeleton-img {
         width: 40px !important;
         height: 40px !important;
     }
 
-    .style-skeleton-fullname{
+    .style-skeleton-fullname {
         width: 150px !important;
         height: 13px !important;
     }
 
-    .style-skeleton-modifydate{
+    .style-skeleton-modifydate {
         width: 50px !important;
         height: 13px !important;
+    }
+
+    .style-skeleton-post-msg {
+        width: 180px !important;
+        height: 13px !important;
+    }
+
+    .style-skeleton-content-post {
+        width: 250px !important;
+        height: 13px !important;
+    }
+
+    .style-skeleton-sub-content-post {
+        width: 200px !important;
+        height: 13px !important;
+    }
+
+    .setting-post-popup {
+        right: 120%;
+    }
+
+    .comment-options-popup-in-container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users {
+        right: 120%;
     }
 }

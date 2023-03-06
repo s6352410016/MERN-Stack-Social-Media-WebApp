@@ -498,6 +498,8 @@ form .err-style{
 
     .container-alert-box-sign-in-err{
         width: 300px;
+        height: 60px;
+        margin-bottom: 1rem;
     }
 
     .container-alert-resend-otp-sucessess{
@@ -512,5 +514,84 @@ form .err-style{
     .container-forgot-password-in-center-content{
         width: 100%;
         text-align: end !important;
+    }
+
+    .content-left h2{
+        font-size: 1.3rem;
+    }
+
+    .content-left label{
+        font-size: .9rem;
+    }
+
+    form .err-style{
+        font-size: .9rem;
+        height: 35px !important;
+    }
+    
+    .password-effect input{
+        font-size: .9rem;
+    }
+
+    .center-content span, .center-content .forgotPassword{
+        font-size: .9rem;
+    }
+
+    .content-left button{
+        height: 35px;
+        font-size: .9rem;
+    }
+
+    .password-effect{
+        height: 35px;
+    }
+
+    .buttom-content div, .buttom-content .signup{
+        font-size: .9rem;
+    }
+
+    .err-style.custom, .err-style.custom:focus , .password-effect.custom, .password-effect.custom:focus{
+        height: 35px !important;
+        font-size: .9rem;
+    }
+
+    .content-left .errMsg{
+        font-size: .9rem;
+    }
+
+    .container-content .checkSigninErr{
+        font-size: .9rem;
+    }
+
+    .err-style.custom-special, .err-style.custom-special:focus{
+        height: 35px !important;
+        font-size: .9rem;
+    }
+
+    .content-left .container-content p{
+        font-size: .9rem;
+        margin-bottom: 1rem;
+    }
+
+    .resend-otp .first-span{
+        font-size: .9rem;
+    }
+
+    .resend-otp .last-span{
+        font-size: .9rem;
+    }
+
+    .msg-success-in-container-alert-resend-otp-sucessess{
+        font-size: .9rem;
+        height: 60px;
+    }
+
+    .content-left .check-logo{
+        font-size: 1.5rem;
+    }
+
+    .content-left .button{
+        font-size: .9rem;
+        height: 35px !important;
     }
 }

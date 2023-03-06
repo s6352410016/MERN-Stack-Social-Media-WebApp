@@ -22,7 +22,7 @@ const SkeletonPost = () => {
                 </div>
             </div>
             <div className='message-in-post-container'>
-                <Skeleton height={15} width={250} />
+                <Skeleton height={15} width={250} className='style-skeleton-post-msg'/>
             </div>
             <div className='content-center-in-post-of-users cursor-none' style={{ marginTop: '10px' }}>
                 <div className='container-img-post-of-users'>
@@ -32,9 +32,9 @@ const SkeletonPost = () => {
                 </div>
             </div>
             <div style={{ marginTop: '1rem' }} />
-            <Skeleton height={15} width={450} />
+            <Skeleton height={15} width={450} className='style-skeleton-content-post'/>
             <div style={{ marginTop: '5px' }} />
-            <Skeleton height={15} width={250} />
+            <Skeleton height={15} width={250} className='style-skeleton-sub-content-post'/>
         </div >
     );
 }

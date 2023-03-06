@@ -9,11 +9,11 @@ const SkeletonSearchResult = () => {
       <div className='search-result-container' id='no-bg-skeleton-load-in-search-result'>
         <div className='search-result-image-user'>
           <div className='search-result-image-container'>
-            <Skeleton circle={true} height={50} width={50}/>
+            <Skeleton circle={true} height={50} width={50} className='style-skeleton-img-search-result'/>
           </div>
         </div> 
         <div className='search-result-fullname-user'>
-          <p className='search-fullname-user'><Skeleton height={15} width={200}/></p>
+          <p className='search-fullname-user'><Skeleton height={15} width={200} className='style-skeleton-fullname-search-result'/></p>
         </div>    
       </div>
     </Link>

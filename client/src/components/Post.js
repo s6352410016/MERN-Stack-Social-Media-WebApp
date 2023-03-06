@@ -372,7 +372,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                                                 </div>
                                             }
                                             {clearImgsInEditPost &&
-                                                <div className='container-img-in-container-img-swipper-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                                <div style={{cursor: fileImgsInEditPost.length === 1 ? 'default' : 'grab'}} className='container-img-in-container-img-swipper-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
                                                     <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
                                                         {fileImgsInEditPost.map((e, index) => (
                                                             <SwiperSlide key={index}><img src={e} alt='postImg55' /></SwiperSlide>

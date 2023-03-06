@@ -19,9 +19,8 @@ import SkeletonPost from './SkeletonPost';
 import SharePost from './SharePost';
 import StatusUsers from './StatusUsers';
 import SkeletonStatusUsers from './SkeletonStatusUsers';
-import { HiOutlineXMark } from "react-icons/hi2";
-import FollowersAndFollowingsList from './FollowersAndFollowingsList';
 import SkeletonUserProfileInMedia from './SkeletonUserProfileInMedia';
+import SkeletonUserProfileInHambuger from './SkeletonUserProfileInHambuger';
 
 const Media = () => {
   const navigate = useNavigate();
@@ -37,6 +36,7 @@ const Media = () => {
   const [showSkeletonNotification, setShowSkeletonNotification] = useState(true);
   const [showSkeletonSearchResult, setShowSkeletonSearchResult] = useState(true);
   const [showSkeletonChatsPopup, setShowSkeletonChatsPopup] = useState(true);
+  const [showSkeletonUserProfileInHamburger, setShowSkeletonUserProfileInHamburger] = useState(true);
   const [showSkeletionPost, setShowSkeletonPost] = useState(true);
   const [showSkeletonStatusUser, setShowSkeletonStatusUsers] = useState(true);
   const [showSkeletonProfileUser, setShowSkeletonProfileUser] = useState(true);
@@ -85,6 +85,24 @@ const Media = () => {
       },
       {
         image: `user7.png`,
+        username: 'สมหมาย ใจงาม',
+        userContent: 'like your post.',
+        modifyDate: '10 minutes ago.'
+      },
+      {
+        image: `user8.png`,
+        username: 'สมหมาย ใจงาม',
+        userContent: 'like your post.',
+        modifyDate: '10 minutes ago.'
+      },
+      {
+        image: `user9.png`,
+        username: 'สมหมาย ใจงาม',
+        userContent: 'like your post.',
+        modifyDate: '10 minutes ago.'
+      },
+      {
+        image: `user10.png`,
         username: 'สมหมาย ใจงาม',
         userContent: 'like your post.',
         modifyDate: '10 minutes ago.'
@@ -453,6 +471,7 @@ const Media = () => {
       setShowSkeletonPost(false);
       setShowSkeletonStatusUsers(false);
       setShowSkeletonProfileUser(false);
+      setShowSkeletonUserProfileInHamburger(false);
     }, 2000);
   }, []);
 
@@ -478,6 +497,22 @@ const Media = () => {
   const showHiddenMenuInHeader = () => {
     const hiddenContentInHeaderPopup = document.querySelector('.hidden-content-in-header-popup');
     hiddenContentInHeaderPopup.classList.toggle('active');
+  }
+
+  const openPageSearchPeopleInHamburger = () => {
+    navigate('/search-people', {
+      state: {
+        dataForUser
+      }
+    });
+  }
+
+  const openPageNotificationsInHamburger = () => {
+    navigate('/notifications', {
+      state: {
+        dataUserNotification
+      }
+    });
   }
 
   const dropdownPopup = () => {
@@ -640,7 +675,38 @@ const Media = () => {
             <div className='bar3'></div>
           </div>
           <div className='hidden-content-in-header-popup'>
-            
+            {userDataInActive !== undefined
+              ?
+              showSkeletonUserProfileInHamburger
+                ?
+                <SkeletonUserProfileInHambuger />
+                :
+                <Link to='/profile' className='container-user-profile-in-hidden-content-in-header-popup'>
+                  <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${userDataInActive.image}`} />
+                  <div className='container-fullname-in-container-user-profile-in-hidden-content-in-header-popup'>
+                    <p>{userDataInActive.fullname}</p>
+                  </div>
+                </Link>
+              :
+              <></>
+            }
+            <div style={{ width: '95%', height: '1px', backgroundColor: '#cacaca', margin: '0', opacity: '.5' }} />
+            <div onClick={openPageSearchPeopleInHamburger} className='container-menus-in-hidden-content-in-header-popup'>
+              <p><FontAwesomeIcon className='icon-search' icon={faMagnifyingGlass} />Search people</p>
+            </div>
+            <div onClick={openPageNotificationsInHamburger} className='container-menus-in-hidden-content-in-header-popup'>
+              <p><FontAwesomeIcon className='icons-in-content-right-header' icon={faBell} />Notifications</p>
+            </div>
+            <Link to='/chats' className='container-menus-in-hidden-content-in-header-popup'>
+              <p><FontAwesomeIcon className='icons-in-content-right-header' icon={faComment} />Chats</p>
+            </Link>
+            <Link to='/profile' className='container-menus-in-hidden-content-in-header-popup'>
+              <p><FontAwesomeIcon className='icons-in-dropdown' icon={faUserPen} />Profile</p>
+            </Link>
+            <div onClick={signOut} className='container-menus-in-hidden-content-in-header-popup'>
+              <p><FontAwesomeIcon className='icons-in-dropdown' icon={faArrowRightFromBracket} />Signout</p>
+            </div>
+            <div style={{ width: '95%', height: '1px', backgroundColor: '#cacaca', margin: '0', opacity: '.5' }} />
           </div>
         </div>
       </header>

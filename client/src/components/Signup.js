@@ -1,29 +1,29 @@
 import React, { useState } from 'react';
-import {Link , useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './css/ContentLeft.css';
 import Snowfall from 'react-snowfall';
 import ContentRight from './ContentRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye , faEyeSlash} from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Cookies from 'js-cookie';
 
 const Signup = () => {
 
   const navigate = useNavigate();
 
-  const [firstName , setFirstName] = useState('');
-  const [lastName , setLastName] = useState('');
-  const [username , setUsername] = useState('');
-  const [password , setPassword] = useState('');
-  const [email , setEmail] = useState('');
-  const [errMsg , setErrMsg] = useState('');
-  
-  const [type , setType] = useState('password');
-  const [icon , setIcon] = useState(faEye);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [errMsg, setErrMsg] = useState('');
+
+  const [type, setType] = useState('password');
+  const [icon, setIcon] = useState(faEye);
 
   const signIn = (e) => {
     e.preventDefault();
-    
+
     const regExForFullname = /^([ก-ฮa-zA-Z\D])[^\s]+$/; //match ก-ฮ a-z A-Z และห้ามมี space แต่จะไม่ match ตัวเลข 0-9
     const regExForUsername = /^[a-zA-Z0-9_]{6,20}$/; //math a-z A-Z 0-9 _ และต้องมีขั้นต่ำ 6 - 20 ตัวอักษร
     const regExForPassword = /^[a-zA-Z0-9_]{8,20}$/; //math a-z A-Z 0-9 _ และต้องมีขั้นต่ำ 8 - 20 ตัวอักษร
@@ -34,9 +34,8 @@ const Signup = () => {
     const inputTextUsername = document.getElementsByClassName('err-style')[2];
     const inputPassword = document.querySelector('.password-effect');
     const inputTextEmail = document.getElementsByClassName('err-style')[3];
-    
 
-    if(!firstName && !!lastName && !!username && !!password && !!email){
+    if (!firstName && !!lastName && !!username && !!password && !!email) {
       setErrMsg({
         firstname: 'Firstname is required.'
       });
@@ -45,7 +44,7 @@ const Signup = () => {
       inputTextUsername.classList.remove('custom');
       inputPassword.classList.remove('custom');
       inputTextEmail.classList.remove('custom');
-    }else if(!!firstName && !lastName && !!username && !!password && !!email){
+    } else if (!!firstName && !lastName && !!username && !!password && !!email) {
       setErrMsg({
         lastname: 'Lastname is required.'
       });
@@ -54,7 +53,7 @@ const Signup = () => {
       inputTextUsername.classList.remove('custom');
       inputPassword.classList.remove('custom');
       inputTextEmail.classList.remove('custom');
-    }else if(!!firstName && !!lastName && !username && !!password && !!email){
+    } else if (!!firstName && !!lastName && !username && !!password && !!email) {
       setErrMsg({
         username: 'Username is required.'
       });
@@ -63,7 +62,7 @@ const Signup = () => {
       inputTextUsername.classList.add('custom');
       inputPassword.classList.remove('custom');
       inputTextEmail.classList.remove('custom');
-    }else if(!!firstName && !!lastName && !!username && !password && !!email){
+    } else if (!!firstName && !!lastName && !!username && !password && !!email) {
       setErrMsg({
         password: 'Password is required.'
       });
@@ -72,7 +71,7 @@ const Signup = () => {
       inputTextUsername.classList.remove('custom');
       inputPassword.classList.add('custom');
       inputTextEmail.classList.remove('custom');
-    }else if(!!firstName && !!lastName && !!username && !!password && !email){
+    } else if (!!firstName && !!lastName && !!username && !!password && !email) {
       setErrMsg({
         email: 'Email is required.'
       });
@@ -81,17 +80,17 @@ const Signup = () => {
       inputTextUsername.classList.remove('custom');
       inputPassword.classList.remove('custom');
       inputTextEmail.classList.add('custom');
-    }else if(!firstName && !lastName && !!username && !!password && !!email){
+    } else if (!firstName && !lastName && !!username && !!password && !!email) {
       setErrMsg({
         firstname: 'Firstname is required.',
         lastname: 'Lastname is required.'
       });
       inputTextFirstname.classList.add('custom-special');
-      inputTextLastname.classList.add('custom-special');  
+      inputTextLastname.classList.add('custom-special');
       inputTextUsername.classList.remove('custom');
       inputPassword.classList.remove('custom');
       inputTextEmail.classList.remove('custom');
-    }else if(!!firstName && !lastName && !username && !!password && !!email){
+    } else if (!!firstName && !lastName && !username && !!password && !!email) {
       setErrMsg({
         lastname: 'Lastname is required.',
         username: 'Username is required.',
@@ -101,7 +100,7 @@ const Signup = () => {
       inputTextUsername.classList.add('custom');
       inputPassword.classList.remove('custom');
       inputTextEmail.classList.remove('custom');
-    }else if(!!firstName && !!lastName && !username && !password && !!email){
+    } else if (!!firstName && !!lastName && !username && !password && !!email) {
       setErrMsg({
         username: 'Username is required.',
         password: 'Password is required.',
@@ -111,7 +110,7 @@ const Signup = () => {
       inputTextUsername.classList.add('custom');
       inputPassword.classList.add('custom');
       inputTextEmail.classList.remove('custom');
-    }else if(!!firstName && !!lastName && !!username && !password && !email){
+    } else if (!!firstName && !!lastName && !!username && !password && !email) {
       setErrMsg({
         password: 'Password is required.',
         email: 'Email is required.'
@@ -121,7 +120,7 @@ const Signup = () => {
       inputTextUsername.classList.remove('custom');
       inputPassword.classList.add('custom');
       inputTextEmail.classList.add('custom');
-    }else if(!firstName && !!lastName && !!username && !!password && !email){
+    } else if (!firstName && !!lastName && !!username && !!password && !email) {
       setErrMsg({
         firstname: 'Firstname is required.',
         email: 'Email is required.'
@@ -131,7 +130,7 @@ const Signup = () => {
       inputTextUsername.classList.remove('custom');
       inputPassword.classList.remove('custom');
       inputTextEmail.classList.add('custom');
-    }else if(!firstName && !!lastName && !username && !!password && !!email){
+    } else if (!firstName && !!lastName && !username && !!password && !!email) {
       setErrMsg({
         firstname: 'Firstname is required.',
         username: 'Username is required.',
@@ -141,7 +140,7 @@ const Signup = () => {
       inputTextUsername.classList.add('custom');
       inputPassword.classList.remove('custom');
       inputTextEmail.classList.remove('custom');
-    }else if(!firstName && !lastName && !username && !!password && !!email){
+    } else if (!firstName && !lastName && !username && !!password && !!email) {
       setErrMsg({
         firstname: 'Firstname is required.',
         lastname: 'Lastname is required.',
@@ -152,7 +151,7 @@ const Signup = () => {
       inputTextUsername.classList.add('custom');
       inputPassword.classList.remove('custom');
       inputTextEmail.classList.remove('custom');
-    }else if(!!firstName && !lastName && !username && !password && !!email){
+    } else if (!!firstName && !lastName && !username && !password && !!email) {
       setErrMsg({
         lastname: 'Lastname is required.',
         username: 'Username is required.',
@@ -163,7 +162,7 @@ const Signup = () => {
       inputTextUsername.classList.add('custom');
       inputPassword.classList.add('custom');
       inputTextEmail.classList.remove('custom');
-    }else if(!!firstName && !!lastName && !username && !password && !email){
+    } else if (!!firstName && !!lastName && !username && !password && !email) {
       setErrMsg({
         username: 'Username is required.',
         password: 'Password is required.',
@@ -174,7 +173,7 @@ const Signup = () => {
       inputTextUsername.classList.add('custom');
       inputPassword.classList.add('custom');
       inputTextEmail.classList.add('custom');
-    }else if(!firstName && !!lastName && !!username && !password && !email){
+    } else if (!firstName && !!lastName && !!username && !password && !email) {
       setErrMsg({
         firstname: 'Firstname is required.',
         password: 'Password is required.',
@@ -185,7 +184,7 @@ const Signup = () => {
       inputTextUsername.classList.remove('custom');
       inputPassword.classList.add('custom');
       inputTextEmail.classList.add('custom');
-    }else if(!firstName && !lastName && !!username && !!password && !email){
+    } else if (!firstName && !lastName && !!username && !!password && !email) {
       setErrMsg({
         firstname: 'Firstname is required.',
         lastname: 'Lastname is required.',
@@ -196,7 +195,7 @@ const Signup = () => {
       inputTextUsername.classList.remove('custom');
       inputPassword.classList.remove('custom');
       inputTextEmail.classList.add('custom');
-    }else if(!firstName && !!lastName && !username && !!password && !email){
+    } else if (!firstName && !!lastName && !username && !!password && !email) {
       setErrMsg({
         firstname: 'Firstname is required.',
         username: 'Username is required.',
@@ -207,7 +206,7 @@ const Signup = () => {
       inputTextUsername.classList.add('custom');
       inputPassword.classList.remove('custom');
       inputTextEmail.classList.add('custom');
-    }else if(!!firstName && !lastName && !!username && !password && !!email){
+    } else if (!!firstName && !lastName && !!username && !password && !!email) {
       setErrMsg({
         lastname: 'Lastname is required.',
         password: 'Password is required.',
@@ -217,7 +216,7 @@ const Signup = () => {
       inputTextUsername.classList.remove('custom');
       inputPassword.classList.add('custom');
       inputTextEmail.classList.remove('custom');
-    }else if(!firstName && !lastName && !!username && !password && !!email){
+    } else if (!firstName && !lastName && !!username && !password && !!email) {
       setErrMsg({
         firstname: 'Firstname is required.',
         lastname: 'Lastname is required.',
@@ -228,7 +227,7 @@ const Signup = () => {
       inputTextUsername.classList.remove('custom');
       inputPassword.classList.add('custom');
       inputTextEmail.classList.remove('custom');
-    }else if(!!firstName && !!lastName && !username && !!password && !email){
+    } else if (!!firstName && !!lastName && !username && !!password && !email) {
       setErrMsg({
         username: 'Username is required.',
         email: 'Email is required.'
@@ -238,7 +237,7 @@ const Signup = () => {
       inputTextUsername.classList.add('custom');
       inputPassword.classList.remove('custom');
       inputTextEmail.classList.add('custom');
-    }else if(!!firstName && !lastName && !!username && !password && !email){
+    } else if (!!firstName && !lastName && !!username && !password && !email) {
       setErrMsg({
         lastname: 'Lastname is required.',
         password: 'Password is required.',
@@ -249,7 +248,7 @@ const Signup = () => {
       inputTextUsername.classList.remove('custom');
       inputPassword.classList.add('custom');
       inputTextEmail.classList.add('custom');
-    }else if(!!firstName && !lastName && !username && !password && !email){
+    } else if (!!firstName && !lastName && !username && !password && !email) {
       setErrMsg({
         lastname: 'Lastname is required.',
         username: 'Username is required.',
@@ -261,7 +260,7 @@ const Signup = () => {
       inputTextUsername.classList.add('custom');
       inputPassword.classList.add('custom');
       inputTextEmail.classList.add('custom');
-    }else if(!firstName && !!lastName && !username && !password && !email){
+    } else if (!firstName && !!lastName && !username && !password && !email) {
       setErrMsg({
         firstname: 'Firstname is required.',
         username: 'Username is required.',
@@ -273,7 +272,7 @@ const Signup = () => {
       inputTextUsername.classList.add('custom');
       inputPassword.classList.add('custom');
       inputTextEmail.classList.add('custom');
-    }else if(!firstName && !lastName && !!username && !password && !email){
+    } else if (!firstName && !lastName && !!username && !password && !email) {
       setErrMsg({
         firstname: 'Firstname is required.',
         lastname: 'Lastname is required.',
@@ -285,7 +284,7 @@ const Signup = () => {
       inputTextUsername.classList.remove('custom');
       inputPassword.classList.add('custom');
       inputTextEmail.classList.add('custom');
-    }else if(!firstName && !lastName && !username && !!password && !email){
+    } else if (!firstName && !lastName && !username && !!password && !email) {
       setErrMsg({
         firstname: 'Firstname is required.',
         lastname: 'Lastname is required.',
@@ -297,7 +296,7 @@ const Signup = () => {
       inputTextUsername.classList.add('custom');
       inputPassword.classList.remove('custom');
       inputTextEmail.classList.add('custom');
-    }else if(!firstName && !lastName && !username && !password && !!email){
+    } else if (!firstName && !lastName && !username && !password && !!email) {
       setErrMsg({
         firstname: 'Firstname is required.',
         lastname: 'Lastname is required.',
@@ -309,7 +308,7 @@ const Signup = () => {
       inputTextUsername.classList.add('custom');
       inputPassword.classList.add('custom');
       inputTextEmail.classList.remove('custom');
-    }else if(!firstName && !lastName && !username && !password && !email){
+    } else if (!firstName && !lastName && !username && !password && !email) {
       setErrMsg({
         firstname: 'Firstname is required.',
         lastname: 'Lastname is required.',
@@ -322,7 +321,7 @@ const Signup = () => {
       inputTextUsername.classList.add('custom');
       inputPassword.classList.add('custom');
       inputTextEmail.classList.add('custom');
-    }else if(!!firstName && !!lastName && !!username && !!password && !!email){
+    } else if (!!firstName && !!lastName && !!username && !!password && !!email) {
       setErrMsg();
       inputTextFirstname.classList.remove('custom-special');
       inputTextLastname.classList.remove('custom-special');
@@ -330,7 +329,7 @@ const Signup = () => {
       inputPassword.classList.remove('custom');
       inputTextEmail.classList.remove('custom');
 
-      if(regExForFullname.test(firstName) === false && regExForFullname.test(lastName) === false){
+      if (regExForFullname.test(firstName) === false && regExForFullname.test(lastName) === false) {
         setErrMsg({
           regExErrFirstname: 'Invalid firstname format.',
           regExErrLastname: 'Invalid lastname format.'
@@ -340,7 +339,7 @@ const Signup = () => {
         inputTextUsername.classList.remove('custom');
         inputPassword.classList.remove('custom');
         inputTextEmail.classList.remove('custom');
-      }else if(regExForFullname.test(firstName) === false){
+      } else if (regExForFullname.test(firstName) === false) {
         setErrMsg({
           regExErrFirstname: 'Invalid firstname format.'
         });
@@ -349,7 +348,7 @@ const Signup = () => {
         inputTextUsername.classList.remove('custom');
         inputPassword.classList.remove('custom');
         inputTextEmail.classList.remove('custom');
-      }else if(regExForFullname.test(lastName) === false){
+      } else if (regExForFullname.test(lastName) === false) {
         setErrMsg({
           regExErrLastname: 'Invalid lastname format.'
         });
@@ -358,7 +357,7 @@ const Signup = () => {
         inputTextUsername.classList.remove('custom');
         inputPassword.classList.remove('custom');
         inputTextEmail.classList.remove('custom');
-      }else if(regExForUsername.test(username) === false){
+      } else if (regExForUsername.test(username) === false) {
         setErrMsg({
           regExErrUsername: 'Username should be ( a-z , A-Z , _ ) or number and must have 6-20 characters.'
         });
@@ -367,7 +366,7 @@ const Signup = () => {
         inputTextUsername.classList.add('custom');
         inputPassword.classList.remove('custom');
         inputTextEmail.classList.remove('custom');
-      }else if(regExForPassword.test(password) === false){
+      } else if (regExForPassword.test(password) === false) {
         setErrMsg({
           regExErrPassword: 'A strong password must have 8-20 characters and contain upper & lowercase letters.'
         });
@@ -376,7 +375,7 @@ const Signup = () => {
         inputTextUsername.classList.remove('custom');
         inputPassword.classList.add('custom');
         inputTextEmail.classList.remove('custom');
-      }else if(regExForEmail.test(email) === false){
+      } else if (regExForEmail.test(email) === false) {
         setErrMsg({
           regExErrEmail: 'Please enter a valid email address for example example@domain.com'
         });
@@ -385,8 +384,8 @@ const Signup = () => {
         inputTextUsername.classList.remove('custom');
         inputPassword.classList.remove('custom');
         inputTextEmail.classList.add('custom');
-      }else{
-        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/checkUsername` , {
+      } else {
+        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/checkUsername`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -395,7 +394,7 @@ const Signup = () => {
             username: username
           })
         }).then((res) => {
-          if(res.status === 400){
+          if (res.status === 400) {
             setErrMsg({
               username: 'Username is already exist.'
             });
@@ -404,8 +403,8 @@ const Signup = () => {
             inputTextUsername.classList.add('custom');
             inputPassword.classList.remove('custom');
             inputTextEmail.classList.remove('custom');
-          }else if(res.status === 200){
-            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/checkEmail` , {
+          } else if (res.status === 200) {
+            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/checkEmail`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -414,7 +413,7 @@ const Signup = () => {
                 email: email
               })
             }).then((res) => {
-              if(res.status === 400){
+              if (res.status === 400) {
                 setErrMsg({
                   email: 'Email is already exist.'
                 });
@@ -423,8 +422,8 @@ const Signup = () => {
                 inputTextUsername.classList.remove('custom');
                 inputPassword.classList.remove('custom');
                 inputTextEmail.classList.add('custom');
-              }else if(res.status === 200){
-                fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/signup` , {
+              } else if (res.status === 200) {
+                fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/signup`, {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json'
@@ -437,16 +436,16 @@ const Signup = () => {
                     email: email
                   })
                 }).then((res) => {
-                  if(res.status === 201){
+                  if (res.status === 201) {
                     Cookies.remove('usernameOrEmail');
                     Cookies.remove('password');
                     return res.json();
                   }
                 }).then((res) => {
-                  localStorage.setItem('token' , res.token);
+                  localStorage.setItem('token', res.token);
                   navigate('/signupSuccess');
                 });
-              } 
+              }
             });
           }
         });
@@ -455,10 +454,10 @@ const Signup = () => {
   }
 
   const eyePopup = () => {
-    if(type === 'password'){
+    if (type === 'password') {
       setType('text');
       setIcon(faEyeSlash);
-    }else{
+    } else {
       setType('password');
       setIcon(faEye);
     }
@@ -466,7 +465,7 @@ const Signup = () => {
 
   return (
     <div className='container'>
-      <Snowfall/>
+      <Snowfall />
       <div className='content-left'>
         <div className='container-content'>
           <h2>Sign up</h2>
@@ -474,35 +473,35 @@ const Signup = () => {
             <div className='input-head'>
               <div className='container-fullname-of-user-in-form'>
                 <label>Firstname:</label>
-                <br/>
-                <input type='text' className='err-style' onChange={(e) => setFirstName(e.target.value)}/>
-                <div style={{display: 'none'}} className='Errmsg-popup-in-768px'>{errMsg && <span className='errMsg' >{errMsg.firstname}{errMsg.regExErrFirstname}</span>}</div>
+                <br />
+                <input type='text' className='err-style' onChange={(e) => setFirstName(e.target.value)} />
+                <div style={{ display: 'none' }} className='Errmsg-popup-in-768px'>{errMsg && <span className='errMsg' >{errMsg.firstname}{errMsg.regExErrFirstname}</span>}</div>
               </div>
               <div className='container-fullname-of-user-in-form'>
                 <label>Lastname:</label>
-                <br/>
-                <input type='text' className='err-style' onChange={(e) => setLastName(e.target.value)}/>
-                <div style={{display: 'none'}} className='Errmsg-popup-in-768px'>{errMsg && <span className='errMsg' style={{textAlign: 'start'}}>{errMsg.lastname}{errMsg.regExErrLastname}</span>}</div>
+                <br />
+                <input type='text' className='err-style' onChange={(e) => setLastName(e.target.value)} />
+                <div style={{ display: 'none' }} className='Errmsg-popup-in-768px'>{errMsg && <span className='errMsg' style={{ textAlign: 'start' }}>{errMsg.lastname}{errMsg.regExErrLastname}</span>}</div>
               </div>
             </div>
-            <div className='errMsg-container' style={{marginBottom: '0'}}>
+            <div className='errMsg-container' style={{ marginBottom: '0' }}>
               {errMsg && <span className='errMsg' >{errMsg.firstname}{errMsg.regExErrFirstname}</span>}
-              {errMsg && <span className='errMsg' style={{textAlign: 'start'}}>{errMsg.lastname}{errMsg.regExErrLastname}</span>}
+              {errMsg && <span className='errMsg' style={{ textAlign: 'start' }}>{errMsg.lastname}{errMsg.regExErrLastname}</span>}
             </div>
             <label>Username:</label>
-            <br/>
-            <input type='text' className='err-style' onChange={(e) => setUsername(e.target.value)}/>
+            <br />
+            <input type='text' className='err-style' onChange={(e) => setUsername(e.target.value)} />
             {errMsg && <span className='errMsg'>{errMsg.username}{errMsg.regExErrUsername}</span>}
             <label>Password:</label>
-            <br/>
+            <br />
             <div className='password-effect'>
-              <input type={type}  onChange={(e) => setPassword(e.target.value)}/> <FontAwesomeIcon onClick={eyePopup} className='icon' icon={icon}/>
+              <input type={type} onChange={(e) => setPassword(e.target.value)} /> <FontAwesomeIcon onClick={eyePopup} className='icon' icon={icon} />
             </div>
             {errMsg && <><span className='errMsg'>{errMsg.password}{errMsg.regExErrPassword}</span></>}
             <label>Email:</label>
-            <br/>
-            <input type='text' className='err-style' onChange={(e) => setEmail(e.target.value)}/>
-            {errMsg && <span style={{marginBottom: '0'}} className='errMsg'>{errMsg.email}{errMsg.regExErrEmail}</span>}
+            <br />
+            <input type='text' className='err-style' onChange={(e) => setEmail(e.target.value)} />
+            {errMsg && <span style={{ marginBottom: '0' }} className='errMsg'>{errMsg.email}{errMsg.regExErrEmail}</span>}
             <button type='submit'>Sign up</button>
             <div className='buttom-content'>
               <div>
@@ -513,7 +512,7 @@ const Signup = () => {
           </form>
         </div>
       </div>
-      <ContentRight/>
+      <ContentRight />
     </div>
   )
 }
