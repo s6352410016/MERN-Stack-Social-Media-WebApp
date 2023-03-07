@@ -63,7 +63,7 @@ const updatePostWithImages = async (req, res) => {
                 return true;
             }
         });
-        const savePost = await postModel.findByIdAndUpdate(
+        await postModel.findByIdAndUpdate(
             {
                 _id: _id
             },
@@ -73,7 +73,6 @@ const updatePostWithImages = async (req, res) => {
                 postVideo: ''
             }
         );
-        await savePost.save();
         res.status(200).json({ msg: 'post updated.' });
     } catch (err) {
         res.status(500).json(err);
@@ -109,7 +108,7 @@ const updatePostWithVideo = async (req, res) => {
             .then(() => {
                 return true;
             });
-        const savePost = await postModel.findByIdAndUpdate(
+        await postModel.findByIdAndUpdate(
             {
                 _id: _id
             },
@@ -119,7 +118,6 @@ const updatePostWithVideo = async (req, res) => {
                 postImgs: []
             }
         );
-        await savePost.save();
         res.status(200).json({ msg: 'post updated.' });
     } catch (err) {
         res.status(500).json(err);
@@ -129,7 +127,7 @@ const updatePostWithVideo = async (req, res) => {
 const updatePostWithMsg = async (req, res) => {
     try {
         const { _id, postMsg } = req.body;
-        const savePost = await postModel.findByIdAndUpdate(
+        await postModel.findByIdAndUpdate(
             {
                 _id: _id
             },
@@ -137,7 +135,6 @@ const updatePostWithMsg = async (req, res) => {
                 postMsg: postMsg
             }
         );
-        await savePost.save();
         res.status(200).json({ msg: 'post updated.' });
     } catch (err) {
         res.status(500).json(err);
