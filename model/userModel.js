@@ -30,13 +30,16 @@ const userSchema = new mongoose.Schema({
         type: Array
     },
     dateOfBirth:{
-        type: String
+        type: String,
+        default: ''
     },
     profilePicture:{
-        type: String
+        type: String,
+        default: ''
     },
     otherDetail:{
-        type: String
+        type: String,
+        default: ''
     }
 } , {
     timestamps: true

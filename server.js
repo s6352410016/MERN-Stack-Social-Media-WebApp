@@ -18,6 +18,7 @@ app.get('*' , (req , res , next) => {
 });
 app.use(router);
 
+mongoose.set('strictQuery' , true);
 mongoose.connect(process.env.DATABASE , {
     useNewUrlParser: true,
     useUnifiedTopology: true

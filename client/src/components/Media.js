@@ -152,8 +152,8 @@ const Media = () => {
     [
       {
         image: `user1.png`,
-        fullname: 'bunlung maieam',
-        userId: '63db82a0028c87f7d37c6628',
+        fullname: 'บัลลังก์ มาเอี่ยม',
+        userId: '6406e8d2fc4dba77f4f318c1',
         follower: ['02', '03', '04', '05', '06', '07', '08', '09', '10'],
         following: []
       },
@@ -261,7 +261,7 @@ const Media = () => {
     [
       {
         postId: '01',
-        userIdToPost: '63db82a0028c87f7d37c6628',
+        userIdToPost: '6406e8d2fc4dba77f4f318c1',
         postMsg: 'This is a new post...',
         postImgs: [
           'img1.webp',
@@ -269,7 +269,7 @@ const Media = () => {
         ],
         postVideo: '',
         createdAt: '2023-02-02T09:30:09.048+00:00',
-        postLikes: ['63db82a0028c87f7d37c6628', '02', '03']
+        postLikes: ['6406e8d2fc4dba77f4f318c1', '02', '03']
       },
       {
         postId: '02',
@@ -282,7 +282,7 @@ const Media = () => {
         ],
         postVideo: '',
         createdAt: '2023-02-02T09:43:05.427+00:00',
-        postLikes: ['63db82a0028c87f7d37c6628', '10', '05', '09', '06', '07']
+        postLikes: ['6406e8d2fc4dba77f4f318c1', '10', '05', '09', '06', '07']
       },
       {
         postId: '03',
@@ -329,7 +329,7 @@ const Media = () => {
         ],
         postVideo: 'video2.mp4',
         createdAt: '2023-02-23T09:06:20.966+00:00',
-        postLikes: ['63db82a0028c87f7d37c6628']
+        postLikes: ['6406e8d2fc4dba77f4f318c1']
       },
       {
         postId: '07',
@@ -344,7 +344,7 @@ const Media = () => {
       },
       {
         postId: '08',
-        userIdToPost: '63db82a0028c87f7d37c6628',
+        userIdToPost: '6406e8d2fc4dba77f4f318c1',
         postMsg: 'The Fuck.',
         postImgs: [
 
@@ -366,7 +366,7 @@ const Media = () => {
       },
       {
         postId: '10',
-        userIdToPost: '63db82a0028c87f7d37c6628',
+        userIdToPost: '6406e8d2fc4dba77f4f318c1',
         postMsg: 'Hello React...',
         postImgs: [
 
@@ -392,10 +392,10 @@ const Media = () => {
     [
       {
         shareId: 'share01',
-        userIdToShare: '63db82a0028c87f7d37c6628',
+        userIdToShare: '6406e8d2fc4dba77f4f318c1',
         postIdToShare: '02',
         shareMsg: 'Test Share...',
-        sharePostLikes: ['63db82a0028c87f7d37c6628'],
+        sharePostLikes: ['6406e8d2fc4dba77f4f318c1'],
         createdAt: '2023-02-19T14:27:00.554+00:00'
       },
       {
@@ -408,7 +408,7 @@ const Media = () => {
       },
       {
         shareId: 'share03',
-        userIdToShare: '63db82a0028c87f7d37c6628',
+        userIdToShare: '6406e8d2fc4dba77f4f318c1',
         postIdToShare: '06',
         shareMsg: '...',
         sharePostLikes: ['02', '03'],
