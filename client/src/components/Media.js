@@ -154,13 +154,13 @@ const Media = () => {
         image: `user1.png`,
         fullname: 'บัลลังก์ มาเอี่ยม',
         userId: '6406e8d2fc4dba77f4f318c1',
-        follower: ['02', '03', '04', '05', '06', '07', '08', '09', '10'],
+        follower: ['64082fb157dd529c269e25a7', '03', '04', '05', '06', '07', '08', '09', '10'],
         following: []
       },
       {
         image: `user2.png`,
-        fullname: 'Prayut Chan O Cha',
-        userId: '02',
+        fullname: 'ประยุทธ์ จัทร์โอชา',
+        userId: '64082fb157dd529c269e25a7',
         follower: [],
         following: []
       },
@@ -273,7 +273,7 @@ const Media = () => {
       },
       {
         postId: '02',
-        userIdToPost: '02',
+        userIdToPost: '64082fb157dd529c269e25a7',
         postMsg: 'Holy Shit!!!',
         postImgs: [
           'img3.jpg',
@@ -400,7 +400,7 @@ const Media = () => {
       },
       {
         shareId: 'share02',
-        userIdToShare: '02',
+        userIdToShare: '64082fb157dd529c269e25a7',
         postIdToShare: '03',
         shareMsg: '',
         sharePostLikes: [],
@@ -411,7 +411,7 @@ const Media = () => {
         userIdToShare: '6406e8d2fc4dba77f4f318c1',
         postIdToShare: '06',
         shareMsg: '...',
-        sharePostLikes: ['02', '03'],
+        sharePostLikes: ['64082fb157dd529c269e25a7', '03'],
         createdAt: '2023-02-19T14:27:00.554+00:00'
       },
       {

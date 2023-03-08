@@ -9,7 +9,6 @@ const createPostWithImages = async (req, res) => {
             userIdToPost: userIdToPost,
             postMsg: postMsg,
             postImgs: req.files.map((e) => e.filename),
-            postLikes: postLikes
         });
         await savePost.save();
         res.status(201).json({ msg: 'post created.' });
@@ -25,7 +24,6 @@ const createPostWithVideo = async (req, res) => {
             userIdToPost: userIdToPost,
             postMsg: postMsg,
             postVideo: req.file !== undefined ? req.file.filename : '',
-            postLikes: postLikes
         });
         await savePost.save();
         res.status(201).json({ msg: 'post created.' });
@@ -36,10 +34,10 @@ const createPostWithVideo = async (req, res) => {
 
 const updatePostWithImages = async (req, res) => {
     try {
-        const { _id, postMsg } = req.body;
+        const { postId, postMsg } = req.body;
         const postData = await postModel.findById(
             {
-                _id: _id
+                _id: postId
             }
         );
         Promise.all(postData.postImgs.map((e) => {
@@ -65,7 +63,7 @@ const updatePostWithImages = async (req, res) => {
         });
         await postModel.findByIdAndUpdate(
             {
-                _id: _id
+                _id: postId
             },
             {
                 postMsg: postMsg,
@@ -81,10 +79,10 @@ const updatePostWithImages = async (req, res) => {
 
 const updatePostWithVideo = async (req, res) => {
     try {
-        const { _id, postMsg } = req.body;
+        const { postId, postMsg } = req.body;
         const postData = await postModel.findById(
             {
-                _id: _id
+                _id: postId
             }
         );
         fs.unlink(path.join(__dirname, `../public/postVideo/${postData.postVideo}`), (err) => {
@@ -110,7 +108,7 @@ const updatePostWithVideo = async (req, res) => {
             });
         await postModel.findByIdAndUpdate(
             {
-                _id: _id
+                _id: postId
             },
             {
                 postMsg: postMsg,
@@ -126,10 +124,10 @@ const updatePostWithVideo = async (req, res) => {
 
 const updatePostWithMsg = async (req, res) => {
     try {
-        const { _id, postMsg } = req.body;
+        const { postId, postMsg } = req.body;
         await postModel.findByIdAndUpdate(
             {
-                _id: _id
+                _id: postId
             },
             {
                 postMsg: postMsg
@@ -143,10 +141,10 @@ const updatePostWithMsg = async (req, res) => {
 
 const deletePost = async (req, res) => {
     try {
-        const { _id } = req.body;
+        const { postId } = req.body;
         const postData = await postModel.findById(
             {
-                _id: _id
+                _id: postId
             }
         );
         Promise.all(postData.postImgs.map((e) => {
@@ -172,11 +170,49 @@ const deletePost = async (req, res) => {
         });
         await postModel.findByIdAndDelete(
             {
-                _id: _id
+                _id: postId
             }
         );
         res.status(200).json({ msg: 'post deleted.' });
     } catch (err) {
+        res.status(500).json(err);
+    }
+}
+
+const likeAndDislikePost = async (req , res) => {
+    try{
+        const {postId , userId} = req.body;
+        const postData = await postModel.findById({
+            _id: postId
+        });
+        if(!postData.postLikes.includes(userId)){
+            await postData.updateOne(
+                {
+                    $push: {
+                        postLikes: userId
+                    }
+                }
+            );
+        }else{
+            await postData.updateOne(
+                {
+                    $pull: {
+                        postLikes: userId
+                    }
+                }
+            );
+        }
+        res.status(200).json({msg: 'pending success.'});
+    }catch(err){
+        res.status(500).json(err);
+    }
+}
+
+const getAllPosts = async (req , res) => {
+    try{
+        const posts = await postModel.find();
+        res.status(200).json(posts);
+    }catch(err){
         res.status(500).json(err);
     }
 }
@@ -187,5 +223,7 @@ module.exports = {
     updatePostWithImages,
     updatePostWithVideo,
     updatePostWithMsg,
-    deletePost
+    deletePost,
+    likeAndDislikePost,
+    getAllPosts
 }

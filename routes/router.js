@@ -5,6 +5,9 @@ const otpControllers = require('../controllers/OTPController');
 const authUserControllers = require('../controllers/authUserController');
 const resetPasswordControllers = require('../controllers/resetPasswordController');
 const postControllers = require('../controllers/postController');
+const commentControllers = require('../controllers/commentController');
+const shareControllers = require('../controllers/shareController');
+const userControllers = require('../controllers/userController');
 const multer = require('multer');
 const path = require('path');
 
@@ -30,8 +33,20 @@ const storage2 = multer.diskStorage({
     } 
 });
 
+const storage3 = multer.diskStorage({
+    destination: (req , file , cb) => {
+        cb(null , path.join(__dirname , '../public/commentImg'));
+    },
+    filename: (req , file , cb) => {
+        const fileExt = file.mimetype.split('/')[1];
+        const randomFileName = `comment_img_${Date.now()}.${fileExt}`;
+        cb(null , randomFileName);
+    } 
+});
+
 const uploadWithImages = multer({storage: storage1});
 const uploadWithVideo = multer({storage: storage2});
+const commentUploadImage = multer({storage: storage3});
 
 router.post('/checkUsername' , signupControllers.checkUsername);
 router.post('/checkEmail' , signupControllers.checkEmail);
@@ -48,5 +63,20 @@ router.put('/updatePostWithImages' , uploadWithImages.array('postImage') , postC
 router.put('/updatePostWithVideo' , uploadWithVideo.single('postVideo') , postControllers.updatePostWithVideo);
 router.put('/updatePostWithMsg' , postControllers.updatePostWithMsg);
 router.delete('/deletePost' , postControllers.deletePost);
+router.put('/likeAndDislikePost' , postControllers.likeAndDislikePost);
+router.post('/createComment' , commentUploadImage.single('commentImage') , commentControllers.createComment);
+router.put('/updateCommentWithImage' , commentUploadImage.single('commentImage') , commentControllers.updateCommentWithImage);
+router.put('/updateCommentWithMsgs' , commentControllers.updateCommentWithMsgs);
+router.delete('/deleteComment' , commentControllers.deleteComment);
+router.post('/createSharePost' , shareControllers.createSharePost);
+router.put('/updateSharePost' , shareControllers.updateSharePost);
+router.delete('/deleteSharePost' , shareControllers.deleteSharePost);
+router.put('/sharePostLikeAndDislike' , shareControllers.sharePostLikeAndDislike);
+router.post('/getAllSharePost' , shareControllers.getAllSharePost);
+router.post('/getAllPosts' , postControllers.getAllPosts);
+router.post('/getAllComments' , commentControllers.getAllComments);
+router.put('/followAndUnFollow' , userControllers.followAndUnFollow);
+router.post('/getAllUsers' , userControllers.getAllUsers);
+router.post('/getUserByUserId' , userControllers.getUserByUserId);
 
 module.exports = router;
