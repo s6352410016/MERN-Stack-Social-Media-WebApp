@@ -17,7 +17,7 @@ const storage1 = multer.diskStorage({
     },
     filename: (req , file , cb) => {
         const fileExt = file.mimetype.split('/')[1];
-        const randomFileName = `post_img_${Date.now()}.${fileExt}`;
+        const randomFileName = `post_img_${Date.now()}_${Math.floor(Math.random() * 1000)}.${fileExt}`;
         cb(null , randomFileName);
     } 
 });
@@ -28,7 +28,7 @@ const storage2 = multer.diskStorage({
     },
     filename: (req , file , cb) => {
         const fileExt = file.mimetype.split('/')[1];
-        const randomFileName = `post_video_${Date.now()}.${fileExt}`;
+        const randomFileName = `post_video_${Date.now()}_${Math.floor(Math.random() * 1000)}.${fileExt}`;
         cb(null , randomFileName);
     } 
 });
@@ -39,7 +39,7 @@ const storage3 = multer.diskStorage({
     },
     filename: (req , file , cb) => {
         const fileExt = file.mimetype.split('/')[1];
-        const randomFileName = `comment_img_${Date.now()}.${fileExt}`;
+        const randomFileName = `comment_img_${Date.now()}_${Math.floor(Math.random() * 1000)}.${fileExt}`;
         cb(null , randomFileName);
     } 
 });
@@ -57,6 +57,7 @@ router.post('/resendOTP' , otpControllers.resendOTP);
 router.post('/verifyOTP' , otpControllers.verifyOTP);
 router.get('/authUser' , authUserControllers.authUser);
 router.put('/resetPassword' , resetPasswordControllers.resetPassword);
+router.post('/createPostWithMsg' , postControllers.createPostWithMsg);
 router.post('/createPostWithImages' , uploadWithImages.array('postImage') , postControllers.createPostWithImages);
 router.post('/createPostWithVideo' , uploadWithVideo.single('postVideo') , postControllers.createPostWithVideo);
 router.put('/updatePostWithImages' , uploadWithImages.array('postImage') , postControllers.updatePostWithImages);

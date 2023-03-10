@@ -43,6 +43,7 @@ const Media = () => {
   const [showIconScrollToTop, setShowIconScrollToTop] = useState(false);
   const [openFollowerPopup, setOpenFollowerPopup] = useState(false);
   const [openFollowingPopup, setOpenFollowingPopup] = useState(false);
+  const [createPostStatus, setCreatePostStatus] = useState(false);
   const [searchResult, setSearchResult] = useState('');
   const [sortAllPostAscening, setSortAllPostAscending] = useState([]);
   const [dataUserNotification, setDataUserNotification] = useState(
@@ -151,277 +152,188 @@ const Media = () => {
   const [dataForUser, setDataForUser] = useState(
     [
       {
-        image: `user1.png`,
-        fullname: 'บัลลังก์ มาเอี่ยม',
-        userId: '6406e8d2fc4dba77f4f318c1',
-        follower: ['64082fb157dd529c269e25a7', '03', '04', '05', '06', '07', '08', '09', '10'],
-        following: []
-      },
-      {
-        image: `user2.png`,
-        fullname: 'ประยุทธ์ จัทร์โอชา',
-        userId: '64082fb157dd529c269e25a7',
+        _id: '64082fb157dd529c269e25a7',
+        profilePicture: `user2.png`,
+        fullname: 'admin 1 ',
         follower: [],
         following: []
       },
       {
-        image: `user3.png`,
-        fullname: 'บัลลังก์ มาเอี่ยม',
-        userId: '03',
+        _id: '6406e8d2fc4dba77f4f318c1',
+        profilePicture: `user3.png`,
+        fullname: 'admin 2',
         follower: [],
         following: []
-      },
-      {
-        image: `user4.png`,
-        fullname: 'มากมี ศรีสุข',
-        userId: '04',
-        follower: [],
-        following: []
-      },
-      {
-        image: `user5.png`,
-        fullname: 'ดวงใจ มากมาย',
-        userId: '05',
-        follower: [],
-        following: []
-      },
-      {
-        image: `user6.png`,
-        fullname: 'สมพร ดวงดี',
-        userId: '06',
-        follower: [],
-        following: []
-      },
-      {
-        image: `user7.png`,
-        fullname: 'สมหมาย ใจงาม',
-        userId: '07',
-        follower: [],
-        following: []
-      },
-      {
-        image: `user8.png`,
-        fullname: 'สมคิด จิตสงบ',
-        userId: '08',
-        follower: [],
-        following: []
-      },
-      {
-        image: `user9.png`,
-        fullname: 'บุญมี มากล้น',
-        userId: '09',
-        follower: [],
-        following: []
-      },
-      {
-        image: `user10.png`,
-        fullname: 'บุญงาม พอแล้ว',
-        userId: '10',
-        follower: [],
-        following: []
-      },
-      {
-        image: `user11.png`,
-        fullname: 'สมควร รวยมาก',
-        userId: '11',
-        follower: [],
-        following: []
-      },
-      {
-        image: `user12.png`,
-        fullname: 'สมจิตร จงจอหอ',
-        userId: '12',
-        follower: [],
-        following: []
-      },
-      {
-        image: `user13.png`,
-        fullname: 'พอดี พอแล้ว',
-        userId: '13',
-        follower: [],
-        following: []
-      },
-      {
-        image: `user14.png`,
-        fullname: 'Mark Sukkerberg',
-        userId: '14',
-        follower: [],
-        following: []
-      },
-      {
-        image: `user15.png`,
-        fullname: 'Elon Mask',
-        userId: '15',
-        follower: [],
-        following: []
-      },
+      }
     ]
   );
+  console.log(dataForUser);
+
   const [postOfusers, setPostOfusers] = useState(
     [
-      {
-        postId: '01',
-        userIdToPost: '6406e8d2fc4dba77f4f318c1',
-        postMsg: 'This is a new post...',
-        postImgs: [
-          'img1.webp',
-          'img2.jpg',
-        ],
-        postVideo: '',
-        createdAt: '2023-02-02T09:30:09.048+00:00',
-        postLikes: ['6406e8d2fc4dba77f4f318c1', '02', '03']
-      },
-      {
-        postId: '02',
-        userIdToPost: '64082fb157dd529c269e25a7',
-        postMsg: 'Holy Shit!!!',
-        postImgs: [
-          'img3.jpg',
-          'img4.jpg',
-          'img5.webp',
-        ],
-        postVideo: '',
-        createdAt: '2023-02-02T09:43:05.427+00:00',
-        postLikes: ['6406e8d2fc4dba77f4f318c1', '10', '05', '09', '06', '07']
-      },
-      {
-        postId: '03',
-        userIdToPost: '03',
-        postMsg: 'What The Fuck...',
-        postImgs: [
-          'img6.webp',
-          'img7.jpg',
-          'img8.jpg',
-          'img9.webp',
-        ],
-        postVideo: '',
-        createdAt: '2023-02-02T09:43:36.020+00:00',
-        postLikes: []
-      },
-      {
-        postId: '04',
-        userIdToPost: '04',
-        postMsg: 'โครตดึง',
-        postImgs: [
+      // {
+      //   postId: '01',
+      //   userIdToPost: '6406e8d2fc4dba77f4f318c1',
+      //   postMsg: 'This is a new post...',
+      //   postImgs: [
+      //     'img1.webp',
+      //     'img2.jpg',
+      //   ],
+      //   postVideo: '',
+      //   createdAt: '2023-02-02T09:30:09.048+00:00',
+      //   postLikes: ['6406e8d2fc4dba77f4f318c1', '02', '03']
+      // },
+      // {
+      //   postId: '02',
+      //   userIdToPost: '64082fb157dd529c269e25a7',
+      //   postMsg: 'Holy Shit!!!',
+      //   postImgs: [
+      //     'img3.jpg',
+      //     'img4.jpg',
+      //     'img5.webp',
+      //   ],
+      //   postVideo: '',
+      //   createdAt: '2023-02-02T09:43:05.427+00:00',
+      //   postLikes: ['6406e8d2fc4dba77f4f318c1', '10', '05', '09', '06', '07']
+      // },
+      // {
+      //   postId: '03',
+      //   userIdToPost: '03',
+      //   postMsg: 'What The Fuck...',
+      //   postImgs: [
+      //     'img6.webp',
+      //     'img7.jpg',
+      //     'img8.jpg',
+      //     'img9.webp',
+      //   ],
+      //   postVideo: '',
+      //   createdAt: '2023-02-02T09:43:36.020+00:00',
+      //   postLikes: []
+      // },
+      // {
+      //   postId: '04',
+      //   userIdToPost: '04',
+      //   postMsg: 'โครตดึง',
+      //   postImgs: [
 
-        ],
-        postVideo: 'video1.mp4',
-        createdAt: '2023-02-02T09:45:36.031+00:00',
-        postLikes: []
-      },
-      {
-        postId: '05',
-        userIdToPost: '05',
-        postMsg: 'วัยรุ่นคำมี',
-        postImgs: [
-          'img10.webp',
-        ],
-        postVideo: '',
-        createdAt: '2023-02-19T14:27:00.554+00:00',
-        postLikes: []
-      },
-      {
-        postId: '06',
-        userIdToPost: '06',
-        postMsg: 'ซีมอกเหล่าตั๊ก',
-        postImgs: [
+      //   ],
+      //   postVideo: 'video1.mp4',
+      //   createdAt: '2023-02-02T09:45:36.031+00:00',
+      //   postLikes: []
+      // },
+      // {
+      //   postId: '05',
+      //   userIdToPost: '05',
+      //   postMsg: 'วัยรุ่นคำมี',
+      //   postImgs: [
+      //     'img10.webp',
+      //   ],
+      //   postVideo: '',
+      //   createdAt: '2023-02-19T14:27:00.554+00:00',
+      //   postLikes: []
+      // },
+      // {
+      //   postId: '06',
+      //   userIdToPost: '06',
+      //   postMsg: 'ซีมอกเหล่าตั๊ก',
+      //   postImgs: [
 
-        ],
-        postVideo: 'video2.mp4',
-        createdAt: '2023-02-23T09:06:20.966+00:00',
-        postLikes: ['6406e8d2fc4dba77f4f318c1']
-      },
-      {
-        postId: '07',
-        userIdToPost: '07',
-        postMsg: 'Test+++',
-        postImgs: [
-          'img2.jpg',
-        ],
-        postVideo: '',
-        createdAt: '2023-02-23T09:06:20.966+00:00',
-        postLikes: []
-      },
-      {
-        postId: '08',
-        userIdToPost: '6406e8d2fc4dba77f4f318c1',
-        postMsg: 'The Fuck.',
-        postImgs: [
+      //   ],
+      //   postVideo: 'video2.mp4',
+      //   createdAt: '2023-02-23T09:06:20.966+00:00',
+      //   postLikes: ['6406e8d2fc4dba77f4f318c1']
+      // },
+      // {
+      //   postId: '07',
+      //   userIdToPost: '07',
+      //   postMsg: 'Test+++',
+      //   postImgs: [
+      //     'img2.jpg',
+      //   ],
+      //   postVideo: '',
+      //   createdAt: '2023-02-23T09:06:20.966+00:00',
+      //   postLikes: []
+      // },
+      // {
+      //   postId: '08',
+      //   userIdToPost: '6406e8d2fc4dba77f4f318c1',
+      //   postMsg: 'The Fuck.',
+      //   postImgs: [
 
-        ],
-        postVideo: '',
-        createdAt: '2023-02-19T14:27:00.554+00:00',
-        postLikes: []
-      },
-      {
-        postId: '09',
-        userIdToPost: '10',
-        postMsg: 'Hello world...',
-        postImgs: [
+      //   ],
+      //   postVideo: '',
+      //   createdAt: '2023-02-19T14:27:00.554+00:00',
+      //   postLikes: []
+      // },
+      // {
+      //   postId: '09',
+      //   userIdToPost: '10',
+      //   postMsg: 'Hello world...',
+      //   postImgs: [
 
-        ],
-        postVideo: '',
-        createdAt: '2023-02-19T14:27:00.554+00:00',
-        postLikes: []
-      },
-      {
-        postId: '10',
-        userIdToPost: '6406e8d2fc4dba77f4f318c1',
-        postMsg: 'Hello React...',
-        postImgs: [
+      //   ],
+      //   postVideo: '',
+      //   createdAt: '2023-02-19T14:27:00.554+00:00',
+      //   postLikes: []
+      // },
+      // {
+      //   postId: '10',
+      //   userIdToPost: '6406e8d2fc4dba77f4f318c1',
+      //   postMsg: 'Hello React...',
+      //   postImgs: [
 
-        ],
-        postVideo: '',
-        createdAt: '2023-02-19T14:27:00.554+00:00',
-        postLikes: []
-      },
-      {
-        postId: '11',
-        userIdToPost: '06',
-        postMsg: '5555+',
-        postImgs: [
-          'img10.webp'
-        ],
-        postVideo: '',
-        createdAt: '2023-02-19T14:27:00.554+00:00',
-        postLikes: []
-      },
+      //   ],
+      //   postVideo: '',
+      //   createdAt: '2023-02-19T14:27:00.554+00:00',
+      //   postLikes: []
+      // },
+      // {
+      //   postId: '11',
+      //   userIdToPost: '06',
+      //   postMsg: '5555+',
+      //   postImgs: [
+      //     'img10.webp'
+      //   ],
+      //   postVideo: '',
+      //   createdAt: '2023-02-19T14:27:00.554+00:00',
+      //   postLikes: []
+      // },
     ]
   );
   const [postOfUsersToShare, setPostOfUsersToShare] = useState(
     [
-      {
-        shareId: 'share01',
-        userIdToShare: '6406e8d2fc4dba77f4f318c1',
-        postIdToShare: '02',
-        shareMsg: 'Test Share...',
-        sharePostLikes: ['6406e8d2fc4dba77f4f318c1'],
-        createdAt: '2023-02-19T14:27:00.554+00:00'
-      },
-      {
-        shareId: 'share02',
-        userIdToShare: '64082fb157dd529c269e25a7',
-        postIdToShare: '03',
-        shareMsg: '',
-        sharePostLikes: [],
-        createdAt: '2023-02-19T14:27:00.554+00:00'
-      },
-      {
-        shareId: 'share03',
-        userIdToShare: '6406e8d2fc4dba77f4f318c1',
-        postIdToShare: '06',
-        shareMsg: '...',
-        sharePostLikes: ['64082fb157dd529c269e25a7', '03'],
-        createdAt: '2023-02-19T14:27:00.554+00:00'
-      },
-      {
-        shareId: 'share04',
-        userIdToShare: '09',
-        postIdToShare: '04',
-        shareMsg: '555+',
-        sharePostLikes: [],
-        createdAt: '2023-02-02T09:43:36.020+00:00'
-      },
+      // {
+      //   shareId: 'share01',
+      //   userIdToShare: '6406e8d2fc4dba77f4f318c1',
+      //   postIdToShare: '02',
+      //   shareMsg: 'Test Share...',
+      //   sharePostLikes: ['6406e8d2fc4dba77f4f318c1'],
+      //   createdAt: '2023-02-19T14:27:00.554+00:00'
+      // },
+      // {
+      //   shareId: 'share02',
+      //   userIdToShare: '64082fb157dd529c269e25a7',
+      //   postIdToShare: '03',
+      //   shareMsg: '',
+      //   sharePostLikes: [],
+      //   createdAt: '2023-02-19T14:27:00.554+00:00'
+      // },
+      // {
+      //   shareId: 'share03',
+      //   userIdToShare: '6406e8d2fc4dba77f4f318c1',
+      //   postIdToShare: '06',
+      //   shareMsg: '...',
+      //   sharePostLikes: ['64082fb157dd529c269e25a7', '03'],
+      //   createdAt: '2023-02-19T14:27:00.554+00:00'
+      // },
+      // {
+      //   shareId: 'share04',
+      //   userIdToShare: '09',
+      //   postIdToShare: '04',
+      //   shareMsg: '555+',
+      //   sharePostLikes: [],
+      //   createdAt: '2023-02-02T09:43:36.020+00:00'
+      // },
     ]
   );
   const [userDataInActive, setUserDataInActive] = useState({});
@@ -451,7 +363,22 @@ const Media = () => {
   }, []);
 
   useEffect(() => {
-    setUserDataInActive(dataForUser.find((e) => e.userId === userData.userId));
+    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/getAllPosts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((res) => {
+      if (res.status === 200) {
+        return res.json();
+      }
+    }).then((res) => {
+      setPostOfusers([...res]);
+    });
+  }, [createPostStatus]);
+
+  useEffect(() => {
+    setUserDataInActive(dataForUser.find((e) => e._id === userData.userId));
   }, [userData]);
 
   useEffect(() => {
@@ -459,7 +386,7 @@ const Media = () => {
       return new Date(b.createdAt) - new Date(a.createdAt);
     });
     setSortAllPostAscending(sortedPosts);
-  }, []);
+  }, [postOfusers, postOfUsersToShare]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -682,7 +609,7 @@ const Media = () => {
                 <SkeletonUserProfileInHambuger />
                 :
                 <Link to='/profile' className='container-user-profile-in-hidden-content-in-header-popup'>
-                  <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${userDataInActive.image}`} />
+                  <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${userDataInActive.image}`} alt='profileImg' />
                   <div className='container-fullname-in-container-user-profile-in-hidden-content-in-header-popup'>
                     <p>{userDataInActive.fullname}</p>
                   </div>
@@ -720,15 +647,15 @@ const Media = () => {
                 {showSkeletonPeopleYouMayKnow
                   ?
                   dataForUser.filter((e) => {
-                    return e.userId !== userData.userId;
+                    return e._id !== userData.userId;
                   }).map((e, index) => (
                     <SkeletonPeopleYouMayKnow key={index} />
                   ))
                   :
                   dataForUser.filter((e) => {
-                    return e.userId !== userData.userId;
+                    return e._id !== userData.userId;
                   }).map((e, index) => (
-                    <PeopleYouMayKnow key={index} image={e.image} fullname={e.fullname} />
+                    <PeopleYouMayKnow key={index} image={e.profilePicture} fullname={e.fullname} />
                   ))
                 }
               </div>
@@ -740,7 +667,7 @@ const Media = () => {
             ?
             <SkeletonCreatePost />
             :
-            <CreatePost />
+            <CreatePost activeUserId={userData.userId} dataForUser={dataForUser} setCreatePostStatus={setCreatePostStatus} />
           }
           <div id='container-post-scroll' className='overflow-y-auto-in-post-content-of-users'>
             {showIconScrollToTop &&
@@ -755,11 +682,11 @@ const Media = () => {
               ))
               :
               sortAllPostAscening.map((e, index) => {
-                if (e.postId) {
-                  return <Post key={index} dataForUser={dataForUser} activeUserId={userData.userId} postId={e.postId} userIdToPost={e.userIdToPost} postMsg={e.postMsg} postImgs={e.postImgs} postVideo={e.postVideo} createdAt={e.createdAt} postLikes={e.postLikes} />;
-                } else {
+                if (e.userIdToPost) {
+                  return <Post key={index} dataForUser={dataForUser} activeUserId={userData.userId} postId={e._id} userIdToPost={e.userIdToPost} postMsg={e.postMsg} postImgs={e.postImgs} postVideo={e.postVideo} createdAt={e.createdAt} postLikes={e.postLikes} />;
+                }/* else {
                   return <SharePost key={index} shareId={e.shareId} userIdToShare={e.userIdToShare} postIdToShare={e.postIdToShare} shareMsg={e.shareMsg} sharePostLikes={e.sharePostLikes} createdAt={e.createdAt} dataForUser={dataForUser} activeUserId={userData.userId} postOfusers={postOfusers} />;
-                }
+                }*/
               })
             }
           </div>
@@ -776,7 +703,7 @@ const Media = () => {
                   :
                   <>
                     <div className='container-img-container-user-profile-in-container-content-right-in-body'>
-                      <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${userDataInActive.image}`} alt='profileImg' />
+                      <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${userDataInActive.profilePicture}`} alt='profileImg' />
                     </div>
                     <div className='container-fullname-active-user-in-container-user-profile-in-container-content-right-in-body'>
                       <b>{userDataInActive.fullname}</b>
@@ -793,15 +720,15 @@ const Media = () => {
               {showSkeletonStatusUser
                 ?
                 dataForUser.filter((e) => {
-                  return e.userId !== userData.userId
+                  return e._id !== userData.userId
                 }).map((e, index) => (
                   <SkeletonStatusUsers key={index} />
                 ))
                 :
                 dataForUser.filter((e) => {
-                  return e.userId !== userData.userId
+                  return e._id !== userData.userId
                 }).map((e, index) => (
-                  <StatusUsers key={index} userId={e.userId} image={e.image} fullname={e.fullname} />
+                  <StatusUsers key={index} userId={e.userId} image={e.profilePicture} fullname={e.fullname} />
                 ))
               }
             </div>

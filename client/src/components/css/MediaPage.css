@@ -1056,6 +1056,9 @@
     font-size: 1.1rem;
     font-weight: 500;
     transition: .2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .post-button-container button:hover {
@@ -1649,7 +1652,6 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin-bottom: 5px;
 }
 
 .link-container-of-img {

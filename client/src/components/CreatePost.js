@@ -4,11 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faCirclePlay, faFaceGrinBeam, faCircleXmark, faFileCircleCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useRef, useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
+import { RotatingLines } from 'react-loader-spinner';
 
-const CreatePost = () => {
+const CreatePost = ({ activeUserId , dataForUser , setCreatePostStatus }) => {
   const imageIconRef = useRef();
   const videoIconRef = useRef();
   const inputRef = useRef();
+  const postButtonRef = useRef(null);
 
   const [openEmojiPicker, setOpenEmojiPicker] = useState(false);
   const [postMsg, setPostMsg] = useState('');
@@ -17,6 +19,10 @@ const CreatePost = () => {
   const [openPreviewImg, setOpenPreviewImg] = useState(false);
   const [openVideoFilePreview, setOpenVideoFilePreview] = useState(false);
   const [videoFile, setVideoFile] = useState();
+  const [fileImgsToSelect, setFileImgsToSelect] = useState([]);
+  const [disabled, setDisabled] = useState(true);
+  const [effectWhileCreatePost, setEffectWhileCreatePost] = useState(false);
+  const [dataOfUserByActiveUserId , setDataOfUserByActiveUserId] = useState({});
 
   const emojiClick = ({ emoji }) => {
     inputRef.current.focus();
@@ -32,6 +38,7 @@ const CreatePost = () => {
     const arrFiles = Array.from(files);
     const createUrlFromFiles = arrFiles.map((files) => URL.createObjectURL(files));
     setFilesImg(createUrlFromFiles);
+    setFileImgsToSelect(arrFiles.map((e) => e));
     if (files.length > 0) {
       setOpenPreviewImg(true);
       setOpenVideoFilePreview(false);
@@ -42,6 +49,7 @@ const CreatePost = () => {
   const clearImageFiles = () => {
     setOpenPreviewImg(false);
     setFilesImg([]);
+    setFileImgsToSelect([]);
   }
 
   const videoFileUpload = (e) => {
@@ -51,6 +59,7 @@ const CreatePost = () => {
       setOpenVideoFilePreview(true);
       setOpenPreviewImg(false);
       setFilesImg([]);
+      setFileImgsToSelect([]);
     }
   }
 
@@ -59,9 +68,104 @@ const CreatePost = () => {
     setVideoFile();
   }
 
+  const postMsgFunc = (e) => {
+    setPostMsg(e.target.value);
+  }
+
+  const createPost = (e) => {
+    e.preventDefault();
+    setEffectWhileCreatePost(true);
+    if (disabled === false) {
+      if (fileImgsToSelect.length !== 0) {
+        const formData = new FormData();
+        formData.append('userIdToPost', activeUserId)
+        formData.append('postMsg', postMsg);
+        fileImgsToSelect.map((file) => {
+          formData.append('postImage', file);
+        });
+        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/createPostWithImages`, {
+          method: 'POST',
+          body: formData
+        }).then((res) => {
+          setOpenPreviewImg(false);
+          setOpenEmojiPicker(false);
+          setPostMsg('');
+          setFilesImg([]);
+          setFileImgsToSelect([]);
+          if (res.status === 201) {
+            setCreatePostStatus(true);
+            setTimeout(() => {
+              setEffectWhileCreatePost(false);
+            }, 1000);
+          }
+        }).catch((err) => {
+          console.error(err);
+        });
+      }
+      if (!!videoFile) {
+        const formData = new FormData();
+        formData.append('userIdToPost', activeUserId)
+        formData.append('postMsg', postMsg);
+        formData.append('postVideo', videoFile);
+        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/createPostWithVideo`, {
+          method: 'POST',
+          body: formData
+        }).then((res) => {
+          setOpenVideoFilePreview(false);
+          setOpenEmojiPicker(false);
+          setPostMsg('');
+          setVideoFile();
+          if (res.status === 201) {
+            setCreatePostStatus(true);
+            setTimeout(() => {
+              setEffectWhileCreatePost(false);
+            }, 1000);
+          }
+        }).catch((err) => {
+          console.error(err);
+        });
+      }
+      if (!!postMsg && fileImgsToSelect.length === 0 && !videoFile) {
+        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/createPostWithMsg`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            userIdToPost: activeUserId,
+            postMsg: postMsg
+          })
+        }).then((res) => {
+          setPostMsg('');
+          setOpenEmojiPicker(false);
+          if (res.status === 201) {
+            setCreatePostStatus(true);
+            setTimeout(() => {
+              setEffectWhileCreatePost(false);
+            }, 1000);
+          }
+        }).catch((err) => {
+          console.error(err);
+        });
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (!!postMsg || fileImgsToSelect.length !== 0 || !!videoFile) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [postMsg, fileImgsToSelect, videoFile]);
+
   useEffect(() => {
     inputRef.current.selectionEnd = cursorPosition;
   }, [cursorPosition]);
+
+  useEffect(() => {
+    setDataOfUserByActiveUserId(dataForUser.find((e) => e._id = activeUserId));
+  } , []);
 
   return (
     <div className='container-content-center-in-body'>
@@ -70,24 +174,24 @@ const CreatePost = () => {
           <Link to='/profile' className='link-to-profile-post'>
             <div className='box-of-user-profile-img'>
               <div className='container-user-profile-img'>
-                <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/user1.png`} alt='imgProfile' />
+                <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${dataOfUserByActiveUserId.profilePicture}`} alt='imgProfile' />
               </div>
             </div>
           </Link>
           <div className='container-input-post'>
-            <input id='auto-focus' type='text' placeholder="what's happening" value={postMsg} ref={inputRef} onChange={(e) => setPostMsg(e.target.value)} />
+            <input id='auto-focus' type='text' placeholder="what's happening" value={postMsg} ref={inputRef} onChange={(e) => postMsgFunc(e)} />
           </div>
         </div>
         <div className='container-icons-post'>
-          <form encType='multipart/form-data' className='form-fix-style-in-container-icons-post'>
+          <form onSubmit={(e) => createPost(e)} encType='multipart/form-data' className='form-fix-style-in-container-icons-post'>
             <div className='image-upload-icon' onClick={() => imageIconRef.current.click()}>
               <FontAwesomeIcon icon={faImage} className='style-icon-post' id='color-icon-image' />
-              <input type='file' multiple accept='image/png , image/jpeg , image/webp' className='display-none-input-file' ref={imageIconRef} onChange={(e) => imagePreview(e)} onClick={(e) => e.target.value = null} />
+              <input name='postImage' type='file' multiple accept='image/png , image/jpeg , image/webp' className='display-none-input-file' ref={imageIconRef} onChange={(e) => imagePreview(e)} onClick={(e) => e.target.value = null} />
               <p>Photo</p>
             </div>
             <div className='video-upload-icon' onClick={() => videoIconRef.current.click()}>
               <FontAwesomeIcon icon={faCirclePlay} className='style-icon-post' id='color-icon-video' />
-              <input type='file' accept='video/mp4' className='display-none-input-file' ref={videoIconRef} onChange={(e) => videoFileUpload(e)} onClick={(e) => e.target.value = null} />
+              <input name='postVideo' type='file' accept='video/mp4' className='display-none-input-file' ref={videoIconRef} onChange={(e) => videoFileUpload(e)} onClick={(e) => e.target.value = null} />
               <p>Video</p>
             </div>
             <div className='emoji-text-container'>
@@ -97,7 +201,14 @@ const CreatePost = () => {
               </div>
             </div>
             <div className='post-button-container'>
-              <button>Post</button>
+              <button type='submit' ref={postButtonRef} disabled={disabled}>
+                {effectWhileCreatePost
+                  ?
+                  <RotatingLines strokeColor="#B9B9B9" strokeWidth="5" animationDuration=".8" width="15%" visible={true} />
+                  :
+                  'Post'
+                }
+              </button>
             </div>
           </form>
         </div>

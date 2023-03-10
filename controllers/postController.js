@@ -2,9 +2,23 @@ const postModel = require('../model/postModel');
 const fs = require('fs');
 const path = require('path');
 
+const createPostWithMsg = async (req , res) => {
+    try{
+        const { userIdToPost, postMsg } = req.body;
+        const savePost = await new postModel({
+            userIdToPost: userIdToPost,
+            postMsg: postMsg
+        });
+        await savePost.save();
+        res.status(201).json({ msg: 'post created.' });
+    }catch(err){
+        res.status(500).json(err);
+    }
+}
+
 const createPostWithImages = async (req, res) => {
     try {
-        const { userIdToPost, postMsg, postLikes } = req.body;
+        const { userIdToPost, postMsg } = req.body;
         const savePost = await new postModel({
             userIdToPost: userIdToPost,
             postMsg: postMsg,
@@ -19,7 +33,7 @@ const createPostWithImages = async (req, res) => {
 
 const createPostWithVideo = async (req, res) => {
     try {
-        const { userIdToPost, postMsg, postLikes } = req.body;
+        const { userIdToPost, postMsg } = req.body;
         const savePost = await new postModel({
             userIdToPost: userIdToPost,
             postMsg: postMsg,
@@ -218,6 +232,7 @@ const getAllPosts = async (req , res) => {
 }
 
 module.exports = {
+    createPostWithMsg,
     createPostWithImages,
     createPostWithVideo,
     updatePostWithImages,

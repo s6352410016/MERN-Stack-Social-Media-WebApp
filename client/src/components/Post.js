@@ -258,13 +258,13 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
 
     useEffect(() => {
         if (userIdToPost) {
-            setDataOfUserByUserId(dataForUser.find((e) => e.userId === userIdToPost));
+            setDataOfUserByUserId(dataForUser.find((e) => e._id === userIdToPost));
         }
     }, []);
 
     useEffect(() => {
         if (activeUserId) {
-            setDataOfUserActiveByUserId(dataForUser.find((e) => e.userId === activeUserId));
+            setDataOfUserActiveByUserId(dataForUser.find((e) => e._id === activeUserId));
         }
     }, []);
 
@@ -274,7 +274,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                 <Link to='id' className='link-container-of-img'>
                     <div className='container-of-img-profile-users'>
                         <div className='container-width-full-img'>
-                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${DataOfUserByUserId.image}`} alt='profileImg' />
+                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${DataOfUserByUserId.profilePicture}`} alt='profileImg' />
                         </div>
                     </div>
                 </Link>
@@ -283,7 +283,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                     <p className='modify-date-post-of-users'>{format(createdAt)}</p>
                 </div>
                 <div className='icon-settings-post-of-users'>
-                    {activeUserId === DataOfUserByUserId.userId
+                    {activeUserId === DataOfUserByUserId._id
                         ?
                         <div className='container-icon-three-dots' onClick={() => setSettingInPostPopup(!settingInPostPopup)} >
                             <FontAwesomeIcon icon={faEllipsis} className='icon-three-dots-horizontal' />
@@ -372,7 +372,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                                                 </div>
                                             }
                                             {clearImgsInEditPost &&
-                                                <div style={{cursor: fileImgsInEditPost.length === 1 ? 'default' : 'grab'}} className='container-img-in-container-img-swipper-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                                <div style={{ cursor: fileImgsInEditPost.length === 1 ? 'default' : 'grab' }} className='container-img-in-container-img-swipper-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
                                                     <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
                                                         {fileImgsInEditPost.map((e, index) => (
                                                             <SwiperSlide key={index}><img src={e} alt='postImg55' /></SwiperSlide>
@@ -468,7 +468,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
             {
                 postImgs.length !== 0
                     ?
-                    <div style={{ cursor: postImgs.length === 1 ? 'default' : 'grab' }} className='content-center-in-post-of-users'>
+                    <div style={{ cursor: postImgs.length === 1 ? 'default' : 'grab', marginTop: !postMsg ? '0' : '10px' }} className='content-center-in-post-of-users'>
                         <div className='container-img-post-of-users'>
                             <Swiper pagination={{ dynamicBullets: true, }} modules={[Pagination]} className="mySwiper">
                                 {postImgs.map((e, index) => (
@@ -483,7 +483,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
             {
                 postVideo !== ''
                     ?
-                    <div className='container-post-video-in-container-post-of-users-fix'>
+                    <div style={{ marginTop: !postMsg ? '0' : '10px' }} className='container-post-video-in-container-post-of-users-fix'>
                         <div className='container-post-video-in-container-post-of-users'>
                             <video controls>
                                 <source src={`${process.env.REACT_APP_SERVER_DOMAIN}/postVideo/${postVideo}`}></source>
@@ -651,7 +651,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
             </div>
             <div className='create-comment-container-in-post-of-users'>
                 <Link to='/profile' className='container-img-profile-in-create-comment-container-in-post-of-users'>
-                    <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${dataOfUserActiveByUserId.image}`} alt='imgProfileUser' />
+                    <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${dataOfUserActiveByUserId.profilePicture}`} alt='imgProfileUser' />
                 </Link>
                 <div className='write-comment-container-in-create-comment-container-in-post-of-users'>
                     <form encType='multipart/form-data'>
