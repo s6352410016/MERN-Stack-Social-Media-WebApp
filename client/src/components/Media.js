@@ -382,7 +382,7 @@ const Media = () => {
       return new Date(b.createdAt) - new Date(a.createdAt);
     });
     setSortAllPostAscending(sortedPosts);
-  }, [postOfusers, postOfUsersToShare]);
+  }, [postOfusers, postOfUsersToShare , createPostStatus]);
 
   useEffect(() => {
     setTimeout(() => {

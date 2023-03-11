@@ -106,7 +106,7 @@ const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPos
     const saveEditPost = () => {
         setEffectWhileEditPost(true);
         const formData = new FormData();
-        if (selectFileImgToEditPost.length === 0 && !fileVideoInEditPost && !!msgInEditPost) {
+        if (selectFileImgToEditPost.length === 0 && !fileVideoInEditPost && !!msgInEditPost && deleteCurrentPostImage === false && deleteCurrentPostVideo === false) {
             fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/updatePostWithMsg`, {
                 method: 'PUT',
                 headers: {
@@ -165,7 +165,6 @@ const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPos
         if (!!msgInEditPost && deleteCurrentPostImage) {
             formData.append('postId', postId);
             formData.append('postMsg', msgInEditPost);
-            formData.append('postImage', []);
             fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/updatePostWithImages`, {
                 method: 'PUT',
                 body: formData
@@ -180,7 +179,20 @@ const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPos
             });
         }
         if (!!msgInEditPost && deleteCurrentPostVideo) {
-            
+            formData.append('postId', postId);
+            formData.append('postMsg', msgInEditPost);
+            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/updatePostWithVideo`, {
+                method: 'PUT',
+                body: formData
+            }).then((res) => {
+                if (res.status === 200) {
+                    setTimeout(() => {
+                        setEffectWhileEditPost(false);
+                        setCreatePostStatus(true);
+                        setOpenEditPostPopup(false);
+                    }, 1500);
+                }
+            });
         }
     }
 

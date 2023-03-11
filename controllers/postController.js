@@ -81,7 +81,7 @@ const updatePostWithImages = async (req, res) => {
             },
             {
                 postMsg: postMsg,
-                postImgs: req.files.map((e) => e.filename),
+                postImgs: req.files !== undefined ? req.files.map((e) => e.filename) : [],
                 postVideo: ''
             }
         );
@@ -126,7 +126,7 @@ const updatePostWithVideo = async (req, res) => {
             },
             {
                 postMsg: postMsg,
-                postVideo: req.file !== '' ? req.file.filename : '',
+                postVideo: req.file !== undefined ? req.file.filename : '',
                 postImgs: []
             }
         );
