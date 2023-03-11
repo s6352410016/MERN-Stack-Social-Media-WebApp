@@ -33,20 +33,20 @@ const SearchPeopleInHamburgerMenu = () => {
       <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0', opacity: '.5' }} />
       <div className='container-search-result-in-container-in-SearchPeopleInHamburgerMenu'>
         {
-          dataForUserInSearchPeople.dataForUser !== undefined
+          dataForUserInSearchPeople.userInfo !== undefined
             ?
             showSkeletonSearchResult
               ?
-              dataForUserInSearchPeople.dataForUser.filter((e) => {
-                return searchResult !== '' && e.fullname.toLowerCase().includes(searchResult.toLowerCase());
+              dataForUserInSearchPeople.userInfo.filter((e) => {
+                return searchResult !== '' ? e.firstname.toLowerCase().includes(searchResult.toLowerCase()) && e.firstname.toLowerCase() !== state.userData.firstname && e.lastname.toLowerCase() !== state.userData.lastname || e.lastname.toLowerCase().includes(searchResult.toLowerCase()) && e.firstname.toLowerCase() !== state.userData.firstname && e.lastname.toLowerCase() !== state.userData.lastname : '';
               }).map((e, index) => (
                 <SkeletonSearchResult key={index} />
               ))
               :
-              dataForUserInSearchPeople.dataForUser.filter((e) => {
-                return searchResult !== '' && e.fullname.toLowerCase().includes(searchResult.toLowerCase());
+              dataForUserInSearchPeople.userInfo.filter((e) => {
+                return searchResult !== '' ? e.firstname.toLowerCase().includes(searchResult.toLowerCase()) && e.firstname.toLowerCase() !== state.userData.firstname && e.lastname.toLowerCase() !== state.userData.lastname || e.lastname.toLowerCase().includes(searchResult.toLowerCase()) && e.firstname.toLowerCase() !== state.userData.firstname && e.lastname.toLowerCase() !== state.userData.lastname : '';
               }).map((e, index) => (
-                <SearchResult key={index} image={e.image} fullname={e.fullname} />
+                <SearchResult key={index} userId={e._id} image={e.profilePicture} firstname={e.firstname} lastname={e.lastname} />
               ))
             :
             <></>

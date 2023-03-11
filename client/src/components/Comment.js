@@ -7,7 +7,7 @@ import { BsEmojiSmile } from "react-icons/bs";
 import EmojiPicker from 'emoji-picker-react';
 import { format } from 'timeago.js';
 
-const Comment = ({ dataForUser, commentId, activeUserId, userIdToComment, commentMsgs, commentImg, createdAt }) => {
+const Comment = ({ userInfo, commentId, activeUserId, userIdToComment, commentMsgs, commentImg, createdAt }) => {
     const editSelectFileRef = useRef();
     const inputEditCommentRef = useRef();
 
@@ -78,7 +78,7 @@ const Comment = ({ dataForUser, commentId, activeUserId, userIdToComment, commen
 
     useEffect(() => {
         if (userIdToComment) {
-            setDataCommentOfUserByUserId(dataForUser.find((e) => e.userId === userIdToComment));
+            setDataCommentOfUserByUserId(userInfo.find((e) => e._id === userIdToComment));
         }
     }, []);
 

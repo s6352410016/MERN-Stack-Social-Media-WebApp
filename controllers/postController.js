@@ -126,7 +126,7 @@ const updatePostWithVideo = async (req, res) => {
             },
             {
                 postMsg: postMsg,
-                postVideo: req.file.filename,
+                postVideo: req.file !== '' ? req.file.filename : '',
                 postImgs: []
             }
         );

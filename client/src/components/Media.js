@@ -149,26 +149,7 @@ const Media = () => {
       },
     ]
   );
-  const [dataForUser, setDataForUser] = useState(
-    [
-      {
-        _id: '64082fb157dd529c269e25a7',
-        profilePicture: `user2.png`,
-        fullname: 'admin 1 ',
-        follower: [],
-        following: []
-      },
-      {
-        _id: '6406e8d2fc4dba77f4f318c1',
-        profilePicture: `user3.png`,
-        fullname: 'admin 2',
-        follower: [],
-        following: []
-      }
-    ]
-  );
-  console.log(dataForUser);
-
+  const [userInfo, setUserInfo] = useState([]);
   const [postOfusers, setPostOfusers] = useState(
     [
       // {
@@ -363,6 +344,21 @@ const Media = () => {
   }, []);
 
   useEffect(() => {
+    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/getAllUsers`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((res) => {
+      if (res.status === 200) {
+        return res.json();
+      }
+    }).then((res) => {
+      setUserInfo(res);
+    });
+  }, []);
+
+  useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/getAllPosts`, {
       method: 'POST',
       headers: {
@@ -378,8 +374,8 @@ const Media = () => {
   }, [createPostStatus]);
 
   useEffect(() => {
-    setUserDataInActive(dataForUser.find((e) => e._id === userData.userId));
-  }, [userData]);
+    setUserDataInActive(userInfo.find((e) => e._id === userData.userId));
+  });
 
   useEffect(() => {
     const sortedPosts = [...postOfusers, ...postOfUsersToShare].sort((a, b) => {
@@ -429,7 +425,8 @@ const Media = () => {
   const openPageSearchPeopleInHamburger = () => {
     navigate('/search-people', {
       state: {
-        dataForUser
+        userInfo,
+        userData
       }
     });
   }
@@ -492,6 +489,7 @@ const Media = () => {
     navigate('/');
   }
 
+  console.log(createPostStatus);
   return (
     <div className='container-media-page'>
       <div id='close-popup' onClick={closeDropdown}></div>
@@ -507,16 +505,16 @@ const Media = () => {
               <div className='search-result'>
                 {showSkeletonSearchResult
                   ?
-                  dataForUser.filter((e) => {
-                    return searchResult !== '' && e.fullname.toLowerCase().includes(searchResult.toLowerCase());
+                  userInfo.filter((e) => {
+                    return searchResult !== '' ? e.firstname.toLowerCase().includes(searchResult.toLowerCase()) && e.firstname.toLowerCase() !== userData.firstname && e.lastname.toLowerCase() !== userData.lastname || e.lastname.toLowerCase().includes(searchResult.toLowerCase()) && e.firstname.toLowerCase() !== userData.firstname && e.lastname.toLowerCase() !== userData.lastname : '';
                   }).map((e, index) => (
                     <SkeletonSearchResult key={index} />
                   ))
                   :
-                  dataForUser.filter((e) => {
-                    return searchResult !== '' && e.fullname.toLowerCase().includes(searchResult.toLowerCase());
+                  userInfo.filter((e) => {
+                    return searchResult !== '' ? e.firstname.toLowerCase().includes(searchResult.toLowerCase()) && e.firstname.toLowerCase() !== userData.firstname && e.lastname.toLowerCase() !== userData.lastname || e.lastname.toLowerCase().includes(searchResult.toLowerCase()) && e.firstname.toLowerCase() !== userData.firstname && e.lastname.toLowerCase() !== userData.lastname : '';  
                   }).map((e, index) => (
-                    <SearchResult key={index} image={e.image} fullname={e.fullname} />
+                    <SearchResult key={index} userId={e._id} image={e.profilePicture} firstname={e.firstname} lastname={e.lastname} />
                   ))
                 }
                 {searchResult === '' && <div className='no-search-result-container'><p className='no-search-result'>Users not found.</p></div>}
@@ -608,10 +606,10 @@ const Media = () => {
                 ?
                 <SkeletonUserProfileInHambuger />
                 :
-                <Link to='/profile' className='container-user-profile-in-hidden-content-in-header-popup'>
-                  <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${userDataInActive.image}`} alt='profileImg' />
+                <Link to={`/profile/${userDataInActive._id}`} className='container-user-profile-in-hidden-content-in-header-popup'>
+                  <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!userDataInActive.profilePicture ? 'profileImgDefault.jpg' : userDataInActive.profilePicture}`} alt='profileImg' />
                   <div className='container-fullname-in-container-user-profile-in-hidden-content-in-header-popup'>
-                    <p>{userDataInActive.fullname}</p>
+                    <p>{userDataInActive.firstname} {userDataInActive.lastname}</p>
                   </div>
                 </Link>
               :
@@ -646,16 +644,16 @@ const Media = () => {
               <div className='overflow-auto-caontainer-fix'>
                 {showSkeletonPeopleYouMayKnow
                   ?
-                  dataForUser.filter((e) => {
+                  userInfo.filter((e) => {
                     return e._id !== userData.userId;
                   }).map((e, index) => (
                     <SkeletonPeopleYouMayKnow key={index} />
                   ))
                   :
-                  dataForUser.filter((e) => {
+                  userInfo.filter((e) => {
                     return e._id !== userData.userId;
                   }).map((e, index) => (
-                    <PeopleYouMayKnow key={index} image={e.profilePicture} fullname={e.fullname} />
+                    <PeopleYouMayKnow key={index} userId={e._id} image={e.profilePicture} firstname={e.firstname} lastname={e.lastname} />
                   ))
                 }
               </div>
@@ -667,7 +665,7 @@ const Media = () => {
             ?
             <SkeletonCreatePost />
             :
-            <CreatePost activeUserId={userData.userId} dataForUser={dataForUser} setCreatePostStatus={setCreatePostStatus} />
+            <CreatePost activeUserId={userData.userId} userInfo={userInfo} setCreatePostStatus={setCreatePostStatus} />
           }
           <div id='container-post-scroll' className='overflow-y-auto-in-post-content-of-users'>
             {showIconScrollToTop &&
@@ -683,9 +681,9 @@ const Media = () => {
               :
               sortAllPostAscening.map((e, index) => {
                 if (e.userIdToPost) {
-                  return <Post key={index} dataForUser={dataForUser} activeUserId={userData.userId} postId={e._id} userIdToPost={e.userIdToPost} postMsg={e.postMsg} postImgs={e.postImgs} postVideo={e.postVideo} createdAt={e.createdAt} postLikes={e.postLikes} />;
+                  return <Post key={index} setCreatePostStatus={setCreatePostStatus} userInfo={userInfo} activeUserId={userData.userId} postId={e._id} userIdToPost={e.userIdToPost} postMsg={e.postMsg} postImgs={e.postImgs} postVideo={e.postVideo} createdAt={e.createdAt} postLikes={e.postLikes} />;
                 }/* else {
-                  return <SharePost key={index} shareId={e.shareId} userIdToShare={e.userIdToShare} postIdToShare={e.postIdToShare} shareMsg={e.shareMsg} sharePostLikes={e.sharePostLikes} createdAt={e.createdAt} dataForUser={dataForUser} activeUserId={userData.userId} postOfusers={postOfusers} />;
+                  return <SharePost key={index} shareId={e.shareId} userIdToShare={e.userIdToShare} postIdToShare={e.postIdToShare} shareMsg={e.shareMsg} sharePostLikes={e.sharePostLikes} createdAt={e.createdAt} userInfo={userInfo} activeUserId={userData.userId} postOfusers={postOfusers} />;
                 }*/
               })
             }
@@ -696,17 +694,17 @@ const Media = () => {
             {showSkeletonProfileUser ?
               <SkeletonUserProfileInMedia />
               :
-              <Link to='/profile' className='container-user-profile-in-container-content-right-in-body'>
+              <Link to={`/profile/${userDataInActive._id}`} className='container-user-profile-in-container-content-right-in-body'>
                 {userDataInActive === undefined
                   ?
                   <></>
                   :
                   <>
                     <div className='container-img-container-user-profile-in-container-content-right-in-body'>
-                      <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${userDataInActive.profilePicture}`} alt='profileImg' />
+                      <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!userDataInActive.profilePicture ? 'profileImgDefault.jpg' : userDataInActive.profilePicture}`} alt='profileImg' />
                     </div>
                     <div className='container-fullname-active-user-in-container-user-profile-in-container-content-right-in-body'>
-                      <b>{userDataInActive.fullname}</b>
+                      <b>{userDataInActive.firstname} {userDataInActive.lastname}</b>
                     </div>
                   </>
                 }
@@ -719,16 +717,16 @@ const Media = () => {
             <div className='container-body-in-container-user-online-list-in-content-right-in-body'>
               {showSkeletonStatusUser
                 ?
-                dataForUser.filter((e) => {
+                userInfo.filter((e) => {
                   return e._id !== userData.userId
                 }).map((e, index) => (
                   <SkeletonStatusUsers key={index} />
                 ))
                 :
-                dataForUser.filter((e) => {
+                userInfo.filter((e) => {
                   return e._id !== userData.userId
                 }).map((e, index) => (
-                  <StatusUsers key={index} userId={e.userId} image={e.profilePicture} fullname={e.fullname} />
+                  <StatusUsers key={index} userId={e._id} image={e.profilePicture} firstname={e.firstname} lastname={e.lastname} />
                 ))
               }
             </div>

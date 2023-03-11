@@ -580,6 +580,7 @@
 .search-img-user {
     width: 100%;
     height: 100%;
+    border-radius: 2rem;
 }
 
 .search-result-fullname-user {
@@ -596,6 +597,7 @@
 
 .search-fullname-user {
     margin-bottom: 0;
+    text-transform: capitalize;
 }
 
 .serach-result-text-decoration-none {
@@ -725,6 +727,7 @@
 .img-container-people-you-may-know img {
     width: 100%;
     height: 100%;
+    border-radius: 3.5rem;
 }
 
 .container-fullname-people-you-may-know {
@@ -1414,6 +1417,7 @@
 .container-user-profile-img-container-status-users-in-container-body-in-container-user-online-list-in-content-right-in-body img {
     width: 100%;
     height: 100%;
+    border-radius: 2rem;
 }
 
 .status-of-user-in-container-status-users-in-container-body-in-container-user-online-list-in-content-right-in-body {
@@ -3515,14 +3519,14 @@
 }
 
 .icon-smark-in-container-icon-xmark-in-container-video-in-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users {
-    color: #fff;
+    color: #EF4040;
     font-size: 1.5rem;
     font-weight: bold;
     transition: .2s;
 }
 
 .container-icon-xmark-in-container-video-in-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users:hover .icon-smark-in-container-icon-xmark-in-container-video-in-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users {
-    color: #f3f3f3;
+    color: #EE2525;
 }
 
 .container-button-save-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users {
@@ -3544,6 +3548,9 @@
     font-size: 1.1rem;
     font-weight: 500;
     transition: .2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .container-button-save-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users button:hover {
@@ -3635,6 +3642,9 @@
     color: #fff;
     font-size: 1rem;
     font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .container-confirm-button-in-container-body-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users button:hover {

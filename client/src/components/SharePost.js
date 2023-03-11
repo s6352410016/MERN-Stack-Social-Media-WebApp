@@ -17,7 +17,7 @@ import PeopleLikedYourPost from './PeopleLikedYourPost';
 import Comment from './Comment';
 import { format } from 'timeago.js';
 
-const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToShare, postIdToShare, shareMsg, sharePostLikes, createdAt }) => {
+const SharePost = ({ postOfusers, userInfo, activeUserId, shareId, userIdToShare, postIdToShare, shareMsg, sharePostLikes, createdAt }) => {
     const selectFileIconRef = useRef();
     const inputCommentRef = useRef();
     const inputInSharePostRef = useRef();
@@ -182,10 +182,10 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
 
     useEffect(() => {
         if (userIdToShare) {
-            setDataOfUserByUserId(dataForUser.find((e) => e.userId === userIdToShare));
+            setDataOfUserByUserId(userInfo.find((e) => e.userId === userIdToShare));
         }
         if (activeUserId) {
-            setDataOfUserActiveByUserId(dataForUser.find((e) => e.userId === activeUserId));
+            setDataOfUserActiveByUserId(userInfo.find((e) => e.userId === activeUserId));
         }
         if (postIdToShare) {
             setDataPostOfUserBySharePostId(postOfusers.find((e) => e.postId === postIdToShare));
@@ -194,7 +194,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
     }, []);
 
     useEffect(() => {
-        setDataUserIdToPostInSharePost(dataForUser.find((e) => e.userId === dataPostOfUserBySharePostId.userIdToPost));
+        setDataUserIdToPostInSharePost(userInfo.find((e) => e.userId === dataPostOfUserBySharePostId.userIdToPost));
     }, [dataPostOfUserBySharePostId]);
 
     return (
@@ -404,7 +404,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                                                 </div>
                                                 :
                                                 sharePostLikes.map((e, index) => (
-                                                    <PeopleLikedYourPost key={index} UserIdToLikeInPost={e} dataForUser={dataForUser} />
+                                                    <PeopleLikedYourPost key={index} UserIdToLikeInPost={e} userInfo={userInfo} />
                                                 ))
                                             }
                                         </div>
@@ -523,7 +523,7 @@ const SharePost = ({ postOfusers, dataForUser, activeUserId, shareId, userIdToSh
                         {commentOfUsers.filter((e) => {
                             return e.shareIdToPostToComment === shareId;
                         }).map((e, index) => (
-                            <Comment key={index} dataForUser={dataForUser} activeUserId={activeUserId} commentId={e.commentId} userIdToComment={e.userIdToComment} commentMsgs={e.commentMsgs} commentImg={e.commentImg} createdAt={e.createdAt} />
+                            <Comment key={index} userInfo={userInfo} activeUserId={activeUserId} commentId={e.commentId} userIdToComment={e.userIdToComment} commentMsgs={e.commentMsgs} commentImg={e.commentImg} createdAt={e.createdAt} />
                         ))}
                     </>
                 }

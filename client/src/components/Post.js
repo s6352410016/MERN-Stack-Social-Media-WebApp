@@ -17,8 +17,9 @@ import EmojiPicker from 'emoji-picker-react';
 import PeopleLikedYourPost from './PeopleLikedYourPost';
 import Comment from './Comment';
 import { format } from 'timeago.js';
+import { RotatingLines } from 'react-loader-spinner';
 
-const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postImgs, postVideo, createdAt, postLikes }) => {
+const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPost, postMsg, postImgs, postVideo, createdAt, postLikes }) => {
     const selectFileIconRef = useRef();
     const inputCommentRef = useRef();
     const inputInSharePostRef = useRef();
@@ -50,8 +51,13 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
     const [showImgsInEditPost, setShowImgsInEditPost] = useState(true);
     const [showVideoInEditPost, setShowVideoInEditPost] = useState(true);
     const [openDeletePostPopup, setOpenDeletePostPopup] = useState(false);
+    const [effectWhileEditPost, setEffectWhileEditPost] = useState(false);
+    const [effectWhileDeletePost, setEffectWhileDeletePost] = useState(false);
+    const [deleteCurrentPostImage, setDeleteCurrentPostImage] = useState(false);
+    const [deleteCurrentPostVideo, setDeleteCurrentPostVideo] = useState(false);
     const [DataOfUserByUserId, setDataOfUserByUserId] = useState({});
     const [dataOfUserActiveByUserId, setDataOfUserActiveByUserId] = useState({});
+    const [selectFileImgToEditPost, setSelectFileImgToEditPost] = useState([]);
     const [commentOfUsers, setCommentOfUsers] = useState(
         [
             {
@@ -97,6 +103,108 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
         ]
     );
 
+    const saveEditPost = () => {
+        setEffectWhileEditPost(true);
+        const formData = new FormData();
+        if (selectFileImgToEditPost.length === 0 && !fileVideoInEditPost && !!msgInEditPost) {
+            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/updatePostWithMsg`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    postId: postId,
+                    postMsg: msgInEditPost
+                })
+            }).then((res) => {
+                if (res.status === 200) {
+                    setTimeout(() => {
+                        setEffectWhileEditPost(false);
+                        setCreatePostStatus(true);
+                        setOpenEditPostPopup(false);
+                    }, 1500);
+                }
+            });
+        }
+        if (selectFileImgToEditPost.length !== 0 && !fileVideoInEditPost) {
+            formData.append('postId', postId);
+            formData.append('postMsg', msgInEditPost);
+            selectFileImgToEditPost.map((file) => {
+                formData.append('postImage', file);
+            });
+            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/updatePostWithImages`, {
+                method: 'PUT',
+                body: formData
+            }).then((res) => {
+                if (res.status === 200) {
+                    setTimeout(() => {
+                        setEffectWhileEditPost(false);
+                        setCreatePostStatus(true);
+                        setOpenEditPostPopup(false);
+                    }, 1500);
+                }
+            });
+        }
+        if (selectFileImgToEditPost.length === 0 && !!fileVideoInEditPost) {
+            formData.append('postId', postId);
+            formData.append('postMsg', msgInEditPost);
+            formData.append('postVideo', fileVideoInEditPost);
+            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/updatePostWithVideo`, {
+                method: 'PUT',
+                body: formData
+            }).then((res) => {
+                if (res.status === 200) {
+                    setTimeout(() => {
+                        setEffectWhileEditPost(false);
+                        setCreatePostStatus(true);
+                        setOpenEditPostPopup(false);
+                    }, 1500);
+                }
+            });
+        }
+        if (!!msgInEditPost && deleteCurrentPostImage) {
+            formData.append('postId', postId);
+            formData.append('postMsg', msgInEditPost);
+            formData.append('postImage', []);
+            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/updatePostWithImages`, {
+                method: 'PUT',
+                body: formData
+            }).then((res) => {
+                if (res.status === 200) {
+                    setTimeout(() => {
+                        setEffectWhileEditPost(false);
+                        setCreatePostStatus(true);
+                        setOpenEditPostPopup(false);
+                    }, 1500);
+                }
+            });
+        }
+        if (!!msgInEditPost && deleteCurrentPostVideo) {
+            
+        }
+    }
+
+    const deletePost = () => {
+        setEffectWhileDeletePost(true);
+        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/deletePost`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                postId: postId
+            })
+        }).then((res) => {
+            if (res.status === 200) {
+                setTimeout(() => {
+                    setEffectWhileDeletePost(false);
+                    setCreatePostStatus(true);
+                    setOpenDeletePostPopup(false);
+                }, 1500);
+            }
+        });
+    }
+
     const EmojiClickInCreateComment = ({ emoji }) => {
         inputCommentRef.current.focus();
         const start = commetMsg.substring(0, inputCommentRef.current.selectionStart);
@@ -138,6 +246,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
             const arrFiles = Array.from(files);
             const imgsUrl = arrFiles.map((e) => URL.createObjectURL(e));
             setFileImgsInEditPost(imgsUrl);
+            setSelectFileImgToEditPost(arrFiles);
             setClearImgsInEditPost(true);
             setFileVideoInEditPost('');
             setShowVideoInEditPost(false);
@@ -149,6 +258,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
         if (file.length > 0) {
             setFileVideoInEditPost(file[0]);
             setFileImgsInEditPost([]);
+            setSelectFileImgToEditPost([]);
             setShowImgsInEditPost(false);
             setShowVideoInEditPost(false);
         }
@@ -187,6 +297,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
 
     const clearFileImgsInEditPost = () => {
         setClearImgsInEditPost(false);
+        setDeleteCurrentPostImage(true);
         setFileImgsInEditPost([]);
     }
 
@@ -212,6 +323,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
 
     const closeOpenVideoInEditPost = () => {
         setFileVideoInEditPost('');
+        setDeleteCurrentPostVideo(true);
         setOpenVideoInEditPost(false);
     }
 
@@ -258,28 +370,28 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
 
     useEffect(() => {
         if (userIdToPost) {
-            setDataOfUserByUserId(dataForUser.find((e) => e._id === userIdToPost));
+            setDataOfUserByUserId(userInfo.find((e) => e._id === userIdToPost));
         }
-    }, []);
+    });
 
     useEffect(() => {
         if (activeUserId) {
-            setDataOfUserActiveByUserId(dataForUser.find((e) => e._id === activeUserId));
+            setDataOfUserActiveByUserId(userInfo.find((e) => e._id === activeUserId));
         }
     }, []);
 
     return (
         <div className='container-post-of-users'>
             <div className='content-header-in-post-of-users'>
-                <Link to='id' className='link-container-of-img'>
+                <Link to={`/profile/${DataOfUserByUserId._id}`} className='link-container-of-img'>
                     <div className='container-of-img-profile-users'>
                         <div className='container-width-full-img'>
-                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${DataOfUserByUserId.profilePicture}`} alt='profileImg' />
+                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!DataOfUserByUserId.profilePicture ? 'profileImgDefault.jpg' : DataOfUserByUserId.profilePicture}`} alt='profileImg' />
                         </div>
                     </div>
                 </Link>
                 <div className='content-center-in-header-in-post-of-users'>
-                    <Link to='id' className='link-in-container-of-fullname-user'><p className='fullname-of-post-users'>{DataOfUserByUserId.fullname}</p></Link>
+                    <Link to={`/profile/${DataOfUserByUserId._id}`} className='link-in-container-of-fullname-user'><p className='fullname-of-post-users'>{DataOfUserByUserId.firstname} {DataOfUserByUserId.lastname}</p></Link>
                     <p className='modify-date-post-of-users'>{format(createdAt)}</p>
                 </div>
                 <div className='icon-settings-post-of-users'>
@@ -317,7 +429,14 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                                         <button>Cancel</button>
                                     </div>
                                     <div className='container-confirm-button-in-container-body-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users'>
-                                        <button>Confirm</button>
+                                        <button onClick={deletePost}>
+                                            {effectWhileDeletePost
+                                                ?
+                                                <RotatingLines strokeColor="#B9B9B9" strokeWidth="5" animationDuration=".8" width="20%" visible={true} />
+                                                :
+                                                'Confirm'
+                                            }
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -339,12 +458,12 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                                 <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0', opacity: '.5' }} />
                                 <div className='container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
                                     <div className='container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
-                                        <Link to='id' className='container-img-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
-                                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${DataOfUserByUserId.image}`} alt='imgProfile' />
+                                        <Link to={`/profile/${DataOfUserByUserId._id}`} className='container-img-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!DataOfUserByUserId.profilePicture ? 'profileImgDefault.jpg' : DataOfUserByUserId.profilePicture}`} alt='imgProfile' />
                                         </Link>
                                         <div className='container-fullname-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
-                                            <Link to='id' className='link-container-in-container-fullname-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
-                                                <p>{DataOfUserByUserId.fullname}</p>
+                                            <Link to={`/profile/${DataOfUserByUserId._id}`} className='link-container-in-container-fullname-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                                <p>{DataOfUserByUserId.firstname} {DataOfUserByUserId.lastname}</p>
                                             </Link>
                                         </div>
                                     </div>
@@ -440,16 +559,23 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                                     <div className='container-all-icon-in-container-footer-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
                                         <div onClick={openWindowFileImgUpload} className='container-icon-img-in-container-all-icon-in-container-footer-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
                                             <CiImageOn className='icon-img-in-container-icon-img-in-container-all-icon-in-container-footer-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users' />
-                                            <input onClick={(e) => e.target.value = null} onChange={(e) => selectFileImgsToUploadInEditPost(e)} ref={inputFileImgsInEditPostRef} type='file' accept='image/png , image/jpeg , image/webp' multiple style={{ display: 'none' }} />
+                                            <input name='postImage' onClick={(e) => e.target.value = null} onChange={(e) => selectFileImgsToUploadInEditPost(e)} ref={inputFileImgsInEditPostRef} type='file' accept='image/png , image/jpeg , image/webp' multiple style={{ display: 'none' }} />
                                         </div>
                                         <div onClick={openWindowFileVideoUpload} className='container-icon-clip-in-container-all-icon-in-container-footer-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
                                             <SlPaperClip className='icon-clip-in-container-icon-clip-in-container-all-icon-in-container-footer-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users' />
-                                            <input onClick={(e) => e.target.value = null} onChange={(e) => selectFileVideoToUploadInEditPost(e)} ref={inputFileVideoInEditPostRef} type='file' accept='video/mp4' style={{ display: 'none' }} />
+                                            <input name='postVideo' onClick={(e) => e.target.value = null} onChange={(e) => selectFileVideoToUploadInEditPost(e)} ref={inputFileVideoInEditPostRef} type='file' accept='video/mp4' style={{ display: 'none' }} />
                                         </div>
                                     </div>
                                 </div>
                                 <div className='container-button-save-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
-                                    <button>Save</button>
+                                    <button onClick={saveEditPost}>
+                                        {effectWhileEditPost
+                                            ?
+                                            <RotatingLines strokeColor="#B9B9B9" strokeWidth="5" animationDuration=".8" width="5%" visible={true} />
+                                            :
+                                            'Save'
+                                        }
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -525,7 +651,7 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                                                 </div>
                                                 :
                                                 postLikes.map((e, index) => (
-                                                    <PeopleLikedYourPost key={index} UserIdToLikeInPost={e} dataForUser={dataForUser} />
+                                                    <PeopleLikedYourPost key={index} UserIdToLikeInPost={e} userInfo={userInfo} />
                                                 ))
                                             }
                                         </div>
@@ -557,12 +683,12 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                                     <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0', opacity: '.5' }} />
                                     <div className='body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                         <div className='container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                            <Link to='id' className='container-img-profile-in-container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${dataOfUserActiveByUserId.image}`} alt='imgProfile' />
+                                            <Link to={`/profile/${dataOfUserActiveByUserId._id}`} className='container-img-profile-in-container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!dataOfUserActiveByUserId.profilePicture ? 'profileImgDefault.jpg' : dataOfUserActiveByUserId.profilePicture}`} alt='imgProfile' />
                                             </Link>
                                             <div className='container-fullname-of-user-in-container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                <Link to='id' className='text-decoration-in-container-fullname-of-user-in-container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                    <p>{dataOfUserActiveByUserId.fullname}</p>
+                                                <Link to={`/profile/${dataOfUserActiveByUserId._id}`} className='text-decoration-in-container-fullname-of-user-in-container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                    <p>{dataOfUserActiveByUserId.firstname} {dataOfUserActiveByUserId.lastname}</p>
                                                 </Link>
                                             </div>
                                         </div>
@@ -606,12 +732,12 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                                             }
                                             <div className='container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                 <div className='container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                    <Link to='id' className='container-img-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                        <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${DataOfUserByUserId.image}`} alt='imgProfile' />
+                                                    <Link to={`/profile/${DataOfUserByUserId._id}`} className='container-img-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                        <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!DataOfUserByUserId.profilePicture ? 'profileImgDefault.jpg' : DataOfUserByUserId.profilePicture}`} alt='imgProfile' />
                                                     </Link>
                                                     <div className='container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                        <Link to='id' className='text-decoration-none-in-container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                            <p>{DataOfUserByUserId.fullname}</p>
+                                                        <Link to={`/profile/${DataOfUserByUserId._id}`} className='text-decoration-none-in-container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                            <p>{DataOfUserByUserId.firstname} {DataOfUserByUserId.lastname}</p>
                                                         </Link>
                                                         <div className='container-modifydate-post-in-container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                             <p>{format(createdAt)}</p>
@@ -644,14 +770,14 @@ const Post = ({ dataForUser, activeUserId, postId, userIdToPost, postMsg, postIm
                         {commentOfUsers.filter((e) => {
                             return e.postIdToComment === postId;
                         }).map((e, index) => (
-                            <Comment key={index} dataForUser={dataForUser} activeUserId={activeUserId} commentId={e.commentId} userIdToComment={e.userIdToComment} commentMsgs={e.commentMsgs} commentImg={e.commentImg} createdAt={e.createdAt} />
+                            <Comment key={index} userInfo={userInfo} activeUserId={activeUserId} commentId={e.commentId} userIdToComment={e.userIdToComment} commentMsgs={e.commentMsgs} commentImg={e.commentImg} createdAt={e.createdAt} />
                         ))}
                     </>
                 }
             </div>
             <div className='create-comment-container-in-post-of-users'>
-                <Link to='/profile' className='container-img-profile-in-create-comment-container-in-post-of-users'>
-                    <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${dataOfUserActiveByUserId.profilePicture}`} alt='imgProfileUser' />
+                <Link to={`/profile/${dataOfUserActiveByUserId._id}`} className='container-img-profile-in-create-comment-container-in-post-of-users'>
+                    <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!dataOfUserActiveByUserId.profilePicture ? 'profileImgDefault.jpg' : dataOfUserActiveByUserId.profilePicture}`} alt='imgProfileUser' />
                 </Link>
                 <div className='write-comment-container-in-create-comment-container-in-post-of-users'>
                     <form encType='multipart/form-data'>

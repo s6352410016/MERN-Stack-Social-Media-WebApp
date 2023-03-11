@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faUserCheck } from '@fortawesome/free-solid-svg-icons';
 import { RotatingLines } from 'react-loader-spinner';
 
-const PeopleYouMayKnow = ({ image, fullname }) => {
+const PeopleYouMayKnow = ({userId , image, firstname , lastname }) => {
     const [changeIcon, setChangeIcon] = useState(false);
     const [loadingEffectFollow, setLoadingEffectFollow] = useState(false);
 
@@ -18,16 +18,16 @@ const PeopleYouMayKnow = ({ image, fullname }) => {
 
     return (
         <div className='container-people-you-may-know'>
-            <Link to='/id' className='text-decoration-none-in-container-people-you-may-know' id='fix-container-img'>
+            <Link to={`/profile/${userId}`} className='text-decoration-none-in-container-people-you-may-know' id='fix-container-img'>
                 <div className='container-image-people-you-may-know'>
                     <div className='img-container-people-you-may-know'>
-                        <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${image}`} alt='imageForUser' />
+                        <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!image ? 'profileImgDefault.jpg' : image}`} alt='imageForUser' />
                     </div>
                 </div>
             </Link>
-            <Link to='/id' className='text-decoration-none-in-container-people-you-may-know' id='fix-container-fullname'>
+            <Link to={`/profile/${userId}`} className='text-decoration-none-in-container-people-you-may-know' id='fix-container-fullname'>
                 <div className='container-fullname-people-you-may-know'>
-                    <b>{fullname}</b>
+                    <b>{firstname} {lastname}</b>
                 </div>
             </Link>
             <div className='container-button-follow-people-you-may-know'>

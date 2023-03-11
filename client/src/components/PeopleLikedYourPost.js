@@ -4,7 +4,7 @@ import { faUserPlus, faUserCheck } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { RotatingLines } from 'react-loader-spinner';
 
-const PeopleLikedYourPost = ({ UserIdToLikeInPost, dataForUser }) => {
+const PeopleLikedYourPost = ({ UserIdToLikeInPost, userInfo }) => {
     const [changeIconFollower, setChangeIconFollower] = useState(false);
     const [loadingEffectFollow, setLoadingEffectFollow] = useState(false);
     const [dataOfUserToLikeInPostByUserId, setDataOfUserToLikeInPostByUserId] = useState({});
@@ -19,7 +19,7 @@ const PeopleLikedYourPost = ({ UserIdToLikeInPost, dataForUser }) => {
 
     useEffect(() => {
         if (UserIdToLikeInPost) {
-            setDataOfUserToLikeInPostByUserId(dataForUser.find((e) => e.userId === UserIdToLikeInPost));
+            setDataOfUserToLikeInPostByUserId(userInfo.find((e) => e.userId === UserIdToLikeInPost));
         }
     }, []);
 

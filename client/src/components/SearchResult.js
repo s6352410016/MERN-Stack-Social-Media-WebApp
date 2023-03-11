@@ -1,17 +1,17 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-const SearchResult = ({image , fullname}) => {
+const SearchResult = ({userId , image , firstname , lastname}) => {
   return (
-    <Link to='id' className='serach-result-text-decoration-none'>
+    <Link to={`/profile/${userId}`} className='serach-result-text-decoration-none'>
       <div className='search-result-container'>
         <div className='search-result-image-user'>
           <div className='search-result-image-container'>
-              <img className='search-img-user' src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${image}`} alt='imageUser'/>
+              <img className='search-img-user' src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!image ? 'profileImgDefault.jpg' : image}`} alt='imageUser'/>
           </div>
         </div> 
         <div className='search-result-fullname-user'>
-          <p className='search-fullname-user'>{fullname}</p>
+          <b className='search-fullname-user'>{firstname} {lastname}</b>
         </div>    
       </div>
     </Link>

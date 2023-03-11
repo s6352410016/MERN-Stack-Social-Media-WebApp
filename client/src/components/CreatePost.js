@@ -6,7 +6,7 @@ import { useRef, useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import { RotatingLines } from 'react-loader-spinner';
 
-const CreatePost = ({ activeUserId , dataForUser , setCreatePostStatus }) => {
+const CreatePost = ({ activeUserId, userInfo, setCreatePostStatus }) => {
   const imageIconRef = useRef();
   const videoIconRef = useRef();
   const inputRef = useRef();
@@ -22,7 +22,7 @@ const CreatePost = ({ activeUserId , dataForUser , setCreatePostStatus }) => {
   const [fileImgsToSelect, setFileImgsToSelect] = useState([]);
   const [disabled, setDisabled] = useState(true);
   const [effectWhileCreatePost, setEffectWhileCreatePost] = useState(false);
-  const [dataOfUserByActiveUserId , setDataOfUserByActiveUserId] = useState({});
+  const [dataOfUserByActiveUserId, setDataOfUserByActiveUserId] = useState({});
 
   const emojiClick = ({ emoji }) => {
     inputRef.current.focus();
@@ -93,10 +93,10 @@ const CreatePost = ({ activeUserId , dataForUser , setCreatePostStatus }) => {
           setFilesImg([]);
           setFileImgsToSelect([]);
           if (res.status === 201) {
-            setCreatePostStatus(true);
             setTimeout(() => {
+              setCreatePostStatus(true);
               setEffectWhileCreatePost(false);
-            }, 1000);
+            }, 1500);
           }
         }).catch((err) => {
           console.error(err);
@@ -116,10 +116,10 @@ const CreatePost = ({ activeUserId , dataForUser , setCreatePostStatus }) => {
           setPostMsg('');
           setVideoFile();
           if (res.status === 201) {
-            setCreatePostStatus(true);
             setTimeout(() => {
+              setCreatePostStatus(true);
               setEffectWhileCreatePost(false);
-            }, 1000);
+            }, 1500);
           }
         }).catch((err) => {
           console.error(err);
@@ -139,10 +139,10 @@ const CreatePost = ({ activeUserId , dataForUser , setCreatePostStatus }) => {
           setPostMsg('');
           setOpenEmojiPicker(false);
           if (res.status === 201) {
-            setCreatePostStatus(true);
             setTimeout(() => {
+              setCreatePostStatus(true);
               setEffectWhileCreatePost(false);
-            }, 1000);
+            }, 1500);
           }
         }).catch((err) => {
           console.error(err);
@@ -164,17 +164,17 @@ const CreatePost = ({ activeUserId , dataForUser , setCreatePostStatus }) => {
   }, [cursorPosition]);
 
   useEffect(() => {
-    setDataOfUserByActiveUserId(dataForUser.find((e) => e._id = activeUserId));
-  } , []);
+    setDataOfUserByActiveUserId(userInfo.find((e) => e._id === activeUserId));
+  }, []);
 
   return (
     <div className='container-content-center-in-body'>
       <div className='create-post-container'>
         <div className='container-post-content'>
-          <Link to='/profile' className='link-to-profile-post'>
+          <Link to={`/profile/${dataOfUserByActiveUserId._id}`} className='link-to-profile-post'>
             <div className='box-of-user-profile-img'>
               <div className='container-user-profile-img'>
-                <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${dataOfUserByActiveUserId.profilePicture}`} alt='imgProfile' />
+                <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!dataOfUserByActiveUserId.profilePicture ? 'profileImgDefault.jpg' : dataOfUserByActiveUserId.profilePicture}`} alt='imgProfile' />
               </div>
             </div>
           </Link>
