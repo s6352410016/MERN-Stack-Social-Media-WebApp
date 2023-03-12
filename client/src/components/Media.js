@@ -44,6 +44,10 @@ const Media = () => {
   const [openFollowerPopup, setOpenFollowerPopup] = useState(false);
   const [openFollowingPopup, setOpenFollowingPopup] = useState(false);
   const [createPostStatus, setCreatePostStatus] = useState(false);
+  const [editPostStatus, setEditPostStatus] = useState(false);
+  const [deletePostStatus, setDeletePostStatus] = useState(false);
+  const [likedPost , setLikedPost] = useState(false);
+  const [followAndUnFollow , setFollowAndUnFollow] = useState(false);
   const [searchResult, setSearchResult] = useState('');
   const [sortAllPostAscening, setSortAllPostAscending] = useState([]);
   const [dataUserNotification, setDataUserNotification] = useState(
@@ -150,137 +154,7 @@ const Media = () => {
     ]
   );
   const [userInfo, setUserInfo] = useState([]);
-  const [postOfusers, setPostOfusers] = useState(
-    [
-      // {
-      //   postId: '01',
-      //   userIdToPost: '6406e8d2fc4dba77f4f318c1',
-      //   postMsg: 'This is a new post...',
-      //   postImgs: [
-      //     'img1.webp',
-      //     'img2.jpg',
-      //   ],
-      //   postVideo: '',
-      //   createdAt: '2023-02-02T09:30:09.048+00:00',
-      //   postLikes: ['6406e8d2fc4dba77f4f318c1', '02', '03']
-      // },
-      // {
-      //   postId: '02',
-      //   userIdToPost: '64082fb157dd529c269e25a7',
-      //   postMsg: 'Holy Shit!!!',
-      //   postImgs: [
-      //     'img3.jpg',
-      //     'img4.jpg',
-      //     'img5.webp',
-      //   ],
-      //   postVideo: '',
-      //   createdAt: '2023-02-02T09:43:05.427+00:00',
-      //   postLikes: ['6406e8d2fc4dba77f4f318c1', '10', '05', '09', '06', '07']
-      // },
-      // {
-      //   postId: '03',
-      //   userIdToPost: '03',
-      //   postMsg: 'What The Fuck...',
-      //   postImgs: [
-      //     'img6.webp',
-      //     'img7.jpg',
-      //     'img8.jpg',
-      //     'img9.webp',
-      //   ],
-      //   postVideo: '',
-      //   createdAt: '2023-02-02T09:43:36.020+00:00',
-      //   postLikes: []
-      // },
-      // {
-      //   postId: '04',
-      //   userIdToPost: '04',
-      //   postMsg: 'โครตดึง',
-      //   postImgs: [
-
-      //   ],
-      //   postVideo: 'video1.mp4',
-      //   createdAt: '2023-02-02T09:45:36.031+00:00',
-      //   postLikes: []
-      // },
-      // {
-      //   postId: '05',
-      //   userIdToPost: '05',
-      //   postMsg: 'วัยรุ่นคำมี',
-      //   postImgs: [
-      //     'img10.webp',
-      //   ],
-      //   postVideo: '',
-      //   createdAt: '2023-02-19T14:27:00.554+00:00',
-      //   postLikes: []
-      // },
-      // {
-      //   postId: '06',
-      //   userIdToPost: '06',
-      //   postMsg: 'ซีมอกเหล่าตั๊ก',
-      //   postImgs: [
-
-      //   ],
-      //   postVideo: 'video2.mp4',
-      //   createdAt: '2023-02-23T09:06:20.966+00:00',
-      //   postLikes: ['6406e8d2fc4dba77f4f318c1']
-      // },
-      // {
-      //   postId: '07',
-      //   userIdToPost: '07',
-      //   postMsg: 'Test+++',
-      //   postImgs: [
-      //     'img2.jpg',
-      //   ],
-      //   postVideo: '',
-      //   createdAt: '2023-02-23T09:06:20.966+00:00',
-      //   postLikes: []
-      // },
-      // {
-      //   postId: '08',
-      //   userIdToPost: '6406e8d2fc4dba77f4f318c1',
-      //   postMsg: 'The Fuck.',
-      //   postImgs: [
-
-      //   ],
-      //   postVideo: '',
-      //   createdAt: '2023-02-19T14:27:00.554+00:00',
-      //   postLikes: []
-      // },
-      // {
-      //   postId: '09',
-      //   userIdToPost: '10',
-      //   postMsg: 'Hello world...',
-      //   postImgs: [
-
-      //   ],
-      //   postVideo: '',
-      //   createdAt: '2023-02-19T14:27:00.554+00:00',
-      //   postLikes: []
-      // },
-      // {
-      //   postId: '10',
-      //   userIdToPost: '6406e8d2fc4dba77f4f318c1',
-      //   postMsg: 'Hello React...',
-      //   postImgs: [
-
-      //   ],
-      //   postVideo: '',
-      //   createdAt: '2023-02-19T14:27:00.554+00:00',
-      //   postLikes: []
-      // },
-      // {
-      //   postId: '11',
-      //   userIdToPost: '06',
-      //   postMsg: '5555+',
-      //   postImgs: [
-      //     'img10.webp'
-      //   ],
-      //   postVideo: '',
-      //   createdAt: '2023-02-19T14:27:00.554+00:00',
-      //   postLikes: []
-      // },
-    ]
-  );
+  const [postOfusers, setPostOfusers] = useState([]);
   const [postOfUsersToShare, setPostOfUsersToShare] = useState(
     [
       // {
@@ -356,7 +230,7 @@ const Media = () => {
     }).then((res) => {
       setUserInfo(res);
     });
-  }, []);
+  }, [followAndUnFollow]);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/getAllPosts`, {
@@ -371,7 +245,7 @@ const Media = () => {
     }).then((res) => {
       setPostOfusers([...res]);
     });
-  }, [createPostStatus]);
+  }, [createPostStatus, editPostStatus, deletePostStatus , likedPost , followAndUnFollow]);
 
   useEffect(() => {
     setUserDataInActive(userInfo.find((e) => e._id === userData.userId));
@@ -382,7 +256,7 @@ const Media = () => {
       return new Date(b.createdAt) - new Date(a.createdAt);
     });
     setSortAllPostAscending(sortedPosts);
-  }, [postOfusers, postOfUsersToShare , createPostStatus]);
+  }, [postOfusers, postOfUsersToShare]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -395,7 +269,7 @@ const Media = () => {
       setShowSkeletonStatusUsers(false);
       setShowSkeletonProfileUser(false);
       setShowSkeletonUserProfileInHamburger(false);
-    }, 2000);
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -489,7 +363,6 @@ const Media = () => {
     navigate('/');
   }
 
-  console.log(createPostStatus);
   return (
     <div className='container-media-page'>
       <div id='close-popup' onClick={closeDropdown}></div>
@@ -512,7 +385,7 @@ const Media = () => {
                   ))
                   :
                   userInfo.filter((e) => {
-                    return searchResult !== '' ? e.firstname.toLowerCase().includes(searchResult.toLowerCase()) && e.firstname.toLowerCase() !== userData.firstname && e.lastname.toLowerCase() !== userData.lastname || e.lastname.toLowerCase().includes(searchResult.toLowerCase()) && e.firstname.toLowerCase() !== userData.firstname && e.lastname.toLowerCase() !== userData.lastname : '';  
+                    return searchResult !== '' ? e.firstname.toLowerCase().includes(searchResult.toLowerCase()) && e.firstname.toLowerCase() !== userData.firstname && e.lastname.toLowerCase() !== userData.lastname || e.lastname.toLowerCase().includes(searchResult.toLowerCase()) && e.firstname.toLowerCase() !== userData.firstname && e.lastname.toLowerCase() !== userData.lastname : '';
                   }).map((e, index) => (
                     <SearchResult key={index} userId={e._id} image={e.profilePicture} firstname={e.firstname} lastname={e.lastname} />
                   ))
@@ -653,7 +526,7 @@ const Media = () => {
                   userInfo.filter((e) => {
                     return e._id !== userData.userId;
                   }).map((e, index) => (
-                    <PeopleYouMayKnow key={index} userId={e._id} image={e.profilePicture} firstname={e.firstname} lastname={e.lastname} />
+                    <PeopleYouMayKnow key={index} followAndUnFollow={followAndUnFollow} setFollowAndUnFollow={setFollowAndUnFollow} activeUserData={userDataInActive} userId={e._id} image={e.profilePicture} firstname={e.firstname} lastname={e.lastname} follower={e.follower}/>
                   ))
                 }
               </div>
@@ -665,7 +538,7 @@ const Media = () => {
             ?
             <SkeletonCreatePost />
             :
-            <CreatePost activeUserId={userData.userId} userInfo={userInfo} setCreatePostStatus={setCreatePostStatus} />
+            <CreatePost activeUserId={userData.userId} userInfo={userInfo} createPostStatus={createPostStatus} setCreatePostStatus={setCreatePostStatus} />
           }
           <div id='container-post-scroll' className='overflow-y-auto-in-post-content-of-users'>
             {showIconScrollToTop &&
@@ -681,7 +554,7 @@ const Media = () => {
               :
               sortAllPostAscening.map((e, index) => {
                 if (e.userIdToPost) {
-                  return <Post key={index} setCreatePostStatus={setCreatePostStatus} userInfo={userInfo} activeUserId={userData.userId} postId={e._id} userIdToPost={e.userIdToPost} postMsg={e.postMsg} postImgs={e.postImgs} postVideo={e.postVideo} createdAt={e.createdAt} postLikes={e.postLikes} />;
+                  return <Post key={index} followAndUnFollow={followAndUnFollow} setFollowAndUnFollow={setFollowAndUnFollow} userDataInActive={userDataInActive} likedPost={likedPost} setLikedPost={setLikedPost} editPostStatus={editPostStatus} setEditPostStatus={setEditPostStatus} deletePostStatus={deletePostStatus} setDeletePostStatus={setDeletePostStatus} userInfo={userInfo} activeUserId={userData.userId} postId={e._id} userIdToPost={e.userIdToPost} postMsg={e.postMsg} postImgs={e.postImgs} postVideo={e.postVideo} createdAt={e.createdAt} postLikes={e.postLikes} />;
                 }/* else {
                   return <SharePost key={index} shareId={e.shareId} userIdToShare={e.userIdToShare} postIdToShare={e.postIdToShare} shareMsg={e.shareMsg} sharePostLikes={e.sharePostLikes} createdAt={e.createdAt} userInfo={userInfo} activeUserId={userData.userId} postOfusers={postOfusers} />;
                 }*/

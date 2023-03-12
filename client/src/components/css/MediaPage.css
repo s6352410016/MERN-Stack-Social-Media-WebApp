@@ -2264,7 +2264,7 @@
     width: 100%;
     height: 85px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     gap: 1rem;
     margin: 5px 0;
@@ -2581,7 +2581,7 @@
 }
 
 .container-comment-img-in-container-comments-of-user-detail-in-container-comments-of-users {
-    width: auto;
+    width: 100%;
     height: 150px;
     margin-top: 5px;
     border-radius: 10px;
@@ -2769,6 +2769,9 @@
     font-size: 1rem;
     transition: .2s;
     background-color: #1982FF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .confirm-button-in-container-botton-in-container-alert-confirm-to-delete-comment-in-container-alert-confirm-to-delete-comment-in-container-confirm-to-delete-comment-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users:hover {

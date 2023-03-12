@@ -4,16 +4,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faUserCheck } from '@fortawesome/free-solid-svg-icons';
 import { RotatingLines } from 'react-loader-spinner';
 
-const PeopleYouMayKnow = ({userId , image, firstname , lastname }) => {
-    const [changeIcon, setChangeIcon] = useState(false);
+const PeopleYouMayKnow = ({ followAndUnFollow, setFollowAndUnFollow, activeUserData, userId, image, firstname, lastname, follower }) => {
     const [loadingEffectFollow, setLoadingEffectFollow] = useState(false);
 
     const followUser = () => {
         setLoadingEffectFollow(true);
-        setTimeout(() => {
-            setLoadingEffectFollow(false);
-            setChangeIcon(true);
-        }, 1000);
+        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/followAndUnFollow`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                activeUserId: activeUserData._id,
+                userIdToFollow: userId
+            })
+        }).then((res) => {
+            if (res.status === 200) {
+                setLoadingEffectFollow(false);
+                setFollowAndUnFollow(!followAndUnFollow);
+            }
+        });
     }
 
     return (
@@ -36,7 +46,7 @@ const PeopleYouMayKnow = ({userId , image, firstname , lastname }) => {
                         ?
                         <RotatingLines strokeColor="#B9B9B9" strokeWidth="5" animationDuration=".8" width="50%" visible={true} />
                         :
-                        <FontAwesomeIcon icon={changeIcon ? faUserCheck : faUserPlus} className='follower-user-icon' />
+                        <FontAwesomeIcon icon={activeUserData.following.includes(userId) ? faUserCheck : faUserPlus} className='follower-user-icon' />
                     }
                 </button>
             </div>

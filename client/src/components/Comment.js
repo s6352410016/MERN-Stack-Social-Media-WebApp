@@ -6,8 +6,9 @@ import { SlPaperClip } from "react-icons/sl";
 import { BsEmojiSmile } from "react-icons/bs";
 import EmojiPicker from 'emoji-picker-react';
 import { format } from 'timeago.js';
+import { RotatingLines } from 'react-loader-spinner';
 
-const Comment = ({ userInfo, commentId, activeUserId, userIdToComment, commentMsgs, commentImg, createdAt }) => {
+const Comment = ({ deleteCommentStatus, setDeleteCommentStatus, editCommentStatus, setEditCommentStatus, userInfo, commentId, activeUserId, userIdToComment, commentMsgs, commentImg, createdAt }) => {
     const editSelectFileRef = useRef();
     const inputEditCommentRef = useRef();
 
@@ -19,7 +20,10 @@ const Comment = ({ userInfo, commentId, activeUserId, userIdToComment, commentMs
     const [previewImgFileInEditComment, setPreviewImgFileInEditComment] = useState('');
     const [openEditComment, setOpenEditComment] = useState(false);
     const [openAlertConfirmToDeleteComment, setOpenAlertConfirmToDeleteComment] = useState(false);
+    const [effectWhileDeleteComment, setEffectWhileDeleteComment] = useState(false);
+    const [deleteImgInEditComment, setDeleteImgInEditComment] = useState(false);
     const [dataCommentOfUserByUserId, setDataCommentOfUserByUserId] = useState({});
+    const [selectFileImgInEditComment, setSelectFileImgInEditComment] = useState();
 
     const EmojiClickInEditComment = ({ emoji }) => {
         inputEditCommentRef.current.focus();
@@ -34,6 +38,7 @@ const Comment = ({ userInfo, commentId, activeUserId, userIdToComment, commentMs
         if (e.target.files.length > 0) {
             const imgUrl = URL.createObjectURL(e.target.files[0]);
             setPreviewImgFileInEditComment(imgUrl);
+            setSelectFileImgInEditComment(e.target.files[0]);
             setOpenImgPreviewInEditComment(true);
         }
     }
@@ -41,6 +46,11 @@ const Comment = ({ userInfo, commentId, activeUserId, userIdToComment, commentMs
     const clearFileToSelect = () => {
         setPreviewImgFileInEditComment('');
         setOpenImgPreviewInEditComment(false);
+        setDeleteImgInEditComment(true);
+    }
+
+    const openAlertEditPostPopup = () => {
+        setOpenAlertConfirmToDeleteComment(true);
     }
 
     const openCommentEdit = () => {
@@ -58,6 +68,124 @@ const Comment = ({ userInfo, commentId, activeUserId, userIdToComment, commentMs
         setPreviewImgFileInEditComment('');
         setOpenEditComment(false);
         setOpenImgPreviewInEditComment(false);
+        setOpenEmojiPickerInEditComment(false);
+    }
+
+    const editComment = (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        if (!!editCommentMsg || !!selectFileImgInEditComment || deleteImgInEditComment === false) {
+            if (!!editCommentMsg && !selectFileImgInEditComment) {
+                fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/updateCommentWithMsgs`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        commentId: commentId,
+                        commentMsgs: editCommentMsg
+                    })
+                }).then((res) => {
+                    if (res.status === 200) {
+                        setEditCommentStatus(!editCommentStatus);
+                        setOpenEditComment(false);
+                        setOpenImgPreviewInEditComment(false);
+                        setEditCommentMsg('');
+                        // setSelectFileImgInEditComment(null);
+                    }
+                });
+            }
+            if (!editCommentMsg && !!selectFileImgInEditComment) {
+                formData.append('commentId', commentId);
+                formData.append('commentMsgs', editCommentMsg);
+                formData.append('commentImage', selectFileImgInEditComment);
+                fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/updateCommentWithImage`, {
+                    method: 'PUT',
+                    body: formData
+                }).then((res) => {
+                    if (res.status === 200) {
+                        setEditCommentStatus(!editCommentStatus);
+                        setOpenEditComment(false);
+                        setOpenImgPreviewInEditComment(false);
+                        setEditCommentMsg('');
+                        setSelectFileImgInEditComment();
+                    }
+                });
+            }
+            if (!!editCommentMsg && !!selectFileImgInEditComment) {
+                formData.append('commentId', commentId);
+                formData.append('commentMsgs', editCommentMsg);
+                formData.append('commentImage', selectFileImgInEditComment);
+                fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/updateCommentWithImage`, {
+                    method: 'PUT',
+                    body: formData
+                }).then((res) => {
+                    if (res.status === 200) {
+                        setEditCommentStatus(!editCommentStatus);
+                        setOpenEditComment(false);
+                        setOpenImgPreviewInEditComment(false);
+                        setEditCommentMsg('');
+                        setSelectFileImgInEditComment();
+                    }
+                });
+            }
+            if (!!editCommentMsg && !selectFileImgInEditComment && deleteImgInEditComment) {
+                formData.append('commentId', commentId);
+                formData.append('commentMsgs', editCommentMsg);
+                fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/updateCommentWithImage`, {
+                    method: 'PUT',
+                    body: formData
+                }).then((res) => {
+                    if (res.status === 200) {
+                        setEditCommentStatus(!editCommentStatus);
+                        setOpenEditComment(false);
+                        setOpenImgPreviewInEditComment(false);
+                        setEditCommentMsg('');
+                        // setSelectFileImgInEditComment();
+                    }
+                });
+            }
+            if (!editCommentMsg && !selectFileImgInEditComment && deleteImgInEditComment === false) {
+                fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/updateCommentWithMsgs`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        commentId: commentId,
+                        commentMsgs: editCommentMsg
+                    })
+                }).then((res) => {
+                    if (res.status === 200) {
+                        setEditCommentStatus(!editCommentStatus);
+                        setOpenEditComment(false);
+                        setOpenImgPreviewInEditComment(false);
+                        setEditCommentMsg('');
+                        // setSelectFileImgInEditComment();
+                    }
+                });
+            }
+        }
+    }
+
+    const deleteComment = () => {
+        setEffectWhileDeleteComment(true);
+        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/deleteComment`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                commentId: commentId
+            })
+        }).then((res) => {
+            if (res.status === 200) {
+                setDeleteCommentStatus(!deleteCommentStatus);
+                setOpenAlertConfirmToDeleteComment(false);
+                setOpenCommentOptions(false);
+                setEffectWhileDeleteComment(false);
+            }
+        });
     }
 
     useEffect(() => {
@@ -87,7 +215,7 @@ const Comment = ({ userInfo, commentId, activeUserId, userIdToComment, commentMs
             <div className='container-comments-of-user-detail-in-container-comments-of-users'>
                 <div className='box-of-container-img-profile-in-container-comments-of-user-detail-in-container-comments-of-users'>
                     <Link to='id' className='container-img-profile-in-container-comments-of-user-detail-in-container-comments-of-users'>
-                        <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${dataCommentOfUserByUserId.image}`} alt='imgProfile' />
+                        <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!dataCommentOfUserByUserId.profilePicture ? 'profileImgDefault.jpg' : dataCommentOfUserByUserId.profilePicture}`} alt='imgProfile' />
                     </Link>
                 </div>
                 {openEditComment
@@ -100,7 +228,7 @@ const Comment = ({ userInfo, commentId, activeUserId, userIdToComment, commentMs
                             <div className='container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                 <div className='container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                     <Link to='id' className='fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
-                                        <p className='fullname-of-users-in-container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>{dataCommentOfUserByUserId.fullname}</p>
+                                        <p className='fullname-of-users-in-container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>{dataCommentOfUserByUserId.firstname} {dataCommentOfUserByUserId.lastname}</p>
                                     </Link>
                                     <span className='modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>{format(createdAt)}</span>
                                 </div>
@@ -118,7 +246,7 @@ const Comment = ({ userInfo, commentId, activeUserId, userIdToComment, commentMs
                             <div className='container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                 <div className='container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                     <Link to='id' className='fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
-                                        <p className='fullname-of-users-in-container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>{dataCommentOfUserByUserId.fullname}</p>
+                                        <p className='fullname-of-users-in-container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>{dataCommentOfUserByUserId.firstname} {dataCommentOfUserByUserId.lastname}</p>
                                     </Link>
                                     <span className='modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>{format(createdAt)}</span>
                                 </div>
@@ -132,7 +260,7 @@ const Comment = ({ userInfo, commentId, activeUserId, userIdToComment, commentMs
                                 <div className='container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                     <div className='container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                         <Link to='id' className='fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
-                                            <p className='fullname-of-users-in-container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>{dataCommentOfUserByUserId.fullname}</p>
+                                            <p className='fullname-of-users-in-container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>{dataCommentOfUserByUserId.firstname} {dataCommentOfUserByUserId.lastname}</p>
                                         </Link>
                                         <span className='modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>{format(createdAt)}</span>
                                     </div>
@@ -146,7 +274,7 @@ const Comment = ({ userInfo, commentId, activeUserId, userIdToComment, commentMs
                 {openEditComment &&
                     <>
                         <div className='container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
-                            <form encType='multipart/form-data'>
+                            <form onSubmit={(e) => editComment(e)} encType='multipart/form-data'>
                                 <input type='text' ref={inputEditCommentRef} onChange={(e) => setEditCommentMsg(e.target.value)} value={editCommentMsg} />
                                 <input type='submit' style={{ display: 'none' }}></input>
                                 <div onClick={() => setOpenEmojiPickerInEditComment(!openEmojiPickerInEditComment)} className='container-icon-emoji-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
@@ -154,7 +282,7 @@ const Comment = ({ userInfo, commentId, activeUserId, userIdToComment, commentMs
                                 </div>
                                 <div onClick={() => editSelectFileRef.current.click()} className='container-icon-clip-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                     <SlPaperClip className='clip-icon-in-container-icon-emoji-in-container-edit-comment-in-container-comments-of-user-detail-in-container-comments-of-users' />
-                                    <input ref={editSelectFileRef} onChange={selectFileToUploadInEditComment} onClick={(e) => e.target.value = null} type='file' accept='image/png , image/jpeg , image/webp' style={{ display: 'none' }} />
+                                    <input name='commentImage' ref={editSelectFileRef} onChange={selectFileToUploadInEditComment} onClick={(e) => e.target.value = null} type='file' accept='image/png , image/jpeg , image/webp' style={{ display: 'none' }} />
                                 </div>
                             </form >
                             {openEmojiPickerInEditComment &&
@@ -189,7 +317,7 @@ const Comment = ({ userInfo, commentId, activeUserId, userIdToComment, commentMs
                                     <div onClick={openCommentEdit} className='container-icon-edit-comment-in-comment-options-popup-in-container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                         <FontAwesomeIcon icon={faPenToSquare} className='icon-edit-comment-in-container-icon-edit-comment-in-comment-options-popup-in-container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users' />&nbsp;&nbsp;<span>Edit</span>
                                     </div>
-                                    <div onClick={() => setOpenAlertConfirmToDeleteComment(true)} className='container-icon-delete-comment-in-comment-options-popup-in-container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                    <div onClick={openAlertEditPostPopup} className='container-icon-delete-comment-in-comment-options-popup-in-container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                         <FontAwesomeIcon icon={faTrash} className='icon-delete-comment-in-container-icon-delete-comment-in-comment-options-popup-in-container-icon-dots-vertical-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users' />&nbsp;&nbsp;<span>Delete</span>
                                     </div>
                                 </div>
@@ -200,10 +328,17 @@ const Comment = ({ userInfo, commentId, activeUserId, userIdToComment, commentMs
                                             <div className='confirm-delete-text-container'>
                                                 <p>Are you sure to delete a comment?</p>
                                             </div>
-                                            <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0' , opacity: '.5'}} />
+                                            <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0', opacity: '.5' }} />
                                             <div className='container-botton-in-container-alert-confirm-to-delete-comment-in-container-alert-confirm-to-delete-comment-in-container-confirm-to-delete-comment-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                                 <button onClick={closeAlertConfirmToDeleteComment} className='cancel-button-in-container-botton-in-container-alert-confirm-to-delete-comment-in-container-alert-confirm-to-delete-comment-in-container-confirm-to-delete-comment-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users'>Cancel</button>
-                                                <button className='confirm-button-in-container-botton-in-container-alert-confirm-to-delete-comment-in-container-alert-confirm-to-delete-comment-in-container-confirm-to-delete-comment-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users'>Confirm</button>
+                                                <button onClick={deleteComment} className='confirm-button-in-container-botton-in-container-alert-confirm-to-delete-comment-in-container-alert-confirm-to-delete-comment-in-container-confirm-to-delete-comment-in-container-options-comments-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                                    {effectWhileDeleteComment
+                                                        ?
+                                                        <RotatingLines strokeColor="#B9B9B9" strokeWidth="5" animationDuration=".8" width="20%" visible={true} />
+                                                        :
+                                                        'Confrim'
+                                                    }
+                                                </button>
                                             </div>
                                         </div>
                                     </div>

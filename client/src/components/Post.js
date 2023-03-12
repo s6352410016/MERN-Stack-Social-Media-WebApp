@@ -19,7 +19,7 @@ import Comment from './Comment';
 import { format } from 'timeago.js';
 import { RotatingLines } from 'react-loader-spinner';
 
-const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPost, postMsg, postImgs, postVideo, createdAt, postLikes }) => {
+const Post = ({ followAndUnFollow, setFollowAndUnFollow, userDataInActive, likedPost, setLikedPost, editPostStatus, setEditPostStatus, deletePostStatus, setDeletePostStatus, userInfo, activeUserId, postId, userIdToPost, postMsg, postImgs, postVideo, createdAt, postLikes }) => {
     const selectFileIconRef = useRef();
     const inputCommentRef = useRef();
     const inputInSharePostRef = useRef();
@@ -55,51 +55,56 @@ const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPos
     const [effectWhileDeletePost, setEffectWhileDeletePost] = useState(false);
     const [deleteCurrentPostImage, setDeleteCurrentPostImage] = useState(false);
     const [deleteCurrentPostVideo, setDeleteCurrentPostVideo] = useState(false);
+    const [createCommentStatus , setCreateCommentStatus] = useState(false);
+    const [editCommentStatus , setEditCommentStatus] = useState(false);
+    const [deleteCommentStatus , setDeleteCommentStatus] = useState(false);
+    const [disableEditPostButton, setDisableEditPostButton] = useState(true);
     const [DataOfUserByUserId, setDataOfUserByUserId] = useState({});
     const [dataOfUserActiveByUserId, setDataOfUserActiveByUserId] = useState({});
     const [selectFileImgToEditPost, setSelectFileImgToEditPost] = useState([]);
+    const [selectFileImgToComment , setSelectFileImgToComment] = useState();
     const [commentOfUsers, setCommentOfUsers] = useState(
         [
-            {
-                commentId: 'cm01',
-                postIdToComment: '01',
-                userIdToComment: '63db82a0028c87f7d37c6628',
-                commentMsgs: '',
-                commentImg: 'img1.jpg',
-                createdAt: '2023-02-19T14:27:00.554+00:00'
-            },
-            {
-                commentId: 'cm02',
-                postIdToComment: '02',
-                userIdToComment: '02',
-                commentMsgs: '+++',
-                commentImg: '',
-                createdAt: '2023-02-19T14:27:00.554+00:00'
-            },
-            {
-                commentId: 'cm03',
-                postIdToComment: '02',
-                userIdToComment: '63db82a0028c87f7d37c6628',
-                commentMsgs: 'ตึงเกิ๊นนนน',
-                commentImg: '',
-                createdAt: '2023-02-02T09:43:36.020+00:00'
-            },
-            {
-                commentId: 'cm04',
-                postIdToComment: '05',
-                userIdToComment: '06',
-                commentMsgs: 'เฟี่๊ยวจัด',
-                commentImg: 'img5.webp',
-                createdAt: '2023-02-02T09:43:36.020+00:00'
-            },
-            {
-                commentId: 'cm05',
-                postIdToComment: '05',
-                userIdToComment: '63db82a0028c87f7d37c6628',
-                commentMsgs: '...',
-                commentImg: 'img4.webp',
-                createdAt: '2023-02-02T09:43:36.020+00:00'
-            },
+            // {
+            //     commentId: 'cm01',
+            //     postIdToComment: '01',
+            //     userIdToComment: '63db82a0028c87f7d37c6628',
+            //     commentMsgs: '',
+            //     commentImg: 'img1.jpg',
+            //     createdAt: '2023-02-19T14:27:00.554+00:00'
+            // },
+            // {
+            //     commentId: 'cm02',
+            //     postIdToComment: '02',
+            //     userIdToComment: '02',
+            //     commentMsgs: '+++',
+            //     commentImg: '',
+            //     createdAt: '2023-02-19T14:27:00.554+00:00'
+            // },
+            // {
+            //     commentId: 'cm03',
+            //     postIdToComment: '02',
+            //     userIdToComment: '63db82a0028c87f7d37c6628',
+            //     commentMsgs: 'ตึงเกิ๊นนนน',
+            //     commentImg: '',
+            //     createdAt: '2023-02-02T09:43:36.020+00:00'
+            // },
+            // {
+            //     commentId: 'cm04',
+            //     postIdToComment: '05',
+            //     userIdToComment: '06',
+            //     commentMsgs: 'เฟี่๊ยวจัด',
+            //     commentImg: 'img5.webp',
+            //     createdAt: '2023-02-02T09:43:36.020+00:00'
+            // },
+            // {
+            //     commentId: 'cm05',
+            //     postIdToComment: '05',
+            //     userIdToComment: '63db82a0028c87f7d37c6628',
+            //     commentMsgs: '...',
+            //     commentImg: 'img4.webp',
+            //     createdAt: '2023-02-02T09:43:36.020+00:00'
+            // },
         ]
     );
 
@@ -120,7 +125,27 @@ const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPos
                 if (res.status === 200) {
                     setTimeout(() => {
                         setEffectWhileEditPost(false);
-                        setCreatePostStatus(true);
+                        setEditPostStatus(!editPostStatus);
+                        setOpenEditPostPopup(false);
+                    }, 1500);
+                }
+            });
+        }
+        if (selectFileImgToEditPost.length === 0 && !fileVideoInEditPost && !msgInEditPost && deleteCurrentPostImage === false && deleteCurrentPostVideo === false) {
+            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/updatePostWithMsg`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    postId: postId,
+                    postMsg: msgInEditPost
+                })
+            }).then((res) => {
+                if (res.status === 200) {
+                    setTimeout(() => {
+                        setEffectWhileEditPost(false);
+                        setEditPostStatus(!editPostStatus);
                         setOpenEditPostPopup(false);
                     }, 1500);
                 }
@@ -139,7 +164,7 @@ const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPos
                 if (res.status === 200) {
                     setTimeout(() => {
                         setEffectWhileEditPost(false);
-                        setCreatePostStatus(true);
+                        setEditPostStatus(!editPostStatus);
                         setOpenEditPostPopup(false);
                     }, 1500);
                 }
@@ -156,7 +181,7 @@ const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPos
                 if (res.status === 200) {
                     setTimeout(() => {
                         setEffectWhileEditPost(false);
-                        setCreatePostStatus(true);
+                        setEditPostStatus(!editPostStatus);
                         setOpenEditPostPopup(false);
                     }, 1500);
                 }
@@ -172,7 +197,7 @@ const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPos
                 if (res.status === 200) {
                     setTimeout(() => {
                         setEffectWhileEditPost(false);
-                        setCreatePostStatus(true);
+                        setEditPostStatus(!editPostStatus);
                         setOpenEditPostPopup(false);
                     }, 1500);
                 }
@@ -188,7 +213,7 @@ const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPos
                 if (res.status === 200) {
                     setTimeout(() => {
                         setEffectWhileEditPost(false);
-                        setCreatePostStatus(true);
+                        setEditPostStatus(!editPostStatus);
                         setOpenEditPostPopup(false);
                     }, 1500);
                 }
@@ -210,11 +235,86 @@ const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPos
             if (res.status === 200) {
                 setTimeout(() => {
                     setEffectWhileDeletePost(false);
-                    setCreatePostStatus(true);
+                    setDeletePostStatus(!deletePostStatus);
                     setOpenDeletePostPopup(false);
                 }, 1500);
             }
         });
+    }
+
+    const likePost = () => {
+        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/likeAndDislikePost`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                postId: postId,
+                userId: activeUserId
+            })
+        }).then((res) => {
+            if (res.status === 200) {
+                setLikedPost(!likedPost);
+            }
+        });
+    }
+
+    const createComment = (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        if(!!commetMsg && !selectFileImgToComment){
+            formData.append('postIdToComment' , postId);
+            formData.append('userIdToComment' , activeUserId);
+            formData.append('commentMsgs' , commetMsg);
+            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/createComment` , {
+                method: 'POST',
+                body: formData
+            }).then((res) => {
+                if(res.status === 201){
+                    setCommentMsg('');
+                    setOpenImgPreview(false);
+                    setOpenComments(true);
+                    setCreateCommentStatus(!createCommentStatus);
+                    inputCommentRef.current.blur();
+                }
+            });
+        }
+        if(!commetMsg && !!selectFileImgToComment){
+            formData.append('postIdToComment' , postId);
+            formData.append('userIdToComment' , activeUserId);
+            formData.append('commentMsgs' , commetMsg);
+            formData.append('commentImage' , selectFileImgToComment);
+            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/createComment` , {
+                method: 'POST',
+                body: formData
+            }).then((res) => {
+                if(res.status === 201){
+                    setCommentMsg('');
+                    setOpenImgPreview(false);
+                    setOpenComments(true);
+                    setCreateCommentStatus(!createCommentStatus);
+                    inputCommentRef.current.blur();
+                }
+            });
+        }
+        if(!!commetMsg && !!selectFileImgToComment){
+            formData.append('postIdToComment' , postId);
+            formData.append('userIdToComment' , activeUserId);
+            formData.append('commentMsgs' , commetMsg);
+            formData.append('commentImage' , selectFileImgToComment);
+            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/createComment` , {
+                method: 'POST',
+                body: formData
+            }).then((res) => {
+                if(res.status === 201){
+                    setCommentMsg('');
+                    setOpenImgPreview(false);
+                    setOpenComments(true);
+                    setCreateCommentStatus(!createCommentStatus);
+                    inputCommentRef.current.blur();
+                }
+            });
+        }
     }
 
     const EmojiClickInCreateComment = ({ emoji }) => {
@@ -248,6 +348,7 @@ const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPos
         if (e.target.files.length > 0) {
             const imgUrl = URL.createObjectURL(e.target.files[0]);
             setPreviewImgFile(imgUrl);
+            setSelectFileImgToComment(e.target.files[0]);
             setOpenImgPreview(true);
         }
     }
@@ -340,11 +441,34 @@ const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPos
     }
 
     useEffect(() => {
+        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/getAllComments` , {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => {
+            if(res.status === 200){
+                return res.json();
+            }
+        }).then((res) => {
+            setCommentOfUsers(res);
+        });
+    } , [createCommentStatus , editCommentStatus , deleteCommentStatus]);
+
+    useEffect(() => {
+        if (selectFileImgToEditPost.length !== 0 || !!fileVideoInEditPost || !!msgInEditPost) {
+            setDisableEditPostButton(false);
+        } else {
+            setDisableEditPostButton(true);
+        }
+    }, [msgInEditPost, selectFileImgToEditPost, fileVideoInEditPost]);
+
+    useEffect(() => {
         const sortedComments = [...commentOfUsers].sort((a, b) => {
             return new Date(b.createdAt) - new Date(a.createdAt);
         })
         setCommentOfUsers(sortedComments);
-    }, []);
+    }, [createCommentStatus]);
 
     useEffect(() => {
         if (openSharePostPopup) {
@@ -580,7 +704,7 @@ const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPos
                                     </div>
                                 </div>
                                 <div className='container-button-save-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
-                                    <button onClick={saveEditPost}>
+                                    <button onClick={saveEditPost} disabled={disableEditPostButton}>
                                         {effectWhileEditPost
                                             ?
                                             <RotatingLines strokeColor="#B9B9B9" strokeWidth="5" animationDuration=".8" width="5%" visible={true} />
@@ -634,8 +758,8 @@ const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPos
             <div className='content-footer-in-post-of-users'>
                 <div className='container-icons-in-content-footer'>
                     <div className='heart-icon-container'>
-                        <div className='box-of-icon-heart-in-container' onClick={() => setIconLikeToggle(!iconLikeToggle)}>
-                            {iconLikeToggle
+                        <div className='box-of-icon-heart-in-container' onClick={likePost}>
+                            {postLikes.includes(activeUserId)
                                 ?
                                 <AiFillHeart className='heart-icon-active' />
                                 :
@@ -663,7 +787,7 @@ const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPos
                                                 </div>
                                                 :
                                                 postLikes.map((e, index) => (
-                                                    <PeopleLikedYourPost key={index} UserIdToLikeInPost={e} userInfo={userInfo} />
+                                                    <PeopleLikedYourPost key={index} followAndUnFollow={followAndUnFollow} setFollowAndUnFollow={setFollowAndUnFollow} userDataInActive={userDataInActive} UserIdToLikeInPost={e} userInfo={userInfo} />
                                                 ))
                                             }
                                         </div>
@@ -782,7 +906,7 @@ const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPos
                         {commentOfUsers.filter((e) => {
                             return e.postIdToComment === postId;
                         }).map((e, index) => (
-                            <Comment key={index} userInfo={userInfo} activeUserId={activeUserId} commentId={e.commentId} userIdToComment={e.userIdToComment} commentMsgs={e.commentMsgs} commentImg={e.commentImg} createdAt={e.createdAt} />
+                            <Comment key={index} setDeleteCommentStatus={setDeleteCommentStatus} deleteCommentStatus={deleteCommentStatus} editCommentStatus={editCommentStatus} setEditCommentStatus={setEditCommentStatus} userInfo={userInfo} activeUserId={activeUserId} commentId={e._id} userIdToComment={e.userIdToComment} commentMsgs={e.commentMsgs} commentImg={e.commentImg} createdAt={e.createdAt} />
                         ))}
                     </>
                 }
@@ -792,7 +916,7 @@ const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPos
                     <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!dataOfUserActiveByUserId.profilePicture ? 'profileImgDefault.jpg' : dataOfUserActiveByUserId.profilePicture}`} alt='imgProfileUser' />
                 </Link>
                 <div className='write-comment-container-in-create-comment-container-in-post-of-users'>
-                    <form encType='multipart/form-data'>
+                    <form onSubmit={(e) => createComment(e)} encType='multipart/form-data'>
                         <input type='text' placeholder='Write your comment...' ref={inputCommentRef} value={commetMsg} onChange={(e) => setCommentMsg(e.target.value)} />
                         <input type='submit' style={{ display: 'none' }}></input>
                         <div className='emoji-picker-container-in-create-comment-container-in-post-of-users' onClick={() => setOpenEmojiPickerInComment(!openEmojiPickerInComment)}>
@@ -800,7 +924,7 @@ const Post = ({ setCreatePostStatus, userInfo, activeUserId, postId, userIdToPos
                         </div>
                         <div className='photo-upload-container-in-create-comment-container-in-post-of-users' onClick={() => selectFileIconRef.current.click()}>
                             <SlPaperClip className='photo-upload-icon-in-create-comment-container-in-post-of-users' />
-                            <input ref={selectFileIconRef} onChange={(e) => selectFileToUploadInComment(e)} onClick={(e) => e.target.value = null} type='file' accept='image/png , image/jpeg , image/webp' style={{ display: 'none' }} />
+                            <input name='commentImage' ref={selectFileIconRef} onChange={(e) => selectFileToUploadInComment(e)} onClick={(e) => e.target.value = null} type='file' accept='image/png , image/jpeg , image/webp' style={{ display: 'none' }} />
                         </div>
                     </form>
                     {openEmojiPickerInComment &&

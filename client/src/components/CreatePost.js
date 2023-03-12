@@ -6,7 +6,7 @@ import { useRef, useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import { RotatingLines } from 'react-loader-spinner';
 
-const CreatePost = ({ activeUserId, userInfo, setCreatePostStatus }) => {
+const CreatePost = ({ activeUserId, userInfo , createPostStatus , setCreatePostStatus }) => {
   const imageIconRef = useRef();
   const videoIconRef = useRef();
   const inputRef = useRef();
@@ -94,7 +94,7 @@ const CreatePost = ({ activeUserId, userInfo, setCreatePostStatus }) => {
           setFileImgsToSelect([]);
           if (res.status === 201) {
             setTimeout(() => {
-              setCreatePostStatus(true);
+              setCreatePostStatus(!createPostStatus);
               setEffectWhileCreatePost(false);
             }, 1500);
           }
@@ -117,7 +117,7 @@ const CreatePost = ({ activeUserId, userInfo, setCreatePostStatus }) => {
           setVideoFile();
           if (res.status === 201) {
             setTimeout(() => {
-              setCreatePostStatus(true);
+              setCreatePostStatus(!createPostStatus);
               setEffectWhileCreatePost(false);
             }, 1500);
           }
@@ -140,7 +140,7 @@ const CreatePost = ({ activeUserId, userInfo, setCreatePostStatus }) => {
           setOpenEmojiPicker(false);
           if (res.status === 201) {
             setTimeout(() => {
-              setCreatePostStatus(true);
+              setCreatePostStatus(!createPostStatus);
               setEffectWhileCreatePost(false);
             }, 1500);
           }
