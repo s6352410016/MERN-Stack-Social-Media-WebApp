@@ -53,7 +53,7 @@ const followAndUnFollow = async(req , res) => {
 
 const getAllUsers = async (req , res) => {
     try{
-        const users = await userModel.find();
+        const users = await userModel.find({} , '_id firstname lastname follower following dateOfBirth profilePicture otherDetail createdAt updatedAt');
         res.status(200).json(users);
     }catch(err){
         res.status(500).json(err); 

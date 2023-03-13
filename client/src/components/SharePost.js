@@ -16,8 +16,9 @@ import EmojiPicker from 'emoji-picker-react';
 import PeopleLikedYourPost from './PeopleLikedYourPost';
 import Comment from './Comment';
 import { format } from 'timeago.js';
+import { RotatingLines } from 'react-loader-spinner';
 
-const SharePost = ({ postOfusers, userInfo, activeUserId, shareId, userIdToShare, postIdToShare, shareMsg, sharePostLikes, createdAt }) => {
+const SharePost = ({ setCreateSharePostStatus, createSharePostStatus, userDataInActive, setFollowAndUnFollow, followAndUnFollow, setLikedSharePost, likedSharePost, setDeleteSharePostStatus, deleteSharePostStatus, setEditSharePostStatus, editSharePostStatus, postOfusers, userInfo, activeUserId, shareId, userIdToShare, postIdToShare, shareMsg, sharePostLikes, createdAt }) => {
     const selectFileIconRef = useRef();
     const inputCommentRef = useRef();
     const inputInSharePostRef = useRef();
@@ -42,38 +43,164 @@ const SharePost = ({ postOfusers, userInfo, activeUserId, shareId, userIdToShare
     const [msgInEditPost, setMsgInEditPost] = useState('');
     const [inputInEditPostCursorPosition, setInputInEditPostCursorPosition] = useState();
     const [openDeletePostPopup, setOpenDeletePostPopup] = useState(false);
+    const [effectWhileEditPost, setEffectWhileEditPost] = useState(false);
+    const [effectWhileDeletePost, setEffectWhileDeletePost] = useState(false);
+    const [disableEditPostButton, setDisableEditPostButton] = useState(true);
     const [DataOfUserByUserId, setDataOfUserByUserId] = useState({});
     const [dataOfUserActiveByUserId, setDataOfUserActiveByUserId] = useState({});
     const [dataPostOfUserBySharePostId, setDataPostOfUserBySharePostId] = useState({});
     const [dataUserIdToPostInSharePost, setDataUserIdToPostInSharePost] = useState({});
-    const [commentOfUsers, setCommentOfUsers] = useState(
-        [
-            {
-                commentId: 'cm01',
-                shareIdToPostToComment: 'share01',
-                userIdToComment: '63db82a0028c87f7d37c6628',
-                commentMsgs: 'วัยรุ่นคำมี',
-                commentImg: 'img1.jpg',
-                createdAt: '2023-02-19T14:27:00.554+00:00'
+    const [selectFileImgToComment, setSelectFileImgToComment] = useState();
+    const [createCommentStatus, setCreateCommentStatus] = useState(false);
+    const [editCommentStatus, setEditCommentStatus] = useState(false);
+    const [deleteCommentStatus, setDeleteCommentStatus] = useState(false);
+    const [effectWhileSharePost, setEffectWhileSharePost] = useState(false);
+    const [disableSharePostButton, setDisableSharePostButton] = useState(true);
+    const [commentOfUsers, setCommentOfUsers] = useState([]);
+
+    const saveEditPost = () => {
+        setEffectWhileEditPost(true);
+        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/updateSharePost`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
             },
-            {
-                commentId: 'cm02',
-                shareIdToPostToComment: 'share02',
-                userIdToComment: '05',
-                commentMsgs: 'ตึงเกิ๊นนนน',
-                commentImg: 'img2.webp',
-                createdAt: '2023-02-02T09:43:36.020+00:00'
+            body: JSON.stringify({
+                shareId: shareId,
+                shareMsg: msgInEditPost
+            })
+        }).then((res) => {
+            if (res.status === 200) {
+                setTimeout(() => {
+                    setEffectWhileEditPost(false);
+                    setOpenEditPostPopup(false);
+                    setEditSharePostStatus(!editSharePostStatus);
+                }, 1000);
+            }
+        });
+    }
+
+    const deletePost = () => {
+        setEffectWhileDeletePost(true);
+        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/deleteSharePost`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
             },
-            {
-                commentId: 'cm03',
-                shareIdToPostToComment: 'share01',
-                userIdToComment: '10',
-                commentMsgs: 'โครตเข้ม',
-                commentImg: '',
-                createdAt: '2023-02-02T09:43:36.020+00:00'
+            body: JSON.stringify({
+                shareId: shareId
+            })
+        }).then((res) => {
+            if (res.status === 200) {
+                setTimeout(() => {
+                    setEffectWhileDeletePost(false);
+                    setDeleteSharePostStatus(!deleteSharePostStatus);
+                    setOpenDeletePostPopup(false);
+                }, 1000);
+            }
+        });
+    }
+
+    const likePost = () => {
+        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/sharePostLikeAndDislike`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
             },
-        ]
-    );
+            body: JSON.stringify({
+                shareId: shareId,
+                userId: activeUserId
+            })
+        }).then((res) => {
+            if (res.status === 200) {
+                setLikedSharePost(!likedSharePost);
+            }
+        });
+    }
+
+    const createComment = (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        if (!!commetMsg && !selectFileImgToComment) {
+            formData.append('postIdToComment', shareId);
+            formData.append('userIdToComment', activeUserId);
+            formData.append('commentMsgs', commetMsg);
+            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/createComment`, {
+                method: 'POST',
+                body: formData
+            }).then((res) => {
+                if (res.status === 201) {
+                    setCommentMsg('');
+                    setSelectFileImgToComment();
+                    setOpenImgPreview(false);
+                    setOpenComments(true);
+                    setCreateCommentStatus(!createCommentStatus);
+                    inputCommentRef.current.blur();
+                }
+            });
+        }
+        if (!commetMsg && !!selectFileImgToComment) {
+            formData.append('postIdToComment', shareId);
+            formData.append('userIdToComment', activeUserId);
+            formData.append('commentMsgs', commetMsg);
+            formData.append('commentImage', selectFileImgToComment);
+            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/createComment`, {
+                method: 'POST',
+                body: formData
+            }).then((res) => {
+                if (res.status === 201) {
+                    setCommentMsg('');
+                    setSelectFileImgToComment();
+                    setOpenImgPreview(false);
+                    setOpenComments(true);
+                    setCreateCommentStatus(!createCommentStatus);
+                    inputCommentRef.current.blur();
+                }
+            });
+        }
+        if (!!commetMsg && !!selectFileImgToComment) {
+            formData.append('postIdToComment', shareId);
+            formData.append('userIdToComment', activeUserId);
+            formData.append('commentMsgs', commetMsg);
+            formData.append('commentImage', selectFileImgToComment);
+            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/createComment`, {
+                method: 'POST',
+                body: formData
+            }).then((res) => {
+                if (res.status === 201) {
+                    setCommentMsg('');
+                    setSelectFileImgToComment();
+                    setOpenImgPreview(false);
+                    setOpenComments(true);
+                    setCreateCommentStatus(!createCommentStatus);
+                    inputCommentRef.current.blur();
+                }
+            });
+        }
+    }
+
+    const sharePost = () => {
+        setEffectWhileSharePost(true);
+        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/createSharePost`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                postIdToShare: postIdToShare,
+                userIdToShare: activeUserId,
+                shareMsg: msgInSharePost
+            })
+        }).then((res) => {
+            if (res.status === 201) {
+                setTimeout(() => {
+                    setEffectWhileSharePost(false);
+                    setCreateSharePostStatus(!createSharePostStatus);
+                    setOpenSharePostPopup(false);
+                }, 1000);
+            }
+        });
+    }
 
     const EmojiClickInCreateComment = ({ emoji }) => {
         inputCommentRef.current.focus();
@@ -106,6 +233,7 @@ const SharePost = ({ postOfusers, userInfo, activeUserId, shareId, userIdToShare
         if (e.target.files.length > 0) {
             const imgUrl = URL.createObjectURL(e.target.files[0]);
             setPreviewImgFile(imgUrl);
+            setSelectFileImgToComment(e.target.files[0]);
             setOpenImgPreview(true);
         }
     }
@@ -127,6 +255,7 @@ const SharePost = ({ postOfusers, userInfo, activeUserId, shareId, userIdToShare
 
     const clearFileToSelect = () => {
         setPreviewImgFile('');
+        setSelectFileImgToComment();
         setOpenImgPreview(false);
     }
 
@@ -145,6 +274,37 @@ const SharePost = ({ postOfusers, userInfo, activeUserId, shareId, userIdToShare
         setOpenEditPostPopup(false);
         setOpenEmojiPickerInEditPost(false);
     }
+
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/getAllComments`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        }).then((res) => {
+            setCommentOfUsers(res);
+        });
+    }, [createCommentStatus, editCommentStatus, deleteCommentStatus]);
+
+    useEffect(() => {
+        if (!!msgInSharePost) {
+            setDisableSharePostButton(false);
+        } else {
+            setDisableSharePostButton(true);
+        }
+    }, [msgInSharePost]);
+
+    useEffect(() => {
+        if (!!msgInEditPost) {
+            setDisableEditPostButton(false);
+        } else {
+            setDisableEditPostButton(true);
+        }
+    }, [msgInEditPost]);
 
     useEffect(() => {
         const sortedComments = [...commentOfUsers].sort((a, b) => {
@@ -182,37 +342,37 @@ const SharePost = ({ postOfusers, userInfo, activeUserId, shareId, userIdToShare
 
     useEffect(() => {
         if (userIdToShare) {
-            setDataOfUserByUserId(userInfo.find((e) => e.userId === userIdToShare));
+            setDataOfUserByUserId(userInfo.find((e) => e._id === userIdToShare));
         }
         if (activeUserId) {
-            setDataOfUserActiveByUserId(userInfo.find((e) => e.userId === activeUserId));
+            setDataOfUserActiveByUserId(userInfo.find((e) => e._id === activeUserId));
         }
         if (postIdToShare) {
-            setDataPostOfUserBySharePostId(postOfusers.find((e) => e.postId === postIdToShare));
+            setDataPostOfUserBySharePostId(postOfusers.find((e) => e._id === postIdToShare));
         }
         setOpenReactFragmentWhileComponentRender(false);
-    }, []);
+    });
 
     useEffect(() => {
-        setDataUserIdToPostInSharePost(userInfo.find((e) => e.userId === dataPostOfUserBySharePostId.userIdToPost));
+        setDataUserIdToPostInSharePost(userInfo.find((e) => e._id === dataPostOfUserBySharePostId.userIdToPost));
     }, [dataPostOfUserBySharePostId]);
 
     return (
         <div className='container-post-of-users'>
             <div className='content-header-in-post-of-users'>
-                <Link to='id' className='link-container-of-img'>
+                <Link to={`/profile/${DataOfUserByUserId._id}`} className='link-container-of-img'>
                     <div className='container-of-img-profile-users'>
                         <div className='container-width-full-img'>
-                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${DataOfUserByUserId.image}`} alt='profileImg' />
+                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!DataOfUserByUserId.profilePicture ? 'profileImgDefault.jpg' : DataOfUserByUserId.profilePicture}`} alt='profileImg' />
                         </div>
                     </div>
                 </Link>
                 <div className='content-center-in-header-in-post-of-users'>
-                    <Link to='id' className='link-in-container-of-fullname-user'><p className='fullname-of-post-users'>{DataOfUserByUserId.fullname}</p></Link>
+                    <Link to={`/profile/${DataOfUserByUserId._id}`} className='link-in-container-of-fullname-user'><p className='fullname-of-post-users'>{DataOfUserByUserId.firstname} {DataOfUserByUserId.lastname}</p></Link>
                     <p className='modify-date-post-of-users'>{format(createdAt)}</p>
                 </div>
                 <div className='icon-settings-post-of-users'>
-                    {activeUserId === DataOfUserByUserId.userId
+                    {activeUserId === DataOfUserByUserId._id
                         ?
                         <div className='container-icon-three-dots' onClick={() => setSettingInPostPopup(!settingInPostPopup)} >
                             <FontAwesomeIcon icon={faEllipsis} className='icon-three-dots-horizontal' />
@@ -240,13 +400,20 @@ const SharePost = ({ postOfusers, userInfo, activeUserId, shareId, userIdToShare
                                 <div className='container-header-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users'>
                                     <p>Are you sure to delete a post?</p>
                                 </div>
-                                <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0' , opacity: '.5'}} />
+                                <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0', opacity: '.5' }} />
                                 <div className='container-body-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users'>
                                     <div onClick={() => setOpenDeletePostPopup(false)} className='container-cancel-button-in-container-body-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users'>
                                         <button>Cancel</button>
                                     </div>
                                     <div className='container-confirm-button-in-container-body-in-container-delete-post-content-in-container-delete-post-in-icon-settings-post-of-users'>
-                                        <button>Confirm</button>
+                                        <button onClick={deletePost}>
+                                            {effectWhileDeletePost
+                                                ?
+                                                <RotatingLines strokeColor="#B9B9B9" strokeWidth="5" animationDuration=".8" width="20%" visible={true} />
+                                                :
+                                                'Confirm'
+                                            }
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -265,15 +432,15 @@ const SharePost = ({ postOfusers, userInfo, activeUserId, shareId, userIdToShare
                                         <HiOutlineXMark className='icon-xmark-in-container-icon-xmark-in-container-header-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users' />
                                     </div>
                                 </div>
-                                <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0' , opacity: '.5'}} />
+                                <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0', opacity: '.5' }} />
                                 <div className='container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
                                     <div className='container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
-                                        <Link to='id' className='container-img-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
-                                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${DataOfUserByUserId.image}`} alt='imgProfile' />
+                                        <Link to={`/profile/${DataOfUserByUserId._id}`} className='container-img-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                            <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!DataOfUserByUserId.profilePicture ? 'profileImgDefault.jpg' : DataOfUserByUserId.profilePicture}`} alt='imgProfile' />
                                         </Link>
                                         <div className='container-fullname-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
-                                            <Link to='id' className='link-container-in-container-fullname-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
-                                                <p>{DataOfUserByUserId.fullname}</p>
+                                            <Link to={`/profile/${DataOfUserByUserId._id}`} className='link-container-in-container-fullname-in-container-header-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
+                                                <p>{DataOfUserByUserId.firstname} {DataOfUserByUserId.lastname}</p>
                                             </Link>
                                         </div>
                                     </div>
@@ -294,7 +461,14 @@ const SharePost = ({ postOfusers, userInfo, activeUserId, shareId, userIdToShare
                                     </div>
                                 </div>
                                 <div className='container-button-save-edit-post-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users'>
-                                    <button>Save</button>
+                                    <button onClick={saveEditPost} disabled={disableEditPostButton}>
+                                        {effectWhileEditPost
+                                            ?
+                                            <RotatingLines strokeColor="#B9B9B9" strokeWidth="5" animationDuration=".8" width="5%" visible={true} />
+                                            :
+                                            'Save'
+                                        }
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -345,12 +519,12 @@ const SharePost = ({ postOfusers, userInfo, activeUserId, shareId, userIdToShare
                     :
                     <div className='container-footer-in-container-post-to-share-in-container-post-of-users'>
                         <div className='container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users'>
-                            <Link to='id' className='container-img-profile-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users'>
-                                <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileimg/${dataUserIdToPostInSharePost.image}`} alt='userProfile' />
+                            <Link to={`/profile/${dataUserIdToPostInSharePost._id}`} className='container-img-profile-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users'>
+                                <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileimg/${!dataUserIdToPostInSharePost.profilePicture ? 'profileImgDefault.jpg' : dataUserIdToPostInSharePost.profilePicture}`} alt='userProfile' />
                             </Link>
                             <div className='container-fullname-user-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users'>
-                                <Link to='id' className='container-fullname-in-container-fullname-user-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users'>
-                                    <p>{dataUserIdToPostInSharePost.fullname}</p>
+                                <Link to={`/profile/${dataUserIdToPostInSharePost._id}`} className='container-fullname-in-container-fullname-user-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users'>
+                                    <p>{dataUserIdToPostInSharePost.firstname} {dataUserIdToPostInSharePost.lastname}</p>
                                 </Link>
                                 <span>{format(dataPostOfUserBySharePostId.createdAt)}</span>
                             </div>
@@ -370,8 +544,8 @@ const SharePost = ({ postOfusers, userInfo, activeUserId, shareId, userIdToShare
             <div className='content-footer-in-post-of-users'>
                 <div className='container-icons-in-content-footer'>
                     <div className='heart-icon-container'>
-                        <div className='box-of-icon-heart-in-container' onClick={() => setIconLikeToggle(!iconLikeToggle)}>
-                            {iconLikeToggle
+                        <div className='box-of-icon-heart-in-container' onClick={likePost}>
+                            {sharePostLikes.includes(activeUserId)
                                 ?
                                 <AiFillHeart className='heart-icon-active' />
                                 :
@@ -395,7 +569,7 @@ const SharePost = ({ postOfusers, userInfo, activeUserId, shareId, userIdToShare
                                                 <HiOutlineXMark className='icon-xmark-in-container-icon-xmark-in-container-header-in-people-likes-post-list' />
                                             </div>
                                         </div>
-                                        <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0' , opacity: '.5'}} />
+                                        <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0', opacity: '.5' }} />
                                         <div className='container-center-in-people-likes-post-list'>
                                             {sharePostLikes.length === 0
                                                 ?
@@ -404,7 +578,7 @@ const SharePost = ({ postOfusers, userInfo, activeUserId, shareId, userIdToShare
                                                 </div>
                                                 :
                                                 sharePostLikes.map((e, index) => (
-                                                    <PeopleLikedYourPost key={index} UserIdToLikeInPost={e} userInfo={userInfo} />
+                                                    <PeopleLikedYourPost key={index} followAndUnFollow={followAndUnFollow} setFollowAndUnFollow={setFollowAndUnFollow} userDataInActive={userDataInActive} UserIdToLikeInPost={e} userInfo={userInfo} />
                                                 ))
                                             }
                                         </div>
@@ -433,15 +607,15 @@ const SharePost = ({ postOfusers, userInfo, activeUserId, shareId, userIdToShare
                                             <HiOutlineXMark className='icon-xmark-in-container-icon-xmark-in-header-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer' />
                                         </div>
                                     </div>
-                                    <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0' , opacity: '.5'}} />
+                                    <div style={{ width: '100%', height: '1px', backgroundColor: '#cacaca', margin: '0', opacity: '.5' }} />
                                     <div className='body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                         <div className='container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                            <Link to='id' className='container-img-profile-in-container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${dataOfUserActiveByUserId.image}`} alt='imgProfile' />
+                                            <Link to={`/profile/${dataOfUserActiveByUserId._id}`} className='container-img-profile-in-container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!dataOfUserActiveByUserId.profilePicture ? 'profileImgDefault.jpg' : dataOfUserActiveByUserId.profilePicture}`} alt='imgProfile' />
                                             </Link>
                                             <div className='container-fullname-of-user-in-container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                <Link to='id' className='text-decoration-in-container-fullname-of-user-in-container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                    <p>{dataOfUserActiveByUserId.fullname}</p>
+                                                <Link to={`/profile/${dataOfUserActiveByUserId._id}`} className='text-decoration-in-container-fullname-of-user-in-container-user-data-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                    <p>{dataOfUserActiveByUserId.firstname} {dataOfUserActiveByUserId.lastname}</p>
                                                 </Link>
                                             </div>
                                         </div>
@@ -485,12 +659,12 @@ const SharePost = ({ postOfusers, userInfo, activeUserId, shareId, userIdToShare
                                             }
                                             <div className='container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                 <div className='container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                    <Link to='id' className='container-img-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                        <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${dataUserIdToPostInSharePost.image}`} alt='imgProfile' />
+                                                    <Link to={`/profile/${dataUserIdToPostInSharePost._id}`} className='container-img-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                        <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!dataUserIdToPostInSharePost.profilePicture ? 'profileImgDefault.jpg' : dataUserIdToPostInSharePost.profilePicture}`} alt='imgProfile' />
                                                     </Link>
                                                     <div className='container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                        <Link to='id' className='text-decoration-none-in-container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                                            <p>{dataUserIdToPostInSharePost.fullname}</p>
+                                                        <Link to={`/profile/${dataUserIdToPostInSharePost._id}`} className='text-decoration-none-in-container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
+                                                            <p>{dataUserIdToPostInSharePost.firstname} {dataUserIdToPostInSharePost.firstname}</p>
                                                         </Link>
                                                         <div className='container-modifydate-post-in-container-fullname-of-user-in-container-user-data-in-container-data-of-user-post-to-share-in-body-share-content-post-in-container-share-content-post-in-container-icons-in-content-footer'>
                                                             <p>{format(dataPostOfUserBySharePostId.createdAt)}</p>
@@ -509,7 +683,14 @@ const SharePost = ({ postOfusers, userInfo, activeUserId, shareId, userIdToShare
                                         </div>
                                     </div>
                                     <div className='container-footer-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                        <button>Post</button>
+                                        <button onClick={sharePost} disabled={disableSharePostButton}>
+                                            {effectWhileSharePost
+                                                ?
+                                                <RotatingLines strokeColor="#B9B9B9" strokeWidth="5" animationDuration=".8" width="5%" visible={true} />
+                                                :
+                                                'Post'
+                                            }
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -521,19 +702,19 @@ const SharePost = ({ postOfusers, userInfo, activeUserId, shareId, userIdToShare
                 {openComments &&
                     <>
                         {commentOfUsers.filter((e) => {
-                            return e.shareIdToPostToComment === shareId;
+                            return e.postIdToComment === shareId;
                         }).map((e, index) => (
-                            <Comment key={index} userInfo={userInfo} activeUserId={activeUserId} commentId={e.commentId} userIdToComment={e.userIdToComment} commentMsgs={e.commentMsgs} commentImg={e.commentImg} createdAt={e.createdAt} />
+                            <Comment key={index} setDeleteCommentStatus={setDeleteCommentStatus} deleteCommentStatus={deleteCommentStatus} editCommentStatus={editCommentStatus} setEditCommentStatus={setEditCommentStatus} userInfo={userInfo} activeUserId={activeUserId} commentId={e._id} userIdToComment={e.userIdToComment} commentMsgs={e.commentMsgs} commentImg={e.commentImg} createdAt={e.createdAt} />
                         ))}
                     </>
                 }
             </div>
             <div className='create-comment-container-in-post-of-users'>
-                <Link to='/profile' className='container-img-profile-in-create-comment-container-in-post-of-users'>
-                    <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${dataOfUserActiveByUserId.image}`} alt='imgProfileUser' />
+                <Link to={`/profile/${dataOfUserActiveByUserId._id}`} className='container-img-profile-in-create-comment-container-in-post-of-users'>
+                    <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!dataOfUserActiveByUserId.profilePicture ? 'profileImgDefault.jpg' : dataOfUserActiveByUserId.profilePicture}`} alt='imgProfileUser' />
                 </Link>
                 <div className='write-comment-container-in-create-comment-container-in-post-of-users'>
-                    <form encType='multipart/form-data'>
+                    <form onSubmit={(e) => createComment(e)} encType='multipart/form-data'>
                         <input type='text' placeholder='Write your comment...' ref={inputCommentRef} value={commetMsg} onChange={(e) => setCommentMsg(e.target.value)} />
                         <input type='submit' style={{ display: 'none' }}></input>
                         <div className='emoji-picker-container-in-create-comment-container-in-post-of-users' onClick={() => setOpenEmojiPickerInComment(!openEmojiPickerInComment)}>
@@ -541,7 +722,7 @@ const SharePost = ({ postOfusers, userInfo, activeUserId, shareId, userIdToShare
                         </div>
                         <div className='photo-upload-container-in-create-comment-container-in-post-of-users' onClick={() => selectFileIconRef.current.click()}>
                             <SlPaperClip className='photo-upload-icon-in-create-comment-container-in-post-of-users' />
-                            <input ref={selectFileIconRef} onChange={(e) => selectFileToUploadInComment(e)} onClick={(e) => e.target.value = null} type='file' accept='image/png , image/jpeg , image/webp' style={{ display: 'none' }} />
+                            <input name='commentImage' ref={selectFileIconRef} onChange={(e) => selectFileToUploadInComment(e)} onClick={(e) => e.target.value = null} type='file' accept='image/png , image/jpeg , image/webp' style={{ display: 'none' }} />
                         </div>
                     </form>
                     {openEmojiPickerInComment &&

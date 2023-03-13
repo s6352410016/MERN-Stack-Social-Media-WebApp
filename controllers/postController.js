@@ -1,9 +1,10 @@
 const postModel = require('../model/postModel');
+const commentModel = require('../model/commentModel');
 const fs = require('fs');
 const path = require('path');
 
-const createPostWithMsg = async (req , res) => {
-    try{
+const createPostWithMsg = async (req, res) => {
+    try {
         const { userIdToPost, postMsg } = req.body;
         const savePost = await new postModel({
             userIdToPost: userIdToPost,
@@ -11,7 +12,7 @@ const createPostWithMsg = async (req , res) => {
         });
         await savePost.save();
         res.status(201).json({ msg: 'post created.' });
-    }catch(err){
+    } catch (err) {
         res.status(500).json(err);
     }
 }
@@ -161,6 +162,21 @@ const deletePost = async (req, res) => {
                 _id: postId
             }
         );
+        const commentOfPostData = await commentModel.find({
+            postIdToComment: postId
+        });
+        commentOfPostData.map((e) => {
+            return fs.unlink(path.join(__dirname, `../public/commentImg/${e.commentImg}`), (err) => {
+                if (err) {
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+        });
+        await commentModel.deleteMany({
+            postIdToComment: postId
+        });
         Promise.all(postData.postImgs.map((e) => {
             return new Promise((resolve, reject) => {
                 fs.unlink(path.join(__dirname, `../public/postImg/${e}`), (err) => {
@@ -193,13 +209,13 @@ const deletePost = async (req, res) => {
     }
 }
 
-const likeAndDislikePost = async (req , res) => {
-    try{
-        const {postId , userId} = req.body;
+const likeAndDislikePost = async (req, res) => {
+    try {
+        const { postId, userId } = req.body;
         const postData = await postModel.findById({
             _id: postId
         });
-        if(!postData.postLikes.includes(userId)){
+        if (!postData.postLikes.includes(userId)) {
             await postData.updateOne(
                 {
                     $push: {
@@ -207,7 +223,7 @@ const likeAndDislikePost = async (req , res) => {
                     }
                 }
             );
-        }else{
+        } else {
             await postData.updateOne(
                 {
                     $pull: {
@@ -216,17 +232,17 @@ const likeAndDislikePost = async (req , res) => {
                 }
             );
         }
-        res.status(200).json({msg: 'pending success.'});
-    }catch(err){
+        res.status(200).json({ msg: 'pending success.' });
+    } catch (err) {
         res.status(500).json(err);
     }
 }
 
-const getAllPosts = async (req , res) => {
-    try{
+const getAllPosts = async (req, res) => {
+    try {
         const posts = await postModel.find();
         res.status(200).json(posts);
-    }catch(err){
+    } catch (err) {
         res.status(500).json(err);
     }
 }

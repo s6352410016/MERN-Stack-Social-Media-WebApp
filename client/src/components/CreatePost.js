@@ -96,7 +96,7 @@ const CreatePost = ({ activeUserId, userInfo , createPostStatus , setCreatePostS
             setTimeout(() => {
               setCreatePostStatus(!createPostStatus);
               setEffectWhileCreatePost(false);
-            }, 1500);
+            }, 1000);
           }
         }).catch((err) => {
           console.error(err);
@@ -119,7 +119,7 @@ const CreatePost = ({ activeUserId, userInfo , createPostStatus , setCreatePostS
             setTimeout(() => {
               setCreatePostStatus(!createPostStatus);
               setEffectWhileCreatePost(false);
-            }, 1500);
+            }, 1000);
           }
         }).catch((err) => {
           console.error(err);
@@ -142,7 +142,7 @@ const CreatePost = ({ activeUserId, userInfo , createPostStatus , setCreatePostS
             setTimeout(() => {
               setCreatePostStatus(!createPostStatus);
               setEffectWhileCreatePost(false);
-            }, 1500);
+            }, 1000);
           }
         }).catch((err) => {
           console.error(err);

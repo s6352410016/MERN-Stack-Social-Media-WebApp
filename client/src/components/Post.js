@@ -19,7 +19,7 @@ import Comment from './Comment';
 import { format } from 'timeago.js';
 import { RotatingLines } from 'react-loader-spinner';
 
-const Post = ({ followAndUnFollow, setFollowAndUnFollow, userDataInActive, likedPost, setLikedPost, editPostStatus, setEditPostStatus, deletePostStatus, setDeletePostStatus, userInfo, activeUserId, postId, userIdToPost, postMsg, postImgs, postVideo, createdAt, postLikes }) => {
+const Post = ({ setCreateSharePostStatus, createSharePostStatus, followAndUnFollow, setFollowAndUnFollow, userDataInActive, likedPost, setLikedPost, editPostStatus, setEditPostStatus, deletePostStatus, setDeletePostStatus, userInfo, activeUserId, postId, userIdToPost, postMsg, postImgs, postVideo, createdAt, postLikes }) => {
     const selectFileIconRef = useRef();
     const inputCommentRef = useRef();
     const inputInSharePostRef = useRef();
@@ -53,60 +53,19 @@ const Post = ({ followAndUnFollow, setFollowAndUnFollow, userDataInActive, liked
     const [openDeletePostPopup, setOpenDeletePostPopup] = useState(false);
     const [effectWhileEditPost, setEffectWhileEditPost] = useState(false);
     const [effectWhileDeletePost, setEffectWhileDeletePost] = useState(false);
+    const [effectWhileSharePost, setEffectWhileSharePost] = useState(false);
     const [deleteCurrentPostImage, setDeleteCurrentPostImage] = useState(false);
     const [deleteCurrentPostVideo, setDeleteCurrentPostVideo] = useState(false);
-    const [createCommentStatus , setCreateCommentStatus] = useState(false);
-    const [editCommentStatus , setEditCommentStatus] = useState(false);
-    const [deleteCommentStatus , setDeleteCommentStatus] = useState(false);
+    const [createCommentStatus, setCreateCommentStatus] = useState(false);
+    const [editCommentStatus, setEditCommentStatus] = useState(false);
+    const [deleteCommentStatus, setDeleteCommentStatus] = useState(false);
     const [disableEditPostButton, setDisableEditPostButton] = useState(true);
+    const [disableSharePostButton, setDisableSharePostButton] = useState(true);
     const [DataOfUserByUserId, setDataOfUserByUserId] = useState({});
     const [dataOfUserActiveByUserId, setDataOfUserActiveByUserId] = useState({});
     const [selectFileImgToEditPost, setSelectFileImgToEditPost] = useState([]);
-    const [selectFileImgToComment , setSelectFileImgToComment] = useState();
-    const [commentOfUsers, setCommentOfUsers] = useState(
-        [
-            // {
-            //     commentId: 'cm01',
-            //     postIdToComment: '01',
-            //     userIdToComment: '63db82a0028c87f7d37c6628',
-            //     commentMsgs: '',
-            //     commentImg: 'img1.jpg',
-            //     createdAt: '2023-02-19T14:27:00.554+00:00'
-            // },
-            // {
-            //     commentId: 'cm02',
-            //     postIdToComment: '02',
-            //     userIdToComment: '02',
-            //     commentMsgs: '+++',
-            //     commentImg: '',
-            //     createdAt: '2023-02-19T14:27:00.554+00:00'
-            // },
-            // {
-            //     commentId: 'cm03',
-            //     postIdToComment: '02',
-            //     userIdToComment: '63db82a0028c87f7d37c6628',
-            //     commentMsgs: 'ตึงเกิ๊นนนน',
-            //     commentImg: '',
-            //     createdAt: '2023-02-02T09:43:36.020+00:00'
-            // },
-            // {
-            //     commentId: 'cm04',
-            //     postIdToComment: '05',
-            //     userIdToComment: '06',
-            //     commentMsgs: 'เฟี่๊ยวจัด',
-            //     commentImg: 'img5.webp',
-            //     createdAt: '2023-02-02T09:43:36.020+00:00'
-            // },
-            // {
-            //     commentId: 'cm05',
-            //     postIdToComment: '05',
-            //     userIdToComment: '63db82a0028c87f7d37c6628',
-            //     commentMsgs: '...',
-            //     commentImg: 'img4.webp',
-            //     createdAt: '2023-02-02T09:43:36.020+00:00'
-            // },
-        ]
-    );
+    const [selectFileImgToComment, setSelectFileImgToComment] = useState();
+    const [commentOfUsers, setCommentOfUsers] = useState([]);
 
     const saveEditPost = () => {
         setEffectWhileEditPost(true);
@@ -127,7 +86,7 @@ const Post = ({ followAndUnFollow, setFollowAndUnFollow, userDataInActive, liked
                         setEffectWhileEditPost(false);
                         setEditPostStatus(!editPostStatus);
                         setOpenEditPostPopup(false);
-                    }, 1500);
+                    }, 1000);
                 }
             });
         }
@@ -147,7 +106,7 @@ const Post = ({ followAndUnFollow, setFollowAndUnFollow, userDataInActive, liked
                         setEffectWhileEditPost(false);
                         setEditPostStatus(!editPostStatus);
                         setOpenEditPostPopup(false);
-                    }, 1500);
+                    }, 1000);
                 }
             });
         }
@@ -166,7 +125,7 @@ const Post = ({ followAndUnFollow, setFollowAndUnFollow, userDataInActive, liked
                         setEffectWhileEditPost(false);
                         setEditPostStatus(!editPostStatus);
                         setOpenEditPostPopup(false);
-                    }, 1500);
+                    }, 1000);
                 }
             });
         }
@@ -183,7 +142,7 @@ const Post = ({ followAndUnFollow, setFollowAndUnFollow, userDataInActive, liked
                         setEffectWhileEditPost(false);
                         setEditPostStatus(!editPostStatus);
                         setOpenEditPostPopup(false);
-                    }, 1500);
+                    }, 1000);
                 }
             });
         }
@@ -199,7 +158,7 @@ const Post = ({ followAndUnFollow, setFollowAndUnFollow, userDataInActive, liked
                         setEffectWhileEditPost(false);
                         setEditPostStatus(!editPostStatus);
                         setOpenEditPostPopup(false);
-                    }, 1500);
+                    }, 1000);
                 }
             });
         }
@@ -215,7 +174,7 @@ const Post = ({ followAndUnFollow, setFollowAndUnFollow, userDataInActive, liked
                         setEffectWhileEditPost(false);
                         setEditPostStatus(!editPostStatus);
                         setOpenEditPostPopup(false);
-                    }, 1500);
+                    }, 1000);
                 }
             });
         }
@@ -237,7 +196,7 @@ const Post = ({ followAndUnFollow, setFollowAndUnFollow, userDataInActive, liked
                     setEffectWhileDeletePost(false);
                     setDeletePostStatus(!deletePostStatus);
                     setOpenDeletePostPopup(false);
-                }, 1500);
+                }, 1000);
             }
         });
     }
@@ -262,16 +221,17 @@ const Post = ({ followAndUnFollow, setFollowAndUnFollow, userDataInActive, liked
     const createComment = (e) => {
         e.preventDefault();
         const formData = new FormData();
-        if(!!commetMsg && !selectFileImgToComment){
-            formData.append('postIdToComment' , postId);
-            formData.append('userIdToComment' , activeUserId);
-            formData.append('commentMsgs' , commetMsg);
-            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/createComment` , {
+        if (!!commetMsg && !selectFileImgToComment) {
+            formData.append('postIdToComment', postId);
+            formData.append('userIdToComment', activeUserId);
+            formData.append('commentMsgs', commetMsg);
+            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/createComment`, {
                 method: 'POST',
                 body: formData
             }).then((res) => {
-                if(res.status === 201){
+                if (res.status === 201) {
                     setCommentMsg('');
+                    setSelectFileImgToComment();
                     setOpenImgPreview(false);
                     setOpenComments(true);
                     setCreateCommentStatus(!createCommentStatus);
@@ -279,17 +239,18 @@ const Post = ({ followAndUnFollow, setFollowAndUnFollow, userDataInActive, liked
                 }
             });
         }
-        if(!commetMsg && !!selectFileImgToComment){
-            formData.append('postIdToComment' , postId);
-            formData.append('userIdToComment' , activeUserId);
-            formData.append('commentMsgs' , commetMsg);
-            formData.append('commentImage' , selectFileImgToComment);
-            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/createComment` , {
+        if (!commetMsg && !!selectFileImgToComment) {
+            formData.append('postIdToComment', postId);
+            formData.append('userIdToComment', activeUserId);
+            formData.append('commentMsgs', commetMsg);
+            formData.append('commentImage', selectFileImgToComment);
+            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/createComment`, {
                 method: 'POST',
                 body: formData
             }).then((res) => {
-                if(res.status === 201){
+                if (res.status === 201) {
                     setCommentMsg('');
+                    setSelectFileImgToComment();
                     setOpenImgPreview(false);
                     setOpenComments(true);
                     setCreateCommentStatus(!createCommentStatus);
@@ -297,17 +258,18 @@ const Post = ({ followAndUnFollow, setFollowAndUnFollow, userDataInActive, liked
                 }
             });
         }
-        if(!!commetMsg && !!selectFileImgToComment){
-            formData.append('postIdToComment' , postId);
-            formData.append('userIdToComment' , activeUserId);
-            formData.append('commentMsgs' , commetMsg);
-            formData.append('commentImage' , selectFileImgToComment);
-            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/createComment` , {
+        if (!!commetMsg && !!selectFileImgToComment) {
+            formData.append('postIdToComment', postId);
+            formData.append('userIdToComment', activeUserId);
+            formData.append('commentMsgs', commetMsg);
+            formData.append('commentImage', selectFileImgToComment);
+            fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/createComment`, {
                 method: 'POST',
                 body: formData
             }).then((res) => {
-                if(res.status === 201){
+                if (res.status === 201) {
                     setCommentMsg('');
+                    setSelectFileImgToComment();
                     setOpenImgPreview(false);
                     setOpenComments(true);
                     setCreateCommentStatus(!createCommentStatus);
@@ -315,6 +277,29 @@ const Post = ({ followAndUnFollow, setFollowAndUnFollow, userDataInActive, liked
                 }
             });
         }
+    }
+
+    const sharePost = () => {
+        setEffectWhileSharePost(true);
+        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/createSharePost`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                postIdToShare: postId,
+                userIdToShare: activeUserId,
+                shareMsg: msgInSharePost
+            })
+        }).then((res) => {
+            if (res.status === 201) {
+                setTimeout(() => {
+                    setEffectWhileSharePost(false);
+                    setCreateSharePostStatus(!createSharePostStatus);
+                    setOpenSharePostPopup(false);
+                } , 1000);
+            }
+        });
     }
 
     const EmojiClickInCreateComment = ({ emoji }) => {
@@ -405,6 +390,7 @@ const Post = ({ followAndUnFollow, setFollowAndUnFollow, userDataInActive, liked
 
     const clearFileToSelect = () => {
         setPreviewImgFile('');
+        setSelectFileImgToComment();
         setOpenImgPreview(false);
     }
 
@@ -441,19 +427,27 @@ const Post = ({ followAndUnFollow, setFollowAndUnFollow, userDataInActive, liked
     }
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/getAllComments` , {
+        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/getAllComments`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((res) => {
-            if(res.status === 200){
+            if (res.status === 200) {
                 return res.json();
             }
         }).then((res) => {
             setCommentOfUsers(res);
         });
-    } , [createCommentStatus , editCommentStatus , deleteCommentStatus]);
+    }, [createCommentStatus, editCommentStatus, deleteCommentStatus]);
+
+    useEffect(() => {
+        if (!!msgInSharePost) {
+            setDisableSharePostButton(false);
+        } else {
+            setDisableSharePostButton(true);
+        }
+    }, [msgInSharePost]);
 
     useEffect(() => {
         if (selectFileImgToEditPost.length !== 0 || !!fileVideoInEditPost || !!msgInEditPost) {
@@ -468,7 +462,7 @@ const Post = ({ followAndUnFollow, setFollowAndUnFollow, userDataInActive, liked
             return new Date(b.createdAt) - new Date(a.createdAt);
         })
         setCommentOfUsers(sortedComments);
-    }, [createCommentStatus]);
+    }, [createCommentStatus, editCommentStatus, deleteCommentStatus]);
 
     useEffect(() => {
         if (openSharePostPopup) {
@@ -892,7 +886,14 @@ const Post = ({ followAndUnFollow, setFollowAndUnFollow, userDataInActive, liked
                                         </div>
                                     </div>
                                     <div className='container-footer-in-container-share-content-post-in-container-icons-in-content-footer'>
-                                        <button>Post</button>
+                                        <button disabled={disableSharePostButton} onClick={sharePost}>
+                                            {effectWhileSharePost
+                                                ?
+                                                <RotatingLines strokeColor="#B9B9B9" strokeWidth="5" animationDuration=".8" width="5%" visible={true} />
+                                                :
+                                                'Post'
+                                            }
+                                        </button>
                                     </div>
                                 </div>
                             </div>

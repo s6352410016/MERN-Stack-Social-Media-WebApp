@@ -46,8 +46,12 @@ const Media = () => {
   const [createPostStatus, setCreatePostStatus] = useState(false);
   const [editPostStatus, setEditPostStatus] = useState(false);
   const [deletePostStatus, setDeletePostStatus] = useState(false);
-  const [likedPost , setLikedPost] = useState(false);
-  const [followAndUnFollow , setFollowAndUnFollow] = useState(false);
+  const [createSharePostStatus, setCreateSharePostStatus] = useState(false);
+  const [editSharePostStatus, setEditSharePostStatus] = useState(false);
+  const [deleteSharePostStatus, setDeleteSharePostStatus] = useState(false);
+  const [likedPost, setLikedPost] = useState(false);
+  const [likedSharePost , setLikedSharePost] = useState(false);
+  const [followAndUnFollow, setFollowAndUnFollow] = useState(false);
   const [searchResult, setSearchResult] = useState('');
   const [sortAllPostAscening, setSortAllPostAscending] = useState([]);
   const [dataUserNotification, setDataUserNotification] = useState(
@@ -155,42 +159,7 @@ const Media = () => {
   );
   const [userInfo, setUserInfo] = useState([]);
   const [postOfusers, setPostOfusers] = useState([]);
-  const [postOfUsersToShare, setPostOfUsersToShare] = useState(
-    [
-      // {
-      //   shareId: 'share01',
-      //   userIdToShare: '6406e8d2fc4dba77f4f318c1',
-      //   postIdToShare: '02',
-      //   shareMsg: 'Test Share...',
-      //   sharePostLikes: ['6406e8d2fc4dba77f4f318c1'],
-      //   createdAt: '2023-02-19T14:27:00.554+00:00'
-      // },
-      // {
-      //   shareId: 'share02',
-      //   userIdToShare: '64082fb157dd529c269e25a7',
-      //   postIdToShare: '03',
-      //   shareMsg: '',
-      //   sharePostLikes: [],
-      //   createdAt: '2023-02-19T14:27:00.554+00:00'
-      // },
-      // {
-      //   shareId: 'share03',
-      //   userIdToShare: '6406e8d2fc4dba77f4f318c1',
-      //   postIdToShare: '06',
-      //   shareMsg: '...',
-      //   sharePostLikes: ['64082fb157dd529c269e25a7', '03'],
-      //   createdAt: '2023-02-19T14:27:00.554+00:00'
-      // },
-      // {
-      //   shareId: 'share04',
-      //   userIdToShare: '09',
-      //   postIdToShare: '04',
-      //   shareMsg: '555+',
-      //   sharePostLikes: [],
-      //   createdAt: '2023-02-02T09:43:36.020+00:00'
-      // },
-    ]
-  );
+  const [postOfUsersToShare, setPostOfUsersToShare] = useState([]);
   const [userDataInActive, setUserDataInActive] = useState({});
 
   useEffect(() => {
@@ -245,11 +214,26 @@ const Media = () => {
     }).then((res) => {
       setPostOfusers([...res]);
     });
-  }, [createPostStatus, editPostStatus, deletePostStatus , likedPost , followAndUnFollow]);
+  }, [createPostStatus, editPostStatus, deletePostStatus, likedPost, followAndUnFollow]);
 
   useEffect(() => {
     setUserDataInActive(userInfo.find((e) => e._id === userData.userId));
   });
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/getAllSharePost`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((res) => {
+      if (res.status === 200) {
+        return res.json();
+      }
+    }).then((res) => {
+      setPostOfUsersToShare(res);
+    });
+  }, [createSharePostStatus, editSharePostStatus, deleteSharePostStatus , likedSharePost]);
 
   useEffect(() => {
     const sortedPosts = [...postOfusers, ...postOfUsersToShare].sort((a, b) => {
@@ -283,12 +267,20 @@ const Media = () => {
     });
   }, []);
 
+  useEffect(() => {
+    const containerPostScroll = document.querySelector('#container-post-scroll');
+    containerPostScroll.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, [createPostStatus, createSharePostStatus]);
+
   const scrollToTop = () => {
     const containerPostScroll = document.querySelector('#container-post-scroll');
     containerPostScroll.scrollTo({
       top: 0,
       behavior: 'smooth'
-    })
+    });
   }
 
   const showHiddenMenuInHeader = () => {
@@ -526,7 +518,7 @@ const Media = () => {
                   userInfo.filter((e) => {
                     return e._id !== userData.userId;
                   }).map((e, index) => (
-                    <PeopleYouMayKnow key={index} followAndUnFollow={followAndUnFollow} setFollowAndUnFollow={setFollowAndUnFollow} activeUserData={userDataInActive} userId={e._id} image={e.profilePicture} firstname={e.firstname} lastname={e.lastname} follower={e.follower}/>
+                    <PeopleYouMayKnow key={index} followAndUnFollow={followAndUnFollow} setFollowAndUnFollow={setFollowAndUnFollow} activeUserData={userDataInActive} userId={e._id} image={e.profilePicture} firstname={e.firstname} lastname={e.lastname} follower={e.follower} />
                   ))
                 }
               </div>
@@ -554,10 +546,10 @@ const Media = () => {
               :
               sortAllPostAscening.map((e, index) => {
                 if (e.userIdToPost) {
-                  return <Post key={index} followAndUnFollow={followAndUnFollow} setFollowAndUnFollow={setFollowAndUnFollow} userDataInActive={userDataInActive} likedPost={likedPost} setLikedPost={setLikedPost} editPostStatus={editPostStatus} setEditPostStatus={setEditPostStatus} deletePostStatus={deletePostStatus} setDeletePostStatus={setDeletePostStatus} userInfo={userInfo} activeUserId={userData.userId} postId={e._id} userIdToPost={e.userIdToPost} postMsg={e.postMsg} postImgs={e.postImgs} postVideo={e.postVideo} createdAt={e.createdAt} postLikes={e.postLikes} />;
-                }/* else {
-                  return <SharePost key={index} shareId={e.shareId} userIdToShare={e.userIdToShare} postIdToShare={e.postIdToShare} shareMsg={e.shareMsg} sharePostLikes={e.sharePostLikes} createdAt={e.createdAt} userInfo={userInfo} activeUserId={userData.userId} postOfusers={postOfusers} />;
-                }*/
+                  return <Post key={index} setCreateSharePostStatus={setCreateSharePostStatus} createSharePostStatus={createSharePostStatus} followAndUnFollow={followAndUnFollow} setFollowAndUnFollow={setFollowAndUnFollow} userDataInActive={userDataInActive} likedPost={likedPost} setLikedPost={setLikedPost} editPostStatus={editPostStatus} setEditPostStatus={setEditPostStatus} deletePostStatus={deletePostStatus} setDeletePostStatus={setDeletePostStatus} userInfo={userInfo} activeUserId={userData.userId} postId={e._id} userIdToPost={e.userIdToPost} postMsg={e.postMsg} postImgs={e.postImgs} postVideo={e.postVideo} createdAt={e.createdAt} postLikes={e.postLikes} />;
+                } else {
+                  return <SharePost key={index} setCreateSharePostStatus={setCreateSharePostStatus} createSharePostStatus={createSharePostStatus} userDataInActive={userDataInActive} setFollowAndUnFollow={setFollowAndUnFollow} followAndUnFollow={followAndUnFollow} setLikedSharePost={setLikedSharePost} likedSharePost={likedSharePost} setDeleteSharePostStatus={setDeleteSharePostStatus} deleteSharePostStatus={deleteSharePostStatus} setEditSharePostStatus={setEditSharePostStatus} editSharePostStatus={editSharePostStatus} shareId={e._id} userIdToShare={e.userIdToShare} postIdToShare={e.postIdToShare} shareMsg={e.shareMsg} sharePostLikes={e.sharePostLikes} createdAt={e.createdAt} userInfo={userInfo} activeUserId={userData.userId} postOfusers={postOfusers} />;
+                }
               })
             }
           </div>

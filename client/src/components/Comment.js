@@ -45,6 +45,7 @@ const Comment = ({ deleteCommentStatus, setDeleteCommentStatus, editCommentStatu
 
     const clearFileToSelect = () => {
         setPreviewImgFileInEditComment('');
+        setSelectFileImgInEditComment();
         setOpenImgPreviewInEditComment(false);
         setDeleteImgInEditComment(true);
     }
@@ -74,7 +75,7 @@ const Comment = ({ deleteCommentStatus, setDeleteCommentStatus, editCommentStatu
     const editComment = (e) => {
         e.preventDefault();
         const formData = new FormData();
-        if (!!editCommentMsg || !!selectFileImgInEditComment || deleteImgInEditComment === false) {
+        if (!!editCommentMsg || !!selectFileImgInEditComment || !!commentImg) {
             if (!!editCommentMsg && !selectFileImgInEditComment) {
                 fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/updateCommentWithMsgs`, {
                     method: 'PUT',
@@ -91,6 +92,7 @@ const Comment = ({ deleteCommentStatus, setDeleteCommentStatus, editCommentStatu
                         setOpenEditComment(false);
                         setOpenImgPreviewInEditComment(false);
                         setEditCommentMsg('');
+                        setOpenEmojiPickerInEditComment(false);
                         // setSelectFileImgInEditComment(null);
                     }
                 });
@@ -109,6 +111,7 @@ const Comment = ({ deleteCommentStatus, setDeleteCommentStatus, editCommentStatu
                         setOpenImgPreviewInEditComment(false);
                         setEditCommentMsg('');
                         setSelectFileImgInEditComment();
+                        setOpenEmojiPickerInEditComment(false);
                     }
                 });
             }
@@ -126,6 +129,7 @@ const Comment = ({ deleteCommentStatus, setDeleteCommentStatus, editCommentStatu
                         setOpenImgPreviewInEditComment(false);
                         setEditCommentMsg('');
                         setSelectFileImgInEditComment();
+                        setOpenEmojiPickerInEditComment(false);
                     }
                 });
             }
@@ -141,11 +145,12 @@ const Comment = ({ deleteCommentStatus, setDeleteCommentStatus, editCommentStatu
                         setOpenEditComment(false);
                         setOpenImgPreviewInEditComment(false);
                         setEditCommentMsg('');
+                        setOpenEmojiPickerInEditComment(false);
                         // setSelectFileImgInEditComment();
                     }
                 });
             }
-            if (!editCommentMsg && !selectFileImgInEditComment && deleteImgInEditComment === false) {
+            if (!editCommentMsg && !selectFileImgInEditComment && deleteImgInEditComment === false && !!commentImg) {
                 fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/updateCommentWithMsgs`, {
                     method: 'PUT',
                     headers: {
@@ -161,6 +166,7 @@ const Comment = ({ deleteCommentStatus, setDeleteCommentStatus, editCommentStatu
                         setOpenEditComment(false);
                         setOpenImgPreviewInEditComment(false);
                         setEditCommentMsg('');
+                        setOpenEmojiPickerInEditComment(false);
                         // setSelectFileImgInEditComment();
                     }
                 });
@@ -214,7 +220,7 @@ const Comment = ({ deleteCommentStatus, setDeleteCommentStatus, editCommentStatu
         <div className='fix-ui-container-comments-of-user-detail-in-container-comments-of-users'>
             <div className='container-comments-of-user-detail-in-container-comments-of-users'>
                 <div className='box-of-container-img-profile-in-container-comments-of-user-detail-in-container-comments-of-users'>
-                    <Link to='id' className='container-img-profile-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                    <Link to={`/profile/${dataCommentOfUserByUserId._id}`} className='container-img-profile-in-container-comments-of-user-detail-in-container-comments-of-users'>
                         <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!dataCommentOfUserByUserId.profilePicture ? 'profileImgDefault.jpg' : dataCommentOfUserByUserId.profilePicture}`} alt='imgProfile' />
                     </Link>
                 </div>
@@ -227,7 +233,7 @@ const Comment = ({ deleteCommentStatus, setDeleteCommentStatus, editCommentStatu
                         <>
                             <div className='container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                 <div className='container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
-                                    <Link to='id' className='fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                    <Link to={`/profile/${dataCommentOfUserByUserId._id}`} className='fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                         <p className='fullname-of-users-in-container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>{dataCommentOfUserByUserId.firstname} {dataCommentOfUserByUserId.lastname}</p>
                                     </Link>
                                     <span className='modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>{format(createdAt)}</span>
@@ -245,7 +251,7 @@ const Comment = ({ deleteCommentStatus, setDeleteCommentStatus, editCommentStatu
                             ?
                             <div className='container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                 <div className='container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
-                                    <Link to='id' className='fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                    <Link to={`/profile/${dataCommentOfUserByUserId._id}`} className='fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                         <p className='fullname-of-users-in-container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>{dataCommentOfUserByUserId.firstname} {dataCommentOfUserByUserId.lastname}</p>
                                     </Link>
                                     <span className='modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>{format(createdAt)}</span>
@@ -259,7 +265,7 @@ const Comment = ({ deleteCommentStatus, setDeleteCommentStatus, editCommentStatu
                                 ?
                                 <div className='container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                     <div className='container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
-                                        <Link to='id' className='fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
+                                        <Link to={`/profile/${dataCommentOfUserByUserId._id}`} className='fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                             <p className='fullname-of-users-in-container-content-comment-of-user-in-container-comments-of-user-detail-in-container-comments-of-users'>{dataCommentOfUserByUserId.firstname} {dataCommentOfUserByUserId.lastname}</p>
                                         </Link>
                                         <span className='modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users'>{format(createdAt)}</span>

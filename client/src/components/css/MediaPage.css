@@ -3130,6 +3130,9 @@
     font-size: 1.1rem;
     background-color: #1982FF;
     transition: .2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .container-footer-in-container-share-content-post-in-container-icons-in-content-footer button:hover {
