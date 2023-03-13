@@ -164,7 +164,7 @@ const Media = () => {
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/authUser`, {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'x-access-token': localStorage.getItem('token')

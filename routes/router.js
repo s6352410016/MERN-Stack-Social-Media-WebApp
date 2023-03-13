@@ -55,7 +55,7 @@ router.post('/signin' , signinControllers.signin);
 router.post('/sendOTP' , otpControllers.sendOTP);
 router.post('/resendOTP' , otpControllers.resendOTP);
 router.post('/verifyOTP' , otpControllers.verifyOTP);
-router.get('/authUser' , authUserControllers.authUser);
+router.post('/authUser' , authUserControllers.authUser);
 router.put('/resetPassword' , resetPasswordControllers.resetPassword);
 router.post('/createPostWithMsg' , postControllers.createPostWithMsg);
 router.post('/createPostWithImages' , uploadWithImages.array('postImage') , postControllers.createPostWithImages);
