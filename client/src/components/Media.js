@@ -199,7 +199,7 @@ const Media = () => {
     }).then((res) => {
       setUserInfo(res);
     });
-  }, [followAndUnFollow]);
+  }, [followAndUnFollow]); 
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/getAllPosts`, {
