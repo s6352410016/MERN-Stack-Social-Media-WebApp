@@ -227,7 +227,7 @@ const Media = () => {
         'Content-Type': 'application/json'
       }
     }).then((res) => {
-      if (res.status === 200) {
+      if (res.status === 200) { 
         return res.json();
       }
     }).then((res) => {
