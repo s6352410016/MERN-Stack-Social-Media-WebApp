@@ -520,7 +520,7 @@ const SharePost = ({ setCreateSharePostStatus, createSharePostStatus, userDataIn
                     <div className='container-footer-in-container-post-to-share-in-container-post-of-users'>
                         <div className='container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users'>
                             <Link to={`/profile/${dataUserIdToPostInSharePost._id}`} className='container-img-profile-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users'>
-                                <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileimg/${!dataUserIdToPostInSharePost.profilePicture ? 'profileImgDefault.jpg' : dataUserIdToPostInSharePost.profilePicture}`} alt='userProfile' />
+                                <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!dataUserIdToPostInSharePost.profilePicture ? 'profileImgDefault.jpg' : dataUserIdToPostInSharePost.profilePicture}`} alt='userProfile' />
                             </Link>
                             <div className='container-fullname-user-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users'>
                                 <Link to={`/profile/${dataUserIdToPostInSharePost._id}`} className='container-fullname-in-container-fullname-user-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users'>

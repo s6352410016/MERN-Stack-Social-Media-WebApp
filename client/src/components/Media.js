@@ -200,7 +200,7 @@ const Media = () => {
       setUserInfo(res);
     });
   }, [followAndUnFollow]); 
-
+  
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/getAllPosts`, {
       method: 'POST',
