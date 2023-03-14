@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import Signin from './components/Signin';
 import Signup from './components/Signup';
 import ForgotPassword from './components/ForgotPassword';
@@ -13,7 +13,7 @@ import NotificationsInHamburgerMenu from './components/NotificationsInHamburgerM
 function App() {
   return (
     <>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path='/' element={<Signin />}></Route>
           <Route path='/signup' element={<Signup />}></Route>
@@ -26,7 +26,7 @@ function App() {
           <Route path='/search-people' element={<SearchPeopleInHamburgerMenu />}></Route>
           <Route path='/notifications' element={<NotificationsInHamburgerMenu />}></Route>
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </>
   );
 }
