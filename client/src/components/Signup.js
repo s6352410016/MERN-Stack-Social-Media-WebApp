@@ -469,7 +469,7 @@ const Signup = () => {
       <div className='content-left'>
         <div className='container-content'>
           <h2>Sign up</h2>
-          <form>
+          <form onSubmit={(e) => signIn(e)}>
             <div className='input-head'>
               <div className='container-fullname-of-user-in-form'>
                 <label>Firstname:</label>
