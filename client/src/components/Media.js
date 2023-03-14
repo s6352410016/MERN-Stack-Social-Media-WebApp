@@ -219,7 +219,7 @@ const Media = () => {
   useEffect(() => {
     setUserDataInActive(userInfo.find((e) => e._id === userData.userId));
   });
-
+ 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/getAllSharePost`, {
       method: 'POST',
