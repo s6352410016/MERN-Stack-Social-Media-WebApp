@@ -1,0 +1,599 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&family=Prompt&display=swap');
+
+*{
+    margin: 0;
+    padding:0 !important;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    user-select: none;
+}
+
+.container{
+    display: flex;
+    min-height: 100vh;
+    min-width: 100vw;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-left , .content-right{
+    width: 50%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.content-left h2{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #353535;
+    text-align: center;
+}
+
+.content-left label{
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color:  #3F3F3F;
+}
+
+.content-left form{
+    width: 400px;
+    height: auto;
+    margin-top: 1.4rem;
+}
+
+form .err-style{
+    width: 100%;
+    height: 40px;
+    outline: none;
+    border: 1px solid #cacaca;
+    margin-bottom: 1rem;
+    font-size: 17px;
+    padding: 10px !important; 
+    color:  #3F3F3F;
+    border-radius: 5px;
+}
+
+.center-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    width: 100%;
+}
+
+.center-content span , .center-content .forgotPassword{
+    font-size: 1rem;
+    color:  #2E2E2E;
+    font-weight: 500;
+}
+
+.center-content .forgotPassword{
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.center-content .forgotPassword:hover{
+    color: #545454;
+}
+         
+.content-left button{
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    transition: .2s;
+    background-color: #1982FF;
+    color: #fff;
+    border: none;
+    margin-top: 1rem;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+
+.content-left button:hover{
+    background-color: #0074FE;
+}
+
+.content-left .button{
+    width: 100%;
+    height: 40px !important;
+    text-align: center;
+    transition: 0.5s;
+    background-color: #1982FF;
+    color: #fff;            
+    display: block;
+    border: none;
+    margin-top: 1rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+  }
+
+.content-left .button:hover{
+    background-color: #0074FE;
+}
+ 
+.content-left .buttom-content{
+    margin-top: 1.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttom-content div , .buttom-content .signup{
+    font-size: 1rem;
+    color:  #848484;
+    font-weight: 400;
+}
+
+.buttom-content .signup{
+    text-decoration: none;
+    color: #2E2E2E;
+    transition: .3s;
+    font-weight: 500;
+}
+
+.buttom-content .signup:hover{
+    color: #545454;
+}
+
+.input-head{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.input-head div{
+    width: 50%;
+}
+
+.input-head div input{
+    height: 40px;
+}
+
+.container-alert-resend-otp-sucessess{
+    width: 100%;
+    height: 4.5rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #a8f0c6;
+    border-left: 5px solid #178344;
+    padding: 1rem !important;
+    margin-bottom: 1.4rem;
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; */
+    border-radius: 5px;
+}
+
+.msg-success-in-container-alert-resend-otp-sucessess{
+    font-size: 1rem;
+    margin-bottom: 0;
+    color: #178344;
+    width: 80%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-icon-xmark-in-container-alert-resend-otp-sucessess{
+    flex-grow: 1;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.icon-xmark-in-container-icon-xmark-in-container-alert-resend-otp-sucessess{
+    font-size: 1.8rem;
+    color: #178344;
+    cursor: pointer;
+    transition: .1s;
+    transition: .1s;
+}
+
+.icon-xmark-in-container-icon-xmark-in-container-alert-resend-otp-sucessess:hover{
+    color: #0B6630;
+}
+
+.content-left p{
+    color: #848484;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.resend-otp{
+    margin-top: 1.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.resend-otp .first-span{
+    font-size: 1rem;
+    color: #848484;
+    font-weight: 400;
+}
+
+.resend-otp .last-span{
+    color: #2E2E2E;
+    transition: .3s;
+    font-weight: 500;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.resend-otp .last-span:hover{
+    color: #545454;
+}
+
+.content-left .logo-container{
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.content-left .check-logo{
+    color: #0072ff;
+    font-size: 2.5rem;
+}
+
+.content-left .errMsg{
+    color: #FF0000;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.err-style.custom , .err-style.custom:focus{
+    width: 100%;
+    height: 40px;
+    outline: none;
+    margin-bottom: 1rem;
+    font-size: 17px;
+    padding: 10px !important; 
+    color:  #3F3F3F;
+    border: 1px solid #FF0000;
+}
+
+.err-style.custom-special , .err-style.custom-special:focus{
+    width: 100%;
+    border: 1px solid #FF0000;
+}
+
+.password-effect.custom , .password-effect.custom:focus{
+    width: 100%;
+    height: 40px;
+    outline: none;
+    margin-bottom: 1rem;
+    font-size: 17px;
+    color:  #3F3F3F;
+    border: 1px solid #FF0000;
+}
+
+.password-effect{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    width: 100%;
+    border: 1px solid #cacaca;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.password-effect input{
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+.password-effect .icon{
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #545454;
+}
+
+.errMsg-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.errMsg-container span{
+    width: 50%;
+}
+
+.container-alert-box-sign-in-err{
+    width: 100%;
+    height: 4.5rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #FFBDBD;
+    border-left: 5px solid #DE4040;
+    padding: 1rem !important;
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; */
+    border-radius: 5px;
+}
+
+.container-content .checkSigninErr{
+    font-size: 1rem;
+    margin-bottom: 0;
+    color: #DE4040;
+    width: 80%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-icon-xmark-in-container-alert-box-sign-in-err{
+    flex-grow: 1;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.icon-xmark-in-container-icon-xmark-in-container-alert-box-sign-in-err{
+    font-size: 1.8rem;
+    color: #DE4040;
+    cursor: pointer;
+    transition: .1s;
+}
+
+.icon-xmark-in-container-icon-xmark-in-container-alert-box-sign-in-err:hover{
+    color: #DF1E1E;
+}
+
+
+
+@media (max-width: 1200px){
+    .content-left form {
+        width: 300px;
+        margin-top: 0 !important;
+    }
+
+    .content-left h1{
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .content-left .container-content{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .content-left .container-content p{
+        width: 80%;
+        margin-bottom: 0;
+    }
+
+    .container-content p span{
+        display: block;
+        margin-top: 1rem;
+    }
+
+    .content-left .check-logo{
+        font-size: 2rem;
+    }
+
+    .container-alert-box-sign-in-err{
+        width: 300px;
+    }
+
+    .container-alert-resend-otp-sucessess{
+        width: 300px;
+    }
+}
+
+@media (max-width: 768px){
+    .input-head{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0 !important;
+    }
+
+    .container-fullname-of-user-in-form{
+        width: 100% !important;
+    }
+
+    .errMsg-container{
+        display: none;
+    }
+    
+    .Errmsg-popup-in-768px{
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .content-left form {
+        width: 250px;
+    }
+
+    .content-left h1{
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+    }
+
+    .center-content{
+        flex-direction: column;
+        margin-top: 1rem;
+        height: auto !important;
+        gap: 10px !important;
+    }
+
+    .center-content div{
+        width: 100%;
+        text-align: center;
+    }
+
+    .content-left .container-content{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .content-left .container-content p{
+        width: 75%;
+        margin-bottom: 0;
+    }
+
+    .container-content p span{
+        display: block;
+        margin-top: 1rem;
+    }
+
+    .resend-otp {
+        flex-direction: column;
+    }
+
+    .content-left .check-logo{
+        font-size: 1.8rem;
+    }
+
+    .container-alert-box-sign-in-err{
+        width: 250px;
+    }
+
+    .container-alert-resend-otp-sucessess{
+        width: 250px;
+    }
+}
+
+@media (max-width: 480px){
+    .content-left form {
+        width: 300px;
+    }
+
+    .content-left h1{
+        font-size: 1.4rem;
+    }
+
+    .center-content{
+        flex-direction: row;
+        margin-top: 0;
+        gap: 10px;
+    }
+
+    .content-left .container-content p{
+        width: 100%;
+    }
+
+    .container-alert-box-sign-in-err{
+        width: 300px;
+        height: 60px;
+        margin-bottom: 1rem;
+    }
+
+    .container-alert-resend-otp-sucessess{
+        width: 300px;
+    }
+
+    .container-remember-in-center-content{
+        width: 100%;
+        text-align: start !important;
+    }
+
+    .container-forgot-password-in-center-content{
+        width: 100%;
+        text-align: end !important;
+    }
+
+    .content-left h2{
+        font-size: 1.3rem;
+    }
+
+    .content-left label{
+        font-size: .9rem;
+    }
+
+    form .err-style{
+        font-size: .9rem;
+        height: 35px !important;
+    }
+    
+    .password-effect input{
+        font-size: .9rem;
+    }
+
+    .center-content span, .center-content .forgotPassword{
+        font-size: .9rem;
+    }
+
+    .content-left button{
+        height: 35px;
+        font-size: .9rem;
+    }
+
+    .password-effect{
+        height: 35px;
+    }
+
+    .buttom-content div, .buttom-content .signup{
+        font-size: .9rem;
+    }
+
+    .err-style.custom, .err-style.custom:focus , .password-effect.custom, .password-effect.custom:focus{
+        height: 35px !important;
+        font-size: .9rem;
+    }
+
+    .content-left .errMsg{
+        font-size: .9rem;
+    }
+
+    .container-content .checkSigninErr{
+        font-size: .9rem;
+    }
+
+    .err-style.custom-special, .err-style.custom-special:focus{
+        height: 35px !important;
+        font-size: .9rem;
+    }
+
+    .content-left .container-content p{
+        font-size: .9rem;
+        margin-bottom: 1rem;
+    }
+
+    .resend-otp .first-span{
+        font-size: .9rem;
+    }
+
+    .resend-otp .last-span{
+        font-size: .9rem;
+    }
+
+    .msg-success-in-container-alert-resend-otp-sucessess{
+        font-size: .9rem;
+        height: 60px;
+    }
+
+    .content-left .check-logo{
+        font-size: 1.5rem;
+    }
+
+    .content-left .button{
+        font-size: .9rem;
+        height: 35px !important;
+    }
+}

@@ -1,0 +1,26 @@
+.content-right{
+    background-color: #f7f7f7;
+}
+
+.content-right img{
+    height: 43%;
+    -webkit-user-drag: none;
+}
+
+@media (max-width: 1200px){
+    .content-right img{
+        height: 30%;
+    }
+}
+
+@media (max-width: 768px){
+    .content-right img{
+        height: 20%;
+    }
+}
+
+@media (max-width: 480px){
+    .content-right{
+        display: none;
+    }
+}
