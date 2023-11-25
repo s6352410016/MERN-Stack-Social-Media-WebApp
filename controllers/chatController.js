@@ -54,8 +54,18 @@ const findChat = async (req, res) => {
     }
 }
 
+const getAllChats = async (req , res) => {
+    try{
+        const chats = await chatModel.find();
+        return res.status(200).json(chats);
+    }catch(err){
+        return res.status(500).json(err);
+    }
+}
+
 module.exports = {
     createChat,
     getAllChatByUserId,
-    findChat
+    findChat,
+    getAllChats
 }

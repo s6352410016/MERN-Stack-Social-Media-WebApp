@@ -16,7 +16,7 @@ const authUser = async (req, res) => {
             });
         }
     } catch (err) {
-        return res.status(500).json(err);
+        return res.status(500).json({err});
     }
 }
 

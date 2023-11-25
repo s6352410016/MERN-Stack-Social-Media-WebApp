@@ -178,6 +178,15 @@ const likeAndDislikeReply = async (req, res) => {
     }
 }
 
+const getAllReplys = async (req , res) => {
+    try{
+        const replys = await replyModel.find();
+        res.status(200).json(replys);
+    }catch(err){
+        res.status(500).json(err);
+    }
+}
+
 module.exports = {
     createReply,
     getReplyByCommentId,
@@ -187,4 +196,5 @@ module.exports = {
     deleteReply,
     likeAndDislikeReply,
     deleteReplyMsg,
+    getAllReplys
 }

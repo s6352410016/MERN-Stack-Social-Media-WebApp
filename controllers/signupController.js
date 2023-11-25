@@ -37,7 +37,7 @@ const signup = async (req, res) => {
     try {
         const { firstname, lastname, username, password, email } = req.body;
         const passwordHash = await bcrypt.hash(password, 10);
-        const saveSignup = await new userModel({
+        const saveSignup = new userModel({
             firstname: firstname,
             lastname: lastname,
             username: username,
@@ -45,7 +45,7 @@ const signup = async (req, res) => {
             email: email
         });
         await saveSignup.save();
-        const token = await jwt.sign(
+        const token = jwt.sign(
             {
                 userData: {
                     userId: saveSignup._id,

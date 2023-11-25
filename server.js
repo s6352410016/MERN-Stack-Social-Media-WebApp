@@ -11,7 +11,7 @@ const server = require('http').createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server, {
     cors: {
-        origin: 'https://bynsocial.up.railway.app',
+        origin: 'http://localhost:3000',
         methods: ['GET', 'POST'],
         credentials: true,
         transports: ['websocket', 'polling'],
@@ -26,7 +26,7 @@ app.use(cors());
 app.use(helmet.contentSecurityPolicy({
     useDefaults: true,
     directives: {
-        "img-src": ["'self'", "https:", "data:", "blob:" , "bynsocial.up.railway.app"]
+        "img-src": ["'self'", "https:", "data:", "blob:"]
     }
 }));
 app.use((req, res, next) => {

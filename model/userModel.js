@@ -44,6 +44,14 @@ const userSchema = new mongoose.Schema({
     otherDetail:{
         type: String,
         default: ''
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    isBlock: {
+        type: Boolean,
+        defult: false
     }
 } , {
     timestamps: true

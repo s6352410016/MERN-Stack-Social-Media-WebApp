@@ -67,7 +67,7 @@ const followAndUnFollow = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
     try {
-        const users = await userModel.find({}, '_id firstname lastname follower following dateOfBirth profilePicture profileBackground otherDetail createdAt updatedAt');
+        const users = await userModel.find({}, '_id firstname lastname username email follower following dateOfBirth profilePicture profileBackground otherDetail createdAt updatedAt isAdmin isBlock');
         if (!res.headersSent) {
             return res.status(200).json(users);
         }
@@ -218,28 +218,54 @@ const deleteCurrentProfileBgImg = async (req, res) => {
     }
 }
 
-const checkUserExistUpdateProfile = async (req , res) => {
-    try{
-        const { firstname , userId } = req.body;
+const checkUserExistUpdateProfile = async (req, res) => {
+    try {
+        const { firstname, userId } = req.body;
         const userExistWithFirstName = await userModel.findOne({
             firstname
         });
         // const userExistWithLastName = await userModel.findOne({
         //     lastname
         // });
-        
+
         // if(userExistWithFirstName && userExistWithLastName && userExistWithFirstName._id.toString() !== userId && userExistWithLastName._id.toString() !== userId){
         //     return res.status(400).json({msg: "fristname and lastname is already exist."});
         // }
-        if(userExistWithFirstName && userExistWithFirstName._id.toString() !== userId){
-            return res.status(400).json({msg: "fristname is already exist."});
+        if (userExistWithFirstName && userExistWithFirstName._id.toString() !== userId) {
+            return res.status(400).json({ msg: "fristname is already exist." });
         }
         // if(userExistWithLastName && userExistWithLastName._id.toString() !== userId){
         //     return res.status(400).json({msg: "lastname is already exist."});
         // }
 
-        return res.status(200).json({msg: "fristname is already use."});
-    }catch(err){
+        return res.status(200).json({ msg: "fristname is already use." });
+    } catch (err) {
+        return res.status(500).json(err);
+    }
+}
+
+const blockUser = async (req, res) => {
+    try {
+        const { userId } = req.body;
+        const user = await userModel.findById({ _id: userId });
+        if (user) {
+            if (user.isBlock) {
+                await user.updateOne(
+                    {
+                        isBlock: false
+                    }
+                );
+            } else {
+                await user.updateOne(
+                    {
+                        isBlock: true
+                    }
+                );
+            }
+
+            return res.status(200).json({ msg: "successfully." });
+        }
+    } catch (err) {
         return res.status(500).json(err);
     }
 }
@@ -253,5 +279,6 @@ module.exports = {
     updateOtherDetailOfUserByUserId,
     deleteCurrentProfileImg,
     deleteCurrentProfileBgImg,
-    checkUserExistUpdateProfile
+    checkUserExistUpdateProfile,
+    blockUser
 }

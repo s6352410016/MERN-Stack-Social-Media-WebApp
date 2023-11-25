@@ -129,6 +129,7 @@ router.put('/sharePostLikeAndDislike', shareControllers.sharePostLikeAndDislike)
 router.post('/getAllSharePost', shareControllers.getAllSharePost);
 router.post('/getAllPosts', postControllers.getAllPosts);
 router.post('/getAllComments', commentControllers.getAllComments);
+router.post('/getAllReplys', replyControllers.getAllReplys);
 router.post('/getCommentByPostId', commentControllers.getCommentByPostId);
 router.post('/getAllSharePostByUserIdToShare/:id', shareControllers.getAllSharePostByUserIdToShare);
 router.put('/followAndUnFollow', userControllers.followAndUnFollow);
@@ -136,6 +137,8 @@ router.post('/getAllUsers', userControllers.getAllUsers);
 router.post('/getUserByUserId', userControllers.getUserByUserId);
 router.post('/createNotification', notificationControllers.createNotification);
 router.post('/getAllNotifications', notificationControllers.getAllNotification);
+router.post('/getAllChats', chatControllers.getAllChats);
+router.post('/getAllMessages', messageControllers.getAllMessages);
 router.put('/updateUserToReadNotification', notificationControllers.updateUserToReadNotification);
 router.put('/uploadProfileImg/:id', uploadProfileImg.single('profileImg'), userControllers.uploadProfileImg);
 router.put('/uploadProfileBgImg/:id', uploadProfileBgImg.single('profileBgImg'), userControllers.uploadProfileBgImg);
@@ -158,8 +161,9 @@ router.put("/likeAndDislikeReply", replyControllers.likeAndDislikeReply);
 router.put("/likeAndDislikeComment", commentControllers.likeAndDislikeComment);
 router.delete("/deleteCurrentProfileImg", userControllers.deleteCurrentProfileImg);
 router.delete("/deleteCurrentProfileBgImg", userControllers.deleteCurrentProfileBgImg);
-
 router.post("/checkUserExistUpdateProfile" , userControllers.checkUserExistUpdateProfile);
+router.post("/adminLogin" , signinControllers.adminLogin);
+router.post("/blockUser" , userControllers.blockUser);
 
 // router.delete('/deleteMessage', messageControllers.deleteMsg);
 

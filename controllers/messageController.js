@@ -81,10 +81,20 @@ const deleteMsgByChatId = async (req, res) => {
     }
 }
 
+const getAllMessages = async (req , res) => {
+    try{
+        const messages = await messageModel.find();
+        res.status(200).json(messages);
+    }catch(err){
+        res.status(500).json(err);
+    }
+}
+
 module.exports = {
     createMessage,
     getMessage,
     getLastMessageByChatId,
     deleteMsg,
-    deleteMsgByChatId
+    deleteMsgByChatId,
+    getAllMessages
 }
