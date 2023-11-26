@@ -326,6 +326,7 @@ const Comment = ({ setCommentOfUsers, postId, followAndUnFollow, setFollowAndUnF
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
+                        postIdToReply: postId,
                         commentIdToReply: commentId,
                         userIdToReply: activeUserId,
                         replyMsg: replyMsg,
@@ -358,6 +359,7 @@ const Comment = ({ setCommentOfUsers, postId, followAndUnFollow, setFollowAndUnF
             }
 
             if (replyMsg.trim() === "" && selectFileImgToReply !== null) {
+                formData.append("postIdToReply", postId);
                 formData.append("commentIdToReply", commentId);
                 formData.append("userIdToReply", activeUserId);
                 formData.append("replyImg", selectFileImgToReply);
@@ -394,6 +396,7 @@ const Comment = ({ setCommentOfUsers, postId, followAndUnFollow, setFollowAndUnF
             }
 
             if (replyMsg.trim() !== "" && selectFileImgToReply !== null) {
+                formData.append("postIdToReply", postId);
                 formData.append("commentIdToReply", commentId);
                 formData.append("userIdToReply", activeUserId);
                 formData.append("replyMsg", replyMsg);

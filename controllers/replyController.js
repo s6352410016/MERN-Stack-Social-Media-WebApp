@@ -5,8 +5,9 @@ const notificationModel = require("../model/notificationModel");
 
 const createReply = async (req, res) => {
     try {
-        const { commentIdToReply, userIdToReply, replyMsg, tagUserId } = req.body;
+        const { postIdToReply, commentIdToReply, userIdToReply, replyMsg, tagUserId } = req.body;
         const replyData = new replyModel({
+            postIdToReply: postIdToReply,
             commentIdToReply: commentIdToReply,
             userIdToReply: userIdToReply,
             replyMsg: replyMsg !== undefined ? replyMsg : "",
@@ -178,12 +179,38 @@ const likeAndDislikeReply = async (req, res) => {
     }
 }
 
-const getAllReplys = async (req , res) => {
-    try{
+const getAllReplys = async (req, res) => {
+    try {
         const replys = await replyModel.find();
         res.status(200).json(replys);
-    }catch(err){
+    } catch (err) {
         res.status(500).json(err);
+    }
+}
+
+const blockReply = async (req, res) => {
+    try {
+        const { replyId } = req.body;
+        const reply = await replyModel.findById({ _id: replyId });
+        if (reply) {
+            if (reply.isBlock) {
+                await reply.updateOne(
+                    {
+                        isBlock: false
+                    }
+                );
+            } else {
+                await reply.updateOne(
+                    {
+                        isBlock: true
+                    }
+                );
+            }
+
+            return res.status(200).json({ msg: "successfully." });
+        }
+    } catch (err) {
+        return res.status(500).json(err);
     }
 }
 
@@ -196,5 +223,6 @@ module.exports = {
     deleteReply,
     likeAndDislikeReply,
     deleteReplyMsg,
-    getAllReplys
+    getAllReplys,
+    blockReply
 }

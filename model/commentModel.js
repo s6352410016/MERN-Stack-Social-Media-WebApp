@@ -20,6 +20,10 @@ const commentSchema = new mongoose.Schema(
         },
         commentLikes: {
             type: Array
+        },
+        isBlock: {
+            type: Boolean,
+            default: false
         }
     },
     {

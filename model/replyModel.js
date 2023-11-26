@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const replySchema = new mongoose.Schema(
     {
+        postIdToReply: {
+            type: String,
+            required: true
+        },
         commentIdToReply: {
             type: String,
             required: true,
@@ -25,6 +29,10 @@ const replySchema = new mongoose.Schema(
         replyLikes: {
             type: Array
         },
+        isBlock: {
+            type: Boolean,
+            default: false
+        }
     },
     {
         timestamps: true

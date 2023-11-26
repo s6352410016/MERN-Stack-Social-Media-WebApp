@@ -204,6 +204,32 @@ const likeAndDislikeComment = async (req, res) => {
     }
 }
 
+const blockComment = async (req, res) => {
+    try {
+        const { commentId } = req.body;
+        const comment = await commentModel.findById({ _id: commentId });
+        if (comment) {
+            if (comment.isBlock) {
+                await comment.updateOne(
+                    {
+                        isBlock: false
+                    }
+                );
+            } else {
+                await comment.updateOne(
+                    {
+                        isBlock: true
+                    }
+                );
+            }
+
+            return res.status(200).json({ msg: "successfully." });
+        }
+    } catch (err) {
+        return res.status(500).json(err);
+    }
+}
+
 module.exports = {
     createComment,
     updateCommentWithImage,
@@ -213,4 +239,5 @@ module.exports = {
     likeAndDislikeComment,
     deleteCommentMsg,
     getCommentByPostId,
+    blockComment
 }

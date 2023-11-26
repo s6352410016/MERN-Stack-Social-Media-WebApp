@@ -297,6 +297,7 @@ const Reply = ({ replyId, commentIdToReply, userIdToReply, replyMsgs, replyImg, 
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
+                        postIdToReply: postId,
                         commentIdToReply: commentId,
                         userIdToReply: activeUserId,
                         replyMsg: replyMsg,
@@ -329,6 +330,7 @@ const Reply = ({ replyId, commentIdToReply, userIdToReply, replyMsgs, replyImg, 
             }
 
             if (replyMsg.trim() === "" && selectFileImgToReply !== null) {
+                formData.append("postIdToReply", postId);
                 formData.append("commentIdToReply", commentId);
                 formData.append("userIdToReply", activeUserId);
                 formData.append("replyImg", selectFileImgToReply);
@@ -365,6 +367,7 @@ const Reply = ({ replyId, commentIdToReply, userIdToReply, replyMsgs, replyImg, 
             }
 
             if (replyMsg.trim() !== "" && selectFileImgToReply !== null) {
+                formData.append("postIdToReply", postId);
                 formData.append("commentIdToReply", commentId);
                 formData.append("userIdToReply", activeUserId);
                 formData.append("replyMsg", replyMsg);

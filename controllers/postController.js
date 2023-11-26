@@ -4,6 +4,7 @@ const notificationModel = require('../model/notificationModel');
 const fs = require('fs');
 const path = require('path');
 const replyModel = require('../model/replyModel');
+const sharePostModel = require("../model/shareModel");
 
 const createPostWithMsg = async (req, res) => {
     try {
@@ -312,6 +313,50 @@ const getAllPosts = async (req, res) => {
     }
 }
 
+const blockPost = async (req, res) => {
+    try {
+        const { postId } = req.body;
+        const post = await postModel.findById({ _id: postId });
+        const sharePost = await sharePostModel.findById({ _id: postId });
+
+        if (post) {
+            if (post.isBlock) {
+                await post.updateOne(
+                    {
+                        isBlock: false
+                    }
+                );
+            } else {
+                await post.updateOne(
+                    {
+                        isBlock: true
+                    }
+                );
+            }
+        }
+
+        if (sharePost) {
+            if (sharePost.isBlock) {
+                await sharePost.updateOne(
+                    {
+                        isBlock: false
+                    }
+                );
+            } else {
+                await sharePost.updateOne(
+                    {
+                        isBlock: true
+                    }
+                );
+            }
+        }
+
+        return res.status(200).json({ msg: "successfully." });
+    } catch (err) {
+        return res.status(500).json(err);
+    }
+}
+
 module.exports = {
     createPostWithMsg,
     createPostWithImages,
@@ -321,5 +366,6 @@ module.exports = {
     updatePostWithMsg,
     deletePost,
     likeAndDislikePost,
-    getAllPosts
+    getAllPosts,
+    blockPost
 }

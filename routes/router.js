@@ -164,6 +164,10 @@ router.delete("/deleteCurrentProfileBgImg", userControllers.deleteCurrentProfile
 router.post("/checkUserExistUpdateProfile" , userControllers.checkUserExistUpdateProfile);
 router.post("/adminLogin" , signinControllers.adminLogin);
 router.post("/blockUser" , userControllers.blockUser);
+router.post("/editUserDataAdmin" , userControllers.editUserDataAdmin);
+router.post("/blockPost" , postControllers.blockPost);
+router.post("/blockComment" , commentControllers.blockComment);
+router.post("/blockReply" , replyControllers.blockReply);
 
 // router.delete('/deleteMessage', messageControllers.deleteMsg);
 

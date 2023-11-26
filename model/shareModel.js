@@ -16,6 +16,10 @@ const shareSchema = new mongoose.Schema(
         },
         sharePostLikes: {
             type: Array
+        },
+        isBlock: {
+            type: Boolean,
+            default: false
         }
     },
     {

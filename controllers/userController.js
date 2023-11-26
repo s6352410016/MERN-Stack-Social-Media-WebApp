@@ -2,6 +2,7 @@ const userModel = require('../model/userModel');
 const fs = require('fs');
 const path = require('path');
 const notificationModel = require('../model/notificationModel');
+const bcrypt = require("bcrypt");
 
 const followAndUnFollow = async (req, res) => {
     try {
@@ -270,6 +271,46 @@ const blockUser = async (req, res) => {
     }
 }
 
+const editUserDataAdmin = async (req , res) => {
+    try {
+        const {userId , email , password , isAdminStatus} = req.body;
+        const userData = await userModel.findOne({email});
+
+        if(userData && userData._id.toString() !== userId){
+            return res.status(400).json({msg: "email is already exist."});
+        }
+
+        if(password !== ""){
+            const hash_password = await bcrypt.hash(password , 10);
+            await userModel.findByIdAndUpdate(
+                {
+                    _id: userId
+                },
+                {
+                    email: email,
+                    password: hash_password,
+                    isAdmin: isAdminStatus
+                }
+            );
+            return res.status(200).json({msg: "update data successfullly."});
+        }
+
+        await userModel.findByIdAndUpdate(
+            {
+                _id: userId
+            },
+            {
+                email: email,
+                isAdmin: isAdminStatus
+            }
+        );
+        
+        return res.status(200).json({msg: "update data successfullly."});
+    } catch (err) {
+        return res.status(500).json(err);
+    }
+}
+
 module.exports = {
     followAndUnFollow,
     getAllUsers,
@@ -280,5 +321,6 @@ module.exports = {
     deleteCurrentProfileImg,
     deleteCurrentProfileBgImg,
     checkUserExistUpdateProfile,
-    blockUser
+    blockUser,
+    editUserDataAdmin
 }

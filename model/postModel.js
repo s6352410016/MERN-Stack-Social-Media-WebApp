@@ -19,6 +19,10 @@ const postSchema = new mongoose.Schema(
         },
         postLikes: {
             type: Array
+        },
+        isBlock: {
+            type: Boolean,
+            default: false
         }
     },
     {
@@ -26,4 +30,4 @@ const postSchema = new mongoose.Schema(
     }
 );
 
-module.exports = mongoose.model('posts' , postSchema);
+module.exports = mongoose.model('posts', postSchema);
