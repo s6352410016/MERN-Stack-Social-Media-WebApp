@@ -46,8 +46,45 @@ const getAllNotification = async (req, res) => {
     }
 }
 
+const blockNotification = async (req, res) => {
+    try {
+        const { notiId } = req.body;
+        const noti = await notificationModel.findById({ _id: notiId });
+        if (noti) {
+            if (noti.isBlock) {
+                await noti.updateOne(
+                    {
+                        isBlock: false
+                    }
+                );
+            } else {
+                await noti.updateOne(
+                    {
+                        isBlock: true
+                    }
+                );
+            }
+
+            return res.status(200).json({ msg: "successfully." });
+        }
+    } catch (err) {
+        return res.status(500).json(err);
+    }
+}
+
+const clearAllNotification = async (req ,res) => {
+    try{
+        await notificationModel.deleteMany();
+        return res.status(200).json({msg: "deleted notification successfully."});
+    }catch(err){
+        return res.status(500).json(err);
+    }
+}
+
 module.exports = {
     createNotification,
     getAllNotification,
-    updateUserToReadNotification
+    updateUserToReadNotification,
+    blockNotification,
+    clearAllNotification
 }

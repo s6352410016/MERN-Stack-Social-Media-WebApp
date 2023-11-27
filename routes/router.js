@@ -168,7 +168,11 @@ router.post("/editUserDataAdmin" , userControllers.editUserDataAdmin);
 router.post("/blockPost" , postControllers.blockPost);
 router.post("/blockComment" , commentControllers.blockComment);
 router.post("/blockReply" , replyControllers.blockReply);
+router.post("/blockNotification" , notificationControllers.blockNotification);
+router.post("/blockChat" , chatControllers.blockChat);
+router.post("/blockMsg" , messageControllers.blockMsg);
 
+// router.delete("/clearAllNotification" , notificationControllers.clearAllNotification);
 // router.delete('/deleteMessage', messageControllers.deleteMsg);
 
 module.exports = router;

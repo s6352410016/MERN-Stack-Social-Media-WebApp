@@ -26,6 +26,10 @@ const notificationSchema = new mongoose.Schema({
     },
     notificationOfReceiverId: {
         type: Array
+    },
+    isBlock: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true

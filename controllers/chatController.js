@@ -63,9 +63,36 @@ const getAllChats = async (req , res) => {
     }
 }
 
+const blockChat = async (req, res) => {
+    try {
+        const { chatId } = req.body;
+        const chat = await chatModel.findById({ _id: chatId });
+        if (chat) {
+            if (chat.isBlock) {
+                await chat.updateOne(
+                    {
+                        isBlock: false
+                    }
+                );
+            } else {
+                await chat.updateOne(
+                    {
+                        isBlock: true
+                    }
+                );
+            }
+
+            return res.status(200).json({ msg: "successfully." });
+        }
+    } catch (err) {
+        return res.status(500).json(err);
+    }
+}
+
 module.exports = {
     createChat,
     getAllChatByUserId,
     findChat,
-    getAllChats
+    getAllChats,
+    blockChat
 }

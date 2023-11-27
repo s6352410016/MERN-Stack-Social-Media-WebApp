@@ -90,11 +90,38 @@ const getAllMessages = async (req , res) => {
     }
 }
 
+const blockMsg = async (req, res) => {
+    try {
+        const { msgId } = req.body;
+        const msg = await messageModel.findById({ _id: msgId });
+        if (msg) {
+            if (msg.isBlock) {
+                await msg.updateOne(
+                    {
+                        isBlock: false
+                    }
+                );
+            } else {
+                await msg.updateOne(
+                    {
+                        isBlock: true
+                    }
+                );
+            }
+
+            return res.status(200).json({ msg: "successfully." });
+        }
+    } catch (err) {
+        return res.status(500).json(err);
+    }
+}
+
 module.exports = {
     createMessage,
     getMessage,
     getLastMessageByChatId,
     deleteMsg,
     deleteMsgByChatId,
-    getAllMessages
+    getAllMessages,
+    blockMsg
 }

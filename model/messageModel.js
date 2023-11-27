@@ -15,6 +15,10 @@ const messageSchema = new mongoose.Schema({
     },
     chatImages: {
         type: Array
+    },
+    isBlock: {
+        type: Boolean,
+        default: false
     }
 } , {
     timestamps: true
