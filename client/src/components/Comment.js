@@ -450,8 +450,8 @@ const Comment = ({ setCommentOfUsers, postId, followAndUnFollow, setFollowAndUnF
                 })
             });
             const data = await res.json();
-            // const sortedReply = data?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-            setReplyData(data);
+            const sortedReply = data?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            setReplyData(sortedReply?.filter((reply) => reply?.isBlock === false));
         } catch (err) {
             console.log(err);
         }

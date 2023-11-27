@@ -5000,7 +5000,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     border-radius: 2rem;
-    padding: 10px 15px !important;
+    padding: 8px 15px !important;
     gap: 5px;
     transition: .2s;
 }
@@ -6603,5 +6603,9 @@
 
     .choose-img-in-container-body-in-container-edit-profile-img-box-in-container-edit-profile-img-popup-in-container-user-profile-img-in-container-user-detail-profile-in-container-user-profile-in-container-body-in-container-profile-delete-img{
         font-size: .7rem;
+    }
+
+    .style-by-bell{
+        font-size: .7rem !important;
     }
 }

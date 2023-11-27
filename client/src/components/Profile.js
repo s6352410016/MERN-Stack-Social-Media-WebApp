@@ -415,7 +415,7 @@ const Profile = ({ setLogoutStatus }) => {
       }).then((res) => {
         const filteredNotification = res.filter((e) => e.notificationOfReceiverId.includes(userDataRef?.current) && e.notificationOfUserId !== userDataRef?.current);
         const sortedFilteredNotification = filteredNotification.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-        setDataUserNotification(sortedFilteredNotification);
+        setDataUserNotification(sortedFilteredNotification?.filter((noti) => noti?.isBlock === false));
         setAlertStatus(true);
       });
     });
@@ -434,7 +434,7 @@ const Profile = ({ setLogoutStatus }) => {
     }).then((res) => {
       const filteredNotification = res.filter((e) => e.notificationOfReceiverId.includes(userDataRef?.current) && e.notificationOfUserId !== userDataRef?.current);
       const sortedFilteredNotification = filteredNotification.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      setDataUserNotification(sortedFilteredNotification);
+      setDataUserNotification(sortedFilteredNotification?.filter((noti) => noti?.isBlock === false));
       setAlertStatus(true);
     });
   }, [userData]);

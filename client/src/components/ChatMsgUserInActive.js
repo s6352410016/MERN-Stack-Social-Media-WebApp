@@ -7,7 +7,7 @@ const ChatMsgUserInActive = ({ senderId, userInfo, chatMsg, chatImages, createdA
     const [userDataBySenderId, setUserDataBySenderId] = useState({});
 
     useEffect(() => {
-        chatRef?.current?.scrollIntoView({ behavior: 'smooth' });
+        chatRef?.current?.scrollIntoView({behavior: 'smooth' , block: 'start'});
     }, []);
 
     useEffect(() => {

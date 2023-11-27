@@ -595,8 +595,8 @@ const Post = ({ setSortAllPostAscending, setOpenProfileStatus, showProfilePageSt
                     return res.json();
                 }
             }).then((res) => {
-                // const sortedComment = res?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-                setCommentOfUsers(res);
+                const sortedComment = res?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                setCommentOfUsers(sortedComment?.filter((comment) => comment?.isBlock === false));
             });
         });
     }, []);
@@ -616,8 +616,8 @@ const Post = ({ setSortAllPostAscending, setOpenProfileStatus, showProfilePageSt
                     return res.json();
                 }
             }).then((res) => {
-                // const sortedComment = res?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-                setCommentOfUsers(res);
+                const sortedComment = res?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                setCommentOfUsers(sortedComment?.filter((comment) => comment?.isBlock === false));
             });
         });
     }, []);
@@ -636,8 +636,8 @@ const Post = ({ setSortAllPostAscending, setOpenProfileStatus, showProfilePageSt
                 return res.json();
             }
         }).then((res) => {
-            // const sortedComment = res?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-            setCommentOfUsers(res);
+            const sortedComment = res?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            setCommentOfUsers(sortedComment?.filter((comment) => comment?.isBlock === false));
         });
     }, []);
 

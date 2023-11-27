@@ -80,6 +80,7 @@ const Chat = ({ setLogoutStatus }) => {
   const [effectWhileDeleteChat, setEffectWhileDeleteChat] = useState(false);
   const [openDeleteChat, setOpenDeleteChat] = useState(false);
   const [deleteMsgInChatStatus, setDeleteMsgInChatStatus] = useState(false);
+  const [isBlockChat, setIsBlockChat] = useState(true);
 
   const closeDropdown = () => {
     setOpenMenus(false);
@@ -308,7 +309,8 @@ const Chat = ({ setLogoutStatus }) => {
     }
   }
 
-  const handleChatIdToCreateChatMsg = (chatId) => {
+  const handleChatIdToCreateChatMsg = (chatId, isBlock) => {
+    setIsBlockChat(isBlock === true ? false : true);
     setChatIdToCreateChatMsg(chatId);
   }
 
@@ -329,6 +331,7 @@ const Chat = ({ setLogoutStatus }) => {
       setEffectWhileDeleteChat(false);
       setChatIdToCreateChatMsg("");
       setDeleteMsgInChatStatus(!deleteMsgInChatStatus);
+      setIsBlockChat(true);
     } catch (err) {
       console.log(err);
     }
@@ -339,7 +342,9 @@ const Chat = ({ setLogoutStatus }) => {
   }
 
   useEffect(() => {
-    inputTextCreateChatMsgRef.current.selectionEnd = cursorPosition;
+    if(isBlockChat){
+      inputTextCreateChatMsgRef.current.selectionEnd = cursorPosition;
+    }
   }, [cursorPosition]);
 
   useEffect(() => {
@@ -434,7 +439,7 @@ const Chat = ({ setLogoutStatus }) => {
       }).then((res) => {
         const filteredNotification = res.filter((e) => e.notificationOfReceiverId.includes(userDataInActiveRef?.current?._id) && e.notificationOfUserId !== userDataInActiveRef?.current?._id);
         const sortedFilteredNotification = filteredNotification.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-        setDataUserNotification(sortedFilteredNotification);
+        setDataUserNotification(sortedFilteredNotification?.filter((noti) => noti?.isBlock === false));
         setAlertStatus(true);
       });
     });
@@ -453,7 +458,7 @@ const Chat = ({ setLogoutStatus }) => {
     }).then((res) => {
       const filteredNotification = res.filter((e) => e.notificationOfReceiverId.includes(userDataInActiveRef?.current?._id) && e.notificationOfUserId !== userDataInActiveRef?.current?._id);
       const sortedFilteredNotification = filteredNotification.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      setDataUserNotification(sortedFilteredNotification);
+      setDataUserNotification(sortedFilteredNotification?.filter((noti) => noti?.isBlock === false));
       setAlertStatus(true);
     });
   }, [userDataInActive]);
@@ -473,6 +478,7 @@ const Chat = ({ setLogoutStatus }) => {
 
   useEffect(() => {
     socket.current?.on('createChat', () => {
+      setIsBlockChat(true);
       setSelectedChat(null);
       setCreateChatStatus(false);
       setChatIdToCreateChatMsg("");
@@ -710,7 +716,7 @@ const Chat = ({ setLogoutStatus }) => {
                   userInfo.filter((e) => {
                     return searchPeopleChat.trim() !== '' ? e.fullname.toLowerCase().includes(searchPeopleChat.trim().toLowerCase()) && e.firstname.toLowerCase() !== userDataInActive.firstname && e.lastname.toLowerCase() !== userDataInActive.lastname : '';
                   }).map((e) => (
-                    <SearchPeopleChat key={e?._id} setChatIdToCreateChatMsg={setChatIdToCreateChatMsg} inputChatMshRef={inputChatMshRef.current} setSelectedChat={setSelectedChat} setSearchPeopleChat={setSearchPeopleChat} setChatOfUser={setChatOfUser} setSearchPeopleInMoblieMsg={setSearchPeopleInMoblieMsg} setOpenSearchPeopleInMobile={setOpenSearchPeopleInMobile} setCreateChatStatus={setCreateChatStatus} createChatStatus={createChatStatus} userDataInActive={userDataInActive} userId={e._id} image={e.profilePicture} firstname={e.firstname} lastname={e.lastname} />
+                    <SearchPeopleChat key={e?._id} setIsBlockChat={setIsBlockChat} setChatIdToCreateChatMsg={setChatIdToCreateChatMsg} inputChatMshRef={inputChatMshRef.current} setSelectedChat={setSelectedChat} setSearchPeopleChat={setSearchPeopleChat} setChatOfUser={setChatOfUser} setSearchPeopleInMoblieMsg={setSearchPeopleInMoblieMsg} setOpenSearchPeopleInMobile={setOpenSearchPeopleInMobile} setCreateChatStatus={setCreateChatStatus} createChatStatus={createChatStatus} userDataInActive={userDataInActive} userId={e._id} image={e.profilePicture} firstname={e.firstname} lastname={e.lastname} />
                   ))
                 }
                 {searchPeopleChat.trim() === '' && <div className='no-search-result-container fix-mobile'><p className='no-search-result'>Users not found.</p></div>}
@@ -731,7 +737,7 @@ const Chat = ({ setLogoutStatus }) => {
                   userInfo.filter((e) => {
                     return searchPeopleInMoblieMsg.trim() !== '' ? e.fullname.toLowerCase().includes(searchPeopleInMoblieMsg.trim().toLowerCase()) && e.firstname.toLowerCase() !== userDataInActive.firstname && e.lastname.toLowerCase() !== userDataInActive.lastname : '';
                   }).map((e) => (
-                    <SearchPeopleChat key={e?._id} inputChatMshRef={inputChatMshRef.current} setSelectedChat={setSelectedChat} setSearchPeopleChat={setSearchPeopleChat} setChatOfUser={setChatOfUser} setSearchPeopleInMoblieMsg={setSearchPeopleInMoblieMsg} setOpenSearchPeopleInMobile={setOpenSearchPeopleInMobile} setCreateChatStatus={setCreateChatStatus} createChatStatus={createChatStatus} userDataInActive={userDataInActive} userId={e._id} image={e.profilePicture} firstname={e.firstname} lastname={e.lastname} />
+                    <SearchPeopleChat key={e?._id} setIsBlockChat={setIsBlockChat} inputChatMshRef={inputChatMshRef.current} setSelectedChat={setSelectedChat} setSearchPeopleChat={setSearchPeopleChat} setChatOfUser={setChatOfUser} setSearchPeopleInMoblieMsg={setSearchPeopleInMoblieMsg} setOpenSearchPeopleInMobile={setOpenSearchPeopleInMobile} setCreateChatStatus={setCreateChatStatus} createChatStatus={createChatStatus} userDataInActive={userDataInActive} userId={e._id} image={e.profilePicture} firstname={e.firstname} lastname={e.lastname} />
                   ))
                 }
               </div>
@@ -747,7 +753,7 @@ const Chat = ({ setLogoutStatus }) => {
               chatOfUser.length !== 0
                 ?
                 chatOfUser.map((e, index) => (
-                  <ChatUserList key={e?._id} setFullnameUserChat={setFullnameUserChat} chatMsg={chatMsg} handleChatIdToCreateChatMsg={handleChatIdToCreateChatMsg} chatIdToCreateChatMsg={chatIdToCreateChatMsg} selectedChat={selectedChat} setSelectedChat={setSelectedChat} index={index} createMsgStatus={createMsgStatus} setCreateChatStatus={setCreateChatStatus} userDataInActiveId={userDataInActive._id} setChatMsg={setChatMsg} chatId={e._id} userInfo={userInfo} chatOfUserId={e.members.find((e) => e !== userDataInActive._id)} />
+                  <ChatUserList key={e?._id} isBlock={e?.isBlock} setFullnameUserChat={setFullnameUserChat} chatMsg={chatMsg} handleChatIdToCreateChatMsg={handleChatIdToCreateChatMsg} chatIdToCreateChatMsg={chatIdToCreateChatMsg} selectedChat={selectedChat} setSelectedChat={setSelectedChat} index={index} createMsgStatus={createMsgStatus} setCreateChatStatus={setCreateChatStatus} userDataInActiveId={userDataInActive._id} setChatMsg={setChatMsg} chatId={e._id} userInfo={userInfo} chatOfUserId={e.members.find((e) => e !== userDataInActive._id)} />
                 ))
                 :
                 <div className='fix-style-bunlung' style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#353535', fontSize: '1rem', fontWeight: '500' }}>No chat history</div>
@@ -846,46 +852,51 @@ const Chat = ({ setLogoutStatus }) => {
                 <div className='fix-style-bunlung' style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#353535', fontSize: '1rem', fontWeight: '500' }}>Select chat or start new conversation</div>
             }
           </div>
-          <div className='container-create-msg-chat-in-chat-msg-user-container-in-chat-container-in-chat-page'>
-            <form onSubmit={(e) => createMessageChat(e)} style={{ width: '100%', height: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: objURLFileImg.length !== 0 ? 'flex-end' : 'center', gap: '10px' }}>
-              <div style={{ position: 'relative' }} className='create-msg-chat-in-chat-msg-user-container-in-chat-container-in-chat-page'>
-                {objURLFileImg.length !== 0 &&
-                  <div className='container-previews-img-in-create-msg-chat-in-chat-msg-user-container-in-chat-container-in-chat-page'>
-                    {objURLFileImg.map((e, index) => (
-                      <div key={index} className='preview-img-container-in-create-chat-msg'>
-                        <img src={e} alt='previewImg' />
-                        <div onClick={() => clearFileImg(index)} className='container-icon-clear-img-to-select-in-preview-img-container-in-create-chat-msg'>
-                          <FontAwesomeIcon icon={faCircleXmark} className='icon-xmark'></FontAwesomeIcon>
+          {isBlockChat
+            ?
+            <div className='container-create-msg-chat-in-chat-msg-user-container-in-chat-container-in-chat-page'>
+              <form onSubmit={(e) => createMessageChat(e)} style={{ width: '100%', height: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: objURLFileImg.length !== 0 ? 'flex-end' : 'center', gap: '10px' }}>
+                <div style={{ position: 'relative' }} className='create-msg-chat-in-chat-msg-user-container-in-chat-container-in-chat-page'>
+                  {objURLFileImg.length !== 0 &&
+                    <div className='container-previews-img-in-create-msg-chat-in-chat-msg-user-container-in-chat-container-in-chat-page'>
+                      {objURLFileImg.map((e, index) => (
+                        <div key={index} className='preview-img-container-in-create-chat-msg'>
+                          <img src={e} alt='previewImg' />
+                          <div onClick={() => clearFileImg(index)} className='container-icon-clear-img-to-select-in-preview-img-container-in-create-chat-msg'>
+                            <FontAwesomeIcon icon={faCircleXmark} className='icon-xmark'></FontAwesomeIcon>
+                          </div>
                         </div>
-                      </div>
-                    ))
-                    }
-                  </div>
-                }
-                <div className='fix-layout-in-create-msg-chat-in-chat-msg-user-container-in-chat-container-in-chat-page'>
-                  <input ref={inputTextCreateChatMsgRef} value={createChatMsg} type='text' placeholder='Type your message' onChange={(e) => setCreateChatMsg(e.target.value)} />
-                  <div onClick={() => setOpenEmojiPicker(true)} className='container-icon-in-create-msg-chat-in-chat-msg-user-container-in-chat-container-in-chat-page'>
-                    <BsEmojiSmile className='icon-emoji' />
-                  </div>
-                  <div onClick={() => inputSelectFileToCreateMsgChat.current.click()} className='container-icon-in-create-msg-chat-in-chat-msg-user-container-in-chat-container-in-chat-page'>
-                    <SlPaperClip className='icon-clip' />
-                    <input multiple name='chatImg' onChange={(e) => previewImgToSelectInCreateChat(e)} onClick={(e) => e.target.value = null} ref={inputSelectFileToCreateMsgChat} type='file' accept='image/png , image/jpeg' style={{ display: 'none' }} />
-                  </div>
-                </div>
-                {openEmojiPicker &&
-                  <>
-                    <div className='bg-onclick-to-close-emoji-popup-picker-in-create-comment-container-in-post-of-users' onClick={() => setOpenEmojiPicker(false)}></div>
-                    <div className='style-emoji-picker-fix-in-write-comment-container-in-create-comment-container-in-post-of-users'>
-                      <EmojiPicker onEmojiClick={emojiClick} />
+                      ))
+                      }
                     </div>
-                  </>
-                }
-              </div>
-              <button type='submit' disabled={disableButtonSendMsg} className='send-msg-chat-button'>
-                <FontAwesomeIcon icon={faPaperPlane} className='icon-send-msg'></FontAwesomeIcon>
-              </button>
-            </form>
-          </div>
+                  }
+                  <div className='fix-layout-in-create-msg-chat-in-chat-msg-user-container-in-chat-container-in-chat-page'>
+                    <input ref={inputTextCreateChatMsgRef} value={createChatMsg} type='text' placeholder='Type your message' onChange={(e) => setCreateChatMsg(e.target.value)} />
+                    <div onClick={() => setOpenEmojiPicker(true)} className='container-icon-in-create-msg-chat-in-chat-msg-user-container-in-chat-container-in-chat-page'>
+                      <BsEmojiSmile className='icon-emoji' />
+                    </div>
+                    <div onClick={() => inputSelectFileToCreateMsgChat.current.click()} className='container-icon-in-create-msg-chat-in-chat-msg-user-container-in-chat-container-in-chat-page'>
+                      <SlPaperClip className='icon-clip' />
+                      <input multiple name='chatImg' onChange={(e) => previewImgToSelectInCreateChat(e)} onClick={(e) => e.target.value = null} ref={inputSelectFileToCreateMsgChat} type='file' accept='image/png , image/jpeg , image/webp' style={{ display: 'none' }} />
+                    </div>
+                  </div>
+                  {openEmojiPicker &&
+                    <>
+                      <div className='bg-onclick-to-close-emoji-popup-picker-in-create-comment-container-in-post-of-users' onClick={() => setOpenEmojiPicker(false)}></div>
+                      <div className='style-emoji-picker-fix-in-write-comment-container-in-create-comment-container-in-post-of-users'>
+                        <EmojiPicker onEmojiClick={emojiClick} />
+                      </div>
+                    </>
+                  }
+                </div>
+                <button type='submit' disabled={disableButtonSendMsg} className='send-msg-chat-button'>
+                  <FontAwesomeIcon icon={faPaperPlane} className='icon-send-msg'></FontAwesomeIcon>
+                </button>
+              </form>
+            </div>
+            :
+            <div className='style-by-bell' style={{textAlign: "center" , color: "#DE4040" , height: "50px" , borderRadius: "5px" , display: "flex" , alignItems: "center" , justifyContent: "center" , width: "100%" , backgroundColor: "#FFBDBD" , fontWeight: "bold"}}>You has been blocked chat by admin!</div>
+          }
         </div>
       </div>
     </div>

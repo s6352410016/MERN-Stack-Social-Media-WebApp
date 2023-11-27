@@ -11,7 +11,8 @@ const ChatMsg = ({ fullnameUserChat, userInfo, senderId, chatMsg, chatImages, cr
   });
 
   useEffect(() => {
-    chatRef?.current?.scrollIntoView({ behavior: 'smooth' });
+    chatRef?.current?.scrollIntoView({ behavior: 'smooth' , block: 'start'});
+    // chatRef?.current?.scrollIntoView(true);
   }, []);
 
   return (

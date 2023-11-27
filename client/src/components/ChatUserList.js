@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { SocketIOContext } from './SocketContext';
 import { format } from 'date-fns';
 
-const ChatUserList = ({ setFullnameUserChat, chatMsg, handleChatIdToCreateChatMsg, selectedChat, setSelectedChat, index, setCreateChatStatus, userDataInActiveId, setChatMsg, chatId, userInfo, chatOfUserId }) => {
+const ChatUserList = ({ isBlock, setFullnameUserChat, chatMsg, handleChatIdToCreateChatMsg, selectedChat, setSelectedChat, index, setCreateChatStatus, userDataInActiveId, setChatMsg, chatId, userInfo, chatOfUserId }) => {
   const { socket } = useContext(SocketIOContext);
 
   const [dataChatOfUserByuserId, setDataChatOfUserByuserId] = useState({});
@@ -26,9 +26,9 @@ const ChatUserList = ({ setFullnameUserChat, chatMsg, handleChatIdToCreateChatMs
         return res.json();
       }
     }).then((res) => {
-      setChatMsg(res);
+      setChatMsg(res?.filter((msg) => msg?.isBlock === false));
       setCreateChatStatus(true);
-      handleChatIdToCreateChatMsg(chatId);
+      handleChatIdToCreateChatMsg(chatId, isBlock);
     });
 
     setSelectedChat(indexPrm);
@@ -52,7 +52,21 @@ const ChatUserList = ({ setFullnameUserChat, chatMsg, handleChatIdToCreateChatMs
         return res.json();
       }
     }).then((res) => {
-      setChatMsgCurrent(res);
+      setChatMsgCurrent(
+        res?.isBlock
+          ?
+          {
+            _id: res?._id,
+            chatId: res?.chatId,
+            chatImages: [],
+            chatMsg: "messages has block!",
+            createdAt: res?.createdAt,
+            senderId: res?.senderId,
+            updatedAt: res?.updatedAt,
+          }
+          :
+          res
+      );
     });
   }, [chatMsg]);
 
@@ -71,7 +85,21 @@ const ChatUserList = ({ setFullnameUserChat, chatMsg, handleChatIdToCreateChatMs
           return res.json();
         }
       }).then((res) => {
-        setChatMsgCurrent(res);
+        setChatMsgCurrent(
+          res?.isBlock
+            ?
+            {
+              _id: res?._id,
+              chatId: res?.chatId,
+              chatImages: [],
+              chatMsg: "messages has block!",
+              createdAt: res?.createdAt,
+              senderId: res?.senderId,
+              updatedAt: res?.updatedAt,
+            }
+            :
+            res
+        );
       });
     });
   }, [chatMsg]);
@@ -91,13 +119,13 @@ const ChatUserList = ({ setFullnameUserChat, chatMsg, handleChatIdToCreateChatMs
       <div className='container-profile-fullname-in-container-user-chat-list-profile'>
         <p>{dataChatOfUserByuserId.firstname} {dataChatOfUserByuserId.lastname}</p>
         {chatMsgCurrent !== null && chatMsgCurrent !== undefined &&
-          Object.keys(chatMsgCurrent).length !== 0 &&
+          Object.keys(chatMsgCurrent)?.length !== 0 &&
           <span>{
-            chatMsgCurrent.chatImages.length !== 0 && chatMsgCurrent.senderId === userDataInActiveId ? `You: send ${chatMsgCurrent.chatImages.length} ${chatMsgCurrent.chatImages.length > 1 ? 'images' : 'image'}`
-              : chatMsgCurrent.chatImages.length !== 0 && chatMsgCurrent.senderId !== userDataInActiveId ? `Send ${chatMsgCurrent.chatImages.length} ${chatMsgCurrent.chatImages.length > 1 ? 'images' : 'image'}`
-                : chatMsgCurrent.senderId === userDataInActiveId && chatMsgCurrent.chatMsg.length < 20 ? `You: ${chatMsgCurrent.chatMsg}`
-                  : chatMsgCurrent.senderId === userDataInActiveId && chatMsgCurrent.chatMsg.length > 20 ? `You: ${chatMsgCurrent.chatMsg.slice(0, 20)}...`
-                    : `${chatMsgCurrent.senderId !== userDataInActiveId && chatMsgCurrent.chatMsg.length < 20 ? 'Send: ' + chatMsgCurrent.chatMsg : 'Send: ' + chatMsgCurrent.chatMsg.slice(0, 20) + '...'}`
+            chatMsgCurrent?.chatImages?.length !== 0 && chatMsgCurrent?.senderId === userDataInActiveId ? `You: send ${chatMsgCurrent?.chatImages?.length} ${chatMsgCurrent?.chatImages?.length > 1 ? 'images' : 'image'}`
+              : chatMsgCurrent?.chatImages?.length !== 0 && chatMsgCurrent?.senderId !== userDataInActiveId ? `Send ${chatMsgCurrent?.chatImages?.length} ${chatMsgCurrent?.chatImages?.length > 1 ? 'images' : 'image'}`
+                : chatMsgCurrent?.senderId === userDataInActiveId && chatMsgCurrent?.chatMsg?.length < 20 ? `You: ${chatMsgCurrent?.chatMsg}`
+                  : chatMsgCurrent?.senderId === userDataInActiveId && chatMsgCurrent?.chatMsg?.length > 20 ? `You: ${chatMsgCurrent?.chatMsg?.slice(0, 20)}...`
+                    : `${chatMsgCurrent?.senderId !== userDataInActiveId && chatMsgCurrent?.chatMsg?.length < 20 ? 'Send: ' + chatMsgCurrent?.chatMsg : 'Send: ' + chatMsgCurrent?.chatMsg?.slice(0, 20) + '...'}`
           }
           </span>
         }

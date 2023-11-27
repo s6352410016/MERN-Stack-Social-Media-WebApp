@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { SocketIOContext } from './SocketContext';
 
-const SearchPeopleChat = ({ setChatIdToCreateChatMsg, inputChatMshRef, setSelectedChat, setSearchPeopleChat, setSearchPeopleInMoblieMsg, setOpenSearchPeopleInMobile, setCreateChatStatus, createChatStatus, userDataInActive, userId, image, firstname, lastname }) => {
+const SearchPeopleChat = ({setIsBlockChat, setChatIdToCreateChatMsg, inputChatMshRef, setSelectedChat, setSearchPeopleChat, setSearchPeopleInMoblieMsg, setOpenSearchPeopleInMobile, setCreateChatStatus, createChatStatus, userDataInActive, userId, image, firstname, lastname }) => {
   const { socket } = useContext(SocketIOContext);
 
   const createChat = () => {
@@ -24,6 +24,7 @@ const SearchPeopleChat = ({ setChatIdToCreateChatMsg, inputChatMshRef, setSelect
         setSearchPeopleInMoblieMsg('');
         setSearchPeopleChat('');
         inputChatMshRef.value = '';
+        setIsBlockChat(true);
       } else {
         setSelectedChat(null);
         setCreateChatStatus(!createChatStatus);
@@ -32,6 +33,7 @@ const SearchPeopleChat = ({ setChatIdToCreateChatMsg, inputChatMshRef, setSelect
         setSearchPeopleChat('');
         inputChatMshRef.value = '';
         setChatIdToCreateChatMsg("");
+        setIsBlockChat(true);
       }
     });
   }

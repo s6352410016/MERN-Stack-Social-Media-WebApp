@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Cookies from 'js-cookie';
 import { CiCircleRemove } from 'react-icons/ci';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Signin = () => {
 
@@ -15,6 +16,8 @@ const Signin = () => {
 
   const inputTextRef = useRef();
   const inputPasswordRef = useRef();
+
+  let blockStatus = false;
 
   useEffect(() => {
     setUsernameOrEmail(inputTextRef.current.defaultValue);
@@ -86,8 +89,11 @@ const Signin = () => {
             password: password
           })
         }).then((res) => {
-          if (res.status === 400) {
-            setErrMsg({
+          if (res.status === 403) {
+            blockStatus = true;
+            return toast.error("You has been blocked by admin.");
+          } else if (res.status === 400) {
+            return setErrMsg({
               signinErr: 'Invalid username / email or password'
             });
           } else if (res.status === 200) {
@@ -104,8 +110,10 @@ const Signin = () => {
             return res.json();
           }
         }).then((res) => {
-          localStorage.setItem('token', res.token);
-          navigate('/media');
+          if (blockStatus === false) {
+            localStorage.setItem('token', res.token);
+            navigate('/media');
+          }
         });
       }
     }
@@ -124,6 +132,7 @@ const Signin = () => {
   return (
     <div className='container'>
       <Snowfall />
+      <Toaster />
       <div className='content-left'>
         <div className='container-content'>
           <h2>Sign in</h2>

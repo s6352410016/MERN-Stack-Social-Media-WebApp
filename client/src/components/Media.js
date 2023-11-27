@@ -86,7 +86,7 @@ const Media = ({ setLogoutStatus }) => {
       }).then((res) => {
         const filteredNotification = res.filter((e) => e.notificationOfReceiverId.includes(userDataInActiveRef?.current?._id) && e.notificationOfUserId !== userDataInActiveRef?.current?._id);
         const sortedFilteredNotification = filteredNotification.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-        setDataUserNotification(sortedFilteredNotification);
+        setDataUserNotification(sortedFilteredNotification?.filter((noti) => noti?.isBlock === false));
         setAlertStatus(true);
       });
     });
@@ -105,7 +105,7 @@ const Media = ({ setLogoutStatus }) => {
     }).then((res) => {
       const filteredNotification = res.filter((e) => e.notificationOfReceiverId.includes(userDataInActiveRef?.current?._id) && e.notificationOfUserId !== userDataInActiveRef?.current?._id);
       const sortedFilteredNotification = filteredNotification.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      setDataUserNotification(sortedFilteredNotification);
+      setDataUserNotification(sortedFilteredNotification?.filter((noti) => noti?.isBlock === false));
       setAlertStatus(true);
     });
   }, [userDataInActive]);
@@ -625,10 +625,10 @@ const Media = ({ setLogoutStatus }) => {
               :
               userDataInActive !== null && userDataInActive !== undefined && Object.keys(userDataInActive).length !== 0 &&
               sortAllPostAscening.map((e) => {
-                if (e.userIdToPost) {
+                if (e.userIdToPost && e.isBlock === false) {
                   return <Post key={e?._id} setSortAllPostAscending={setSortAllPostAscending} setOpenProfileStatus={setOpenProfileStatus} showProfilePageStatus={showProfilePageStatus} setShowProfilePageStatus={setShowProfilePageStatus} setCreateSharePostStatus={setCreateSharePostStatus} createSharePostStatus={createSharePostStatus} followAndUnFollow={followAndUnFollow} setFollowAndUnFollow={setFollowAndUnFollow} userDataInActive={userDataInActive?._id} likedPost={likedPost} setLikedPost={setLikedPost} editPostStatus={editPostStatus} setEditPostStatus={setEditPostStatus} deletePostStatus={deletePostStatus} setDeletePostStatus={setDeletePostStatus} userInfo={userInfo} activeUserId={userData.userId} postId={e._id} userIdToPost={e.userIdToPost} postMsg={e.postMsg} postImgs={e.postImgs} postVideo={e.postVideo} createdAt={e.createdAt} postLikes={e.postLikes} />;
                 } else {
-                  return <SharePost key={e?._id} setOpenProfileStatus={setOpenProfileStatus} showProfilePageStatus={showProfilePageStatus} setShowProfilePageStatus={setShowProfilePageStatus} setCreateSharePostStatus={setCreateSharePostStatus} createSharePostStatus={createSharePostStatus} userDataInActive={userDataInActive?._id} setFollowAndUnFollow={setFollowAndUnFollow} followAndUnFollow={followAndUnFollow} setLikedSharePost={setLikedSharePost} likedSharePost={likedSharePost} setDeleteSharePostStatus={setDeleteSharePostStatus} deleteSharePostStatus={deleteSharePostStatus} setEditSharePostStatus={setEditSharePostStatus} editSharePostStatus={editSharePostStatus} shareId={e._id} userIdToShare={e.userIdToShare} postIdToShare={e.postIdToShare} shareMsg={e.shareMsg} sharePostLikes={e.sharePostLikes} createdAt={e.createdAt} userInfo={userInfo} activeUserId={userData.userId} postOfusers={postOfusers} />;
+                  return e.isBlock === false && <SharePost key={e?._id} setOpenProfileStatus={setOpenProfileStatus} showProfilePageStatus={showProfilePageStatus} setShowProfilePageStatus={setShowProfilePageStatus} setCreateSharePostStatus={setCreateSharePostStatus} createSharePostStatus={createSharePostStatus} userDataInActive={userDataInActive?._id} setFollowAndUnFollow={setFollowAndUnFollow} followAndUnFollow={followAndUnFollow} setLikedSharePost={setLikedSharePost} likedSharePost={likedSharePost} setDeleteSharePostStatus={setDeleteSharePostStatus} deleteSharePostStatus={deleteSharePostStatus} setEditSharePostStatus={setEditSharePostStatus} editSharePostStatus={editSharePostStatus} shareId={e._id} userIdToShare={e.userIdToShare} postIdToShare={e.postIdToShare} shareMsg={e.shareMsg} sharePostLikes={e.sharePostLikes} createdAt={e.createdAt} userInfo={userInfo} activeUserId={userData.userId} postOfusers={postOfusers} />;
                 }
               })
             }

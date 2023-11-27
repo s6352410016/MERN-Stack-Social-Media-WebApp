@@ -12,6 +12,10 @@ const signin = async (req, res) => {
             ]
         });
         if (doc) {
+            if(doc.isBlock){
+                return res.status(403).json({msg: "you has been blocked by admin."});
+            }
+            
             const result = await bcrypt.compare(password, doc.password);
             if (result) {
                 const token = jwt.sign(
