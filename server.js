@@ -23,16 +23,16 @@ const PORT = process.env.PORT || 5000;
 
 // app.use(morgan("combined"));
 app.use(cors());
-app.use(helmet.contentSecurityPolicy({
-    useDefaults: true,
-    directives: {
-        "img-src": ["'self'", "https:", "data:", "blob:" , "bynsocial.up.railway.app" , "bynsocial-admin.onrender.com"]
-    }
-}));
-app.use((req, res, next) => {
-    res.setHeader('Cross-Origin-Resource-Policy', 'same-site');
-    next();
-});
+// app.use(helmet.contentSecurityPolicy({
+//     useDefaults: true,
+//     directives: {
+//         "img-src": ["'self'", "https:", "data:", "blob:" , "bynsocial.up.railway.app" , "bynsocial-admin.onrender.com"]
+//     }
+// }));
+// app.use((req, res, next) => {
+//     res.setHeader('Cross-Origin-Resource-Policy', 'same-site');
+//     next();
+// });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
