@@ -21,7 +21,9 @@ import SkeletonChatUserList from './SkeletonChatUserList';
 import SkeletonChatMsg from './SkeletonChatMsg';
 import SkeletonChatMsgUserInActive from './SkeletonChatMsgUserInActive';
 import { SocketIOContext } from './SocketContext';
-import { RotatingLines } from 'react-loader-spinner';
+import { RotatingLines, ColorRing } from 'react-loader-spinner';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Chat = ({ setLogoutStatus }) => {
   const { socket } = useContext(SocketIOContext);
@@ -32,6 +34,7 @@ const Chat = ({ setLogoutStatus }) => {
   const inputChatMshRef = useRef();
   const closeFindUserChat = useRef();
   const userDataInActiveRef = useRef(null);
+  const closePopupRef = useRef(null);
 
   const [searchResult, setSearchResult] = useState('');
   const [openSearchResult, setOpenSearchResult] = useState(false);
@@ -81,6 +84,9 @@ const Chat = ({ setLogoutStatus }) => {
   const [openDeleteChat, setOpenDeleteChat] = useState(false);
   const [deleteMsgInChatStatus, setDeleteMsgInChatStatus] = useState(false);
   const [isBlockChat, setIsBlockChat] = useState(true);
+  const [showChatHeader, setShowChatHeader] = useState(true);
+  const [showChatBody, setShowChatBody] = useState(false);
+  const [showIconFetchMsg, setShowIconFetchMsg] = useState(true);
 
   const closeDropdown = () => {
     setOpenMenus(false);
@@ -177,11 +183,11 @@ const Chat = ({ setLogoutStatus }) => {
   }
 
   const openSearchPeopleChatPopup = () => {
-    setOpenSearchPeopleChat(!openSearchPeopleChat);
+    setOpenSearchPeopleChat(true);
     setOpenSearchPeopleInMobile(true);
 
-    // const closePopup = document.getElementById('close-popup');
-    // closePopup.classList.add('close-popup');
+    const closePopup = document.getElementById('close-popup');
+    closePopup.classList.add('close-popup');
   }
 
   const emojiClick = ({ emoji }) => {
@@ -330,6 +336,7 @@ const Chat = ({ setLogoutStatus }) => {
       setOpenDeleteChat(false);
       setEffectWhileDeleteChat(false);
       setChatIdToCreateChatMsg("");
+      setShowChatBody(false);
       setDeleteMsgInChatStatus(!deleteMsgInChatStatus);
       setIsBlockChat(true);
     } catch (err) {
@@ -342,7 +349,7 @@ const Chat = ({ setLogoutStatus }) => {
   }
 
   useEffect(() => {
-    if(isBlockChat){
+    if (isBlockChat) {
       inputTextCreateChatMsgRef.current.selectionEnd = cursorPosition;
     }
   }, [cursorPosition]);
@@ -494,7 +501,9 @@ const Chat = ({ setLogoutStatus }) => {
             return res.json();
           }
         }).then((res) => {
-          setChatOfUser(res);
+          setShowChatBody(false);
+          const sortedChat = res.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          setChatOfUser(sortedChat);
         });
       }
     });
@@ -512,7 +521,8 @@ const Chat = ({ setLogoutStatus }) => {
           return res.json();
         }
       }).then((res) => {
-        setChatOfUser(res);
+        const sortedChat = res.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setChatOfUser(sortedChat);
       });
     }
   }, [createChatStatus, userDataInActive, userData.userId, deleteMsgInChatStatus]);
@@ -584,7 +594,7 @@ const Chat = ({ setLogoutStatus }) => {
 
   return (
     <div className='container-chat'>
-      <div id='close-popup' onClick={closeDropdown}></div>
+      <div id='close-popup' onClick={closeDropdown} ref={closePopupRef}></div>
       <header className='container-header'>
         <div className='content-left-header'>
           <Link to='/media' className='text-decoration-none'><h2 className='logo-header'>BYNSocial</h2></Link>
@@ -708,6 +718,7 @@ const Chat = ({ setLogoutStatus }) => {
       <div className='chat-container-in-chat-page'>
         <div className='list-user-chat-container-in-chat-container-in-chat-page'>
           <div onClick={openSearchPeopleChatPopup} style={{ position: 'relative' }} className='container-search-people-to-chat-in-list-user-chat-container-in-chat-container-in-chat-page'>
+            {/* {openSearchPeopleChat && <div onClick={() => setOpenSearchPeopleChat(false)} class="bg-onclick-to-close-people-likes-post-list-bell"></div>} */}
             <FontAwesomeIcon className='search-icon-in-container-search-people-to-chat-in-list-user-chat-container-in-chat-container-in-chat-page' icon={faMagnifyingGlass}></FontAwesomeIcon>
             <input ref={inputChatMshRef} onChange={(e) => setSearchPeopleChat(e.target.value)} className='input-text-in-container-search-people-to-chat-in-list-user-chat-container-in-chat-container-in-chat-page' type='text' placeholder='Search people to chat' />
             {openSearchPeopleChat &&
@@ -716,7 +727,7 @@ const Chat = ({ setLogoutStatus }) => {
                   userInfo.filter((e) => {
                     return searchPeopleChat.trim() !== '' ? e.fullname.toLowerCase().includes(searchPeopleChat.trim().toLowerCase()) && e.firstname.toLowerCase() !== userDataInActive.firstname && e.lastname.toLowerCase() !== userDataInActive.lastname : '';
                   }).map((e) => (
-                    <SearchPeopleChat key={e?._id} setIsBlockChat={setIsBlockChat} setChatIdToCreateChatMsg={setChatIdToCreateChatMsg} inputChatMshRef={inputChatMshRef.current} setSelectedChat={setSelectedChat} setSearchPeopleChat={setSearchPeopleChat} setChatOfUser={setChatOfUser} setSearchPeopleInMoblieMsg={setSearchPeopleInMoblieMsg} setOpenSearchPeopleInMobile={setOpenSearchPeopleInMobile} setCreateChatStatus={setCreateChatStatus} createChatStatus={createChatStatus} userDataInActive={userDataInActive} userId={e._id} image={e.profilePicture} firstname={e.firstname} lastname={e.lastname} />
+                    <SearchPeopleChat key={e?._id} closePopupRef={closePopupRef} setOpenSearchPeopleChat={setOpenSearchPeopleChat} setShowChatBody={setShowChatBody} setShowChatHeader={setShowChatHeader} setIsBlockChat={setIsBlockChat} setChatIdToCreateChatMsg={setChatIdToCreateChatMsg} inputChatMshRef={inputChatMshRef.current} setSelectedChat={setSelectedChat} setSearchPeopleChat={setSearchPeopleChat} setChatOfUser={setChatOfUser} setSearchPeopleInMoblieMsg={setSearchPeopleInMoblieMsg} setOpenSearchPeopleInMobile={setOpenSearchPeopleInMobile} setCreateChatStatus={setCreateChatStatus} createChatStatus={createChatStatus} userDataInActive={userDataInActive} userId={e._id} image={e.profilePicture} firstname={e.firstname} lastname={e.lastname} />
                   ))
                 }
                 {searchPeopleChat.trim() === '' && <div className='no-search-result-container fix-mobile'><p className='no-search-result'>Users not found.</p></div>}
@@ -737,7 +748,7 @@ const Chat = ({ setLogoutStatus }) => {
                   userInfo.filter((e) => {
                     return searchPeopleInMoblieMsg.trim() !== '' ? e.fullname.toLowerCase().includes(searchPeopleInMoblieMsg.trim().toLowerCase()) && e.firstname.toLowerCase() !== userDataInActive.firstname && e.lastname.toLowerCase() !== userDataInActive.lastname : '';
                   }).map((e) => (
-                    <SearchPeopleChat key={e?._id} setIsBlockChat={setIsBlockChat} inputChatMshRef={inputChatMshRef.current} setSelectedChat={setSelectedChat} setSearchPeopleChat={setSearchPeopleChat} setChatOfUser={setChatOfUser} setSearchPeopleInMoblieMsg={setSearchPeopleInMoblieMsg} setOpenSearchPeopleInMobile={setOpenSearchPeopleInMobile} setCreateChatStatus={setCreateChatStatus} createChatStatus={createChatStatus} userDataInActive={userDataInActive} userId={e._id} image={e.profilePicture} firstname={e.firstname} lastname={e.lastname} />
+                    <SearchPeopleChat key={e?._id} setChatIdToCreateChatMsg={setChatIdToCreateChatMsg} closePopupRef={closePopupRef} setOpenSearchPeopleChat={setOpenSearchPeopleChat} setShowChatBody={setShowChatBody} setShowChatHeader={setShowChatHeader} setIsBlockChat={setIsBlockChat} inputChatMshRef={inputChatMshRef.current} setSelectedChat={setSelectedChat} setSearchPeopleChat={setSearchPeopleChat} setChatOfUser={setChatOfUser} setSearchPeopleInMoblieMsg={setSearchPeopleInMoblieMsg} setOpenSearchPeopleInMobile={setOpenSearchPeopleInMobile} setCreateChatStatus={setCreateChatStatus} createChatStatus={createChatStatus} userDataInActive={userDataInActive} userId={e._id} image={e.profilePicture} firstname={e.firstname} lastname={e.lastname} />
                   ))
                 }
               </div>
@@ -753,7 +764,7 @@ const Chat = ({ setLogoutStatus }) => {
               chatOfUser.length !== 0
                 ?
                 chatOfUser.map((e, index) => (
-                  <ChatUserList key={e?._id} isBlock={e?.isBlock} setFullnameUserChat={setFullnameUserChat} chatMsg={chatMsg} handleChatIdToCreateChatMsg={handleChatIdToCreateChatMsg} chatIdToCreateChatMsg={chatIdToCreateChatMsg} selectedChat={selectedChat} setSelectedChat={setSelectedChat} index={index} createMsgStatus={createMsgStatus} setCreateChatStatus={setCreateChatStatus} userDataInActiveId={userDataInActive._id} setChatMsg={setChatMsg} chatId={e._id} userInfo={userInfo} chatOfUserId={e.members.find((e) => e !== userDataInActive._id)} />
+                  <ChatUserList key={e?._id} setShowIconFetchMsg={setShowIconFetchMsg} setShowChatBody={setShowChatBody} setShowChatHeader={setShowChatHeader} isBlock={e?.isBlock} setFullnameUserChat={setFullnameUserChat} chatMsg={chatMsg} handleChatIdToCreateChatMsg={handleChatIdToCreateChatMsg} chatIdToCreateChatMsg={chatIdToCreateChatMsg} selectedChat={selectedChat} setSelectedChat={setSelectedChat} index={index} createMsgStatus={createMsgStatus} setCreateChatStatus={setCreateChatStatus} userDataInActiveId={userDataInActive._id} setChatMsg={setChatMsg} chatId={e._id} userInfo={userInfo} chatOfUserId={e.members.find((e) => e !== userDataInActive._id)} />
                 ))
                 :
                 <div className='fix-style-bunlung' style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#353535', fontSize: '1rem', fontWeight: '500' }}>No chat history</div>
@@ -761,7 +772,22 @@ const Chat = ({ setLogoutStatus }) => {
           </div>
         </div>
         <div className='chat-msg-user-container-in-chat-container-in-chat-page'>
-          {chatIdToCreateChatMsg !== "" &&
+          {showIconFetchMsg && chatIdToCreateChatMsg !== "" && showChatHeader
+            ?
+            <div className='message-header-in-chat-msg-user-container-in-chat-container-in-chat-page'>
+              <Link className='container-profile-img-in-container-user-chat-list-profile'>
+                <Skeleton circle={true} height={50} width={50} className='fix-style-mobile-bybell-bunlung-profile-img' />
+              </Link>
+              <div className='user-info-data-chat'>
+                <Skeleton height={15} width={150} className='fix-style-mobile-bybell-bunlung-detail-main' />
+                <Skeleton height={15} width={100} className='fix-style-mobile-bybell-bunlung-detail' />
+              </div>
+              <div className='dot-dot-dot-chat-setting'>
+                <Skeleton height={15} width={35} className='fix-style-mobile-bybell-bunlung-dot' />
+              </div>
+            </div>
+            :
+            chatIdToCreateChatMsg !== "" && showChatHeader &&
             <div className='message-header-in-chat-msg-user-container-in-chat-container-in-chat-page'>
               <Link to={`/profile/${chatUserData?._id}`} className='container-profile-img-in-container-user-chat-list-profile'>
                 <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/userProfileImg/${!chatUserData?.profilePicture ? 'profileImgDefault.jpg' : chatUserData?.profilePicture}`} alt='userProfileImg' />
@@ -833,21 +859,35 @@ const Chat = ({ setLogoutStatus }) => {
                 }
               })
               :
-              createChatStatus
+              showChatBody
                 ?
-                chatMsg.length !== 0
+                showIconFetchMsg
                   ?
-                  chatMsg.map((e) => {
-                    if (e?.senderId === userDataInActiveRef?.current?._id && e?.chatId === chatIdToCreateChatMsg) {
-                      return <ChatMsgUserInActive key={e?._id} userInfo={userInfo} senderId={e.senderId} createMsgStatus={createMsgStatus} chatMsg={e.chatMsg} chatImages={e.chatImages} createdAt={e.createdAt} />;
-                    } else {
-                      if (e?.chatId === chatIdToCreateChatMsg) {
-                        return <ChatMsg key={e?._id} fullnameUserChat={fullnameUserChat} createMsgStatus={createMsgStatus} userInfo={userInfo} senderId={e.senderId} chatMsg={e.chatMsg} chatImages={e.chatImages} createdAt={e.createdAt} />;
-                      }
-                    }
-                  })
+                  <div className='icon-fetch-msg'>
+                    <ColorRing
+                      visible={true}
+                      height="50"
+                      width="50"
+                      ariaLabel="blocks-loading"
+                      wrapperStyle={{}}
+                      wrapperClass="blocks-wrapper"
+                      colors={['#1982FF', '#1982FF', '#1982FF', '#1982FF', '#1982FF']}
+                    />
+                  </div>
                   :
-                  <div className='fix-style-bunlung' style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#353535', fontSize: '1rem', fontWeight: '500' }}>No message</div>
+                  chatMsg.length !== 0
+                    ?
+                    chatMsg.map((e) => {
+                      if (e?.senderId === userDataInActiveRef?.current?._id && e?.chatId === chatIdToCreateChatMsg) {
+                        return <ChatMsgUserInActive key={e?._id} userInfo={userInfo} senderId={e.senderId} createMsgStatus={createMsgStatus} chatMsg={e.chatMsg} chatImages={e.chatImages} createdAt={e.createdAt} />;
+                      } else {
+                        if (e?.chatId === chatIdToCreateChatMsg) {
+                          return <ChatMsg key={e?._id} fullnameUserChat={fullnameUserChat} createMsgStatus={createMsgStatus} userInfo={userInfo} senderId={e.senderId} chatMsg={e.chatMsg} chatImages={e.chatImages} createdAt={e.createdAt} />;
+                        }
+                      }
+                    })
+                    :
+                    <div className='fix-style-bunlung' style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#353535', fontSize: '1rem', fontWeight: '500' }}>No message</div>
                 :
                 <div className='fix-style-bunlung' style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#353535', fontSize: '1rem', fontWeight: '500' }}>Select chat or start new conversation</div>
             }
@@ -895,7 +935,7 @@ const Chat = ({ setLogoutStatus }) => {
               </form>
             </div>
             :
-            <div className='style-by-bell' style={{textAlign: "center" , color: "#DE4040" , height: "50px" , borderRadius: "5px" , display: "flex" , alignItems: "center" , justifyContent: "center" , width: "100%" , backgroundColor: "#FFBDBD" , fontWeight: "bold"}}>You has been blocked chat by admin!</div>
+            <div className='style-by-bell' style={{ textAlign: "center", color: "#DE4040", height: "50px", borderRadius: "5px", display: "flex", alignItems: "center", justifyContent: "center", width: "100%", backgroundColor: "#FFBDBD", fontWeight: "bold" }}>You has been blocked chat by admin!</div>
           }
         </div>
       </div>

@@ -2,13 +2,14 @@ import React, { useState, useEffect, useContext } from 'react';
 import { SocketIOContext } from './SocketContext';
 import { format } from 'date-fns';
 
-const ChatUserList = ({ isBlock, setFullnameUserChat, chatMsg, handleChatIdToCreateChatMsg, selectedChat, setSelectedChat, index, setCreateChatStatus, userDataInActiveId, setChatMsg, chatId, userInfo, chatOfUserId }) => {
+const ChatUserList = ({ setShowIconFetchMsg, setShowChatBody, setShowChatHeader, isBlock, setFullnameUserChat, chatMsg, handleChatIdToCreateChatMsg, selectedChat, setSelectedChat, index, setCreateChatStatus, userDataInActiveId, setChatMsg, chatId, userInfo, chatOfUserId }) => {
   const { socket } = useContext(SocketIOContext);
 
   const [dataChatOfUserByuserId, setDataChatOfUserByuserId] = useState({});
   const [chatMsgCurrent, setChatMsgCurrent] = useState({});
 
   const getChatMsg = (indexPrm) => {
+    setShowIconFetchMsg(true);
     const firstname = dataChatOfUserByuserId.firstname;
     const lastname = dataChatOfUserByuserId.lastname
     const fullName = `${firstname}`;
@@ -26,7 +27,14 @@ const ChatUserList = ({ isBlock, setFullnameUserChat, chatMsg, handleChatIdToCre
         return res.json();
       }
     }).then((res) => {
+      setShowIconFetchMsg(false);
+      setShowChatHeader(true);
+      // setTimeout(() => {
+      //   setShowIconFetchMsg(false);
+      //   setChatMsg(res?.filter((msg) => msg?.isBlock === false));
+      // } , 1000);
       setChatMsg(res?.filter((msg) => msg?.isBlock === false));
+      setShowChatBody(true);
       setCreateChatStatus(true);
       handleChatIdToCreateChatMsg(chatId, isBlock);
     });

@@ -802,6 +802,20 @@
     align-items: center;
     cursor: pointer;
     transition: .2s;
+    padding-left: 7px !important; 
+}
+
+.icon-fetch-msg{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
 }
 
 .search-result-container:hover {
@@ -824,7 +838,6 @@
     width: 50px;
     height: 50px;
     border-radius: 3rem;
-    margin-left: 7px;
 }
 
 .search-img-user {
@@ -2608,6 +2621,16 @@
     height: 100%;
     background-color: transparent;
     z-index: 998;
+}
+
+.bg-onclick-to-close-people-likes-post-list-bell {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    z-index: 999;
 }
 
 .container-comments-of-users {
@@ -6607,5 +6630,25 @@
 
     .style-by-bell{
         font-size: .7rem !important;
+    }
+
+    .fix-style-mobile-bybell-bunlung-profile-img{
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .fix-style-mobile-bybell-bunlung-detail-main{
+        width: 100px !important;
+        height: 10px !important;
+    }
+
+    .fix-style-mobile-bybell-bunlung-detail{
+        width: 50px !important;
+        height: 10px !important;
+    }
+
+    .fix-style-mobile-bybell-bunlung-dot{
+        width: 20px !important;
+        height: 10px !important;
     }
 }

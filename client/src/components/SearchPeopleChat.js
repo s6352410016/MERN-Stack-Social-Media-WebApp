@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { SocketIOContext } from './SocketContext';
 
-const SearchPeopleChat = ({setIsBlockChat, setChatIdToCreateChatMsg, inputChatMshRef, setSelectedChat, setSearchPeopleChat, setSearchPeopleInMoblieMsg, setOpenSearchPeopleInMobile, setCreateChatStatus, createChatStatus, userDataInActive, userId, image, firstname, lastname }) => {
+const SearchPeopleChat = ({closePopupRef ,setOpenSearchPeopleChat , setShowChatBody ,setShowChatHeader , setIsBlockChat, setChatIdToCreateChatMsg, inputChatMshRef, setSelectedChat, setSearchPeopleChat, setSearchPeopleInMoblieMsg, setOpenSearchPeopleInMobile, setCreateChatStatus, createChatStatus, userDataInActive, userId, image, firstname, lastname }) => {
   const { socket } = useContext(SocketIOContext);
 
   const createChat = () => {
@@ -25,6 +25,8 @@ const SearchPeopleChat = ({setIsBlockChat, setChatIdToCreateChatMsg, inputChatMs
         setSearchPeopleChat('');
         inputChatMshRef.value = '';
         setIsBlockChat(true);
+        setShowChatHeader(false);
+        setShowChatBody(false);
       } else {
         setSelectedChat(null);
         setCreateChatStatus(!createChatStatus);
@@ -34,7 +36,12 @@ const SearchPeopleChat = ({setIsBlockChat, setChatIdToCreateChatMsg, inputChatMs
         inputChatMshRef.value = '';
         setChatIdToCreateChatMsg("");
         setIsBlockChat(true);
+        setShowChatHeader(false);
+        setShowChatBody(false);
       }
+
+      setOpenSearchPeopleChat(false);
+      closePopupRef?.current?.classList?.remove('close-popup');
     });
   }
 
