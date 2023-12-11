@@ -221,27 +221,19 @@ const deleteCurrentProfileBgImg = async (req, res) => {
 
 const checkUserExistUpdateProfile = async (req, res) => {
     try {
-        const { firstname, userId } = req.body;
-        const userExistWithFirstName = await userModel.findOne({
-            firstname
+        const { firstname, lastname, userId } = req.body;
+        const userExist = await userModel.findOne({
+            firstname,
+            lastname
         });
-        // const userExistWithLastName = await userModel.findOne({
-        //     lastname
-        // });
 
-        // if(userExistWithFirstName && userExistWithLastName && userExistWithFirstName._id.toString() !== userId && userExistWithLastName._id.toString() !== userId){
-        //     return res.status(400).json({msg: "fristname and lastname is already exist."});
-        // }
-        if (userExistWithFirstName && userExistWithFirstName._id.toString() !== userId) {
-            return res.status(400).json({ msg: "fristname is already exist." });
+        if (userExist && userExist._id.toString() !== userId) {
+            return res.status(400).json({ msg: "fristname and lastname is already exist." });
         }
-        // if(userExistWithLastName && userExistWithLastName._id.toString() !== userId){
-        //     return res.status(400).json({msg: "lastname is already exist."});
-        // }
 
         return res.status(200).json({ msg: "fristname is already use." });
     } catch (err) {
-        return res.status(500).json(err);
+        return res.status(500).json({ msg: err });
     }
 }
 
@@ -271,17 +263,17 @@ const blockUser = async (req, res) => {
     }
 }
 
-const editUserDataAdmin = async (req , res) => {
+const editUserDataAdmin = async (req, res) => {
     try {
-        const {userId , email , password , isAdminStatus} = req.body;
-        const userData = await userModel.findOne({email});
+        const { userId, email, password, isAdminStatus } = req.body;
+        const userData = await userModel.findOne({ email });
 
-        if(userData && userData._id.toString() !== userId){
-            return res.status(400).json({msg: "email is already exist."});
+        if (userData && userData._id.toString() !== userId) {
+            return res.status(400).json({ msg: "email is already exist." });
         }
 
-        if(password !== ""){
-            const hash_password = await bcrypt.hash(password , 10);
+        if (password !== "") {
+            const hash_password = await bcrypt.hash(password, 10);
             await userModel.findByIdAndUpdate(
                 {
                     _id: userId
@@ -292,7 +284,7 @@ const editUserDataAdmin = async (req , res) => {
                     isAdmin: isAdminStatus
                 }
             );
-            return res.status(200).json({msg: "update data successfullly."});
+            return res.status(200).json({ msg: "update data successfullly." });
         }
 
         await userModel.findByIdAndUpdate(
@@ -304,8 +296,8 @@ const editUserDataAdmin = async (req , res) => {
                 isAdmin: isAdminStatus
             }
         );
-        
-        return res.status(200).json({msg: "update data successfullly."});
+
+        return res.status(200).json({ msg: "update data successfullly." });
     } catch (err) {
         return res.status(500).json(err);
     }

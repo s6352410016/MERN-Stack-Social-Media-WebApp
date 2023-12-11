@@ -690,20 +690,14 @@ const Profile = ({ setLogoutStatus }) => {
         },
         body: JSON.stringify({
           firstname,
+          lastname,
           userId: userDataRef?.current
         })
       });
       const resMessage = await userExistRes.json();
       
-      // if(resMessage.msg === "fristname and lastname is already exist."){
-      //   return toast.error("Fristname and lastname is already exist.");
-      // }else if(resMessage.msg === "fristname is already exist."){
-      //   return toast.error("Fristname is already exist.");
-      // }else if(resMessage.msg === "lastname is already exist."){
-      //   return toast.error("Lastname is already exist.");
-      // }
-      if(resMessage.msg === "fristname is already exist."){
-        return toast.error("Fristname is already exist.");
+      if(resMessage.msg === "fristname and lastname is already exist."){
+        return toast.error("Fristname and lastname is already exist.");
       }
     }catch(err){
       console.log(`error ${err}`);

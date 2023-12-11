@@ -206,7 +206,7 @@
     color: #353535;
     font-size: 1rem;
     font-weight: bold;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
 .user-info-data-chat span {
@@ -860,7 +860,7 @@
 
 .search-fullname-user {
     margin-bottom: 0;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
 .serach-result-text-decoration-none {
@@ -1008,7 +1008,7 @@
     width: 100%;
     text-align: start;
     padding-left: 10px !important;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
 .container-button-follow-people-you-may-know {
@@ -1379,7 +1379,7 @@
     margin-bottom: 0;
     color: #353535;
     font-size: 1rem;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
 .container-show-post-follower-following-in-container-user-profile-in-container-content-right-in-body {
@@ -1995,7 +1995,7 @@
     color: #353535;
     font-size: 1rem;
     font-weight: bold;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
 .fullname-of-post-users:hover {
@@ -2585,7 +2585,7 @@
 .container-fullname-in-center-in-people-likes-post-list b {
     color: #353535;
     font-size: 1rem;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
 .container-follow-icon-in-center-in-people-likes-post-list {
@@ -2852,7 +2852,7 @@
     color: #353535;
     font-size: 1rem;
     font-weight: bold;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
 .modity-date-in-container-fix-fullname-of-user-comment-in-container-comments-of-user-detail-in-container-comments-of-users {
@@ -3580,7 +3580,7 @@
     color: #353535;
     font-weight: bold;
     font-size: 1rem;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
 .container-body-in-container-body-in-container-edit-post-content-in-container-edit-post-in-icon-settings-post-of-users {
@@ -4044,7 +4044,7 @@
     color: #353535;
     font-weight: bold;
     cursor: pointer;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
 .container-fullname-user-in-container-header-in-container-footer-in-container-post-to-share-in-container-post-of-users span {
@@ -4230,7 +4230,7 @@
     font-size: 1.5rem;
     color: #fff;
     font-weight: bold;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
 .container-edit-profile-img-in-container-user-profile-img-in-container-user-detail-profile-in-container-user-profile-in-container-body-in-container-profile {
@@ -4870,7 +4870,7 @@
     color: #353535;
     font-size: 1rem;
     font-weight: bold;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
 .container-profile-fullname-in-container-user-chat-list-profile span {

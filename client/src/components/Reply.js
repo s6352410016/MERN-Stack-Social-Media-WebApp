@@ -504,7 +504,7 @@ const Reply = ({ replyId, commentIdToReply, userIdToReply, replyMsgs, replyImg, 
                                                 <div className='container-comment-msg-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                                     <p>
                                                         {tagUserId !== "" &&
-                                                            <Link to={`/profile/${tagUserData?._id}`} style={{ fontWeight: "bold", color: "#0074FE", textDecoration: "none", textTransform: "capitalize" }}>@{tagUserData?.firstname} {tagUserData?.lastname} </Link>
+                                                            <Link to={`/profile/${tagUserData?._id}`} style={{ fontWeight: "bold", color: "#0074FE", textDecoration: "none"}}>@{tagUserData?.firstname} {tagUserData?.lastname} </Link>
                                                         }
                                                         {replyMsgs}
                                                     </p>
@@ -518,7 +518,7 @@ const Reply = ({ replyId, commentIdToReply, userIdToReply, replyMsgs, replyImg, 
                                             <div className='container-comment-msg-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                                 <p>
                                                     {tagUserId !== "" &&
-                                                        <Link to={`/profile/${tagUserData?._id}`} style={{ fontWeight: "bold", color: "#0074FE", textDecoration: "none", textTransform: "capitalize" }}>@{tagUserData?.firstname} {tagUserData?.lastname} </Link>
+                                                        <Link to={`/profile/${tagUserData?._id}`} style={{ fontWeight: "bold", color: "#0074FE", textDecoration: "none"}}>@{tagUserData?.firstname} {tagUserData?.lastname} </Link>
                                                     }
                                                     {replyMsgs}
                                                 </p>
@@ -527,7 +527,7 @@ const Reply = ({ replyId, commentIdToReply, userIdToReply, replyMsgs, replyImg, 
                                         {replyImg !== "" && replyMsgs === "" &&
                                             <>
                                                 {tagUserId !== "" &&
-                                                    <Link to={`/profile/${tagUserData?._id}`} style={{ fontWeight: "bold", color: "#0074FE", textDecoration: "none", textTransform: "capitalize" }}>@{tagUserData?.firstname} {tagUserData?.lastname} </Link>
+                                                    <Link to={`/profile/${tagUserData?._id}`} style={{ fontWeight: "bold", color: "#0074FE", textDecoration: "none"}}>@{tagUserData?.firstname} {tagUserData?.lastname} </Link>
                                                 }
                                                 <div className='container-comment-img-in-container-comments-of-user-detail-in-container-comments-of-users'>
                                                     <img src={`${process.env.REACT_APP_SERVER_DOMAIN}/replyImg/${replyImg}`} alt='commentImg' />
