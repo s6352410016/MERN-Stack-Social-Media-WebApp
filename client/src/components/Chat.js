@@ -481,7 +481,7 @@ const Chat = ({ setLogoutStatus }) => {
     } else {
       setDisableButtonSendMsg(true);
     }
-  }, [createChatMsg, fileImg]);
+  }, [createChatMsg, fileImg , chatIdToCreateChatMsg]);
 
   useEffect(() => {
     socket.current?.on('createChat', () => {
