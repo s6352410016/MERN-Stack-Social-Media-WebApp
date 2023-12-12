@@ -152,7 +152,8 @@ const Media = ({ setLogoutStatus }) => {
           return res.json();
         }
       }).then((res) => {
-        setUserInfo(res);
+        const sortedUsers = res.sort((a , b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setUserInfo(sortedUsers);
       });
     });
   }, [followAndUnFollow]);
@@ -168,7 +169,8 @@ const Media = ({ setLogoutStatus }) => {
         return res.json();
       }
     }).then((res) => {
-      setUserInfo(res);
+      const sortedUsers = res.sort((a , b) => new Date(b.createdAt) - new Date(a.createdAt));
+      setUserInfo(sortedUsers);
     });
   }, [followAndUnFollow]);
 
